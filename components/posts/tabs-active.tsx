@@ -1,0 +1,104 @@
+'use client';
+// 'use client';
+
+import { cn } from '@/lib/utils';
+import { Button } from '../ui/button';
+
+import { anything, PostProps, tabsData } from '@/types';
+import SidePostItem from './side-post-item';
+import { useState } from 'react';
+// import { id } from 'date-fns/locale';
+// import { useState } from 'react';
+
+// type TabsProps = {};
+
+// const TabsActive = () => {
+//   const [tabs, setTabs] = useState(tabsData);
+
+//   const handleTabActive = (id: number): void => {
+//     setTabs(
+//       tabsData.map((tab) => {
+//         tab.active = false;
+//         if (tab.id === id) {
+//           tab.active = true;
+//           return tab;
+//         }
+//       })
+//     );
+//   };
+//   return <div>Tabs</div>;
+// };
+
+// export default TabsActive;
+
+type TabsActiveProps = {
+  items: PostProps[];
+};
+
+const TabsActive = ({ items }: TabsActiveProps) => {
+  const [tabs, setTabs] = useState(tabsData);
+
+  const handleTabActive = (id: number): void => {
+    setTabs(
+      tabsData.map((tab) => {
+        tab.active = false;
+        if (tab.id === id) tab.active = true;
+        return tab;
+      })
+    );
+  };
+
+  const renderedTabsActive = tabsData.map((tab) => (
+    <li
+      key={tab.id}
+      className={cn(
+        'nav-item   rounded-sm mx-auto',
+        tab.active
+          ? ' bg-orange-100/50 w-full border-b-2 border-gray-400'
+          : ' bg-gray-50 w-full'
+      )}
+    >
+      <Button
+        onClick={() => handleTabActive(tab.id)}
+        variant='ghost'
+        size='sm'
+        type='button'
+        className={cn(
+          `text-center w-full text-gray-400  nav-link`,
+          tab.active ? 'active text-black' : undefined
+        )}
+      >
+        {tab.name}
+      </Button>
+    </li>
+  ));
+  return (
+    <div className='aside-block '>
+      <ul className='nav nav-pills custom-tab-nav  mb-4 flex flex-row justify-center items-center '>
+        {renderedTabsActive}
+      </ul>
+      <div className='tab-content '>
+        <div
+          className={`tab-pane fade ${
+            tabs[0].active ? 'show active' : 'hidden'
+          }`}
+        >
+          {items.slice(0, 6).map((item, i) => (
+            <SidePostItem key={item.id} item={item} i={i} />
+          ))}
+        </div>
+        <div
+          className={`tab-pane fade ${
+            tabs[1].active ? 'show active' : 'hidden'
+          }`}
+        >
+          {items.slice(6, 12).map((item, i) => (
+            <SidePostItem key={item.id} item={item} i={i} />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default TabsActive;

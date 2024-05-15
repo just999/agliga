@@ -1,0 +1,236 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Old-London';
+  src: url('/fonts/Old-London.ttf.woff') format('woff'),
+    url('/fonts/Old-London.ttf.svg#Old-London') format('svg'),
+    url('/fonts/Old-London.ttf.eot'),
+    url('/fonts/Old-London.ttf.eot?#iefix') format('embedded-opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+html,
+body,
+:root {
+  height: 100%;
+}
+
+.rdrMonth {
+  width: 100% !important;
+}
+.rdrCalendarWrapper {
+  width: 100% !important;
+  font-size: 16px !important;
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+.leaflet-bottom,
+.leaflet-control,
+.leaflet-pane,
+.leaflet-top {
+  z-index: 0 !important;
+}
+.swiper {
+  width: 100%;
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: visible;
+}
+
+.custom-swiper-button-next,
+.custom-swiper-button-prev {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 9;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .custom-swiper-button-next,
+  .custom-swiper-button-prev {
+    display: none;
+  }
+}
+
+.custom-swiper-button-next span,
+.custom-swiper-button-prev span {
+  font-size: 20px;
+  color: rgba(255, 255, 255, 0.7);
+  transition: 0.3s all ease;
+}
+
+.custom-swiper-button-next:hover span,
+.custom-swiper-button-next:focus span,
+.custom-swiper-button-prev:hover span,
+.custom-swiper-button-prev:focus span {
+  color: rgba(255, 255, 255, 1);
+}
+
+.custom-swiper-button-next {
+  right: 0px;
+}
+
+.custom-swiper-button-prev {
+  left: 0px;
+}
+
+.swiper .swiper-pagination-bullet-active {
+  opacity: 1;
+  background: orange;
+}
+
+/* .news {
+  font-family: 'Jacquard_24', serif;
+  font-size: 48px;
+  text-shadow: 4px 4px 4px #aaa;
+} */
+/* .swiper .swiper-pagination-bullet {
+  border: 1px solid;
+}
+
+.swiper .swiper-pagination-bullet-active:nth-child(1) {
+  opacity: 1;
+  background: orange;
+}
+.swiper .swiper-pagination-bullet-active:nth-child(2) {
+  opacity: 1;
+  background: red;
+}
+.swiper .swiper-pagination-bullet-active:nth-child(3) {
+  opacity: 1;
+  background: cyan;
+}
+.swiper .swiper-pagination-bullet-active:nth-child(4) {
+  opacity: 1;
+  background: pink;
+}
+.swiper .swiper-pagination-bullet-active:nth-child(5) {
+  opacity: 1;
+  background: whitesmoke;
+}
+.swiper .swiper-pagination-bullet-active:nth-child(6) {
+  opacity: 1;
+  background: brown;
+}
+.swiper .swiper-pagination-bullet-active:nth-child(7) {
+  opacity: 1;
+  background: yellow;
+}
+.swiper .swiper-pagination-bullet-active:nth-child(8) {
+  opacity: 1;
+  background: green;
+}
+.swiper .swiper-pagination-bullet-active:nth-child(9) {
+  opacity: 1;
+  background: gold;
+}
+.swiper .swiper-pagination-bullet-active:nth-child(10) {
+  opacity: 1;
+  background: indigo;
+}
+.swiper .swiper-pagination-bullet-active:nth-child(11) {
+  opacity: 1;
+  background: lightsalmon;
+}
+.swiper .swiper-pagination-bullet-active:nth-child(12) {
+  opacity: 1;
+  background: aquamarine;
+} */
+
+.fixed-bottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+}
+
+.text-shadow {
+  text-shadow: 3px 3px 7px rgba(0, 0, 0, 0.49);
+}
+
+.logo {
+  text-shadow: 5px 2px 6px rgba(95, 46, 0, 0.6);
+}
+
+.MuiOutlinedInput-notchedOutline {
+  border-color: none !important;
+  border-width: 0px !important;
+}
