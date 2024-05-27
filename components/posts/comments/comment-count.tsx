@@ -5,7 +5,7 @@ import Loader from '@/components/loader';
 import { useGetComment } from '@/hooks/use-get-comment';
 import { useGetPost } from '@/hooks/use-get-post';
 import ClientOnly from '@/lib/client-only';
-import { getPostByPostId } from '@/lib/queries/posts';
+
 import { PostProps } from '@/types';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';

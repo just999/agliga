@@ -6,28 +6,32 @@ import { BiDollar } from 'react-icons/bi';
 
 type InputProps = {
   id: string;
+  name?: string;
   className?: string;
-
   accept?: string;
   labelClassName?: string;
   value?: string;
   rows?: number;
   cols?: number;
   multiple?: boolean;
-  label: string;
+  label?: string;
   type?: string;
   disabled?: boolean;
   formatPrice?: boolean;
   required?: boolean;
   defaultValue?: any;
   placeholder?: string;
-  register: UseFormRegister<FieldValues>;
+  handleChange?: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
+  register?: UseFormRegister<FieldValues>;
   errors: FieldErrors;
   as?: React.ElementType;
 };
 
 const Input: React.FC<InputProps> = ({
   id,
+  name,
   className,
   labelClassName,
   value,
@@ -37,12 +41,12 @@ const Input: React.FC<InputProps> = ({
   rows,
   cols,
   type,
-
   disabled,
   formatPrice,
   required,
   defaultValue,
   placeholder,
+  handleChange,
   register,
   errors,
   as = 'input',
@@ -59,12 +63,14 @@ const Input: React.FC<InputProps> = ({
       {as === 'textarea' ? (
         <textarea
           id={id}
+          name={name}
           rows={rows}
           cols={cols}
           value={value}
           defaultValue={defaultValue}
           disabled={disabled}
-          {...register(id, { required })}
+          {...register?.(id, { required })}
+          onChange={handleChange}
           placeholder={placeholder}
           className={cn(
             `peer w-full p-3 pt-4 font-light bg-stone-100 border-2 rounded-md outline-none transition  disabled:opacity-70 disabled:cursor-not-allowed`,
@@ -80,10 +86,12 @@ const Input: React.FC<InputProps> = ({
         <input
           id={id}
           accept={accept}
+          name={name}
           defaultValue={defaultValue}
           disabled={disabled}
           multiple={multiple}
-          {...register(id, { required })}
+          onChange={handleChange}
+          {...register?.(id, { required })}
           placeholder={placeholder}
           type={type}
           className={cn(

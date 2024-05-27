@@ -14,7 +14,11 @@ const Heading = ({ title, subtitle, center }: HeadingProps) => {
     <div className={cn(center ? 'text-center' : 'text-start')}>
       <div className='text-2xl font-bold flex flex-row items-center justify-center gap-8 '>
         {' '}
-        <Logo /> {title}
+        <Logo
+          className='w-10 h-auto'
+          styles={{ width: '18%', height: 'auto' }}
+        />{' '}
+        {title}
       </div>
       <div className='font-light text-neutral-500 mt-2 '>{subtitle}</div>
     </div>

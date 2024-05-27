@@ -28,6 +28,7 @@ import NoUserModal from '@/components/modals/no-user-modal';
 import SoccerModal from '@/components/modals/soccer-modal';
 import getCurrentUser from '@/actions/get-user';
 import UserProfileModal from '@/components/modals/user-profile-modal';
+import AddPostModal from '@/components/modals/add-post-modal';
 
 const inter = Nunito({ subsets: ['latin'] });
 
@@ -46,9 +47,7 @@ export default async function RootLayout({
   className,
 }: Readonly<RootLayoutProps>) {
   const currentUser = await getCurrentUser();
-
   const session = await auth();
-
   return (
     <SessionProvider session={session}>
       <html lang='en'>
@@ -67,6 +66,8 @@ export default async function RootLayout({
           <DeleteModal />
           <DepositWdModal />
           <PostModal />
+          {/* <AddPostModal /> */}
+
           <SearchModal />
           <NoUserModal />
           <AuthModal />

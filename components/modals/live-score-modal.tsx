@@ -10,7 +10,6 @@ const LiveScoreModal = () => {
 
   const bodyContent = (
     <div className='flex flex-col gap-1'>
-      <Heading title='Live' center />
       <LiveScore />
     </div>
   );

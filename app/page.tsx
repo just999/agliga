@@ -13,27 +13,27 @@ import {
   fetchPosts,
   fetchPostsByUserId,
   getPosts,
-  // getPosts,
   getRandomPost,
   IPostsParams,
 } from '@/lib/queries/posts';
+import { PostProps } from '@/types';
 
 type HomeProps = {
   searchParams: IPostsParams;
 };
 
 const Home = async ({ searchParams }: HomeProps) => {
-  // const posts = await getPosts(searchParams);
-  const posts = await fetchPostsByUserId(searchParams);
+  const posts = await getPosts();
+  // const posts = await fetchPostsByUserId(searchParams);
   if (!posts || posts.length === 0) return [];
 
-  const randPost = await getRandomPost();
+  const randPost = (await getRandomPost()) as PostProps;
   const currentUser = await getCurrentUser();
 
   if (!randPost) return <EmptyState showReset title='no post!' />;
 
   return (
-    <>
+    <ClientOnly>
       <Hero />
       <Posts
         randPost={randPost}
@@ -43,7 +43,7 @@ const Home = async ({ searchParams }: HomeProps) => {
       />
 
       {/* <CommentsList /> */}
-    </>
+    </ClientOnly>
   );
 };
 

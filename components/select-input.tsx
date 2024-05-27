@@ -113,8 +113,8 @@ const SelectInput = ({
         )}
         options={options() as any}
         components={animatedComponents}
-        // isMulti={placeholder === 'Banks' || id === 'bankPT' ? false : true}
-        isMulti={isMulti}
+        isMulti={placeholder === 'Banks' || id === 'bankPT' ? false : true}
+        // isMulti={isMulti}
         value={value}
         defaultValue={defaultValue}
         onChange={(value) => onChange(value as SelectInputValue)}

@@ -15,11 +15,14 @@
 .post-content .firstcharacter {
   float: left;
   font-family: 'Old-London';
+  font-weight: 200;
+  text-shadow: 4px 4px 6px rgba(66, 68, 90, 1);
   font-size: 80px;
   line-height: 60px;
   padding-top: 4px;
   padding-right: 8px;
   padding-left: 3px;
+  font-style: italic;
 }
 
 /* .post-content figure {

@@ -1,9 +1,9 @@
 'use client';
 
-import useRunToggleStore from '@/store/use-table-store';
+import { usePathname } from 'next/navigation';
 import RunBox from '../run-box';
-import { ru } from 'date-fns/locale';
-import { useSearchParams, usePathname } from 'next/navigation';
+
+// import { useSearchParams, usePathname } from 'next/navigation';
 
 type TableData = { value: number; className?: string };
 
@@ -28,7 +28,6 @@ export const rows: TableData[][] = [
     { value: 17, className: 'lsm2' },
     { value: 18, className: 'lsm2' },
     { value: 19, className: 'lsm2' },
-
     { value: 20, className: 'lsm2' },
     { value: 21, className: 'lsm2' },
     { value: 22, className: 'lsm2' },
@@ -58,8 +57,8 @@ export type RunTableProps = {
 };
 
 const RunTable = ({ toggle, setIsOpen }: RunTableProps) => {
-  const params = useSearchParams();
-  const run = params.get('run');
+  // const params = useSearchParams();
+  // const run = params.get('run');
   const pathname = usePathname();
 
   const isMainPage = pathname === '/';
@@ -88,7 +87,7 @@ const RunTable = ({ toggle, setIsOpen }: RunTableProps) => {
               >
                 <RunBox
                   label={cellData.value}
-                  selected={Number(run) === cellData.value}
+                  selected={Number(cellData.value) === cellData.value}
                   toggle={() => toggle(cellData.value)}
                 />
               </td>

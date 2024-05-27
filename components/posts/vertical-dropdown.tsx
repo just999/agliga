@@ -7,14 +7,12 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
 } from '@radix-ui/react-dropdown-menu';
-import { MoreVertical, Pencil } from 'lucide-react';
+import { MoreVertical } from 'lucide-react';
 import { Button } from '../ui/button';
-import Link from 'next/link';
+
 import { PostProps, SafeUser } from '@/types';
-import { BiCommentDots, BiDislike, BiLike, BiPencil } from 'react-icons/bi';
+import { BiCommentDots, BiPencil } from 'react-icons/bi';
 import useFavorite from '@/hooks/use-favorite';
-import { useStore } from 'zustand';
-import useFavoriteStore from '@/store/use-favorite-store';
 
 type VerticalDropdownProps = {
   item: PostProps;

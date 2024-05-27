@@ -271,7 +271,7 @@ const DepositWdModal = () => {
 
       <SelectInput
         label='game'
-        isMulti={true}
+        isMulti={false}
         id='game'
         register={register}
         required

@@ -4,15 +4,18 @@ import getCurrentUser from '@/actions/get-user';
 import Loader from '@/components/loader';
 import PageTitle from '@/components/posts/page-title';
 import PostItemOne from '@/components/posts/post-item-one';
+
 // import { useGetPost } from '@/hooks/use-get-post';
 import {
   fetchPosts,
   fetchPostsByUserId,
   getPosts,
+  // getPosts,
   IPostsParams,
 } from '@/lib/queries/posts';
 
 import { PostProps } from '@/types';
+import { Suspense } from 'react';
 
 type PostItemsPageProps = {
   searchParams: IPostsParams;
@@ -20,8 +23,8 @@ type PostItemsPageProps = {
 
 const PostItemsPage = async ({ searchParams }: PostItemsPageProps) => {
   // const posts = await fetchPosts();
-  // const posts = await getPosts(searchParams);
-  const posts = await fetchPostsByUserId(searchParams);
+  const posts = await getPosts();
+  // const posts = await fetchPostsByUserId(searchParams);
   const currentUser = await getCurrentUser();
   if (!posts || posts.length === 0) return [];
 
@@ -35,12 +38,14 @@ const PostItemsPage = async ({ searchParams }: PostItemsPageProps) => {
             {posts.length > 0 ? (
               posts.map((item: PostProps) => (
                 <div className='col-lg-3 col-md-6 ' key={item.id}>
-                  <PostItemOne
-                    pageOne={false}
-                    large={false}
-                    item={item}
-                    currentUser={currentUser}
-                  />
+                  <Suspense fallback={<Loader />}>
+                    <PostItemOne
+                      pageOne={false}
+                      large={false}
+                      item={item}
+                      currentUser={currentUser}
+                    />
+                  </Suspense>
                 </div>
               ))
             ) : (

@@ -1,32 +1,49 @@
 'use client';
 
-import useModal from '@/hooks/use-modal';
-import { useUserRole } from '@/hooks/use-user-role';
+// import useModal from '@/hooks/use-modal';
+// import { useUserRole } from '@/hooks/use-user-role';
+import { cn } from '@/lib/utils';
+import { RoutesProps } from '@/types';
+import Link from 'next/link';
 
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useMemo } from 'react';
-import { BiUserCircle } from 'react-icons/bi';
+// import { useRouter } from 'next/navigation';
 
-const DepoWdMenu = () => {
-  const params = useSearchParams();
-  const router = useRouter();
+type UserMenuProps = {
+  routes: RoutesProps[];
+  userRole: string;
+};
 
-  const guestCount = params?.get('guestCount');
+const DepoWdMenu = ({ routes, userRole }: UserMenuProps) => {
+  // const router = useRouter();
 
-  const { onOpen, modalType } = useModal();
-
-  const guestLabel = useMemo(() => {
-    if (guestCount) return `${guestCount} guests`;
-
-    return 'Current User';
-  }, [guestCount]);
-
-  const userRole = useUserRole();
+  // const userRole = useUserRole();
 
   return (
-    <div className='border-[1px] w-full md:w-auto py-2 rounded-full shadow-sm hover:shadow-md transition cursor-pointer '>
-      <div className=' flex flex-row items-center justify-between '>
-        <div
+    <div className='border w-full md:w-auto rounded-full shadow-sm hover:shadow-md transition'>
+      <div className=' flex flex-row items-center justify-between h-full'>
+        {routes.map(
+          ({ label, href, onClick, active, className, icon: Icon }) => (
+            <Link
+              key={label}
+              href={href}
+              onClick={onClick}
+              className={cn(
+                `h-full w-full  p-0 m-0 bg-emerald-900  cursor-pointer py-2 `,
+                className,
+                active
+                  ? ' text-gray-800  rounded-xl bg-zinc-100 drop-shadow-sm border-b-2 border-solid px-3 border-stone-300 transition font-semibold'
+                  : 'text-stone-400 bg-slate-100 px-3'
+              )}
+            >
+              {/* {Icon && <Icon size={18} />} */}
+              {/* <div className={cn('text-stone-900 text-xs text-center')}> */}
+              {label}
+              {/* </div> */}
+            </Link>
+          )
+        )}
+
+        {/* <div
           onClick={() => onOpen('depo')}
           className=' text-xs font-semibold px-6 '
         >
@@ -43,9 +60,9 @@ const DepoWdMenu = () => {
           className=' text-xs font-semibold px-6  md:hidden lg:block '
         >
           Berita
-        </div>
+        </div> */}
 
-        {userRole === 'admin' && (
+        {/* {userRole === 'admin' && (
           <>
             <div
               onClick={() => {
@@ -64,9 +81,9 @@ const DepoWdMenu = () => {
               Topic
             </div>
           </>
-        )}
+        )} */}
 
-        <div
+        {/* <div
           onClick={() => router.push('/soccer')}
           className='hidden sm:block text-xs font-semibold px-6 border-x-[1px] flex-1 text-center  md:hidden lg:block '
         >
@@ -77,14 +94,6 @@ const DepoWdMenu = () => {
           className='hidden sm:block text-xs font-semibold px-6 border-x-[1px] flex-1 text-center '
         >
           Livescore
-        </div>
-        {/* <div className=' text-xs pl-6 pr-2 text-gray-600 flex flex-row justify-center items-center gap-1 md:hidden  lg:flex lg:flex-row lg:items-center lg:justify-center  '>
-          <div className=' hidden  sm:block md:hidden  lg:block '>
-            {userRole}
-          </div>
-          <div className='  w-8 h-8 my-auto  flex flex-row items-center md:hidden lg:flex '>
-            <BiUserCircle className='w-5 h-5 ' />
-          </div>
         </div> */}
       </div>
     </div>

@@ -4,7 +4,6 @@ import { db } from '@/lib/db';
 
 import { cache } from 'react';
 import { PostProps } from '@/types';
-import posts from '@/components/posts/posts';
 
 export type PostWithData = Post & {
   topic: { slug: string } | null;
@@ -12,49 +11,47 @@ export type PostWithData = Post & {
   _count: { comments: number };
 };
 
-export const getPostByPostId = cache(async (postId: string) => {
-  const data = await db.post.findUnique({
-    where: { id: postId },
-    include: {
-      comments: true,
-    },
-  });
-  return data;
-});
+export const getPostByPostId = async (id: string) => {
+  try {
+    if (!id) return;
+    const data = await db.post.findUnique({
+      where: { id: id },
+      include: {
+        comments: true,
+      },
+    });
+    return data;
+  } catch (err: unknown) {
+    throw new Error('Something went wrong');
+  }
+};
 
 export type IPostsParams = {
   userId?: string;
 };
 interface Post {
-  id: string;
   img: string;
   category: string;
-  date: Date;
   title: string;
   brief: string | null;
-  avatar: string;
   author: string | null;
-  userId: string | null;
-  top: boolean | null;
-  trending: boolean | null;
   topicId: string;
-  createdAt: Date;
   comments: Comment[];
 }
 
 interface Comment {
-  id: string;
   content: string;
   postId: string;
   userId: string;
   parentId: string | null;
-  createdAt: Date;
-  updatedAt: Date;
 }
 
-export const getPosts = cache(async (params: IPostsParams) => {
+export const getPosts = cache(async (params?: IPostsParams) => {
   try {
-    const { userId } = params;
+    let userId;
+    if (params) {
+      userId = params.userId;
+    }
 
     let query: { userId?: string } = {};
     if (userId) {
@@ -95,19 +92,40 @@ export const getPosts = cache(async (params: IPostsParams) => {
   }
 });
 
-export const getRandomPost = cache(async () => {
+// export const getRandomPost = cache(async () => {
+//   try {
+//     const posts = await db.post.findMany({
+//       where: {
+//         img: {
+//           not: {
+//             equals: '',
+//           },
+//         },
+//       },
+//     });
+//     if (posts.length === 0) return null;
+//     const randPost = posts.sort(() => Math.random() - Math.random())[0];
+//     return randPost;
+//   } catch (err: unknown) {
+//     console.error('Error fetching random post:', err);
+//     return null;
+//   }
+// });
+export const getRandomPost = async () => {
   try {
-    const posts = await db.post.findMany({});
-    if (posts.length === 0) return null;
+    const randomPost = await db.post.aggregateRaw({
+      pipeline: [
+        { $match: { img: { $ne: '' } } }, // Filter for posts with non-empty img
+        { $sample: { size: 1 } }, // Sample one random document
+      ],
+    });
 
-    const randPost = posts.sort(() => Math.random() - Math.random())[0];
-
-    return randPost;
+    return randomPost[0];
   } catch (err: unknown) {
     console.error('Error fetching random post:', err);
     return null;
   }
-});
+};
 
 export const fetchPosts = cache(async () => {
   // return db.post.findMany({
@@ -173,3 +191,19 @@ export const fetchPostsByUserId = async (params: IPostsParams) => {
     return null;
   }
 };
+
+export const fetchPostByPostId = cache((postId: string): Promise<PostProps> => {
+  console.log('comments query making query');
+  return db.post
+    .findFirst({
+      where: { id: postId },
+      include: {
+        comments: {
+          select: {
+            content: true,
+          },
+        },
+      },
+    })
+    .then((post) => post as any);
+});

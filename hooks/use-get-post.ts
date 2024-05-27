@@ -1,4 +1,8 @@
+'use client';
+
 import { getPost, getPostByTopicAndSlug, getPosts } from '@/actions/get-post';
+import { db } from '@/lib/db';
+import { fetchPosts, getPostByPostId } from '@/lib/queries/posts';
 import usePostsStore from '@/store/use-posts-store';
 
 import { useEffect } from 'react';
@@ -93,14 +97,15 @@ export const useGetPost = (postId?: string, slug?: string) => {
         setIsLoading(true);
 
         if (postId && !slug) {
-          const res = await getPost(postId);
-          if (res) setItem(res);
+          const res = await getPostByPostId(postId);
+          if (!res) throw new Error('No post found!');
+          setItem(res);
         } else if (postId && slug) {
           const res: any = await getPostByTopicAndSlug(postId, slug);
           if (!res) throw new Error('data fetching failed');
           setItemBySlugAndPostId(res);
         } else {
-          const res: any = await getPosts();
+          const res: any = await fetchPosts();
           setItems(res);
         }
       } catch (err) {
@@ -123,4 +128,42 @@ export const useGetPost = (postId?: string, slug?: string) => {
     setItemBySlugAndPostId,
   ]);
   return { isLoading, error, item, items, itemBySlugAndPostId, setIsLoading };
+};
+
+export const useRandomPost = () => {
+  const {
+    items,
+    setRandomItem,
+    randomItem,
+    setItems,
+    setIsLoading,
+    setItem,
+    setItemBySlugAndPostId,
+    setError,
+  } = usePostsStore();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setIsLoading(true);
+        const res: any = await fetchPosts();
+        setItems(res);
+      } catch (err) {
+        console.error('error fetch data', err);
+        setError('error');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [setError, setIsLoading, setItems]);
+  if (items.length > 0) {
+    const randomPost = items.sort(() => Math.random() - Math.random())[0];
+    setRandomItem(randomPost);
+    return randomPost;
+  } else {
+    console.warn('No Posts available to select a random items');
+  }
+
+  return { randomItem };
 };

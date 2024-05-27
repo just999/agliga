@@ -24,6 +24,24 @@ import { DEFAULT_REDIRECT, PUBLIC_ROUTES, ROOT } from '@/routes';
 
 const { auth } = NextAuth(authConfig);
 
+export function middleware(request: any, response: any) {
+  // Allow CORS for specific origins (replace with your frontend origin)
+  const allowedOrigins = ['https://ae38-175-100-33-86.ngrok-free.app'];
+
+  const origin = request.headers.origin;
+
+  if (allowedOrigins.includes(origin)) {
+    response.setHeader('Access-Control-Allow-Origin', origin);
+    response.setHeader(
+      'Access-Control-Allow-Methods',
+      'GET, POST, PUT, DELETE'
+    );
+    response.setHeader(
+      'Access-Control-Allow-Headers',
+      'Content-Type, Authorization'
+    );
+  }
+}
 export default auth((req) => {
   const { nextUrl } = req;
   const isAuthenticated = !!req.auth;

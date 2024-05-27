@@ -4,20 +4,29 @@ import { NextResponse } from 'next/server';
 import { ObjectId } from 'mongodb';
 // import { Schedule } from '@prisma/client';
 import getCurrentUser from '@/actions/get-user';
+import NextCors from 'nextjs-cors';
+import { NextApiRequest, NextApiResponse } from 'next';
+
+async function handler(req: NextApiRequest, res: NextApiResponse) {
+  // Run the cors middleware
+  // nextjs-cors uses the cors package, so we invite you to check the documentation https://github.com/expressjs/cors
+  await NextCors(req, res, {
+    // Options
+    methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+    origin: '*',
+    optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+  });
+
+  // Rest of the API logic
+  res.json({ message: 'Hello NextJs Cors!' });
+}
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
     const { run, date, teamAway, teamHome, analysis } = body;
     let isoDate = date + ':00.000Z';
-    // const parseDate = new Date(date);
 
-    // const formattedDate = new Date(
-    //   parseDate.getTime() + parseDate.getTimezoneOffset() * 60000
-    // )
-    //   .toISOString()
-    //   .slice(0, 19)
-    //   .replace('T', ' ');
     const currentUser = await getCurrentUser();
     if (!currentUser || currentUser.role !== 'admin')
       return NextResponse.error();

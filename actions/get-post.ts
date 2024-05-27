@@ -1,15 +1,18 @@
+'use server';
+
+import { db } from '@/lib/db';
 import { PostProps } from '@/types';
 
 type PostsResponse = PostProps[];
 
 // export const getPost = async (id: string) => {
 //   try {
-//     const post = await db.post.findUnique({
+//     const postById = await db.post.findUnique({
 //       where: { id: id },
 //       include: { comments: true },
 //     });
-//     if (!post) return null;
-//     return post;
+//     if (!postById) return null;
+//     return postById;
 //   } catch (err) {
 //     console.error(err);
 //     return null;

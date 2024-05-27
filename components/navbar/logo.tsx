@@ -3,8 +3,14 @@
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { CSSProperties } from 'react';
 
-const Logo = () => {
+type LogoProps = {
+  className: string;
+  styles: CSSProperties;
+};
+
+const Logo = ({ className, styles }: LogoProps) => {
   const router = useRouter();
 
   return (
@@ -17,12 +23,10 @@ const Logo = () => {
       sizes='(max-width: 60px) 5vw, 10vw'
       priority
       className={cn(
-        'logo hidden object-cover w-24 h-auto md:block sm:block xs:block cursor-pointer  transition'
+        'hidden object-cover w-32 h-auto md:block sm:block xs:block cursor-pointer  transition',
+        className
       )}
-      // style={{
-      //   width: '8%',
-      //   height: 'auto',
-      // }}
+      style={styles}
     />
   );
 };

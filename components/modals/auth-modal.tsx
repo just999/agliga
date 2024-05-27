@@ -9,7 +9,8 @@ import Input from '../ui/input';
 import toast from 'react-hot-toast';
 
 import { FcGoogle } from 'react-icons/fc';
-import { AiFillGithub } from 'react-icons/ai';
+import { AiFillFacebook, AiFillGithub } from 'react-icons/ai';
+import { ImFacebook2 } from 'react-icons/im';
 import { signIn } from 'next-auth/react';
 
 import useModal from '@/hooks/use-modal';
@@ -17,7 +18,7 @@ import { useRouter } from 'next/navigation';
 
 import useBanks from '@/hooks/use-banks';
 
-import SelectInput, { SelectInputValue } from '../select-input';
+import SelectInput from '../select-input';
 import useGames from '@/hooks/use-games';
 import { Button } from '../ui/button';
 import { BsEye, BsEyeSlash } from 'react-icons/bs';
@@ -188,7 +189,13 @@ const AuthModal = () => {
       <div className='relative w-full'>
         <Input
           id='password'
-          type={isPasswordVisible ? 'text' : 'password'}
+          type={
+            modalType === 'login'
+              ? 'password'
+              : isPasswordVisible
+              ? 'text'
+              : 'password'
+          }
           label='Password'
           disabled={isLoading}
           register={register}
@@ -196,20 +203,22 @@ const AuthModal = () => {
           required
           className='pl-9 tracking-wider font-bold'
         />
-        <button
-          type='button'
-          className={`password-visibility-toggle absolute right-2 top-1/2 mr-4 h-6 w-6 -translate-y-1/2 transform text-muted-foreground ${
-            isPasswordVisible ? 'show' : ''
-          }`}
-          onClick={handleToggleVisibility}
-          aria-label={isPasswordVisible ? 'Hide password' : 'Show password'}
-        >
-          {isPasswordVisible ? (
-            <BsEyeSlash className='h-5 w-5' />
-          ) : (
-            <BsEye className='h-5 w-5' />
-          )}
-        </button>
+        {modalType === 'register' && (
+          <button
+            type='button'
+            className={`password-visibility-toggle absolute right-2 top-1/2 mr-4 h-6 w-6 -translate-y-1/2 transform text-muted-foreground ${
+              isPasswordVisible ? 'show' : ''
+            }`}
+            onClick={handleToggleVisibility}
+            aria-label={isPasswordVisible ? 'Hide password' : 'Show password'}
+          >
+            {isPasswordVisible ? (
+              <BsEyeSlash className='h-5 w-5' />
+            ) : (
+              <BsEye className='h-5 w-5' />
+            )}
+          </button>
+        )}
       </div>
       {errors.password && (
         <span className='text-sm text-red-700 '>
@@ -323,19 +332,33 @@ const AuthModal = () => {
       <div className='flex flex-row items-center justify-center gap-2 '>
         <Button
           variant='outline'
+          className='text-xs '
           // label='Continue with Google'
           // icon={FcGoogle}
           onClick={() => signIn('google')}
         >
-          <FcGoogle className='mr-2 ' /> Continue with Google
+          <FcGoogle className='mr-2 ' size={20} />
+          Login with Google
         </Button>
         <Button
           variant='outline'
+          className='text-xs '
           // label='Continue with Github'
           // icon={AiFillGithub}
           onClick={() => signIn('github')}
         >
-          <AiFillGithub className='mr-2 ' /> Continue with Github
+          <AiFillGithub className='mr-2 ' size={20} />
+          Login with Github
+        </Button>
+        <Button
+          variant='outline'
+          className='text-xs '
+          // label='Continue with Github'
+          // icon={AiFillGithub}
+          onClick={() => signIn('facebook')}
+        >
+          <ImFacebook2 className='mr-2 text-[#3b5999] ' size={20} />
+          Login with Facebook
         </Button>
       </div>
 

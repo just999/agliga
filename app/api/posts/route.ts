@@ -1,5 +1,8 @@
 import getCurrentUser from '@/actions/get-user';
+
+import cloudinary from '@/lib/cloudinary';
 import { db } from '@/lib/db';
+
 import { NextResponse } from 'next/server';
 
 export async function GET() {
@@ -17,66 +20,158 @@ export async function GET() {
   }
 }
 
+// post with multiple images....( not yet solved!)
+// export async function POST(req: Request) {
+//   const currentUser = await getCurrentUser();
+//   if (!currentUser) return NextResponse.error();
+//   // const body = await req.json();
+//   // const cat = body.category.value;
+
+//   try {
+//     const formData = await req.formData();
+//     const img = formData.getAll('img').filter((image) => {
+//       return image !== '';
+//     });
+//     const topic = await db.topic.findUnique({
+//       where: {
+//         slug: formData.get('category')?.toString(),
+//       },
+//     });
+//     if (!topic?.id) throw new Error('No topic found');
+//     const id = topic.id;
+
+//     const newPost = {
+//       img,
+//       category: formData.get('category'),
+//       title: formData.get('title'),
+//       author: formData.get('author'),
+//       brief: formData.get('brief'),
+//       avatar: currentUser.image,
+//       top: false,
+//       topicId: id,
+//       trending: false,
+//       userId: currentUser.id,
+//     } as any;
+//     Object.keys(img).forEach((e: any) =>
+//       console.log(`key=${e}  value=${img[e]}`)
+//     );
+
+//     for (let key in img) {
+//       if (img.hasOwnProperty(key)) {
+//         const value = img[key];
+//         console.log(key, value);
+//       }
+//     }
+
+//     let imageUploadPromises = [];
+
+//     for (const image of img) {
+//       if (image instanceof File) {
+//         const imageBuffer = await image.arrayBuffer();
+//         const imageArray = Array.from(new Uint8Array(imageBuffer));
+//         const imageData = Buffer.from(imageArray);
+
+//         const imageBase64 = imageData.toString('base64');
+
+//         const result = await cloudinary.uploader.upload(
+//           `data:image/png;base64,${imageBase64}`,
+//           { folder: 'agenliga' }
+//         );
+//         imageUploadPromises.push(result.secure_url);
+//         const uploadedImages = await Promise.all(imageUploadPromises);
+//         newPost.img = uploadedImages;
+//       }
+//     }
+
+//     const createdPost = await db.post.create({
+//       data: newPost,
+//     });
+//     // return new Response(JSON.stringify(createdPost), {
+//     //   status: 200,
+//     // });
+//     if (!createdPost) throw new Error('post error !');
+//     return Response.redirect(
+//       `${process.env.NEXTAUTH_URL}/posts/${createdPost.id}`
+//     );
+//   } catch (err) {
+//     return new Response('Something Went Wrong', {
+//       status: 500,
+//     });
+//   }
+// }
+
 export async function POST(req: Request) {
   const currentUser = await getCurrentUser();
-
   if (!currentUser) return NextResponse.error();
-  const body = await req.json();
-
-  const name = body.category.value;
-
-  const topic = await db.topic.findUnique({
-    where: {
-      slug: name,
-    },
-  });
-  if (!topic?.id) throw new Error('No topic found');
-  const id = topic.id;
-  const {
-    img,
-    category,
-    title,
-    brief,
-    avatar,
-    author,
-    top,
-    topicId,
-    trending,
-  } = body;
-  if (!body) throw new Error('No Post');
+  // const body = await req.json();
+  // const cat = body.category.value;
 
   try {
-    const post = await db.post.create({
-      data: {
-        img,
-        category: body.category.value,
-        title,
-        brief,
-        avatar,
-        author,
-        top,
-        topicId: topic.id,
-        trending,
-        userId: currentUser.id,
+    const formData = await req.formData();
+    const img = formData.get('img');
+    const topic = await db.topic.findUnique({
+      where: {
+        slug: formData.get('category')?.toString(),
       },
     });
-    // return new Response(JSON.stringify(data), {
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   status: 201,
-    // });
+    if (!topic?.id) throw new Error('No topic found');
+    const id = topic.id;
 
-    // return NextResponse.json(data, {
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   status: 201,
-    // });
+    const newPost = {
+      img,
+      category: formData.get('category'),
+      title: formData.get('title'),
+      author: formData.get('author'),
+      brief: formData.get('brief'),
+      avatar: currentUser.image,
+      top: false,
+      topicId: id,
+      trending: false,
+      userId: currentUser.id,
+    } as any;
+    // Object.keys(img).forEach((e: any) =>
+    //   console.log(`key=${e}  value=${img[e]}`)
+    // );
 
-    return NextResponse.json(post, { status: 200 });
+    // for (let key in img) {
+    //   if (img.hasOwnProperty(key)) {
+    //     const value = img[key];
+    //     console.log(key, value);
+    //   }
+    // }
+
+    const image = formData.get('img');
+
+    let imageUploadPromises = [];
+
+    if (image instanceof File) {
+      const imageBuffer = await image.arrayBuffer();
+      const imageArray = Array.from(new Uint8Array(imageBuffer));
+      const imageData = Buffer.from(imageArray);
+
+      const imageBase64 = imageData.toString('base64');
+
+      const result = await cloudinary.uploader.upload(
+        `data:image/png;base64,${imageBase64}`,
+        { folder: 'agenliga' }
+      );
+      imageUploadPromises.push(result.secure_url);
+      const uploadedImages = await Promise.all(imageUploadPromises);
+      newPost.img = uploadedImages[0];
+    }
+
+    const createdPost = await db.post.create({
+      data: newPost,
+    });
+    // return new Response(JSON.stringify(createdPost), {
+    //   status: 200,
+    // });
+    if (!createdPost) throw new Error('post error !');
+    return Response.redirect(
+      `${process.env.NEXTAUTH_URL}/posts/${createdPost.id}`
+    );
   } catch (err) {
-    return new Response(JSON.stringify({ message: 'Server Error' }), {
+    return new Response('Something Went Wrong', {
       status: 500,
     });
   }

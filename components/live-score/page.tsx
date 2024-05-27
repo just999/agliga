@@ -2,8 +2,6 @@
 
 import LiveScore from '@/components/live-score';
 
-type LiveScorePageProps = {};
-
 const LiveScorePage = () => {
   return <LiveScore />;
 };

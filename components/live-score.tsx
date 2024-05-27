@@ -1,10 +1,12 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Loader from './loader';
+import Heading from './heading';
 
 const LiveScore = () => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const timeZone = '%2B0800';
@@ -35,19 +37,37 @@ const LiveScore = () => {
 
     const src = `//freelive.7msport.com/live.aspx?mark=${mark}&TimeZone=${timeZone}&wordAd=${wordAd}&cpageBgColor=${cpageBgColor}&wadurl=${wadurl}&width=${width}&tableFontSize=${tableFontSize}&cborderColor=${cborderColor}&ctdColor1=${ctdColor1}&ctdColor2=${ctdColor2}&clinkColor=${clinkColor}&cdateFontColor=${cdateFontColor}&cdateBgColor=${cdateBgColor}&scoreFontSize=${scoreFontSize}&cteamFontColor=${cteamFontColor}&cgoalFontColor=${cgoalFontColor}&cgoalBgColor=${cgoalBgColor}&cremarkFontColor=${cremarkFontColor}&cremarkBgColor=${cremarkBgColor}&Skins=${Skins}&teamWeight=${teamWeight}&scoreWeight=${scoreWeight}&goalWeight=${goalWeight}&fontWeight=${fontWeight}&DSTbox=${dstbox}`;
 
-    if (iframeRef.current) {
-      iframeRef.current.src = src;
+    const handleIframeLoad = () => {
+      setIsLoading(false);
+    };
+
+    const currentIframe = iframeRef.current;
+
+    if (currentIframe) {
+      currentIframe.src = src;
+      currentIframe.onload = handleIframeLoad;
     }
+
+    return () => {
+      if (currentIframe) {
+        currentIframe.onload = null;
+      }
+    };
   }, []);
 
   return (
-    <iframe
-      ref={iframeRef}
-      height='100%'
-      width='1024'
-      className='w-full h-screen '
-      style={{ overflow: 'auto', border: 'none' }}
-    />
+    <div className='live-score-container'>
+      {isLoading ? <Loader /> : <Heading title='Live' center />}
+      <>
+        <iframe
+          ref={iframeRef}
+          height='100%'
+          width='1024'
+          className='w-full h-screen '
+          style={{ overflow: 'auto', border: 'none' }}
+        />
+      </>
+    </div>
   );
 };
 

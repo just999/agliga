@@ -12,7 +12,7 @@ type ModalProps = {
   className?: string;
   isOpen?: boolean;
   onClose: () => void;
-  onSubmit: () => void;
+  onSubmit?: () => void;
   title?: string;
   body?: React.ReactElement;
   footer?: React.ReactElement;
@@ -57,7 +57,7 @@ const Modal = ({
   const handleSubmit = useCallback(() => {
     if (disabled) return;
 
-    onSubmit();
+    if (onSubmit) onSubmit();
   }, [disabled, onSubmit]);
 
   const handleSecondaryAction = useCallback(() => {
@@ -70,7 +70,11 @@ const Modal = ({
 
   return (
     <>
-      <div className='justify-center items-center flex overflow-x-hidden overflow-scroll top-0 left-0 h-full fixed inset-0 z-50 outline-none focus:outline-none bg-neutral-800/70 pt-20 '>
+      <div
+        className={cn(
+          'justify-center items-center flex overflow-x-hidden overflow-scroll top-0 left-0 h-full fixed inset-0 z-50 outline-none focus:outline-none bg-neutral-800/70 pt-24'
+        )}
+      >
         <div className='relative h  w-full md:w-4/6 lg:w-3/6 xl:w-2/5 my-6 mx-auto h-full lg:h-auto md:h-auto '>
           {/* CONTENT */}
           <div
@@ -128,7 +132,7 @@ const Modal = ({
                     disabled={disabled}
                     label={actionLabel}
                     onClick={handleSubmit}
-                    className={cn(btnClassName)}
+                    className={cn(btnClassName, onSubmit ? '' : 'hidden')}
                   />
                 </div>
                 {footer}

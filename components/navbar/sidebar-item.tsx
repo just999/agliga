@@ -2,7 +2,7 @@
 
 import { cn } from '@/lib/utils';
 
-import { usePathname, useRouter } from 'next/navigation';
+// import { usePathname, useRouter } from 'next/navigation';
 import { IconType } from 'react-icons';
 
 type SidebarItemProps = {
@@ -12,8 +12,8 @@ type SidebarItemProps = {
 };
 
 const SidebarItem = ({ icon: Icon, label, onClick }: SidebarItemProps) => {
-  const pathname = usePathname();
-  const router = useRouter();
+  // const pathname = usePathname();
+  // const router = useRouter();
 
   // const isActive =
   //   (pathname === '/' && href === '/') ||

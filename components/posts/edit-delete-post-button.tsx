@@ -13,7 +13,7 @@ type EditDeletePostButtonProps = {
 
 const EditDeletePostButton = ({ item }: EditDeletePostButtonProps) => {
   const { data, status } = useSession();
-  const userRole = data?.user.role;
+  const userRole = data?.user.curUser.role;
   return (
     <span className='flex flex-row w-full justify-between items-center mb-5 '>
       <h1 className='text-2xl font-bold '>{item.title}</h1>

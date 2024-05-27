@@ -13,12 +13,13 @@ import Sci from './sci';
 
 type PostsProps = {
   items: PostProps[];
-  randPost: PostProps | null;
+  randPost?: PostProps;
   size?: number | string | undefined;
   currentUser?: SafeUser | null;
 };
 
 const Posts = ({ randPost, items, size, currentUser }: PostsProps) => {
+  // const { randomItem } = useRandomPost();
   if (!items) return [];
 
   const filterNonTopTrendingItems = (data: PostProps[]): PostProps[] =>
@@ -37,14 +38,14 @@ const Posts = ({ randPost, items, size, currentUser }: PostsProps) => {
     <Container>
       <section id='posts' className='posts pt-10 '>
         <div className='container mx-auto px-4 ' data-aos='fade-up'>
-          <div className='flex flex-row items-center justify-between text-center w-full pb-4'>
-            <span className='opacity-0'>none</span>
+          <div className='flex flex-row items-center justify-around text-center w-full pb-4'>
+            <span className='opacity-0 hidden '>none</span>
             <h1
               className={cn(
-                'news text-5xl text-center font-semibold shadow-sm text-shadow'
+                'news  2xl:text-8xl 2xs:text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-center  font-semibold drop-shadow-sm text-shadow border-b-2 w-full'
               )}
             >
-              Berita
+              Sports News.
             </h1>
             <span className='flex flex-row gap-2 items-center justify-center'>
               <Sci size={size} />

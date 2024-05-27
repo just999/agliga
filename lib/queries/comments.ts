@@ -49,7 +49,6 @@ export const getComments = cache(
         ...comment,
         createdAt: comment.createdAt.toISOString(),
       }));
-      console.log('🚀 ~ safeCommenting ~ safeCommenting:', safeCommenting);
       return safeCommenting;
     } catch (err: unknown) {
       throw new Error('Something went wrong');

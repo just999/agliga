@@ -31,25 +31,25 @@ import { NextResponse } from 'next/server';
 //   return NextResponse.json(user);
 // }
 
-export async function DELETE(
-  req: Request,
-  { params }: { params: { listingId: string } }
-) {
-  const currentUser = await getCurrentUser();
+// export async function DELETE(
+//   req: Request,
+//   { params }: { params: { listingId: string } }
+// ) {
+//   const currentUser = await getCurrentUser();
 
-  if (!currentUser) return NextResponse.error();
+//   if (!currentUser) return NextResponse.error();
 
-  const { listingId } = params;
+//   const { listingId } = params;
 
-  if (!listingId || typeof listingId !== 'string')
-    throw new Error('Invalid listingId');
+//   if (!listingId || typeof listingId !== 'string')
+//     throw new Error('Invalid listingId');
 
-  const listing = await db.listing.deleteMany({
-    where: {
-      id: listingId,
-      userId: currentUser.id,
-    },
-  });
+//   const listing = await db.listing.deleteMany({
+//     where: {
+//       id: listingId,
+//       userId: currentUser.id,
+//     },
+//   });
 
-  return NextResponse.json(listing);
-}
+//   return NextResponse.json(listing);
+// }

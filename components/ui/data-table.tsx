@@ -60,13 +60,13 @@ export function DataTable<TData, TValue>({
   return (
     <div className=' pt-20 xs:pt-28 sm:pt-32 md:pt-24 lg:pt-20'>
       <div className='shadow-lg '>
-        <div className='flex items-center pt-2 '>
+        <div className='flex flex-row items-center py-2 bg-orange-50/60 border border-solid border-orange-100 rounded-lg  '>
           <InputCustom
             placeholder='Search...'
             value={filtering}
             // value={(table.getColumn(searchKey)?.getFilterValue() as string) ?? ''}
             onChange={(event) => setFiltering(event.target.value)}
-            className='max-w-sm'
+            className='max-w-sm text-stone-700 mx-2 bg-yellow-50'
           />
         </div>
         <RunTable toggle={toggle} setIsOpen={() => setIsOpen} />

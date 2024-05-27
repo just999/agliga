@@ -25,7 +25,7 @@ model User {
   emailVerified  DateTime?
   phone          String?
   bank           String?       @default("NONEBANK")
-  game           String?       @default("SBOBET")
+  game           String[]      @default(["SBOBET"])
   accountNumber  String?       @default("0000000000")
   image          String?       @default("/images/cavatar.svg")
   hashedPassword String?
@@ -122,7 +122,7 @@ model Wd {
 
 model Post {
   id       String   @id @default(auto()) @map("_id") @db.ObjectId
-  img      String
+  img      String?
   category String
   date     DateTime @default(now())
   title    String

@@ -17,9 +17,10 @@ import { useStore } from 'zustand';
 // import useFavoriteStore from '@/store/use-favorite-store';
 import { BsTrash, BsPen } from 'react-icons/bs';
 import useModal from '@/hooks/use-modal';
+import { useParams } from 'next/navigation';
 
 type VerticalDropdownProps = {
-  item: PostProps;
+  item?: PostProps;
   currentUser?: SafeUser;
   title?: string;
 };
@@ -29,7 +30,9 @@ const VerticalDropdown = ({
   currentUser,
   title,
 }: VerticalDropdownProps) => {
-  // const postId = item.id;
+  const params = useParams();
+  const id = typeof params.id === 'string' ? params.id : item?.id;
+
   // const { isFavorited, setIsFavorited } = useFavorite({
   //   currentUser,
   //   postId,
@@ -75,7 +78,7 @@ const VerticalDropdown = ({
               <BsTrash
                 className='text-neutral-400 h-4 w-4 m-0 p-0 cursor-pointer hover:text-red-500 hover:font-bold hover:shadow-lg '
                 onClick={() =>
-                  onOpen('delete', item.id, (title = 'Delete post'))
+                  onOpen('delete', item?.id, (title = 'Delete post'))
                 }
               />
               {/* </Button> */}
@@ -88,7 +91,7 @@ const VerticalDropdown = ({
               > */}
               <BsPen
                 className='text-neutral-400  hover:font-bold h-4 w-4 m-0 cursor-pointer hover:text-sky-500  hover:shadow-lg'
-                onClick={() => onOpen('edit', item.id, (title = 'Edit post'))}
+                onClick={() => onOpen('edit', id, (title = 'Edit post'))}
               />
               {/* </Button> */}
             </div>

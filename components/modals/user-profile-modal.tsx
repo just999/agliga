@@ -10,22 +10,12 @@ import {
   CardTitle,
 } from '../ui/card';
 
-import { Label } from '../ui/label';
-
 import Modal from './modal';
 import useModal from '@/hooks/use-modal';
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 
-import Image from 'next/image';
-
-import {
-  BsTrash,
-  BsPen,
-  BsPersonFillGear,
-  BsHouse,
-  BsPencil,
-} from 'react-icons/bs';
+import { BsTrash, BsPersonFillGear, BsHouse, BsPencil } from 'react-icons/bs';
 
 import { useForm, FieldValues, SubmitHandler } from 'react-hook-form';
 import Input from '../ui/input';
@@ -37,24 +27,21 @@ import toast from 'react-hot-toast';
 
 import { BiUser } from 'react-icons/bi';
 import Link from 'next/link';
-import Heading from '../heading';
+
 import { useRouter } from 'next/navigation';
+import { Badge } from '../ui/badge';
+import { findMatchingObjects } from '@/lib/utils';
+import ProfilePicture from '../candidate-form/profile-picture';
 
 export type UserProfileModalProps = {
   name: string;
   bank: string;
   accountNumber: string;
   email: string;
-  game: string;
+  game: string[];
   phone: string;
-  role: 'user' | 'admin';
-  image: string | null;
+  image: string;
 };
-
-interface VerifyPasswordProps {
-  onSubmit: (password: string) => void;
-  onTimeOut?: () => void;
-}
 
 const UserProfileModal = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -62,23 +49,20 @@ const UserProfileModal = () => {
   const [isPasswordVerified, setIsPasswordVerified] = useState(false);
   const [remainingTime, setRemainingTime] = useState(0);
 
-  // const [verificationTime, setVerificationTime] = useState<number | null>(null);
-
   const { modalType, isOpen, onOpen, onClose } = useModal();
 
   const { data: session, status } = useSession();
-  // if (session?.user) {
-  //   const { name, bank, accountNumber, email,game, phone, role, image } =
-  //     session?.user.curUser;
-  //   setProfile(session.user.curUser);
-  // } else {
-  //   return 'no logged in user found';
-  // }
+
   const router = useRouter();
   const userId = session?.user.id;
 
   const { getBanks } = useBanks();
   const { getGames } = useGames();
+
+  let profileGame: string[] = [];
+  if (profile?.game) {
+    profile.game.forEach((item) => profileGame.push(item));
+  }
 
   const {
     register,
@@ -93,7 +77,7 @@ const UserProfileModal = () => {
       bank: profile?.bank,
       accountNumber: profile?.accountNumber,
       email: profile?.email,
-      game: profile?.game,
+      game: profileGame,
       phone: profile?.phone,
     },
   });
@@ -138,30 +122,33 @@ const UserProfileModal = () => {
         icon: '',
         value: '',
       };
+
       const game = games.filter(
         (g) => g.value === session.user.curUser.game
       ) || {
         icon: '',
         value: '',
       };
+      const targetValues = session.user.curUser.game;
 
+      const m = findMatchingObjects(games, targetValues);
       setValue('name', session?.user.curUser.name);
       setValue('bank', bank[0]);
       setValue('accountNumber', session?.user.curUser.accountNumber);
       setValue('email', session?.user.curUser.email);
-      setValue('game', game[0]);
+      setValue('image', session?.user.curUser.image);
+      setValue('game', m);
       setValue('phone', session?.user.curUser.phone);
-    } else {
-      console.log('no logged in user found');
     }
   }, [banks, games, session?.user.curUser, setValue]);
 
-  // const name = watch('name');
-  // const email = watch('email');
-  // const bank = watch('bank');
-  // const game = watch('game');
-  // const phone = watch('phone');
-  // const accountNumber = watch('accountNumber');
+  const name = watch('name');
+  const email = watch('email');
+  const bank = watch('bank');
+  const game = watch('game');
+  const image = watch('image');
+  const phone = watch('phone');
+  const accountNumber = watch('accountNumber');
 
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
@@ -189,8 +176,8 @@ const UserProfileModal = () => {
     setIsLoading(true);
 
     if (modalType === 'validateUser') {
-      const response = axios
-        .post('api/verify-password', data)
+      axios
+        .post('api/profiles/verify-password', data)
         .then((res) => {
           if (res.data.isValid === true) {
             setIsPasswordVerified(true);
@@ -207,11 +194,10 @@ const UserProfileModal = () => {
       axios
         .put(`/api/profiles/${userId}`, data)
         .then(() => {
-          let g;
+          let g: string[] = [];
           data.game.forEach((item: any) => {
-            g = item.value;
+            g.push(item.value);
           });
-
           const newData: any = {
             name: data.name,
             bank: data.bank.value,
@@ -222,7 +208,8 @@ const UserProfileModal = () => {
           };
           router.refresh();
           setProfile(newData);
-          toast.success('user successfully registered');
+          setIsPasswordVerified(false);
+          toast.success('user successfully Updated');
           onOpen('profile');
         })
         .catch((error) => {
@@ -244,17 +231,21 @@ const UserProfileModal = () => {
           <CardDescription>Data Pribadi anda</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className='grid w-full items-center gap-4'>
-            <div className='flex flex-col w-1/4 space-y-1.5 items-center justify-'>
-              <Image
-                src={profile.image === null ? '/img/user.svg' : profile.image}
+          <div className='grid w-full items-center gap-0'>
+            <div className='flex flex-col w-1/4 space-y-1.5 items-center justify-center'>
+              {/* <Image
+                src={profile.image || '/img/user.svg'}
                 alt='user avatar'
                 width={50}
                 height={50}
                 priority
                 className='w-20 h-auto '
-              />
-              <p className='text-xs w-full text-center '>Edit Avatar?</p>
+              /> */}
+              <ProfilePicture register={register} />
+              {/* <p className='text-lg  flex flex-col justify-start  w-full '>
+            
+            
+              </p> */}
             </div>
             <div>
               <Button
@@ -271,7 +262,21 @@ const UserProfileModal = () => {
               <p>Bank: {profile?.bank}</p>
               <p>Nomor-Rekening: {profile?.accountNumber}</p>
               <p>Email: {profile?.email}</p>
-              <p>Game: {profile?.game}</p>
+              <div>
+                Game:
+                <span className='flex flex-wrap gap-2 text-xs'>
+                  {profile?.game.map((g) => (
+                    <Badge
+                      key={g}
+                      variant='outline'
+                      className='border-b-2 border-gray-400 shadow-lg cursor-pointer'
+                    >
+                      {g}{' '}
+                    </Badge>
+                  ))}
+                </span>
+              </div>
+              {/* <pre>{JSON.stringify(profileGame, null, 2)}</pre> */}
               <p>Phone: {profile?.phone}</p>
             </div>
           </div>
@@ -357,23 +362,30 @@ const UserProfileModal = () => {
     bodyContent = (
       <Card className='border-none pt-4'>
         <CardHeader>
-          <CardTitle>Profile</CardTitle>
+          <CardTitle>Edit Profile</CardTitle>
           <CardDescription>Data Pribadi anda</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className='grid w-full items-center gap-4'>
-            <div className='flex flex-col space-y-1.5'>
-              <Image
-                src={profile.image === null ? '/img/user.svg' : profile.image}
-                alt='user avatar'
-                width={50}
-                height={50}
-                priority
-                className='w-20 h-auto '
+          <div className='grid w-full items-center gap-0'>
+            <div className='flex flex-col justify-center items-center space-y-1.5'>
+              <ProfilePicture
+                register={register}
+                watch={watch}
+                setValue={setValue}
               />
-              <p className='text-xs '>Edit Avatar?</p>
+              {/* <p className='text-lg w-full'>
+                <Button
+                  variant='ghost'
+                  size='sm'
+                  type='button'
+                  className='flex flex-row gap-2  '
+                >
+                  <FaUsersCog size={30} />{' '}
+                  <span className='text-xs '>Edit Avatar</span>
+                </Button>
+              </p> */}
             </div>
-            <div>
+            <div className='flex flex-col space-y-1.5'>
               <p>Email: {profile.email}</p>
             </div>
             <div className='flex flex-col space-y-1.5'>
@@ -464,6 +476,7 @@ const UserProfileModal = () => {
                 errors={errors}
                 required
               />
+              {/* <pre>{JSON.stringify(game, null, 2)}</pre> */}
               {errors.game && (
                 <span className='text-sm text-red-500 '>
                   <span className='text-xs  underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>

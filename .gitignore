@@ -28,8 +28,10 @@ yarn-error.log*
 # local env files
 .env*.local
 .env
+.env.bakfile
 **/.vscode
 **/cspell.json
+**/.env
 
 # vercel
 .vercel

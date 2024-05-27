@@ -11,19 +11,18 @@ export async function PUT(
     if (!currentUser || currentUser === undefined) return NextResponse.error();
 
     const body = await req.json();
-
     if (!body) NextResponse.error();
     const id = params.id;
+    const { name, bank, accountNumber, email, game, phone } = body;
 
-    const { name, bank, accountNumber, game, phone } = body;
-
-    let gameValue;
-    game.forEach((item: any) => {
-      gameValue = item.value;
-    });
+    let gameValue: string[] = [];
+    if (Array.isArray(game))
+      game.forEach((item: any) => {
+        gameValue.push(item.value);
+      });
 
     const updatedProfile = await db.user.update({
-      where: { id: currentUser.id },
+      where: { id: id },
       data: {
         name,
         bank: bank.value,

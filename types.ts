@@ -1,4 +1,5 @@
 import { Comment, Listing, Reservation, User } from '@prisma/client';
+import { IconType } from 'react-icons';
 
 export type SafeListing = Omit<Listing, 'createdAt'> & {
   createdAt: string;
@@ -23,12 +24,22 @@ export type SafeReservation = Omit<
   listing: SafeListing;
 };
 
+export type ValueIconProps = {
+  value: string;
+  icon: string;
+};
+
 export type BanksProps = {
   value: string;
   icon: string;
 };
 
 export type GameProps = {
+  value: string;
+  icon: string;
+};
+
+export type CategoryProps = {
   value: string;
   icon: string;
 };
@@ -41,7 +52,7 @@ type TComment = {
 export type PostProps = {
   comments?: TComment[];
   id: string;
-  img: string;
+  img: string | null;
   category: string;
   title: string;
   date: string | Date;
@@ -60,7 +71,7 @@ export const tabsData = [
 
 export type initialPostStateProps = {
   title: string;
-  img: string;
+  img: string | null;
   category: string;
   author: string;
   brief: string;
@@ -97,7 +108,7 @@ export interface IconProps {
 
 export type PostFormState = {
   title: string;
-  img: string;
+  img: string | null;
   category: string;
   author: string;
   brief: string;
@@ -106,7 +117,7 @@ export type PostFormState = {
 
 export type anything = {
   id: string;
-  img: string;
+  img: string | null;
   category: string;
   title: string;
   date: Date;
@@ -148,8 +159,40 @@ export type ScheduleProps = {
 
 export type InitialPostProps = {
   title: string;
-  img: string;
+  img: string | null;
   category: string;
   author: string | null;
   brief: string | null;
+};
+
+// types.ts
+export type TImage = {
+  id?: string; // For edit form
+  file?: File;
+  url?: string; // For previewing uploaded images
+};
+
+// interface PostProps {
+//   title: string;
+//   description: string;
+//   images: Image[];
+// }
+
+export type ProfileProps = {
+  name: string;
+  bank: string;
+  accountNumber: string;
+  email: string;
+  game: string[];
+  image?: string;
+  phone: string;
+};
+
+export type RoutesProps = {
+  onClick: () => void;
+  icon: IconType;
+  label: string;
+  className: string;
+  href: string;
+  active: boolean;
 };

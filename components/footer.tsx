@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import Logo from './navbar/logo';
-import Image from 'next/image';
 
 type FooterProps = {};
 
@@ -10,30 +9,34 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
   return (
     <footer className='bg-neutral-50 py-4 mt-auto absolute bottom-0 w-full'>
-      <div className='container mx-auto flex flex-row md:flex-row items-center justify-between px-4'>
+      <div className='container mx-auto flex flex-row md:flex-row items-center justify-between px-10'>
         <div className='mb-4 md:mb-0'>
-          <Image
-            src='/logo.svg'
-            alt='Logo'
-            height={40}
-            width={100}
-            priority
-            className='h-12 w-auto  p-2 rounded-full shadow-sm'
+          <Logo
+            className='w-30 h-auto'
+            styles={{ width: '60%', height: 'auto' }}
           />
         </div>
         <div className='flex flex-wrap justify-center md:justify-start mb-4 md:mb-0'>
-          <ul className='flex space-x-4'>
+          <ul className='flex space-x-4 text-xs'>
             <li>
-              <Link href='/'>Agen Liga</Link>
+              <Link href='/'>AgenLiga</Link>
             </li>
             <li>
               <Link href='/'>Terms of Service</Link>
             </li>
+            <li>
+              <Link href='/sitemap'>Sitemap</Link>
+            </li>
           </ul>
         </div>
         <div>
-          <p className='text-sm text-gray-500 mt-2 md:mt-0'>
-            © {currentYear} Agen-Liga. All rights reserved.
+          <p className='flex flex-row  items-center justify-center gap-1 text-sm text-gray-500 mt-2 md:mt-0'>
+            © {currentYear}{' '}
+            <Logo
+              className='w-10 h-auto '
+              styles={{ width: '8%', height: 'auto' }}
+            />
+            . All rights reserved.
           </p>
         </div>
       </div>

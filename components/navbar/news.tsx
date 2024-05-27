@@ -1,5 +1,6 @@
 'use client';
 
+import { cn } from '@/lib/utils';
 import { BiSearch } from 'react-icons/bi';
 
 type NewsProps = {};
@@ -13,7 +14,7 @@ const News = () => {
       <div className=' flex flex-row items-center justify-between '>
         <div
           onClick={() => console.log('News')}
-          className='text-sm font-semibold px-6'
+          className={cn('text-sm font-semibold px-6 news')}
         >
           Berita
         </div>

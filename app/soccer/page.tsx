@@ -1,3 +1,6 @@
+'use server';
+
+import Loader from '@/components/loader';
 // type SchedulePageProps = {
 //   run: number;
 //   date: string;
@@ -8,9 +11,9 @@
 // };
 
 import ScheduleClient from '@/components/table/client';
-import ClientOnly from '@/lib/client-only';
+
 // import { ScheduleColumn } from '@/components/table/columns';
-import { schedulePL } from '@/lib/helper';
+
 import { getSoccers } from '@/lib/queries/soccers';
 
 const SchedulePage = async () => {
@@ -27,13 +30,11 @@ const SchedulePage = async () => {
 
   if (!schedules) return [];
   return (
-    <ClientOnly>
-      <div className='container flex-col  absolute inset-x-0 top-0 '>
-        <div className='flex flex-col justify-start gap-2 space-y-4  pt-0 '>
-          <ScheduleClient data={schedules} />
-        </div>
+    <div className='container flex-col  absolute inset-x-0 top-0 '>
+      <div className='flex flex-col justify-start gap-2 space-y-4  pt-0 '>
+        <ScheduleClient data={schedules} />
       </div>
-    </ClientOnly>
+    </div>
   );
 };
 
