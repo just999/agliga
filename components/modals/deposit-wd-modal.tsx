@@ -1,7 +1,7 @@
 'use client';
 
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import Modal from './modal';
 import Heading from '../heading';
@@ -179,11 +179,8 @@ const DepositWdModal = () => {
   };
 
   const bodyContent = (
-    <div className='flex flex-col gap-1'>
-      <Heading
-        title={modalType === 'depo' ? 'Deposit' : 'Withdrawal'}
-        subtitle={''}
-      />
+    <div className='flex flex-col gap-3'>
+      <Heading title={modalType === 'depo' ? 'Deposit' : 'Wd'} subtitle={''} />
       <Input
         id='email'
         type='email'
@@ -195,7 +192,7 @@ const DepositWdModal = () => {
       />
       {errors.email && (
         <span className='text-sm text-red-500 '>
-          <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
+          <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-50 px-4 '>
             Kolom Wajib di isi...
           </span>
         </span>
@@ -214,7 +211,7 @@ const DepositWdModal = () => {
       />
       {errors.bank && (
         <span className='text-sm text-red-500 '>
-          <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
+          <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-50 px-4 '>
             Kolom Wajib di isi...
           </span>
         </span>
@@ -230,7 +227,7 @@ const DepositWdModal = () => {
       />
       {errors.accountNumber && (
         <span className='text-sm text-red-500 '>
-          <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
+          <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-50 px-4 '>
             Kolom Wajib di isi...
           </span>
         </span>
@@ -247,7 +244,7 @@ const DepositWdModal = () => {
       />
       {errors.name && (
         <span className='text-sm text-red-500 '>
-          <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
+          <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-50 px-4 '>
             Kolom Wajib di isi...
           </span>
         </span>
@@ -263,7 +260,7 @@ const DepositWdModal = () => {
       />
       {(errors.depoAmount || errors.wdAmount) && (
         <span className='text-sm text-red-500 '>
-          <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
+          <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-50 px-4 '>
             Kolom Wajib di isi...
           </span>
         </span>
@@ -284,7 +281,7 @@ const DepositWdModal = () => {
       {/* <pre>{JSON.stringify(game, null, 2)}</pre> */}
       {errors.game && (
         <span className='text-sm text-red-500  '>
-          <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
+          <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-50 px-4 '>
             Kolom Wajib di isi...
           </span>
         </span>
@@ -301,7 +298,7 @@ const DepositWdModal = () => {
       />
       {errors.gameUserId && (
         <span className='text-sm text-red-500 '>
-          <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
+          <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-50 px-4 '>
             Kolom Wajib di isi...
           </span>
         </span>
@@ -323,7 +320,7 @@ const DepositWdModal = () => {
           />
           {errors.bankPT && (
             <span className='text-sm text-red-500 '>
-              <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
+              <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-50 px-4 '>
                 Kolom Wajib di isi...
               </span>
             </span>
@@ -334,10 +331,10 @@ const DepositWdModal = () => {
   );
 
   const footerContent = (
-    <div className='flex flex-col gap-4 mt-3 '>
+    <div className='flex flex-col  m-0 '>
       <hr />
 
-      <div className='text-neutral-500 text-center mt-4 font-light '>
+      <div className='text-neutral-500 text-center mt-2 font-light '>
         <div className='justify-center flex flex-row items-center gap-2 '>
           <div>{modalType === 'depo' ? 'Apakah mau Wd?' : 'Mau deposit?'}</div>
           <div

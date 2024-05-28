@@ -27,7 +27,7 @@ const MenuItem = ({
       onClick={onClick}
       href={href}
       className={cn(
-        `flex whitespace-nowrap flex-row items-center gap-2 px-4 py-3 mx-2 my-1 rounded-lg text-neutral-400  hover:bg-orange-100/30 grayscale hover:grayscale-0 hover:text-stone-900 hover:shadow-md transition font-semibold`,
+        `flex whitespace-nowrap flex-row items-center gap-3 px-4 py-1 mx-2 my-1 rounded-lg text-neutral-400  hover:bg-orange-100/30 grayscale hover:grayscale-0 hover:text-stone-900 hover:shadow-md transition font-semibold`,
         className,
         label === 'Logout' && 'hover:text-red-500 hover:bg-rose-50',
         label === 'Home' && 'hover:text-violet-800 hover:bg-violet-50',

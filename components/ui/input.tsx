@@ -95,11 +95,11 @@ const Input: React.FC<InputProps> = ({
           placeholder={placeholder}
           type={type}
           className={cn(
-            `peer w-full p-3 pt-4 font-light bg-stone-100  border-2 rounded-md outline-none transition  disabled:opacity-70 disabled:cursor-not-allowed`,
+            `peer w-full py-2  font-light bg-stone-100  border rounded-md outline-none transition  disabled:opacity-70 disabled:cursor-not-allowed`,
             className,
-            formatPrice ? 'pl-9' : 'pl-4',
+            formatPrice ? 'pl-9' : 'px-4',
             errors[id]
-              ? 'border-rose-500 bg-rose-100/30'
+              ? 'border-rose-500 bg-rose-100/20 border-2'
               : 'border-neutral-300',
             errors[id] ? 'focus:border-rose-500' : 'focus:border-black'
           )}

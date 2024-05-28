@@ -57,7 +57,7 @@ const UserMenu = ({ currentUser, status, routes }: UserMenuProps) => {
         </div>
       </div>
       {isToggle && (
-        <div className='absolute rounded-xl shadow-md w-[40vw] xl:w-[20vw] lg:w-[25vw] md:w-[30vw] bg-stone-100 overflow-hidden right-0 top-12 text-sm z-10 sm:w-[50vw] '>
+        <div className='absolute rounded-xl shadow-md 2xl:w-[15vw] xl:w-[15vw] lg:w-[18vw] md:w-[19vw] bg-stone-100 overflow-hidden right-0 top-12 text-sm z-10 sm:w-[20vw] '>
           <div className='flex flex-col cursor-pointer w-full '>
             <SidebarRoutes
               userMenuClassName='flex flex-row items-center justify-center shadow-lg'

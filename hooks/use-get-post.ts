@@ -1,7 +1,7 @@
 'use client';
 
-import { getPost, getPostByTopicAndSlug, getPosts } from '@/actions/get-post';
-import { db } from '@/lib/db';
+import { getPostByTopicAndSlug } from '@/actions/get-post';
+
 import { fetchPosts, getPostByPostId } from '@/lib/queries/posts';
 import usePostsStore from '@/store/use-posts-store';
 

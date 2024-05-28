@@ -85,7 +85,7 @@ const SidebarRoutes = ({
   return (
     <div
       className={cn(
-        'flex flex-col w-full h-1/2 justify-between  cursor-pointer pb-24 2xs:pb-24'
+        'flex flex-col w-full h-1/2 justify-between  cursor-pointer pb-2 2xs:pb-2'
       )}
     >
       <nav>
@@ -124,7 +124,7 @@ const SidebarRoutes = ({
       </nav>
       <span
         className={cn(
-          'flex flex-col gap-2 justify-start py-4 shadow-sm rounded-xl',
+          'flex flex-col gap-2 justify-start py-2 shadow-sm rounded-xl',
           iconClass
         )}
       >
@@ -133,7 +133,7 @@ const SidebarRoutes = ({
         </p>
         <div
           className={cn(
-            'flex flex-wrap items-center justify-center gap-2 px-8  bg-stone-100'
+            'flex flex-wrap items-center justify-center gap-2 px-4  bg-stone-100'
           )}
         >
           <Sci

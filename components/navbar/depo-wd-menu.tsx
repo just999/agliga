@@ -19,7 +19,7 @@ const DepoWdMenu = ({ routes, userRole }: UserMenuProps) => {
   // const userRole = useUserRole();
 
   return (
-    <div className='border w-full md:w-auto rounded-full shadow-sm hover:shadow-md transition'>
+    <div className='border w-full md:w-auto rounded-full shadow-sm  transition'>
       <div className=' flex flex-row items-center justify-between h-full'>
         {routes.map(
           ({ label, href, onClick, active, className, icon: Icon }) => (
@@ -28,10 +28,10 @@ const DepoWdMenu = ({ routes, userRole }: UserMenuProps) => {
               href={href}
               onClick={onClick}
               className={cn(
-                `h-full w-full  p-0 m-0 bg-emerald-900  cursor-pointer py-2 `,
+                `h-full w-full  p-0 m-0 bg-emerald-900  cursor-pointer py-2 hover:shadow-md`,
                 className,
                 active
-                  ? ' text-gray-800  rounded-xl bg-zinc-100 drop-shadow-sm border-b-2 border-solid px-3 border-stone-300 transition font-semibold'
+                  ? ' text-gray-800 bg-zinc-100 drop-shadow-sm border-b-2 border-solid px-3 border-stone-300 transition font-semibold'
                   : 'text-stone-400 bg-slate-100 px-3'
               )}
             >

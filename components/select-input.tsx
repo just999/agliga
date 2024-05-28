@@ -107,14 +107,13 @@ const SelectInput = ({
         isClearable
         {...register(id, { required })}
         className={cn(
-          'peer w-full   font-light bg-stone-100 border-2 rounded-md outline-none transition  disabled:opacity-70 disabled:cursor-not-allowed',
+          'peer w-full font-light bg-stone-100 border rounded-md outline-none transition  disabled:opacity-70 disabled:cursor-not-allowed',
           errors[id] ? 'border-rose-500 bg-rose-100/30' : 'border-neutral-300',
           errors[id] ? 'focus:border-rose-500' : 'focus:border-black'
         )}
         options={options() as any}
         components={animatedComponents}
         isMulti={placeholder === 'Banks' || id === 'bankPT' ? false : true}
-        // isMulti={isMulti}
         value={value}
         defaultValue={defaultValue}
         onChange={(value) => onChange(value as SelectInputValue)}
@@ -124,12 +123,11 @@ const SelectInput = ({
               ' cursor-pointer text-gray-800  hover:text-black hover:font-normal',
               placeholder === 'Bank'
                 ? 'flex flex-row items-center gap-3 text-xs '
-                : 'flex flex-row items-center gap-3 text-xs w-full h-full my-auto',
+                : 'flex flex-row items-center gap-3 text-xs w-full h-auto my-auto',
               errors[id]
                 ? 'border-rose-500 bg-rose-100/30'
                 : 'border-neutral-300',
               errors[id] ? 'focus:border-rose-500' : 'focus:border-black'
-
               // value && 'text-gray-700'
             )}
           >
@@ -154,7 +152,7 @@ const SelectInput = ({
                   priority
                   sizes='(min-width: 10px) 100vw, (max-width: 30px) 50vw, 33vw'
                   className={cn(
-                    'object-cover w-full border-solid border-[1px] rounded  border-gray-200 drop-shadow-lg'
+                    'object-cover w-full border-solid border rounded  border-gray-200 drop-shadow-lg'
                   )}
                 />
               )}
@@ -162,13 +160,13 @@ const SelectInput = ({
             <div className='cursor-pointer text-slate-600 text-xs font-semibold'>
               {option.value}
 
-              <span className='text-neutral-500 ml-1 '></span>
+              {/* <span className='text-neutral-500 ml-1 '></span> */}
             </div>
           </div>
         )}
         classNames={{
           control: () =>
-            `p-3 border-2 ${
+            `px-3 py-1 border ${
               errors[id]
                 ? 'border-rose-500 focus:border-rose-500 bg-rose-900/30!important'
                 : 'border-neutral-300 focus:border-black'
