@@ -49,7 +49,7 @@ const SelectInput = ({
   let isFocus: string;
   let focusFontWeight: string;
 
-  const customStyles: StylesConfig<SelectInputValue, false> = {
+  const customStyles: StylesConfig<SelectInputValue> = {
     control: (provided) => ({
       ...provided,
       backgroundColor: errors[id]
@@ -61,10 +61,7 @@ const SelectInput = ({
       color = state.isSelected ? '#e2e8f0' : '#ffffff';
       fontColor = state.isSelected ? '#09090b' : '#71717a';
       fontWeight = state.isSelected ? '700' : '400';
-      // dropShadow = state.isSelected
-      //   ? 'rgba(0, 0, 0, 0.35) 0px 5px 15px;'
-      //   : 'rgba(149, 157, 165, 0.2) 0px 8px 24px';
-      isFocus = state.isFocused ? '#e5e7eb' : '#fff';
+      isFocus = state.isFocused ? '#e5e7eb' : '#ffffff';
       focusFontWeight = state.isFocused ? '700' : '';
       return {
         ...provided,
@@ -80,7 +77,6 @@ const SelectInput = ({
       backgroundColor: state.isFocused ? isFocus : color,
       color: errors[id] ? 'text-green-400' : 'text-indigo-600',
       fontWeight: value && fontWeight,
-      // boxShadow: dropShadow,
     }),
   };
 
