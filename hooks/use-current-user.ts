@@ -5,10 +5,7 @@ import getCurrentUser from '@/actions/get-user';
 import { auth } from '@/auth'; // Assuming this imports your NextAuth.js session provider
 import { db } from '@/lib/db'; // Assuming this imports your Prisma client
 
-// import useUsersStore, { UserProps } from '@/store/use-user-store';
-
 import { User } from 'next-auth';
-import error from 'next/error';
 
 import { useEffect, useState } from 'react';
 

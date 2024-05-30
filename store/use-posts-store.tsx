@@ -16,7 +16,7 @@ type PostState = {
   setItemBySlugAndPostId: (itemBySlugAndPostId: PostProps) => void;
 };
 
-const postItems = {
+export const postItems = {
   id: '',
   img: '',
   category: '',

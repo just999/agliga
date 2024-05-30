@@ -25,6 +25,7 @@ const Hero = () => {
     });
   }, []);
 
+  console.log('🚀 ~ HeroSlide:', heroSlides);
   return (
     <section
       id='hero-slider'
@@ -75,7 +76,6 @@ const Hero = () => {
             >
               {heroSlides.map((slide) => (
                 <SwiperSlide key={slide.id}>
-                  {/* <div className='flex flex-col bg-sky-700 justify-center mx-auto gap-6 group relative shadow-lg text-white rounded-xl px-6 py-8 h-[350px] w-[315px] xs:h-[400px] xs:w-[320px]   md:h-[400px] md:w-[400px] lg:h-[400px] lg:w-[520px] xl:h-[400px] xl:w-[400px] 2xl:h-[400px] 2xl:w-[420px] overflow-hidden cursor-pointer grayscale hover:grayscale-0 hover:brightness-200 hover:scale-110 transition drop-shadow-lg '> */}
                   <div className='flex flex-col bg-sky-700 justify-center mx-auto gap-6 group relative shadow-lg text-white rounded-xl px-6 py-8 h-[350px] w-full xs:h-[400px] xs:w-full md:h-[400px] md:w-full lg:h-[400px] lg:w-full xl:h-[400px] xl:w-full 2xl:h-[400px] 2xl:w-full overflow-hidden cursor-pointer grayscale hover:grayscale-0 hover:rounded-xl hover:brightness-200 hover:scale-105 transition drop-shadow-lg '>
                     <HeroSlide slide={slide} />
                     <div className='absolute inset-0 bg-black opacity-10 group-hover:opacity-50 '></div>

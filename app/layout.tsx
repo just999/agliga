@@ -29,6 +29,7 @@ import SoccerModal from '@/components/modals/soccer-modal';
 import getCurrentUser from '@/actions/get-user';
 import UserProfileModal from '@/components/modals/user-profile-modal';
 import AddPostModal from '@/components/modals/add-post-modal';
+import SliderModal from '@/components/modals/slider-modal';
 
 const inter = Nunito({ subsets: ['latin'] });
 
@@ -50,10 +51,10 @@ export default async function RootLayout({
   const session = await auth();
   return (
     <SessionProvider session={session}>
-      <html lang='en'>
+      <html lang='en' className='relative '>
         <body
           className={cn(
-            'flex flex-col justify-between overflow-x-hidden relative',
+            'flex flex-col   overflow-x-hidden ',
             inter.className,
             className
           )}
@@ -67,13 +68,13 @@ export default async function RootLayout({
           <DepositWdModal />
           <PostModal />
           {/* <AddPostModal /> */}
-
+          <SliderModal />
           <SearchModal />
           <NoUserModal />
           <AuthModal />
           <Navbar currentUser={currentUser} />
-          <div className='pb-4'>{children}</div>
-          <div className='relative pb-20'>
+          <div className='pb-20 flex-1 '>{children}</div>
+          <div>
             <Footer />
           </div>
         </body>

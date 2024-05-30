@@ -8,14 +8,8 @@ import Hero from '@/components/hero';
 import Posts from '@/components/posts/posts';
 
 import ClientOnly from '@/lib/client-only';
-// import { fetchCommentsByPostId } from '@/lib/queries/comments';
-import {
-  fetchPosts,
-  fetchPostsByUserId,
-  getPosts,
-  getRandomPost,
-  IPostsParams,
-} from '@/lib/queries/posts';
+
+import { getPosts, getRandomPost, IPostsParams } from '@/lib/queries/posts';
 import { PostProps } from '@/types';
 
 type HomeProps = {

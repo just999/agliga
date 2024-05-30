@@ -71,13 +71,12 @@ const PostModal = () => {
   const { modalType, onOpen, isOpen, onClose } = useModal();
   const router = useRouter();
   const { item, error } = useGetPost(id ? id : undefined);
-  const imgRef = useRef<HTMLInputElement>(null);
 
   let initialPost;
   if (modalType === 'post') {
     initialPost = {
       title: '',
-      img: [],
+      img: '',
       category: '',
       author: '',
       brief: '',
@@ -165,7 +164,6 @@ const PostModal = () => {
       shouldValidate: true,
     });
   };
-
   // let allSelectedFiles: File[] = [];
   // let filesForUpload: File[] = [];
   // const MAX_FILES_COUNT = 4;
@@ -233,7 +231,7 @@ const PostModal = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
-    console.log('text:', text);
+
     const formData = new FormData();
     if (text.img) formData.append('img', text.img);
     formData.append('title', data.title);
@@ -302,18 +300,23 @@ const PostModal = () => {
     }
   };
   const handleCloseClearForm = () => {
+    initialPost = {
+      title: '',
+      img: '',
+      category: '',
+      author: '',
+      brief: '',
+    };
     onClose();
     setText(initialFormState);
+    clear();
     reset();
   };
 
   const clear = () => {
-    if (imgRef.current) {
-      imgRef.current.value = '';
-    }
     setText((prev) => ({
       ...prev,
-      imagesPrev: [],
+      imagesPrev: '',
     }));
   };
 
@@ -480,6 +483,7 @@ const PostModal = () => {
           setText={(data) => setText(data)}
           text={text}
           watch={watch}
+          clear={clear}
         />
       </div>
 

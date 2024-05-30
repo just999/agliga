@@ -1,13 +1,13 @@
 /*--------------------------------------------------------------
 # Post Item one
 --------------------------------------------------------------*/
-.post-entry-1 {
-  margin-bottom: 10px;
-}
+/* .post-entry-1 {
+  margin-bottom: 20px;
+} */
 
-.post-entry-1 img {
+/* .post-entry-1 img {
   margin-bottom: 30px;
-}
+} */
 
 .post-entry-1 h2 {
   margin-bottom: 20px;
@@ -22,7 +22,7 @@
 }
 
 .post-entry-1.lg h2 {
-  font-size: 40px;
+  font-size: 20px;
   line-height: 1;
 }
 

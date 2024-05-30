@@ -35,7 +35,6 @@ import { Southampton } from '@/components/assets/sports/southampton';
 import { Tth } from '@/components/assets/sports/tth';
 import { Westham } from '@/components/assets/sports/westham';
 import { Wolve } from '@/components/assets/sports/wolve';
-import { BsCalendar } from 'react-icons/bs';
 
 import { FaSwimmer, FaSkiing, FaChess } from 'react-icons/fa';
 import {
@@ -51,7 +50,7 @@ import {
   GiCricketBat,
 } from 'react-icons/gi';
 import { MdKayaking, MdOutlineSurfing } from 'react-icons/md';
-import { PiCellSignalNoneThin } from 'react-icons/pi';
+
 import { TbKarate, TbPlayVolleyball } from 'react-icons/tb';
 
 export const banks = [

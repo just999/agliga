@@ -4,7 +4,7 @@
 
 .trending > h3 {
   color: var(--color-black);
-  padding: 20px;
+  /* padding: 20px; */
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
@@ -22,7 +22,7 @@
 
 .trending .trending-post li a {
   display: block;
-  padding: 20px;
+  /* padding: 20px; */
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   position: relative;
   overflow: hidden;

@@ -19,7 +19,7 @@ const Categories = () => {
   return (
     <div className='bg-zinc-50 drop-shadow-md'>
       <Container>
-        <div className='pt-4 flex flex-row items-center justify-between overflow-x-auto border-b-[1px] border-b-neutral-900/10'>
+        <div className='pt-2 flex flex-row items-center justify-between overflow-x-auto border-b-[1px] border-b-neutral-900/10'>
           {categories.map((cat) => (
             <CategoryBox
               key={cat.label}

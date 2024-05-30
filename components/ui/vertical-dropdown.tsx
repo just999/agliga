@@ -57,10 +57,10 @@ const VerticalDropdown = ({
       <DropdownMenuTrigger asChild>
         <Button
           variant='ghost'
-          className='h-4  bg-neutral-100 p-0 focus:outline-none'
+          className='h-4 mr-4 bg-neutral-100 p-0 focus:outline-none'
         >
           <span className='sr-only '>Open menu</span>
-          <MoreVertical className='h-4 w-4 ' />
+          <MoreVertical className='h-5 w-5 text-slate-500 hover:text-emerald-700 ' />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className='w-full flex flex-col justify-start align-middle text-xs text-center bg-stone-200 rounded-lg px-2'>

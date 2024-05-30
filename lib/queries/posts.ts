@@ -92,40 +92,40 @@ export const getPosts = cache(async (params?: IPostsParams) => {
   }
 });
 
-// export const getRandomPost = cache(async () => {
-//   try {
-//     const posts = await db.post.findMany({
-//       where: {
-//         img: {
-//           not: {
-//             equals: '',
-//           },
-//         },
-//       },
-//     });
-//     if (posts.length === 0) return null;
-//     const randPost = posts.sort(() => Math.random() - Math.random())[0];
-//     return randPost;
-//   } catch (err: unknown) {
-//     console.error('Error fetching random post:', err);
-//     return null;
-//   }
-// });
-export const getRandomPost = async () => {
+export const getRandomPost = cache(async () => {
   try {
-    const randomPost = await db.post.aggregateRaw({
-      pipeline: [
-        { $match: { img: { $ne: '' } } }, // Filter for posts with non-empty img
-        { $sample: { size: 1 } }, // Sample one random document
-      ],
+    const posts = await db.post.findMany({
+      where: {
+        img: {
+          not: {
+            equals: '',
+          },
+        },
+      },
     });
-
-    return randomPost[0];
+    if (posts.length === 0) return null;
+    const randPost = posts.sort(() => Math.random() - Math.random())[0];
+    return randPost;
   } catch (err: unknown) {
     console.error('Error fetching random post:', err);
     return null;
   }
-};
+});
+// export const getRandomPost = async () => {
+//   try {
+//     const randomPost = await db.post.aggregateRaw({
+//       pipeline: [
+//         { $match: { img: { $ne: '' } } }, // Filter for posts with non-empty img
+//         { $sample: { size: 1 } }, // Sample one random document
+//       ],
+//     });
+
+//     return randomPost[0];
+//   } catch (err: unknown) {
+//     console.error('Error fetching random post:', err);
+//     return null;
+//   }
+// };
 
 export const fetchPosts = cache(async () => {
   // return db.post.findMany({

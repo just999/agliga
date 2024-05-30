@@ -1,12 +1,15 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import { Old_Standard_TT } from 'next/font/google';
+import { Poppins } from 'next/font/google';
+import { EB_Garamond } from 'next/font/google';
 
-const old = Old_Standard_TT({
-  subsets: ['latin'],
-  weight: ['400', '700'],
+const old = Poppins({
+  subsets: ['latin', 'latin-ext'],
+  weight: ['100', '200', '300', '500', '600', '800', '900'],
 });
+
+const eb = EB_Garamond({ subsets: ['latin'] });
 
 type PageTitleProps = {
   title: string;
@@ -16,11 +19,18 @@ const PageTitle = ({ title }: PageTitleProps) => {
   return (
     <h3
       className={cn(
-        'category-title text-center border-b-2 border-solid border-stone-300   text-base font-bold uppercase py-4',
+        'category-title text-center underline px-2 text-base  my-4 ',
         old.className
       )}
     >
-      {title}
+      <span
+        className={cn(
+          'shadow-sm px-2  bg-zinc-100 text-zinc-500 mx-auto rounded-sm',
+          eb.className
+        )}
+      >
+        {title}
+      </span>
     </h3>
   );
 };

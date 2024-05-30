@@ -34,7 +34,7 @@ const PostItemPage = async ({ params }: PostItemPageProps) => {
   const items = await fetchPosts();
   if (!items) return [];
   return (
-    <main id='main' className='pt-8 '>
+    <main id='main' className='pt-4 '>
       <section className='single-post-content '>
         <div className='container mx-auto px-4 '>
           <div className='row flex flex-row lg:flex-row lg:flex lg:gap-5 gap-20 2xs:flex-col '>

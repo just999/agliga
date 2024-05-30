@@ -81,6 +81,13 @@ const SelectInput = ({
   };
 
   const animatedComponents = makeAnimated();
+
+  let multi;
+  if (id === 'bankPt' || 'category' || 'bank') {
+    multi = false;
+  } else {
+    multi = true;
+  }
   return (
     <div
       className={cn(
@@ -109,7 +116,7 @@ const SelectInput = ({
         )}
         options={options() as any}
         components={animatedComponents}
-        isMulti={placeholder === 'Banks' || id === 'bankPT' ? false : true}
+        isMulti={multi}
         value={value}
         defaultValue={defaultValue}
         onChange={(value) => onChange(value as SelectInputValue)}

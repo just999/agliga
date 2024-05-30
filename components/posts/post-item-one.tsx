@@ -5,6 +5,8 @@ import './postItemOne.css';
 import Link from 'next/link';
 import Image from 'next/image';
 
+import { EB_Garamond } from 'next/font/google';
+import { Source_Serif_4 } from 'next/font/google';
 import { cn } from '@/lib/utils';
 import { BsDot } from 'react-icons/bs';
 import Loader from '../loader';
@@ -25,6 +27,9 @@ interface PostItemOneProps {
   currentUser?: SafeUser | null;
 }
 
+const eb = EB_Garamond({ subsets: ['latin'] });
+const source = Source_Serif_4({ subsets: ['latin'] });
+
 const PostItemOne = ({
   pageOne,
   large,
@@ -41,7 +46,7 @@ const PostItemOne = ({
   return (
     <div
       className={cn(
-        'post-entry-1 p-4 bg-yellow-50 drop-shadow-md rounded-md h-[337px]',
+        'post-entry-1 p-2 bg-yellow-50/60 shadow-xl rounded-md h-[380px]',
         className,
         large ? 'lg' : undefined
       )}
@@ -91,13 +96,14 @@ const PostItemOne = ({
             <BsDot />
           </span>
           <span>{new Date(item.date).toLocaleDateString('en-US')}</span>
+          {/* <pre>{JSON.stringify(item.date)}</pre> */}
         </div>
         <div className='flex items-center gap-2 '>
           <Button type='button' variant='ghost' disabled>
-            <svg
+            {/* <svg
               className='animate-spin h-5 w-5 mr-3'
               viewBox='0 0 24 24'
-            ></svg>
+            ></svg> */}
           </Button>
           {currentUser && (
             <HeartButton
@@ -124,24 +130,64 @@ const PostItemOne = ({
           href={`/posts/${item.id}`}
           className='text-ellipsis overflow-hidden'
         >
-          {item.img ? (
-            `${item.title.substring(0, 30)}...`
-          ) : (
-            <span className='shadow-lg'>
-              <div className='mb-2 font-semibold '>{item.title}</div>{' '}
-              <div className='text-sm w-full  py-2 text-pretty '>
-                {item.brief?.substring(0, 270)}
+          {item.img && pageOne === false ? (
+            <span className='shadow-lg px-1'>
+              <div className={cn('mb-2 font-semibold', eb.className)}>
+                {item.title.substring(0, 30)}
               </div>{' '}
+              <div
+                className={cn(
+                  'text-sm w-full py-2 mb-2 text-pretty text-gray-700 font-light',
+                  source.className
+                )}
+              >
+                {item.brief?.substring(0, 60)}...
+              </div>{' '}
+            </span>
+          ) : item.img && pageOne ? (
+            <span className='shadow-lg'>
+              <div className={cn('mb-0 font-semibold', eb.className)}>
+                {item.title.substring(0, 30)}
+              </div>{' '}
+              <div
+                className={cn(
+                  'text-sm w-full py-2 text-pretty text-gray-700 font-light',
+                  source.className
+                )}
+              >
+                {item.brief?.substring(0, 120)}...
+              </div>{' '}
+            </span>
+          ) : (
+            ''
+          )}
+
+          {item.img === '' && pageOne === false && (
+            <span className='shadow-lg'>
+              <div className={cn('mb-2 font-semibold', eb.className)}>
+                {item.title.substring(0, 30)}
+              </div>
+              <div
+                className={cn(
+                  'text-sm w-full  py-2 text-pretty text-gray-700 font-light',
+                  source.className
+                )}
+              >
+                {item.brief?.substring(0, 350)}
+              </div>
             </span>
           )}
         </Link>
       </h2>
       {large ? (
-        <span className='mb-4 block bg-slate-50 '>
+        <span className='mb-4 block  pb-4  text-pretty text-gray-700 font-light'>
           {item.brief}
+          {/* <pre>{JSON.stringify(item.brief)}</pre> */}
           <PostAuthor item={item} />
         </span>
-      ) : null}
+      ) : (
+        <span> {/* <pre>{JSON.stringify(item.brief, null, 2)}</pre> */}</span>
+      )}
     </div>
   );
 };

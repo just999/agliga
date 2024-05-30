@@ -26,44 +26,6 @@ import {
 
 import { TfiYoutube } from 'react-icons/tfi';
 
-export const navs = [
-  {
-    id: 1,
-    name: 'Home',
-    link: '/',
-    icon: FcHome,
-    active: true,
-  },
-  {
-    id: 2,
-    name: 'Posts',
-    link: '/posts',
-    icon: FcNews,
-    active: false,
-  },
-  {
-    id: 3,
-    name: 'Create Post',
-    link: '/add-post',
-    icon: FcAddDatabase,
-    active: false,
-  },
-  {
-    id: 4,
-    name: 'About',
-    link: '/about',
-    icon: FcAbout,
-    active: false,
-  },
-  {
-    id: 5,
-    name: 'Contact',
-    link: '/contact',
-    icon: FcContacts,
-    active: false,
-  },
-];
-
 export const scis = [
   {
     id: 1,

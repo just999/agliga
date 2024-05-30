@@ -19,7 +19,7 @@ const GamesCategories = () => {
 
   return (
     <Container className='bg-stone-50 shadow-sm  '>
-      <div className='pt-4 flex flex-row items-center justify-between overflow-x-auto border-b-[1px] border-b-neutral-900/10  '>
+      <div className='pt-2 flex flex-row items-center justify-between overflow-x-auto border-b-[1px] border-b-neutral-900/10  '>
         {gamesCategoriesList.map((cat) => (
           <GameBox
             key={cat.label}

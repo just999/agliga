@@ -58,7 +58,8 @@ export function DataTable<TData, TValue>({
 
   const { isOpen, toggle, setIsOpen, run } = useRunToggleStore();
   return (
-    <div className=' pt-20 xs:pt-28 sm:pt-32 md:pt-24 lg:pt-20'>
+    <div className=''>
+      {/* <div className=' pt-20 xs:pt-28 sm:pt-32 md:pt-24 lg:pt-20'> */}
       <div className='shadow-lg '>
         <div className='flex flex-row items-center py-2 bg-orange-50/60 border border-solid border-orange-100 rounded-lg  '>
           <InputCustom
@@ -66,7 +67,7 @@ export function DataTable<TData, TValue>({
             value={filtering}
             // value={(table.getColumn(searchKey)?.getFilterValue() as string) ?? ''}
             onChange={(event) => setFiltering(event.target.value)}
-            className='max-w-sm text-stone-700 mx-2 bg-yellow-50'
+            className='max-w-sm text-stone-700 mx-2 bg-zinc-50'
           />
         </div>
         <RunTable toggle={toggle} setIsOpen={() => setIsOpen} />

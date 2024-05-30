@@ -19,27 +19,28 @@ enum UserRole {
 }
 
 model User {
-  id             String        @id @default(auto()) @map("_id") @db.ObjectId
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
   name           String?
-  email          String?       @unique
+  email          String?   @unique
   emailVerified  DateTime?
   phone          String?
-  bank           String?       @default("NONEBANK")
-  game           String[]      @default(["SBOBET"])
-  accountNumber  String?       @default("0000000000")
-  image          String?       @default("/images/cavatar.svg")
+  bank           String?   @default("NONEBANK")
+  game           String[]  @default(["SBOBET"])
+  accountNumber  String?   @default("0000000000")
+  image          String?   @default("/images/cavatar.svg")
   hashedPassword String?
-  role           UserRole      @default(user)
-  createdAt      DateTime      @default(now())
-  updatedAt      DateTime      @updatedAt
-  favoriteIds    String[]      @db.ObjectId
+  role           UserRole  @default(user)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  favoriteIds    String[]  @db.ObjectId
   accounts       Account[]
-  listings       Listing[]
-  reservations   Reservation[]
+  // listings       Listing[]
+  // reservations   Reservation[]
   depos          Depo[]
   wds            Wd[]
   posts          Post[]
   comments       Comment[]
+  sliders        Slider[]
 }
 
 model Account {
@@ -61,35 +62,35 @@ model Account {
   @@unique([provider, providerAccountId])
 }
 
-model Listing {
-  id            String   @id @default(auto()) @map("_id") @db.ObjectId
-  title         String
-  description   String
-  imageSrc      String
-  createdAt     DateTime @default(now())
-  category      String
-  roomCount     Int
-  bathroomCount Int
-  guestCount    Int
-  locationValue String
-  userId        String   @db.ObjectId
-  price         Int
+// model Listing {
+//   id            String   @id @default(auto()) @map("_id") @db.ObjectId
+//   title         String
+//   description   String
+//   imageSrc      String
+//   createdAt     DateTime @default(now())
+//   category      String
+//   roomCount     Int
+//   bathroomCount Int
+//   guestCount    Int
+//   locationValue String
+//   userId        String   @db.ObjectId
+//   price         Int
 
-  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  reservations Reservation[]
-}
+//   user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+//   reservations Reservation[]
+// }
 
-model Reservation {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId     String   @db.ObjectId
-  listingId  String   @db.ObjectId
-  startDate  DateTime
-  endDate    DateTime
-  totalPrice Int
-  createdAt  DateTime @default(now())
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  listing    Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
-}
+// model Reservation {
+//   id         String   @id @default(auto()) @map("_id") @db.ObjectId
+//   userId     String   @db.ObjectId
+//   listingId  String   @db.ObjectId
+//   startDate  DateTime
+//   endDate    DateTime
+//   totalPrice Int
+//   createdAt  DateTime @default(now())
+//   user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+//   listing    Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
+// }
 
 model Depo {
   id            String   @id @default(auto()) @map("_id") @db.ObjectId
@@ -174,6 +175,17 @@ model Schedule {
   score    String?  @default("VS")
   teamHome String
   analysis String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Slider {
+  id     String   @id @default(auto()) @map("_id") @db.ObjectId
+  images String[]
+  userId String   @db.ObjectId
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

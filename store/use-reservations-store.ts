@@ -1,89 +1,89 @@
-import { create } from 'zustand';
-import { db } from '@/lib/db';
+// import { create } from 'zustand';
+// import { db } from '@/lib/db';
 
-import { SafeReservation } from '@/types';
-import getCurrentUser from '@/actions/get-user';
+// import { SafeReservation } from '@/types';
+// import getCurrentUser from '@/actions/get-user';
 
-// interface Reservation {
-//   id: string;
-//   // ... other reservation properties
-//   createdAt: Date;
-//   startDate: Date;
-//   endDate: Date;
-//   listing: Listing; // Replace with your listing type
+// // interface Reservation {
+// //   id: string;
+// //   // ... other reservation properties
+// //   createdAt: Date;
+// //   startDate: Date;
+// //   endDate: Date;
+// //   listing: Listing; // Replace with your listing type
+// // }
+
+// // interface Listing {
+// //   id: string;
+// //   // ... other listing properties
+// //   createdAt: Date;
+// // }
+
+// interface ReservationsState {
+//   reservations: SafeReservation[];
+//   loading: boolean;
+//   error: string | null;
 // }
 
-// interface Listing {
-//   id: string;
-//   // ... other listing properties
-//   createdAt: Date;
+// const initialState: ReservationsState = {
+//   reservations: [],
+//   loading: false,
+//   error: null,
+// };
+
+// interface IParams {
+//   listingId?: string;
+//   userId?: string;
+//   authorId?: string;
 // }
 
-interface ReservationsState {
-  reservations: SafeReservation[];
-  loading: boolean;
-  error: string | null;
-}
+// export const useReservationsStore = create((set) => ({
+//   ...initialState,
+//   fetchReservations: async (params: IParams) => {
+//     set({ loading: true, error: null });
+//     try {
+//       const currentUser = await getCurrentUser();
+//       if (!currentUser) throw new Error('Unauthorized');
+//       const { listingId, userId, authorId } = params;
+//       let query: any = {};
 
-const initialState: ReservationsState = {
-  reservations: [],
-  loading: false,
-  error: null,
-};
+//       if (listingId) {
+//         query.listingId = listingId;
+//       }
 
-interface IParams {
-  listingId?: string;
-  userId?: string;
-  authorId?: string;
-}
+//       if (userId) {
+//         query.userId = userId;
+//       }
 
-export const useReservationsStore = create((set) => ({
-  ...initialState,
-  fetchReservations: async (params: IParams) => {
-    set({ loading: true, error: null });
-    try {
-      const currentUser = await getCurrentUser();
-      if (!currentUser) throw new Error('Unauthorized');
-      const { listingId, userId, authorId } = params;
-      let query: any = {};
+//       if (authorId) {
+//         query.listing = { userId: authorId };
+//       }
 
-      if (listingId) {
-        query.listingId = listingId;
-      }
+//       const reservations = await db.reservation.findMany({
+//         where: {
+//           AND: [query, { userId: currentUser.id }],
+//         },
+//         include: {
+//           listing: true,
+//         },
+//         orderBy: {
+//           createdAt: 'desc',
+//         },
+//       });
 
-      if (userId) {
-        query.userId = userId;
-      }
-
-      if (authorId) {
-        query.listing = { userId: authorId };
-      }
-
-      const reservations = await db.reservation.findMany({
-        where: {
-          AND: [query, { userId: currentUser.id }],
-        },
-        include: {
-          listing: true,
-        },
-        orderBy: {
-          createdAt: 'desc',
-        },
-      });
-
-      const safeReservations = reservations.map((reservation) => ({
-        ...reservation,
-        createdAt: reservation.createdAt.toISOString(),
-        startDate: reservation.startDate.toISOString(),
-        endDate: reservation.endDate.toISOString(),
-        listing: {
-          ...reservation.listing,
-          createdAt: reservation.listing.createdAt.toISOString(),
-        },
-      }));
-      set({ reservations: safeReservations, loading: false });
-    } catch (err: any) {
-      set({ loading: false, error: err.message });
-    }
-  },
-}));
+//       const safeReservations = reservations.map((reservation) => ({
+//         ...reservation,
+//         createdAt: reservation.createdAt.toISOString(),
+//         startDate: reservation.startDate.toISOString(),
+//         endDate: reservation.endDate.toISOString(),
+//         listing: {
+//           ...reservation.listing,
+//           createdAt: reservation.listing.createdAt.toISOString(),
+//         },
+//       }));
+//       set({ reservations: safeReservations, loading: false });
+//     } catch (err: any) {
+//       set({ loading: false, error: err.message });
+//     }
+//   },
+// }));

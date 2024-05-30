@@ -8,12 +8,12 @@ type FooterProps = {};
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   return (
-    <footer className='bg-neutral-50 py-4 mt-auto absolute bottom-0 w-full'>
+    <footer className='bg-neutral-50 py-4 mt-auto fixed bottom-0 w-full left-0'>
       <div className='container mx-auto flex flex-row md:flex-row items-center justify-between px-10'>
         <div className='mb-4 md:mb-0'>
           <Logo
             className='w-30 h-auto'
-            styles={{ width: '60%', height: 'auto' }}
+            styles={{ width: '70%', height: 'auto' }}
           />
         </div>
         <div className='flex flex-wrap justify-center md:justify-start mb-4 md:mb-0'>

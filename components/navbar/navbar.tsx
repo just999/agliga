@@ -8,7 +8,7 @@ import Search from './search';
 import UserMenu from './user-menu';
 import { SafeUser } from '@/types';
 import DepoWdMenu from './depo-wd-menu';
-import GamesCategories from './games-categories';
+// import GamesCategories from './games-categories';
 import MobileSidebar from './mobile-sidebar';
 import { AiOutlineLogout, AiOutlineLogin } from 'react-icons/ai';
 import { BiHome } from 'react-icons/bi';
@@ -25,20 +25,23 @@ import {
 import { PiUserPlus } from 'react-icons/pi';
 import { usePathname } from 'next/navigation';
 import useModal from '@/hooks/use-modal';
-
+import { GrUserAdmin } from 'react-icons/gr';
 import { capitalizeFirstCharacter, cn } from '@/lib/utils';
 import { TbScoreboard } from 'react-icons/tb';
+import usePostsStore, { postItems } from '@/store/use-posts-store';
 
 type NavbarProps = {
   currentUser?: SafeUser | null;
+  className?: string;
 };
 
-const Navbar = ({ currentUser }: NavbarProps) => {
+const Navbar = ({ currentUser, className }: NavbarProps) => {
   const { data: session, status } = useSession();
   const pathname = usePathname();
   const { modalType, onOpen, onClose } = useModal();
   const userRole = session?.user.curUser.role;
 
+  const { setItem } = usePostsStore();
   let username: string;
   let role: string;
 
@@ -134,7 +137,13 @@ const Navbar = ({ currentUser }: NavbarProps) => {
     {
       icon: FcTemplate,
       label: 'New-Post',
-      onClick: () => onOpen('post'),
+      onClick: () => {
+        onOpen('post');
+        // setItem((prev: any) => ({
+        //   ...prev,
+        //   item: postItems,
+        // }));
+      },
       href: `${pathname}`,
       active: modalType === 'post',
       className:
@@ -148,6 +157,17 @@ const Navbar = ({ currentUser }: NavbarProps) => {
       onClick: () => onOpen('topic'),
       href: `${pathname} `,
       active: modalType === 'topic',
+      className:
+        userRole === 'admin'
+          ? 'hidden whitespace-nowrap sm:block text-xs font-semibold px-3 border-x-[1px] flex-1 text-center  md:hidden lg:block'
+          : 'hidden',
+    },
+    {
+      icon: GrUserAdmin,
+      label: 'Edit-Slider',
+      onClick: () => onOpen('slider'),
+      href: `${pathname} `,
+      active: modalType === 'slider',
       className:
         userRole === 'admin'
           ? 'hidden whitespace-nowrap sm:block text-xs font-semibold px-3 border-x-[1px] flex-1 text-center  md:hidden lg:block'
@@ -180,8 +200,8 @@ const Navbar = ({ currentUser }: NavbarProps) => {
     },
   ];
   return (
-    <div className='relative w-full bg-white z-10  '>
-      <div className='py-4 border-b-[1px] bg-slate-50 shadow-sm'>
+    <div className={cn('relative w-full bg-white z-10', className)}>
+      <div className='py-2 border-b-[1px] bg-slate-50 shadow-sm'>
         <Container>
           <MobileSidebar routes={routes} />
           <div className='hidden md:flex flex-1 flex-row items-center justify-between gap-3 md:gap-0 '>
@@ -190,7 +210,7 @@ const Navbar = ({ currentUser }: NavbarProps) => {
               styles={{ width: '10%', height: 'auto' }}
             />
             {/* <Search /> */}
-            <DepoWdMenu routes={routes} userRole={userRole} />
+            <DepoWdMenu routes={routes} />
             {/* <News /> */}
             <UserMenu
               currentUser={currentUser}
@@ -201,7 +221,7 @@ const Navbar = ({ currentUser }: NavbarProps) => {
         </Container>
       </div>
       <Categories />
-      <GamesCategories />
+      {/* <GamesCategories /> */}
     </div>
   );
 };

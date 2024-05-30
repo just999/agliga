@@ -11,10 +11,10 @@ type SidebarProps = {
 const Sidebar = ({ routes }: SidebarProps) => {
   return (
     <div className='h-full border-r flex flex-col sm:h-full overflow-y-none bg-neutral-50 shadow-sm '>
-      <div className='m-0 pl-4 pt-10 2xs:pt-10'>
+      <div className='m-0 pl-4 w-full h-auto pt-10 2xs:pt-10'>
         <Logo
-          className='w-20 h-auto '
-          styles={{ width: '8%', height: 'auto' }}
+          className='w-10 h-5 pb-2'
+          styles={{ width: '30%', height: 'auto' }}
         />
       </div>
       <div>

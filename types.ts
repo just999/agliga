@@ -1,9 +1,11 @@
-import { Comment, Listing, Reservation, User } from '@prisma/client';
+// import { Comment User } from '@prisma/client';
+// import { User } from 'next-auth';
+import { User } from '@prisma/client';
 import { IconType } from 'react-icons';
 
-export type SafeListing = Omit<Listing, 'createdAt'> & {
-  createdAt: string;
-};
+// export type SafeListing = Omit<Listing, 'createdAt'> & {
+//   createdAt: string;
+// };
 
 export type SafeUser = Omit<
   User,
@@ -14,15 +16,15 @@ export type SafeUser = Omit<
   emailVerified: string | null;
 };
 
-export type SafeReservation = Omit<
-  Reservation,
-  'createdAt' | 'startDate' | 'endDate' | 'listing'
-> & {
-  createdAt: string;
-  startDate: string;
-  endDate: string;
-  listing: SafeListing;
-};
+// export type SafeReservation = Omit<
+//   Reservation,
+//   'createdAt' | 'startDate' | 'endDate' | 'listing'
+// > & {
+//   createdAt: string;
+//   startDate: string;
+//   endDate: string;
+//   listing: SafeListing;
+// };
 
 export type ValueIconProps = {
   value: string;
@@ -195,4 +197,5 @@ export type RoutesProps = {
   className: string;
   href: string;
   active: boolean;
+  admin?: any;
 };

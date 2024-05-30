@@ -17,6 +17,7 @@ type ModalStore = {
     | 'profile'
     | 'editProfile'
     | 'validateUser'
+    | 'slider'
     | 'deleteSchedule'
     | null;
   isOpen: boolean;
@@ -41,6 +42,7 @@ type ModalStore = {
       | 'profile'
       | 'editProfile'
       | 'validateUser'
+      | 'slider'
       | 'deleteSchedule',
     id?: string | null,
     title?: string | undefined
@@ -74,6 +76,7 @@ const useModal = create<ModalStore>((set) => ({
       | 'profile'
       | 'editProfile'
       | 'validateUser'
+      | 'slider'
       | 'editSoccer',
     id = null,
     title
