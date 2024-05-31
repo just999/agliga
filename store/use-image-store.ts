@@ -3,16 +3,22 @@
 import { create } from 'zustand';
 
 type UseImageStoreProps = {
-  images: File[];
-  addImage: (image: File) => void;
-  removeImage: (image: File | string) => void;
+  images: string;
+  error: any;
+  isLoading: boolean;
+  setImages: (image: string) => void;
+  setIsLoading: (isLoading: boolean) => void;
+  setError: (error: any) => void;
 };
 
 export const useImageStore = create<UseImageStoreProps>((set) => ({
-  images: [],
-  addImage: (image) => set((state) => ({ images: [...state.images, image] })),
-  removeImage: (imageToRemove) =>
+  images: '',
+  isLoading: false,
+  error: null,
+  setIsLoading: (isLoading: boolean) => set(() => ({ isLoading })),
+  setError: (error) => set(() => ({ error })),
+  setImages: (image: string) =>
     set((state) => ({
-      images: state.images.filter((image) => image !== imageToRemove),
+      images: state.images ? `${state.images},${image}` : image,
     })),
 }));

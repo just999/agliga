@@ -13,9 +13,21 @@ import { useEffect } from 'react';
 import { BiChevronLeft, BiChevronRight } from 'react-icons/bi';
 import { heroSlides } from '@/lib/helper';
 import HeroSlide from './hero-slide';
-type HeroProps = {};
+import Loader from './loader';
 
-const Hero = () => {
+export type HeroProps = {
+  images:
+    | {
+        id: string;
+        images: string;
+        userId: string;
+        createdAt: Date;
+        updatedAt: Date;
+      }[]
+    | null;
+};
+
+const Hero = ({ images }: HeroProps) => {
   useEffect(() => {
     AOS.init({
       duration: 1000,
@@ -25,7 +37,10 @@ const Hero = () => {
     });
   }, []);
 
-  console.log('🚀 ~ HeroSlide:', heroSlides);
+  if (!images) {
+    return <Loader />;
+  }
+
   return (
     <section
       id='hero-slider'
@@ -74,10 +89,10 @@ const Hero = () => {
               loop={true}
               // className='sliderFeaturedPosts max-w-[100%] lg:max-w-[80%] '
             >
-              {heroSlides.map((slide) => (
+              {images.map((slide) => (
                 <SwiperSlide key={slide.id}>
                   <div className='flex flex-col bg-sky-700 justify-center mx-auto gap-6 group relative shadow-lg text-white rounded-xl px-6 py-8 h-[350px] w-full xs:h-[400px] xs:w-full md:h-[400px] md:w-full lg:h-[400px] lg:w-full xl:h-[400px] xl:w-full 2xl:h-[400px] 2xl:w-full overflow-hidden cursor-pointer grayscale hover:grayscale-0 hover:rounded-xl hover:brightness-200 hover:scale-105 transition drop-shadow-lg '>
-                    <HeroSlide slide={slide} />
+                    <HeroSlide slide={slide.images} />
                     <div className='absolute inset-0 bg-black opacity-10 group-hover:opacity-50 '></div>
                     <div className='relative flex flex-col gap-3 '>
                       {/* <h1 className='text-md lg:text-xl text-white/30 '>

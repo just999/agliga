@@ -10,6 +10,8 @@ import Posts from '@/components/posts/posts';
 import ClientOnly from '@/lib/client-only';
 
 import { getPosts, getRandomPost, IPostsParams } from '@/lib/queries/posts';
+
+import { fetchSliders } from '@/lib/queries/sliders';
 import { PostProps } from '@/types';
 
 type HomeProps = {
@@ -21,14 +23,18 @@ const Home = async ({ searchParams }: HomeProps) => {
   // const posts = await fetchPostsByUserId(searchParams);
   if (!posts || posts.length === 0) return [];
 
-  const randPost = (await getRandomPost()) as PostProps;
+  const images = await fetchSliders();
+
+  if (!images) return [];
+
+  const randPost = await getRandomPost();
   const currentUser = await getCurrentUser();
 
   if (!randPost) return <EmptyState showReset title='no post!' />;
 
   return (
     <ClientOnly>
-      <Hero />
+      <Hero images={images} />
       <Posts
         randPost={randPost}
         items={posts}

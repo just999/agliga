@@ -1,6 +1,9 @@
-import { getSchedule, getSchedules } from '@/actions/get-schedule';
+'use client';
+
+import { fetchSchedule, fetchScheduleById } from '@/lib/queries/schedule';
 import useSchedulesStore from '@/store/use-schedule-store';
-import { id } from 'date-fns/locale';
+import { ScheduleProps } from '@/types';
+
 import { useEffect } from 'react';
 
 export const useGetSchedules = (id?: string) => {
@@ -20,12 +23,14 @@ export const useGetSchedules = (id?: string) => {
       try {
         setIsLoading(true);
 
-        if (id) {
-          const res = await getSchedule(id);
+        if (!id) {
+          const res = await fetchSchedule();
+          if (res) {
+            setItems(res);
+          }
+        } else if (id) {
+          const res = await fetchScheduleById(id);
           if (res) setItem(res);
-        } else {
-          const res = await getSchedules();
-          setItems(res);
         }
       } catch (err) {
         console.error('Error fetching data', err);
@@ -35,7 +40,7 @@ export const useGetSchedules = (id?: string) => {
       }
     };
     fetchData();
-  }, [id, error, setItem, setIsLoading, setError, setItems]);
+  }, [id, setError, setIsLoading, setItem, setItems]);
 
   return { isLoading, error, items, item, setIsLoading };
 };

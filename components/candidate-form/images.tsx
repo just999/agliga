@@ -12,28 +12,19 @@ import {
 } from 'react-hook-form';
 import { Label } from '../ui/label';
 import { Button } from '../ui/button';
-import {
-  FcAddImage,
-  FcFullTrash,
-  FcPhotoReel,
-  FcPicture,
-} from 'react-icons/fc';
 
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 
-import { getBase64FromUrl, trimFilename } from '@/lib/utils';
-import { InitialPostProps, initialPostStateProps, PostProps } from '@/types';
+import { InitialPostProps } from '@/types';
 import useModal from '@/hooks/use-modal';
 import { MdOutlineAddPhotoAlternate } from 'react-icons/md';
 
-import toast from 'react-hot-toast';
-import { useRouter } from 'next/navigation';
 import usePostsStore from '@/store/use-posts-store';
 
 type ImagesProps = {
   control: Control;
-  text: InitialPostProps;
-  setText: (data: any) => void;
+  text?: InitialPostProps;
+  setText?: (data: any) => void;
   register: UseFormRegister<FieldValues>;
   watch?: UseFormWatch<FieldValues>;
   setValue?: UseFormSetValue<FieldValues>;
@@ -57,14 +48,12 @@ const Images = ({
   const { ref: registerRef, ...rest } = register('img');
   const hiddenFileInput = useRef<HTMLInputElement | null>(null);
   const { modalType } = useModal();
-  console.log('🚀 ~ modalType:', modalType);
-
   const { item } = usePostsStore();
   useEffect(() => {
     if (item.img) {
       setPreview(item.img);
     }
-    if (text.img === '') {
+    if (text?.img === '') {
       setPreview('');
     }
   }, [item.img, text]);
@@ -94,10 +83,11 @@ const Images = ({
           }
         };
         reader.readAsDataURL(file);
-        setText((prev: any) => ({
-          ...prev,
-          img: file,
-        }));
+        if (setText)
+          setText((prev: InitialPostProps) => ({
+            ...prev,
+            img: file,
+          }));
       }
     }
   };
@@ -128,16 +118,6 @@ const Images = ({
           </AvatarFallback>
         </Avatar>
 
-        {modalType === 'slider' && (
-          <Button
-            variant='ghost'
-            className='text-xs flex flex-row gap-2'
-            onClick={onAddImages}
-          >
-            {' '}
-            <FcPhotoReel size={18} /> Edit
-          </Button>
-        )}
         <div>
           {modalType === 'post' && (
             <Button

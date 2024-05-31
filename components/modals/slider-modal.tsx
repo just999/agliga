@@ -8,10 +8,13 @@ import Heading from '../heading';
 import Input from '../ui/input';
 import toast from 'react-hot-toast';
 
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import useModal from '@/hooks/use-modal';
 import Images from '../candidate-form/images';
 import { InitialPostProps } from '@/types';
+import { useSliderImages } from '@/hooks/use-get-slider-images';
+import image from 'next/image';
+import { control } from 'leaflet';
 
 type SliderModalProps = {};
 export const initialFormState = {
@@ -23,12 +26,25 @@ export const initialFormState = {
 };
 
 const SliderModal = () => {
-  const [text, setText] = useState<InitialPostProps>(initialFormState);
-  const [slider, setSlider] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const params = useParams();
   const router = useRouter();
+  const { images, setImages } = useSliderImages();
+  const { modalType, isOpen, onOpen, onClose, img } = useModal();
+  const id = params.id?.toString();
 
-  const { modalType, isOpen, onOpen, onClose } = useModal();
+  let initialSliderImage;
+  if (modalType === 'add-slider') {
+    initialSliderImage = {
+      images: '',
+    };
+  }
+  if (modalType === 'edit-slider') {
+    initialSliderImage = {
+      images: images,
+    };
+  }
+
   const {
     control,
     register,
@@ -38,14 +54,8 @@ const SliderModal = () => {
     formState: { errors },
     reset,
   } = useForm<FieldValues>({
-    defaultValues: {
-      slug: '',
-      description: '',
-    },
+    defaultValues: initialSliderImage,
   });
-
-  const slug = watch('slug');
-  const description = watch('description');
 
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
@@ -57,22 +67,52 @@ const SliderModal = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
+    const formData = new FormData();
+    if (data.images) {
+      formData.append('images', data.images);
+    }
 
-    data = {
-      slug,
-      description,
-    };
-
-    axios
-      .post(`/api/topics`, data)
-      .then(() => {
-        toast.success('successfully created Topic');
-        router.refresh();
-        reset();
-        onClose();
-      })
-      .catch((err) => toast.error('Something went wrong!'))
-      .finally(() => setIsLoading(false));
+    if (modalType === 'add-slider') {
+      try {
+        axios
+          .post(`/api/sliders`, formData, {
+            headers: {
+              'Content-Type': 'multiPart/form-data',
+            },
+          })
+          .then(() => {
+            toast.success('successfully add image slider');
+            router.refresh();
+            reset();
+            onClose();
+          })
+          .catch((err) => toast.error('Something went wrong!'))
+          .finally(() => setIsLoading(false));
+      } catch (err) {
+        console.error(err);
+      }
+    } else if (modalType === 'edit-slider') {
+      try {
+        axios
+          .put(`/api/sliders/${id}`, formData, {
+            headers: {
+              'Content-Type': 'multiPart/form-data',
+            },
+          })
+          .then(() => {
+            toast.success('Slider successfully edited');
+            router.refresh();
+            reset();
+            onClose();
+          })
+          .catch((err) => {
+            toast.error('Something went wrong', err);
+          })
+          .finally(() => setIsLoading(false));
+      } catch (err) {
+        console.error(err);
+      }
+    }
   };
 
   const handleCloseClearForm = () => {
@@ -85,15 +125,15 @@ const SliderModal = () => {
 
   const bodyContent = (
     <div className='flex flex-col gap-1 '>
-      <Heading title='New Slider' subtitle='Slider' />
+      <Heading
+        title={modalType === 'add-slider' ? 'New Slider' : 'Edit Slider'}
+        subtitle='Slider'
+      />
       <Images
         control={control}
         register={register}
-        setText={(data) => setSlider(data)}
-        text={text}
-        slider={slider}
-        setSlider={() => setSlider}
         watch={watch}
+        setValue={setValue}
         required
       />
       {errors.slug && (
@@ -108,10 +148,13 @@ const SliderModal = () => {
 
   return (
     <Modal
-      isOpen={isOpen && modalType === 'slider'}
+      isOpen={
+        isOpen && (modalType === 'add-slider' || modalType === 'edit-slider')
+      }
       onClose={handleCloseClearForm}
+      title={modalType === 'add-slider' ? 'Add-Image' : 'Edit-Image'}
       onSubmit={handleSubmit(onSubmit)}
-      actionLabel='Create New Topic'
+      actionLabel='Submit'
       disabled={isLoading}
       body={bodyContent}
       // footer={footerContent}

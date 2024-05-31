@@ -86,7 +86,7 @@ const Navbar = ({ currentUser, className }: NavbarProps) => {
       href: `${pathname}`,
       active: modalType === 'depo',
       className:
-        'hidden p-0 m-0  whitespace-nowrap py-2  sm:block text-xs font-semibold px-3  flex-1 text-center  md:hidden lg:block ',
+        'text-xs font-semibold  rounded-l-full px-6 py-2 cursor-pointer hover:shadow-md hover:bg-emerald-50',
     },
     {
       icon: FcMoneyTransfer,
@@ -95,7 +95,7 @@ const Navbar = ({ currentUser, className }: NavbarProps) => {
       href: `${pathname} `,
       active: modalType === 'wd',
       className:
-        'hidden whitespace-nowrap sm:block text-xs font-semibold px-3 border-x-[1px] flex-1 text-center md:hidden lg:block',
+        'hidden sm:block text-xs py-2 font-semibold px-6 border-x-[1px] flex-1 text-center cursor-pointer hover:shadow-md hover:bg-emerald-50',
     },
     {
       icon: FcNews,
@@ -108,7 +108,7 @@ const Navbar = ({ currentUser, className }: NavbarProps) => {
       href: `/posts`,
       active: modalType === null && pathname === '/posts',
       className:
-        'hidden whitespace-nowrap sm:block text-xs font-semibold px-3 border-x-[1px] flex-1 text-center md:hidden lg:block',
+        'hidden whitespace-nowrap sm:block text-xs font-semibold px-6 py-2 border-x-[1px] flex-1 text-center  md:hidden lg:block cursor-pointer hover:shadow-md hover:bg-emerald-50',
     },
     {
       icon: FcDataSheet,
@@ -121,7 +121,7 @@ const Navbar = ({ currentUser, className }: NavbarProps) => {
       href: `/soccer`,
       active: modalType === null && pathname === '/soccer',
       className:
-        'hidden whitespace-nowrap sm:block text-xs font-semibold px-3 border-x-[1px] flex-1 text-center md:hidden lg:block',
+        'hidden whitespace-nowrap sm:block text-xs font-semibold px-6 py-2 border-x-[1px] flex-1 text-center  md:hidden lg:block cursor-pointer hover:shadow-md hover:bg-emerald-50',
     },
     {
       icon: FcCalendar,
@@ -131,7 +131,7 @@ const Navbar = ({ currentUser, className }: NavbarProps) => {
       active: modalType === 'soccer',
       className:
         userRole === 'admin'
-          ? 'hidden whitespace-nowrap sm:block text-xs font-semibold px-3 border-x-[1px] flex-1 text-center md:hidden lg:block'
+          ? 'hidden whitespace-nowrap sm:block text-xs font-semibold px-6 py-2 border-x-[1px] flex-1 text-center  md:hidden lg:block cursor-pointer hover:shadow-md hover:bg-emerald-50'
           : 'hidden',
     },
     {
@@ -148,7 +148,7 @@ const Navbar = ({ currentUser, className }: NavbarProps) => {
       active: modalType === 'post',
       className:
         userRole === 'admin'
-          ? 'hidden whitespace-nowrap sm:block text-xs font-semibold px-3 border-x-[1px] flex-1 text-center md:hidden lg:block'
+          ? 'hidden whitespace-nowrap sm:block text-xs font-semibold px-6 py-2 border-x-[1px] flex-1 text-center  md:hidden lg:block cursor-pointer hover:shadow-md hover:bg-emerald-50'
           : 'hidden',
     },
     {
@@ -159,18 +159,18 @@ const Navbar = ({ currentUser, className }: NavbarProps) => {
       active: modalType === 'topic',
       className:
         userRole === 'admin'
-          ? 'hidden whitespace-nowrap sm:block text-xs font-semibold px-3 border-x-[1px] flex-1 text-center  md:hidden lg:block'
+          ? 'hidden whitespace-nowrap sm:block text-xs font-semibold px-6 py-2 border-x-[1px] flex-1 text-center  md:hidden lg:block cursor-pointer hover:shadow-md hover:bg-emerald-50'
           : 'hidden',
     },
     {
       icon: GrUserAdmin,
-      label: 'Edit-Slider',
-      onClick: () => onOpen('slider'),
-      href: `${pathname} `,
-      active: modalType === 'slider',
+      label: 'Slider',
+      onClick: () => {},
+      href: `/sliders`,
+      active: modalType === null && pathname === '/sliders',
       className:
         userRole === 'admin'
-          ? 'hidden whitespace-nowrap sm:block text-xs font-semibold px-3 border-x-[1px] flex-1 text-center  md:hidden lg:block'
+          ? 'hidden whitespace-nowrap sm:block text-xs font-semibold px-6 py-2 border-x-[1px] flex-1 text-center  md:hidden lg:block cursor-pointer hover:shadow-md hover:bg-emerald-50'
           : 'hidden',
     },
     {
@@ -180,7 +180,7 @@ const Navbar = ({ currentUser, className }: NavbarProps) => {
       href: `${pathname} `,
       active: modalType === 'live',
       className:
-        ' p-0 m-0 hidden sm:block py-2 text-xs font-semibold px-3  flex-1 text-center  md:hidden lg:block ',
+        'hidden sm:block text-xs bg-slate-50 rounded-r-full py-2  font-semibold px-6 border-x-[1px] flex-1 text-center cursor-pointer h-full hover:shadow-md hover:bg-emerald-50',
     },
     {
       icon: status === 'authenticated' ? AiOutlineLogout : AiOutlineLogin,

@@ -1,5 +1,18 @@
 import { create } from 'zustand';
 
+// export const imageSlider = {
+//   images: '',
+//   userId: '',
+// };
+
+type ImageSlider = {
+  id: string;
+  images: string;
+  userId: string;
+  createAt: Date;
+  updatedAt: Date;
+};
+
 type ModalStore = {
   modalType:
     | 'login'
@@ -17,13 +30,15 @@ type ModalStore = {
     | 'profile'
     | 'editProfile'
     | 'validateUser'
-    | 'slider'
+    | 'add-slider'
+    | 'edit-slider'
     | 'deleteSchedule'
     | null;
   isOpen: boolean;
   id?: string | null;
   title?: string | undefined;
   isToggle: boolean;
+  img?: ImageSlider;
 
   onOpen: (
     type:
@@ -42,10 +57,12 @@ type ModalStore = {
       | 'profile'
       | 'editProfile'
       | 'validateUser'
-      | 'slider'
+      | 'add-slider'
+      | 'edit-slider'
       | 'deleteSchedule',
     id?: string | null,
-    title?: string | undefined
+    title?: string | undefined,
+    img?: ImageSlider | undefined
   ) => void;
   onClose: () => void;
   toggle: () => void;
@@ -58,6 +75,7 @@ const useModal = create<ModalStore>((set) => ({
   id: null,
   title: undefined,
   isToggle: false,
+  img: undefined,
 
   onOpen: (
     type:
@@ -76,13 +94,21 @@ const useModal = create<ModalStore>((set) => ({
       | 'profile'
       | 'editProfile'
       | 'validateUser'
-      | 'slider'
+      | 'add-slider'
+      | 'edit-slider'
       | 'editSoccer',
     id = null,
-    title
-  ) => set({ modalType: type, isOpen: true, id, title }),
+    title,
+    img
+  ) => set({ modalType: type, isOpen: true, id, title, img }),
   onClose: () =>
-    set({ modalType: null, isOpen: false, id: null, title: undefined }),
+    set({
+      modalType: null,
+      isOpen: false,
+      id: null,
+      title: undefined,
+      img: undefined,
+    }),
   toggle: () => set((state) => ({ isToggle: !state.isToggle })),
   // authModal: () => set((state) => ({ isOpen: !state.isOpen })),
 }));

@@ -51,7 +51,7 @@ const Posts = ({ randPost, items, size, currentUser }: PostsProps) => {
             >
               Sports News.
             </h1>
-            <span className='flex flex-row gap-2 px-4 items-center justify-center shadow-lg rounded-lg '>
+            <span className='flex flex-row gap-2 mx-4 items-center justify-center shadow-lg rounded-lg '>
               <Sci size={size} />
             </span>
           </div>

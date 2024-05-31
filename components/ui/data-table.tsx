@@ -25,6 +25,7 @@ import { useState } from 'react';
 
 import useRunToggleStore from '@/store/use-table-store';
 import RunTable from './run-table';
+import { cn } from '@/lib/utils';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -134,7 +135,10 @@ export function DataTable<TData, TValue>({
             size='sm'
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
-            className='w-1/12 bg-zinc-200 text-stone-900 hover:bg-orange-100/40'
+            className={cn(
+              'w-1/12 bg-emerald-200/60 text-stone-900 hover:bg-emerald-200 hover:text-black hover:font-semibold hover:shadow-2xl shadow-xl',
+              !table.getCanPreviousPage() && 'text-zinc-600'
+            )}
           >
             Previous
           </Button>
@@ -143,7 +147,10 @@ export function DataTable<TData, TValue>({
             size='sm'
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
-            className='w-1/12 bg-zinc-200 text-stone-900 hover:bg-orange-100/40'
+            className={cn(
+              'w-1/12 bg-emerald-200/60 text-stone-900 hover:bg-emerald-200 hover:text-black hover:font-semibold hover:shadow-2xl shadow-xl',
+              !table.getCanNextPage() && 'text-zinc-600'
+            )}
           >
             Next
           </Button>

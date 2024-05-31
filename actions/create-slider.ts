@@ -4,11 +4,9 @@ import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 import { auth } from '@/auth';
 import { db } from '@/lib/db';
-import { paths } from '@/lib/helper';
-import images from '@/components/candidate-form/images';
 
 const createSliderSchema = z.object({
-  images: z.array(z.string()),
+  images: z.string().min(3),
 });
 
 interface CreateSliderFormState {
@@ -27,8 +25,6 @@ export async function createSlider(
   const result = createSliderSchema.safeParse({
     images: formData.get('images'),
   });
-  console.log('🚀 ~ images:', images);
-
   if (!result.success) {
     return {
       errors: result.error.flatten().fieldErrors,
@@ -79,6 +75,7 @@ export async function createSlider(
   // }
 
   // revalidatePath(paths.postShow(topic.slug, postId));
+  revalidatePath('/');
   return {
     errors: {},
     success: true,

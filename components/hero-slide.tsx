@@ -4,11 +4,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 type HeroSlideProps = {
-  slide: {
-    bgImg: string;
-    title: string;
-    brief: string;
-  };
+  // slide: {
+  //   bgImg: string;
+  //   title: string;
+  //   brief: string;
+  // };
+  slide: string;
 };
 
 const HeroSlide = ({ slide }: HeroSlideProps) => {
@@ -16,7 +17,7 @@ const HeroSlide = ({ slide }: HeroSlideProps) => {
     <Link
       href='/'
       className='img-bg absolute inset-0 bg-cover bg-center'
-      style={{ backgroundImage: `url(${slide.bgImg})` }}
+      style={{ backgroundImage: `url(${slide})` }}
     >
       {/* <Image
         src={slide.bgImg}

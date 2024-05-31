@@ -1,6 +1,6 @@
 // import { Comment User } from '@prisma/client';
 // import { User } from 'next-auth';
-import { User } from '@prisma/client';
+import { Slider, User } from '@prisma/client';
 import { IconType } from 'react-icons';
 
 // export type SafeListing = Omit<Listing, 'createdAt'> & {
@@ -14,6 +14,11 @@ export type SafeUser = Omit<
   createdAt: string;
   updatedAt: string;
   emailVerified: string | null;
+};
+
+export type SafeSliderImage = Omit<Slider, 'createdAt' | 'updatedAt'> & {
+  createdAt: string;
+  updatedAt: string;
 };
 
 // export type SafeReservation = Omit<
