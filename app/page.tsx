@@ -20,7 +20,7 @@ type HomeProps = {
 
 const Home = async ({ searchParams }: HomeProps) => {
   const posts = await getPosts();
-  // const posts = await fetchPostsByUserId(searchParams);
+
   if (!posts || posts.length === 0) return [];
 
   const images = await fetchSliders();
