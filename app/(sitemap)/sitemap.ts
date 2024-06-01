@@ -1,5 +1,4 @@
 import { getPosts } from '@/lib/queries/posts';
-import { PostProps } from '@/types';
 
 import { MetadataRoute } from 'next';
 
