@@ -14,7 +14,6 @@ export function convertDateTime(dateTimeString: string): string {
   const hours = String(date.getHours()).padStart(2, '0'); // Pad hours with leading zero
   const minutes = String(date.getMinutes()).padStart(2, '0'); // Pad minutes with leading zero
 
-  // Format the date in the desired format
   return `${year}-${month}-${day} ${hours}:${minutes}`;
 }
 
