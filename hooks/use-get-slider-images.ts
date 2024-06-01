@@ -25,7 +25,6 @@ export const useSliderImages = (id?: string) => {
         setIsLoading(true);
         const res = await fetchSliderImageById(id);
         if (!res) throw new Error('error fetching images slider');
-        // setImages(res);
         return res;
       } catch (err) {
         console.error('Error fetching slider images', err);
