@@ -29,6 +29,7 @@ import { GrUserAdmin } from 'react-icons/gr';
 import { capitalizeFirstCharacter, cn } from '@/lib/utils';
 import { TbScoreboard } from 'react-icons/tb';
 import usePostsStore, { postItems } from '@/store/use-posts-store';
+import ClientOnly from '@/lib/client-only';
 
 type NavbarProps = {
   currentUser?: SafeUser | null;
@@ -200,29 +201,31 @@ const Navbar = ({ currentUser, className }: NavbarProps) => {
     },
   ];
   return (
-    <div className={cn('relative w-full bg-white z-10', className)}>
-      <div className='py-2 border-b-[1px] bg-slate-50 shadow-sm'>
-        <Container>
-          <MobileSidebar routes={routes} />
-          <div className='hidden md:flex flex-1 flex-row items-center justify-between gap-3 md:gap-0 '>
-            <Logo
-              className='w-auto h-12 '
-              styles={{ width: '10%', height: 'auto' }}
-            />
-            {/* <Search /> */}
-            <DepoWdMenu routes={routes} />
-            {/* <News /> */}
-            <UserMenu
-              currentUser={currentUser}
-              status={status}
-              routes={routes}
-            />
-          </div>
-        </Container>
+    <ClientOnly>
+      <div className={cn('relative w-full bg-white z-10', className)}>
+        <div className='py-2 border-b-[1px] bg-slate-50 shadow-sm'>
+          <Container>
+            <MobileSidebar routes={routes} />
+            <div className='hidden md:flex flex-1 flex-row items-center justify-between gap-3 md:gap-0 '>
+              <Logo
+                className='w-auto h-12 '
+                styles={{ width: '10%', height: 'auto' }}
+              />
+              {/* <Search /> */}
+              <DepoWdMenu routes={routes} />
+              {/* <News /> */}
+              <UserMenu
+                currentUser={currentUser}
+                status={status}
+                routes={routes}
+              />
+            </div>
+          </Container>
+        </div>
+        <Categories />
+        {/* <GamesCategories /> */}
       </div>
-      <Categories />
-      {/* <GamesCategories /> */}
-    </div>
+    </ClientOnly>
   );
 };
 
