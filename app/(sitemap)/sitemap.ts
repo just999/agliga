@@ -63,7 +63,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const changeFrequency = 'daily' as changeFrequency;
 
-  // Handle potential missing news data
+  // Handle potential missing news data blah
   if (!news) {
     console.warn('No posts found for sitemap generation.');
     return [];
