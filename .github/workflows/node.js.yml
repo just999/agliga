@@ -12,20 +12,20 @@ jobs:
       matrix:
         node-version: [20.14.0]
     env:
-      NEXT_PUBLIC_DOMAIN: ${{secrets.NEXT_PUBLIC_DOMAIN}}
-      NEXT_PUBLIC_API_DOMAIN: ${{secrets.NEXT_PUBLIC_API_DOMAIN}}
+      NEXT_PUBLIC_DOMAIN: http://localhost:3000
+      NEXT_PUBLIC_API_DOMAIN: http://localhost:3000/api
       DATABASE_URL: ${{secrets.DATABASE_URL}}
-      AUTH_SECRET: ${{secrets.AUTH_SECRET}}
-      NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: ${{secrets.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}}
-      AUTH_TRUST_HOST: ${{secrets.AUTH_TRUST_HOST}}
-      NEXTAUTH_URL: ${{secrets.NEXTAUTH_URL}}
+      AUTH_SECRET: UJHo7DqvtDCLVCiPHl5fsAryaWPmm684yEH3DpVzoj8=
+      NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: tommy08
+      AUTH_TRUST_HOST: http://localhost:3000
+      NEXTAUTH_URL: http://localhost:3000
       GOOGLE_ID: ${{secrets.GOOGLE_ID}}
       GOOGLE_SECRET: ${{secrets.GOOGLE_SECRET}}
       GITHUB_ID: ${{secrets.GITHUB_ID}}
       GITHUB_SECRET: ${{secrets.GITHUB_SECRET}}
       CLOUDINARY_API_SECRET: ${{secrets.CLOUDINARY_API_SECRET}}
       CLOUDINARY_API_KEY: ${{secrets.CLOUDINARY_API_KEY}}
-      CLOUDINARY_CLOUD_NAME: ${{secrets.CLOUDINARY_CLOUD_NAME}}
+      CLOUDINARY_CLOUD_NAME: tommy08
       AUTH_FACEBOOK_ID: ${{secrets.AUTH_FACEBOOK_ID}}
       AUTH_FACEBOOK_SECRET: ${{secrets.AUTH_FACEBOOK_SECRET}}
 
