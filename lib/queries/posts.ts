@@ -11,7 +11,7 @@ export type PostWithData = Post & {
   _count: { comments: number };
 };
 
-export const getPostByPostId = async (id: string) => {
+export const getPostByPostId = async (id?: string) => {
   try {
     if (!id) return;
     const data = await db.post.findUnique({

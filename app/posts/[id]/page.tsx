@@ -15,7 +15,7 @@ import { Suspense } from 'react';
 
 type PostItemPageProps = {
   params: {
-    id: string;
+    id?: string;
   };
 };
 
