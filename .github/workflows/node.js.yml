@@ -14,7 +14,7 @@ jobs:
     env:
       NEXT_PUBLIC_DOMAIN: http://localhost:3000
       NEXT_PUBLIC_API_DOMAIN: http://localhost:3000/api
-      DATABASE_URL: ${{secrets.DATABASE_URL}}
+      DATABASE_URL: mongodb+srv://tom:2p1ik2swjSCvOulF@bookit.xknf1.mongodb.net/al?retryWrites=true&w=majority
       AUTH_SECRET: UJHo7DqvtDCLVCiPHl5fsAryaWPmm684yEH3DpVzoj8=
       NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: tommy08
       AUTH_TRUST_HOST: http://localhost:3000
@@ -32,6 +32,10 @@ jobs:
     steps:
       - name: Read a next public domain
         run: echo "My NEXT_PUBLIC_DOMAIN value is ${{env.NEXT_PUBLIC_DOMAIN}}"
+      - name: Read a next Auth Secret
+        run: echo "My NEXT_PUBLIC_DOMAIN value is ${{env.AUTH_SECRET}}"
+      - name: Read a Database Url
+        run: echo "My NEXT_PUBLIC_DOMAIN value is ${{env.DATABASE_URL}}"
       - uses: actions/checkout@v4
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
