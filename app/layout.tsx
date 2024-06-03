@@ -58,6 +58,7 @@ export default async function RootLayout({
             inter.className,
             className
           )}
+          suppressHydrationWarning={true}
         >
           <ToasterProvider />
           <UserProfileModal />
