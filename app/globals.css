@@ -22,6 +22,10 @@
   color: rgba(71, 85, 105, 1);
 }
 
+.page-title {
+  font-family: 'Old-London';
+}
+
 .icon {
   text-shadow: 4px 4px 6px rgba(66, 68, 90, 1);
 }

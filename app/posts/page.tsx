@@ -32,7 +32,7 @@ const PostItemsPage = async ({ searchParams }: PostItemsPageProps) => {
     <main id='main'>
       <section id='posts ' className='posts  pb-8 mb-8'>
         <div className='container  mx-auto md:container md:mx-auto px-4'>
-          <PageTitle title='Daftar Berita' />
+          <PageTitle className='text-3xl page-title' title='Daftar Berita' />
 
           <div className='row grid lg:grid-cols-4 md:grid-cols-2 gap-4'>
             {posts.length > 0 ? (

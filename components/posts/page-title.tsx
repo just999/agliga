@@ -13,9 +13,10 @@ const eb = EB_Garamond({ subsets: ['latin'] });
 
 type PageTitleProps = {
   title: string;
+  className?: string;
 };
 
-const PageTitle = ({ title }: PageTitleProps) => {
+const PageTitle = ({ title, className }: PageTitleProps) => {
   return (
     <h3
       className={cn(
@@ -26,7 +27,7 @@ const PageTitle = ({ title }: PageTitleProps) => {
       <span
         className={cn(
           'shadow-sm px-2  bg-zinc-100 text-zinc-500 mx-auto rounded-sm',
-          eb.className
+          className
         )}
       >
         {title}

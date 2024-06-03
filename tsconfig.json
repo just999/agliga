@@ -27,7 +27,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "lib/facebook.js"
+    "lib/facebook.js",
+    "public/(sitemap)/robots.ts.bak"
   ],
   "exclude": ["node_modules"]
 }

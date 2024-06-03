@@ -2,8 +2,7 @@ import Github from 'next-auth/providers/github';
 import Google from 'next-auth/providers/google';
 import Facebook from 'next-auth/providers/facebook';
 import Credentials from 'next-auth/providers/credentials';
-// import bcrypt from 'bcryptjs';
-import * as bcrypt from 'bcryptjs';
+import bcrypt from 'bcryptjs';
 import type { NextAuthConfig } from 'next-auth';
 import { db } from './lib/db';
 
