@@ -13,8 +13,8 @@ export default {
       clientSecret: process.env.GOOGLE_SECRET,
     }),
     Github({
-      clientId: process.env.GITHUB_ID,
-      clientSecret: process.env.GITHUB_SECRET,
+      clientId: process.env.ITS_GITHUB_ID,
+      clientSecret: process.env.ITS_GITHUB_SECRET,
     }),
     Facebook({
       clientId: process.env.AUTH_FACEBOOK_ID,
