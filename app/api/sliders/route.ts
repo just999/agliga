@@ -26,6 +26,7 @@ export async function POST(req: Request) {
     const formData = await req.formData();
 
     const images = formData.get('images');
+    console.log('🚀 ~ POST ~ images:', images);
 
     const newSliderImage = {
       images,
@@ -47,6 +48,7 @@ export async function POST(req: Request) {
       );
       imageSliderPromise.push(result.secure_url);
       const uploadedImages = await Promise.all(imageSliderPromise);
+      console.log('🚀 ~ POST ~ uploadedImages:', uploadedImages);
       newSliderImage.images = uploadedImages[0];
     }
 

@@ -126,7 +126,9 @@ const Images = ({
         </Avatar>
 
         <div>
-          {(modalType === 'post' || modalType === 'edit-slider') && (
+          {(modalType === 'post' ||
+            modalType === 'edit-slider' ||
+            modalType === 'add-slider') && (
             <Button
               variant='ghost'
               size='sm'

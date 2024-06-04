@@ -33,8 +33,8 @@ const ScheduleClient = ({ data }: ScheduleClientProps) => {
   }
 
   return (
-    <>
-      <div className='flex items-center justify-between '>
+    <div className='pt-20 '>
+      {/* <div className='flex items-center justify-between pt-20 '>
         <Heading
           title={`Schedules (${data.length})`}
           description='Manage schedule for your store'
@@ -49,7 +49,7 @@ const ScheduleClient = ({ data }: ScheduleClientProps) => {
           Add New
         </Button>
       </div>
-      <Separator />
+      <Separator /> */}
       <DataTable
         searchKey='teamHome'
         columns={columns}
@@ -58,7 +58,7 @@ const ScheduleClient = ({ data }: ScheduleClientProps) => {
       {/* <Heading title='API' description='API calls for Schedules' /> */}
       {/* <Separator /> */}
       {/* <ApiList entityName='schedules' entityIdName='scheduleId' /> */}
-    </>
+    </div>
   );
 };
 

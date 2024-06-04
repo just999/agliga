@@ -68,10 +68,11 @@ const SliderModal = () => {
   // };
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    console.log('🚀 ~ SliderModal ~ data:', data);
     setIsLoading(true);
     const formData = new FormData();
-    if (data.images) {
-      formData.append('images', data.images);
+    if (data.img) {
+      formData.append('images', data.img);
     }
 
     if (modalType === 'add-slider') {
