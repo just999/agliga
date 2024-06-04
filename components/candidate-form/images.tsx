@@ -10,7 +10,7 @@ import {
   UseFormSetValue,
   UseFormWatch,
 } from 'react-hook-form';
-import { Label } from '../ui/label';
+
 import { Button } from '../ui/button';
 
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
@@ -47,7 +47,8 @@ const Images = ({
   const [preview, setPreview] = useState<string>('');
   const { ref: registerRef, ...rest } = register('img');
   const hiddenFileInput = useRef<HTMLInputElement | null>(null);
-  const { modalType } = useModal();
+  const { modalType, img } = useModal();
+  console.log('🚀 ~ img:', img);
   const { item } = usePostsStore();
   useEffect(() => {
     if (item.img) {
@@ -57,6 +58,12 @@ const Images = ({
       setPreview('');
     }
   }, [item.img, text]);
+
+  useEffect(() => {
+    if (modalType === 'edit-slider' && img) {
+      setPreview(img.images);
+    }
+  }, [img, modalType]);
 
   let watchRes;
   if (watch) {
@@ -107,19 +114,19 @@ const Images = ({
         required={required}
       />
       <div className='flex flex-row gap-2 items-center h-full my-auto '>
-        <Avatar className='rounded-none w-auto h-20 my-auto shadow-xl '>
+        <Avatar className='rounded-none w-auto h-20 my-auto shadow-xl  '>
           <AvatarImage
             src={preview}
             className='w-auto h-18 rounded-lg aspect-auto'
             alt='@shadcn'
           />
-          <AvatarFallback className='text-stone-400 text-xs'>
+          <AvatarFallback className='text-stone-400 text-xs px-4'>
             Post image{' '}
           </AvatarFallback>
         </Avatar>
 
         <div>
-          {modalType === 'post' && (
+          {(modalType === 'post' || modalType === 'edit-slider') && (
             <Button
               variant='ghost'
               size='sm'

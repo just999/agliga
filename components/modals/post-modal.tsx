@@ -490,7 +490,7 @@ const PostModal = () => {
       {/* <ProfilePicture register={register} text={text} setText={setText} /> */}
 
       <SelectInput
-        label='Category'
+        label='category'
         isMulti={false}
         id='category'
         register={register}

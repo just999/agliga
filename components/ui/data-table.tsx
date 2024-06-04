@@ -131,24 +131,24 @@ export function DataTable<TData, TValue>({
         </div>
         <div className='flex items-center justify-end space-x-2 py-4 pr-4'>
           <Button
-            variant='outline'
+            variant='ghost'
             size='sm'
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
             className={cn(
-              'w-1/12 bg-emerald-200/60 text-stone-900 hover:bg-emerald-200 hover:text-black hover:font-semibold hover:shadow-2xl shadow-xl',
+              'w-1/12 bg-amber-100 text-stone-900 hover:bg-amber-200 hover:text-black hover:font-semibold hover:drop-shadow-xl shadow-lg',
               !table.getCanPreviousPage() && 'text-zinc-600'
             )}
           >
             Previous
           </Button>
           <Button
-            variant='outline'
+            variant='ghost'
             size='sm'
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
             className={cn(
-              'w-1/12 bg-emerald-200/60 text-stone-900 hover:bg-emerald-200 hover:text-black hover:font-semibold hover:shadow-2xl shadow-xl',
+              'w-1/12 bg-amber-100 text-stone-900 hover:bg-amber-200 hover:text-black hover:font-semibold hover:drop-shadow-xl shadow-lg',
               !table.getCanNextPage() && 'text-zinc-600'
             )}
           >

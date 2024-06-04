@@ -157,7 +157,7 @@ const UserEditProfile = () => {
                   )}
 
                   <SelectInput
-                    label='bank player'
+                    label='bank'
                     isMulti={false}
                     id='bank'
                     register={register}

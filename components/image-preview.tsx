@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { Button } from './ui/button';
-import { FcFullTrash } from 'react-icons/fc';
+
 import { useEffect, useState } from 'react';
 import { useImageStore } from '@/store/use-image-store';
 import { FaTimesCircle } from 'react-icons/fa';

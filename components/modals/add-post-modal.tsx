@@ -242,7 +242,7 @@ const AddPostModal = () => {
           id='title'
           // name='title'
           type='text'
-          label='Title'
+          label='title'
           register={register}
           // {...register('title', { onChange: handleChange })}
           placeholder=''

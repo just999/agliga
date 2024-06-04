@@ -179,7 +179,7 @@ const DepositWdModal = () => {
   };
 
   const bodyContent = (
-    <div className='flex flex-col gap-3'>
+    <div className='flex flex-col gap-2'>
       <Heading title={modalType === 'depo' ? 'Deposit' : 'Wd'} subtitle={''} />
       <Input
         id='email'

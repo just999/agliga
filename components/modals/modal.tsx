@@ -128,6 +128,7 @@ const Modal = ({
                   />
                 )}
                 <Btn
+                  type='submit'
                   disabled={disabled}
                   label={actionLabel}
                   onClick={handleSubmit}

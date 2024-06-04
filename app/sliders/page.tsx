@@ -6,8 +6,9 @@ import Loader from '@/components/loader';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useSliderImages } from '@/hooks/use-get-slider-images';
 
-import useModal from '@/hooks/use-modal';
+import useModal, { ImageSlider } from '@/hooks/use-modal';
 
 import { fetchSliders } from '@/lib/queries/sliders';
 import { useEffect, useState } from 'react';
@@ -25,6 +26,7 @@ type PageProps = {
 const SlidersPage = () => {
   const [images, setImages] = useState<PageProps[]>([]);
   const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     try {
       setLoading(true);
@@ -40,7 +42,13 @@ const SlidersPage = () => {
     }
   }, []);
 
-  const { onOpen } = useModal();
+  const { onOpen, setImg } = useModal();
+
+  const handleEditSlider = (img: ImageSlider) => {
+    console.log('🚀 ~ handleEditSlider ~ img:', img);
+    onOpen('edit-slider');
+    setImg('edit-slider', img);
+  };
   return (
     <>
       {loading &&
@@ -81,12 +89,12 @@ const SlidersPage = () => {
               <Button
                 size='sm'
                 variant='ghost'
-                onClick={() => onOpen('edit-slider', img.id)}
+                onClick={() => handleEditSlider(img)}
                 className='absolute top-0 right-0 p-0 m-0 h-5 w-5 rounded-full bg-slate-50/70 text-red-500 '
               >
                 <BiSolidEdit size={18} />
               </Button>
-              <pre className='text-xl '>{JSON.stringify(img, null, 2)}</pre>
+              {/* <pre className='text-xl '>{JSON.stringify(img, null, 2)}</pre> */}
             </span>
           ))}
         <Button

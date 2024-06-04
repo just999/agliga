@@ -3,8 +3,6 @@
 import { usePathname } from 'next/navigation';
 import RunBox from '../run-box';
 
-// import { useSearchParams, usePathname } from 'next/navigation';
-
 type TableData = { value: number; className?: string };
 
 export const rows: TableData[][] = [

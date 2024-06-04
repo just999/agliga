@@ -15,6 +15,7 @@ import { InitialPostProps } from '@/types';
 import { useSliderImages } from '@/hooks/use-get-slider-images';
 import image from 'next/image';
 import { control } from 'leaflet';
+import { id } from 'date-fns/locale';
 
 type SliderModalProps = {};
 export const initialFormState = {
@@ -27,11 +28,12 @@ export const initialFormState = {
 
 const SliderModal = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const params = useParams();
+  // const params = useParams();
   const router = useRouter();
   const { images, setImages } = useSliderImages();
-  const { modalType, isOpen, onOpen, onClose, img } = useModal();
-  const id = params.id?.toString();
+  const { modalType, isOpen, onOpen, onClose } = useModal();
+
+  // const id = params.id?.toString();
 
   let initialSliderImage;
   if (modalType === 'add-slider') {
@@ -57,13 +59,13 @@ const SliderModal = () => {
     defaultValues: initialSliderImage,
   });
 
-  const setCustomValue = (id: string, value: any) => {
-    setValue(id, value, {
-      shouldDirty: true,
-      shouldTouch: true,
-      shouldValidate: true,
-    });
-  };
+  // const setCustomValue = (id: string, value: any) => {
+  //   setValue(id, value, {
+  //     shouldDirty: true,
+  //     shouldTouch: true,
+  //     shouldValidate: true,
+  //   });
+  // };
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);

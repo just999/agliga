@@ -1,3 +1,4 @@
+import { type } from 'os';
 import { create } from 'zustand';
 
 // export const imageSlider = {
@@ -5,7 +6,7 @@ import { create } from 'zustand';
 //   userId: '',
 // };
 
-type ImageSlider = {
+export type ImageSlider = {
   id: string;
   images: string;
   userId: string;
@@ -66,6 +67,7 @@ type ModalStore = {
   ) => void;
   onClose: () => void;
   toggle: () => void;
+  setImg: (type: 'edit-slider', img: ImageSlider) => void;
   // authModal: () => void;
 };
 
@@ -110,6 +112,7 @@ const useModal = create<ModalStore>((set) => ({
       img: undefined,
     }),
   toggle: () => set((state) => ({ isToggle: !state.isToggle })),
+  setImg: (type: 'edit-slider', img) => set({ modalType: type, img }),
   // authModal: () => set((state) => ({ isOpen: !state.isOpen })),
 }));
 

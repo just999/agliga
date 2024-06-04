@@ -10,7 +10,7 @@ import { auth } from '@/auth';
 
 import AuthModal from '@/components/modals/auth-modal';
 
-import SearchModal from '@/components/modals/search-modal';
+// import SearchModal from '@/components/modals/search-modal';
 import DepositWdModal from '@/components/modals/deposit-wd-modal';
 
 // import ClientOnly from '@/lib/client-only';
@@ -31,7 +31,7 @@ import UserProfileModal from '@/components/modals/user-profile-modal';
 import AddPostModal from '@/components/modals/add-post-modal';
 import SliderModal from '@/components/modals/slider-modal';
 
-const inter = Nunito({ subsets: ['latin'] });
+const inter = Nunito({ subsets: ['latin'], preload: true });
 
 export const metadata: Metadata = {
   title: 'AL',
@@ -70,7 +70,7 @@ export default async function RootLayout({
           <PostModal />
           {/* <AddPostModal /> */}
           <SliderModal />
-          <SearchModal />
+          {/* <SearchModal /> */}
           <NoUserModal />
           <AuthModal />
           <Navbar currentUser={currentUser} />

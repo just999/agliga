@@ -54,7 +54,7 @@ const TabsActive = ({ items }: TabsActiveProps) => {
       className={cn(
         'nav-item   rounded-sm mx-auto',
         tab.active
-          ? ' bg-orange-100/50 w-full border-b-2 border-gray-400'
+          ? ' bg-orange-100/50 w-full border-b-2 border-orange-400'
           : ' bg-gray-50 w-full'
       )}
     >

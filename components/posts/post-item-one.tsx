@@ -27,8 +27,8 @@ interface PostItemOneProps {
   currentUser?: SafeUser | null;
 }
 
-const eb = EB_Garamond({ subsets: ['latin'] });
-const source = Source_Serif_4({ subsets: ['latin'] });
+const eb = EB_Garamond({ subsets: ['latin'], preload: true });
+const source = Source_Serif_4({ subsets: ['latin'], preload: true });
 
 const PostItemOne = ({
   pageOne,

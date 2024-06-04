@@ -8,7 +8,7 @@ import Link from 'next/link';
 import PostAuthor from './post-author';
 import { cn } from '@/lib/utils';
 
-const eb = EB_Garamond({ subsets: ['latin'] });
+const eb = EB_Garamond({ subsets: ['latin'], preload: true });
 
 type TrendingPostProps = {
   i: number;

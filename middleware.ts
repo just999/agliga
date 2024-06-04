@@ -24,9 +24,10 @@ import { DEFAULT_REDIRECT, PUBLIC_ROUTES, ROOT } from '@/routes';
 
 const { auth } = NextAuth(authConfig);
 
-export function middleware(request: any, response: any) {
+export async function middleware(request: any, response: any) {
+  const session = await auth();
   // Allow CORS for specific origins (replace with your frontend origin)
-  const allowedOrigins = ['https://ae38-175-100-33-86.ngrok-free.app'];
+  const allowedOrigins = ['https://agenliga.cloud'];
 
   const origin = request.headers.origin;
 

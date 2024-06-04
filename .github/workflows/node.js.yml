@@ -11,39 +11,46 @@ jobs:
     strategy:
       matrix:
         node-version: [20.14.0]
-    env:
-      NEXT_PUBLIC_DOMAIN: http://localhost:3000
-      NEXT_PUBLIC_API_DOMAIN: http://localhost:3000/api
-      DATABASE_URL: mongodb+srv://tom:2p1ik2swjSCvOulF@bookit.xknf1.mongodb.net/al?retryWrites=true&w=majority
-      AUTH_SECRET: UJHo7DqvtDCLVCiPHl5fsAryaWPmm684yEH3DpVzoj8=
-      NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: tommy08
-      AUTH_TRUST_HOST: http://localhost:3000
-      NEXTAUTH_URL: http://localhost:3000
-      GOOGLE_ID: ${{secrets.GOOGLE_ID}}
-      GOOGLE_SECRET: ${{secrets.GOOGLE_SECRET}}
-      GITHUB_ID: ${{secrets.GITHUB_ID}}
-      GITHUB_SECRET: ${{secrets.GITHUB_SECRET}}
-      CLOUDINARY_API_SECRET: ${{secrets.CLOUDINARY_API_SECRET}}
-      CLOUDINARY_API_KEY: ${{secrets.CLOUDINARY_API_KEY}}
-      CLOUDINARY_CLOUD_NAME: tommy08
-      AUTH_FACEBOOK_ID: ${{secrets.AUTH_FACEBOOK_ID}}
-      AUTH_FACEBOOK_SECRET: ${{secrets.AUTH_FACEBOOK_SECRET}}
 
     steps:
-      - name: Read a next public domain
-        run: echo "My NEXT_PUBLIC_DOMAIN value is ${{env.NEXT_PUBLIC_DOMAIN}}"
-      - name: Read a next Auth Secret
-        run: echo "My NEXT_PUBLIC_DOMAIN value is ${{env.AUTH_SECRET}}"
-      - name: Read a Database Url
-        run: echo "My NEXT_PUBLIC_DOMAIN value is ${{env.DATABASE_URL}}"
-      - uses: actions/checkout@v4
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      - run: npm ci
-      - run: npm run build --if-present
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Create env file
+        run: |
+          echo "NEXT_PUBLIC_DOMAIN=${{ secrets.NEXT_PUBLIC_DOMAIN }}" >> .env.production
+          echo "NEXT_PUBLIC_API_DOMAIN=${{ secrets.NEXT_PUBLIC_API_DOMAIN }}" >> .env.production
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env.production
+          echo "AUTH_SECRET=${{ secrets.AUTH_SECRET }}" >> .env.production
+          echo "NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=${{ secrets.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME }}" >> .env.production
+          echo "AUTH_TRUST_HOST=${{ secrets.AUTH_TRUST_HOST }}" >> .env.production
+          echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }}" >> .env.production
+          echo "GOOGLE_ID=${{ secrets.GOOGLE_ID }}" >> .env.production
+          echo "GOOGLE_SECRET=${{ secrets.GOOGLE_SECRET }}" >> .env.production
+          echo "ITS_GITHUB_ID=${{ secrets.ITS_GITHUB_ID }}" >> .env.production
+          echo "ITS_GITHUB_SECRET=${{ secrets.ITS_GITHUB_SECRET }}" >> .env.production
+          echo "CLOUDINARY_API_SECRET=${{ secrets.CLOUDINARY_API_SECRET }}" >> .env.production
+          echo "CLOUDINARY_API_KEY=${{ secrets.CLOUDINARY_API_KEY }}" >> .env.production
+          echo "CLOUDINARY_CLOUD_NAME=${{ secrets.CLOUDINARY_CLOUD_NAME }}" >> .env.production
+          echo "AUTH_FACEBOOK_ID=${{ secrets.AUTH_FACEBOOK_ID }}" >> .env.production
+          echo "AUTH_FACEBOOK_SECRET=${{ secrets.AUTH_FACEBOOK_SECRET }}" >> .env.production
+        working-directory: ${{ github.workspace }}
+
+      - name: Print contents of .env.production file
+        run: cat .env.production
+
+      - name: Build
+        run: npm run build --if-present
+
       - name: Change Directory
         run: cd /home/tom/actions-runner/_work/agliga/agliga
-      - run: pm2 restart 1
+      - run: pm2 restart 0

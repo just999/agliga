@@ -274,7 +274,7 @@ const SoccerModal = () => {
       )}
 
       <SelectInput
-        label='team home'
+        label='teamHome'
         isMulti={false}
         id='teamHome'
         register={register}
@@ -311,7 +311,7 @@ const SoccerModal = () => {
       )}
 
       <SelectInput
-        label='team away'
+        label='teamAway'
         isMulti={false}
         id='teamAway'
         register={register}

@@ -173,7 +173,7 @@ const AuthModal = () => {
       <Input
         id='email'
         type='email'
-        label='Email'
+        label='email'
         disabled={isLoading}
         register={register}
         errors={errors}
@@ -196,7 +196,7 @@ const AuthModal = () => {
               ? 'text'
               : 'password'
           }
-          label='Password'
+          label='password'
           disabled={isLoading}
           register={register}
           errors={errors}
@@ -233,7 +233,7 @@ const AuthModal = () => {
           <Input
             id='phone'
             type='tel'
-            label='Tel'
+            label='phone'
             disabled={isLoading}
             register={register}
             errors={errors}
@@ -249,7 +249,7 @@ const AuthModal = () => {
 
           <SelectInput
             register={register}
-            label='bank player'
+            label='bank'
             id='bank'
             value={watch('bank')}
             isMulti={false}
@@ -270,7 +270,7 @@ const AuthModal = () => {
           <Input
             id='accountNumber'
             type='tel'
-            label='Nomor Rekening'
+            label='accountNumber'
             disabled={isLoading}
             register={register}
             errors={errors}
@@ -288,7 +288,7 @@ const AuthModal = () => {
           <Input
             id='name'
             type='text'
-            label='Nama sesuai dengan rek bank'
+            label='name'
             disabled={isLoading}
             register={register}
             errors={errors}
