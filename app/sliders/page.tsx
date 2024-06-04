@@ -94,7 +94,7 @@ const SlidersPage = () => {
               >
                 <BiSolidEdit size={18} />
               </Button>
-              {/* <pre className='text-xl '>{JSON.stringify(img, null, 2)}</pre> */}
+              <pre className='text-xl '>{JSON.stringify(img, null, 2)}</pre>
             </span>
           ))}
         <Button
