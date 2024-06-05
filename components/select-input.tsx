@@ -116,7 +116,7 @@ const SelectInput = ({
         )}
         options={options() as any}
         components={animatedComponents}
-        isMulti={multi}
+        isMulti={isMulti}
         value={value}
         defaultValue={defaultValue}
         onChange={(value) => onChange(value as SelectInputValue)}

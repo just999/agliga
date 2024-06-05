@@ -1,7 +1,7 @@
 'use client';
 
 import axios from 'axios';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import Modal from './modal';
 import Heading from '../heading';
@@ -13,9 +13,8 @@ import useModal from '@/hooks/use-modal';
 import Images from '../candidate-form/images';
 import { InitialPostProps } from '@/types';
 import { useSliderImages } from '@/hooks/use-get-slider-images';
-import image from 'next/image';
-import { control } from 'leaflet';
-import { id } from 'date-fns/locale';
+import { useImageStore } from '@/store/use-image-store';
+import ClientOnly from '@/lib/client-only';
 
 type SliderModalProps = {};
 export const initialFormState = {
@@ -30,10 +29,17 @@ const SliderModal = () => {
   const [isLoading, setIsLoading] = useState(false);
   // const params = useParams();
   const router = useRouter();
-  const { images, setImages } = useSliderImages();
-  const { modalType, isOpen, onOpen, onClose } = useModal();
+  const { images, setImages } = useImageStore();
+  const { modalType, isOpen, onOpen, onClose, img } = useModal();
+  useEffect(() => {
+    if (modalType === 'edit-slider' && img) {
+      const image = img.images;
+      setImages(image);
+    }
+  }, [img, modalType, setImages]);
 
   // const id = params.id?.toString();
+  const id = img?.id;
 
   let initialSliderImage;
   if (modalType === 'add-slider') {
@@ -59,16 +65,15 @@ const SliderModal = () => {
     defaultValues: initialSliderImage,
   });
 
-  // const setCustomValue = (id: string, value: any) => {
-  //   setValue(id, value, {
-  //     shouldDirty: true,
-  //     shouldTouch: true,
-  //     shouldValidate: true,
-  //   });
-  // };
+  const setCustomValue = (id: string, value: any) => {
+    setValue(id, value, {
+      shouldDirty: true,
+      shouldTouch: true,
+      shouldValidate: true,
+    });
+  };
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log('🚀 ~ SliderModal ~ data:', data);
     setIsLoading(true);
     const formData = new FormData();
     if (data.img) {
@@ -115,6 +120,23 @@ const SliderModal = () => {
       } catch (err) {
         console.error(err);
       }
+    } else if (modalType === 'delete-slider') {
+      try {
+        axios
+          .delete(`/api/sliders/${id}`)
+          .then(() => {
+            toast.success('Slider successfully deleted');
+            router.refresh();
+            reset();
+            onClose();
+          })
+          .catch((err) => {
+            toast.error('Something went wrong', err);
+          })
+          .finally(() => setIsLoading(false));
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
 
@@ -150,18 +172,20 @@ const SliderModal = () => {
   );
 
   return (
-    <Modal
-      isOpen={
-        isOpen && (modalType === 'add-slider' || modalType === 'edit-slider')
-      }
-      onClose={handleCloseClearForm}
-      title={modalType === 'add-slider' ? 'Add-Image' : 'Edit-Image'}
-      onSubmit={handleSubmit(onSubmit)}
-      actionLabel='Submit'
-      disabled={isLoading}
-      body={bodyContent}
-      // footer={footerContent}
-    />
+    <ClientOnly>
+      <Modal
+        isOpen={
+          isOpen && (modalType === 'add-slider' || modalType === 'edit-slider')
+        }
+        onClose={handleCloseClearForm}
+        title={modalType === 'add-slider' ? 'Add-Image' : 'Edit-Image'}
+        onSubmit={handleSubmit(onSubmit)}
+        actionLabel='Submit'
+        disabled={isLoading}
+        body={bodyContent}
+        // footer={footerContent}
+      />
+    </ClientOnly>
   );
 };
 

@@ -107,7 +107,7 @@ const Hero = ({ images }: HeroProps) => {
               <div className='custom-swiper-button-next'>
                 <BiChevronRight
                   size={38}
-                  className='text-gray-600/70 hover:text-black '
+                  className='text-gray-600/70 hover:text-black p '
                 />
               </div>
               <div className='custom-swiper-button-prev'>

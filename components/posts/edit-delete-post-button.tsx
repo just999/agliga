@@ -8,7 +8,7 @@ import { PostProps } from '@/types';
 import VerticalDropdown from '../ui/vertical-dropdown';
 
 type EditDeletePostButtonProps = {
-  item: PostProps;
+  item?: PostProps;
 };
 
 const EditDeletePostButton = ({ item }: EditDeletePostButtonProps) => {
@@ -16,7 +16,7 @@ const EditDeletePostButton = ({ item }: EditDeletePostButtonProps) => {
   const userRole = data?.user.curUser.role;
   return (
     <span className='flex flex-row w-full justify-between items-center mb-5 '>
-      <h1 className='text-2xl font-bold '>{item.title}</h1>
+      <h1 className='text-2xl font-bold '>{item?.title}</h1>
       {status === 'authenticated' && userRole === 'admin' && (
         <VerticalDropdown item={item} />
         // <div className='flex justify-center gap-4 items-center '>

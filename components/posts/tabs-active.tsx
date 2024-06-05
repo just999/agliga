@@ -4,7 +4,7 @@
 import { cn } from '@/lib/utils';
 import { Button } from '../ui/button';
 
-import { anything, PostProps, tabsData } from '@/types';
+import { PostProps, tabsData } from '@/types';
 import SidePostItem from './side-post-item';
 import { useState } from 'react';
 // import { id } from 'date-fns/locale';

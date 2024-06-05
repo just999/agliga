@@ -20,6 +20,7 @@ import useModal from '@/hooks/use-modal';
 import { MdOutlineAddPhotoAlternate } from 'react-icons/md';
 
 import usePostsStore from '@/store/use-posts-store';
+import { FcEmptyTrash } from 'react-icons/fc';
 
 type ImagesProps = {
   control: Control;
@@ -48,7 +49,6 @@ const Images = ({
   const { ref: registerRef, ...rest } = register('img');
   const hiddenFileInput = useRef<HTMLInputElement | null>(null);
   const { modalType, img } = useModal();
-  console.log('🚀 ~ img:', img);
   const { item } = usePostsStore();
   useEffect(() => {
     if (item.img) {
@@ -74,6 +74,10 @@ const Images = ({
     if (hiddenFileInput.current) {
       hiddenFileInput.current.click();
     }
+  };
+
+  const onRemoveImage = () => {
+    setPreview('');
   };
 
   const handleAddImages = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -124,21 +128,35 @@ const Images = ({
             Post image{' '}
           </AvatarFallback>
         </Avatar>
-
-        <div>
-          {(modalType === 'post' ||
-            modalType === 'edit-slider' ||
-            modalType === 'add-slider') && (
-            <Button
-              variant='ghost'
-              size='sm'
-              type='button'
-              onClick={onAddImages}
-              className='bg-sky-50 border text-slate-400 border-sky-200 border-solid rounded-full w-6 h-6'
-            >
-              <MdOutlineAddPhotoAlternate />
-            </Button>
-          )}
+        <div className='flex flex-col gap-4 w-full '>
+          <div className='w-full '>
+            {modalType === 'post' && (
+              <Button
+                variant='ghost'
+                size='sm'
+                type='button'
+                onClick={onRemoveImage}
+                className='bg-sky-50 border text-slate-400 border-sky-200 border-solid rounded-full  w-1/6 h-6 cursor-pointer'
+              >
+                <FcEmptyTrash />{' '}
+                <span className='text-[10px] pl-2 '>Delete</span>
+              </Button>
+            )}
+          </div>
+          <div>
+            {modalType === 'post' && (
+              <Button
+                variant='ghost'
+                size='sm'
+                type='button'
+                onClick={onAddImages}
+                className='bg-sky-50 border text-slate-400 border-sky-200 border-solid rounded-full  w-1/6 h-6 cursor-pointer'
+              >
+                <MdOutlineAddPhotoAlternate />{' '}
+                <span className='text-[10px] pl-2 '>Edit</span>
+              </Button>
+            )}
+          </div>
         </div>
       </div>
     </>

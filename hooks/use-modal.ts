@@ -33,6 +33,7 @@ type ModalStore = {
     | 'validateUser'
     | 'add-slider'
     | 'edit-slider'
+    | 'delete-slider'
     | 'deleteSchedule'
     | null;
   isOpen: boolean;
@@ -60,6 +61,7 @@ type ModalStore = {
       | 'validateUser'
       | 'add-slider'
       | 'edit-slider'
+      | 'delete-slider'
       | 'deleteSchedule',
     id?: string | null,
     title?: string | undefined,
@@ -98,6 +100,7 @@ const useModal = create<ModalStore>((set) => ({
       | 'validateUser'
       | 'add-slider'
       | 'edit-slider'
+      | 'delete-slider'
       | 'editSoccer',
     id = null,
     title,
