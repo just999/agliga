@@ -4,11 +4,9 @@
 import Modal from './modal';
 import Heading from '../heading';
 import { useRouter } from 'next/navigation';
-import { useParams } from 'next/navigation';
+
 import toast from 'react-hot-toast';
 import useModal from '@/hooks/use-modal';
-import { id } from 'date-fns/locale';
-import router from 'next/router';
 
 // type DeleteModalProps = {
 //   title?: string | undefined;
@@ -19,17 +17,7 @@ const DeleteModal = () => {
   // const params = useParams();
   // const id = params.id;
   const { modalType, onOpen, isOpen, onClose, id, title } = useModal();
-  const bodyContent = (
-    <div className='flex flex-col gap-1'>
-      {title && (
-        <Heading
-          title={`${title}?`}
-          subtitle={`Are you sure you want to ${title}?, this action is reversible!`}
-        />
-      )}
-      {/* {modalType} */}
-    </div>
-  );
+
   const onDelete = async () => {
     if (modalType === 'delete') {
       try {
@@ -65,13 +53,50 @@ const DeleteModal = () => {
       } catch (err) {
         console.error('Error fetching soccer', err);
       }
+    } else if (modalType === 'delete-slider') {
+      try {
+        const res = await fetch(`/api/sliders/${id}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }).then((res) => {
+          if (res.status === 200) {
+            toast.success('images successfully deleted');
+            onClose();
+            router.refresh();
+          }
+        });
+        // if (res.status === 200) {
+        //   toast.success('Images successfully deleted');
+        //   onClose();
+        //   router.refresh();
+        //   router.push('/sliders');
+        // }
+      } catch (err) {
+        console.error('Error fetching image', err);
+      }
     }
   };
+
+  const bodyContent = (
+    <div className='flex flex-col gap-1'>
+      {title && (
+        <Heading
+          title={`${title}?`}
+          subtitle={`Are you sure you want to ${title}?, this action is reversible!`}
+        />
+      )}
+    </div>
+  );
 
   return (
     <Modal
       isOpen={
-        isOpen && (modalType === 'delete' || modalType === 'deleteSchedule')
+        isOpen &&
+        (modalType === 'delete' ||
+          modalType === 'deleteSchedule' ||
+          modalType === 'delete-slider')
       }
       onClose={onClose}
       onSubmit={onDelete}

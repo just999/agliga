@@ -25,11 +25,13 @@ import {
 import { PiUserPlus } from 'react-icons/pi';
 import { usePathname } from 'next/navigation';
 import useModal from '@/hooks/use-modal';
-import { GrUserAdmin } from 'react-icons/gr';
+import { GrLanguage, GrUserAdmin } from 'react-icons/gr';
 import { capitalizeFirstCharacter, cn } from '@/lib/utils';
 import { TbScoreboard } from 'react-icons/tb';
 import usePostsStore, { postItems } from '@/store/use-posts-store';
 import ClientOnly from '@/lib/client-only';
+import { Button } from '../ui/button';
+import LanguageDropdown from '../language-dropdown';
 
 type NavbarProps = {
   currentUser?: SafeUser | null;
@@ -208,13 +210,13 @@ const Navbar = ({ currentUser, className }: NavbarProps) => {
             <MobileSidebar routes={routes} />
             <div className='hidden md:flex flex-1 flex-row items-center justify-between gap-3 md:gap-0 '>
               <Logo
-                className='w-auto h-12 '
+                className='w-10 h-auto '
                 styles={{ width: '10%', height: 'auto' }}
               />
               {/* <Search /> */}
               <DepoWdMenu routes={routes} />
               {/* <News /> */}
-              languages
+              <LanguageDropdown />
               <UserMenu
                 currentUser={currentUser}
                 status={status}

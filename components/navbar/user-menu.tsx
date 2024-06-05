@@ -35,7 +35,7 @@ const UserMenu = ({ currentUser, status, routes }: UserMenuProps) => {
       <div className='flex flex-row items-center gap-3 '>
         {status !== 'authenticated' && (
           <div
-            onClick={() => onOpen('login')}
+            onClick={() => onOpen('register')}
             className='hidden   md:block  text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 hover:shadow-md  transition cursor-pointer '
           >
             <span className=' flex flex-row gap-1 items-center justify-end '>

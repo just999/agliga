@@ -30,7 +30,15 @@ const SliderModal = () => {
   // const params = useParams();
   const router = useRouter();
   const { images, setImages } = useImageStore();
-  const { modalType, isOpen, onOpen, onClose, img } = useModal();
+  const {
+    modalType,
+    isOpen,
+    onOpen,
+    setImg,
+    onClose,
+    img,
+    id: imgId,
+  } = useModal();
   useEffect(() => {
     if (modalType === 'edit-slider' && img) {
       const image = img.images;
@@ -141,11 +149,9 @@ const SliderModal = () => {
   };
 
   const handleCloseClearForm = () => {
+    // setImages('');
     onClose();
-    setValue('slug', '');
-    setValue('description', '');
-
-    reset();
+    // reset();
   };
 
   const bodyContent = (
@@ -161,6 +167,7 @@ const SliderModal = () => {
         setValue={setValue}
         required
       />
+      <span>{imgId}</span>
       {errors.slug && (
         <span className='text-sm text-red-500 '>
           <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
@@ -177,6 +184,7 @@ const SliderModal = () => {
         isOpen={
           isOpen && (modalType === 'add-slider' || modalType === 'edit-slider')
         }
+        // onClose={handleCloseClearForm}
         onClose={handleCloseClearForm}
         title={modalType === 'add-slider' ? 'Add-Image' : 'Edit-Image'}
         onSubmit={handleSubmit(onSubmit)}

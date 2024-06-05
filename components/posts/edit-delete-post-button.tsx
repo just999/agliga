@@ -1,24 +1,38 @@
 'use client';
 
-import { BsTrash, BsPen } from 'react-icons/bs';
-import { Button } from '../ui/button';
-import useModal from '@/hooks/use-modal';
 import { useSession } from 'next-auth/react';
 import { PostProps } from '@/types';
 import VerticalDropdown from '../ui/vertical-dropdown';
+import { Slider } from '@prisma/client';
+
+import { cn } from '@/lib/utils';
 
 type EditDeletePostButtonProps = {
   item?: PostProps;
+  img?: Slider;
+  className?: string;
+  className2?: string;
 };
 
-const EditDeletePostButton = ({ item }: EditDeletePostButtonProps) => {
+const EditDeletePostButton = ({
+  item,
+  img,
+  className,
+  className2,
+}: EditDeletePostButtonProps) => {
   const { data, status } = useSession();
   const userRole = data?.user.curUser.role;
+
   return (
-    <span className='flex flex-row w-full justify-between items-center mb-5 '>
+    <span
+      className={cn(
+        'flex flex-row w-full justify-between items-center mb-5',
+        className
+      )}
+    >
       <h1 className='text-2xl font-bold '>{item?.title}</h1>
       {status === 'authenticated' && userRole === 'admin' && (
-        <VerticalDropdown item={item} />
+        <VerticalDropdown item={item} img={img} className={className2} />
         // <div className='flex justify-center gap-4 items-center '>
         //   <Button
         //     variant='outline'

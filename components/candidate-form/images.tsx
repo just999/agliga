@@ -20,7 +20,7 @@ import useModal from '@/hooks/use-modal';
 import { MdOutlineAddPhotoAlternate } from 'react-icons/md';
 
 import usePostsStore from '@/store/use-posts-store';
-import { FcEmptyTrash } from 'react-icons/fc';
+import { FcAddImage, FcEmptyTrash, FcEditImage } from 'react-icons/fc';
 
 type ImagesProps = {
   control: Control;
@@ -48,16 +48,16 @@ const Images = ({
   const [preview, setPreview] = useState<string>('');
   const { ref: registerRef, ...rest } = register('img');
   const hiddenFileInput = useRef<HTMLInputElement | null>(null);
-  const { modalType, img } = useModal();
+  const { modalType, img, id } = useModal();
   const { item } = usePostsStore();
   useEffect(() => {
     if (item.img) {
       setPreview(item.img);
     }
-    if (text?.img === '') {
+    if (text?.img === '' || modalType === null) {
       setPreview('');
     }
-  }, [item.img, text]);
+  }, [item.img, modalType, text]);
 
   useEffect(() => {
     if (modalType === 'edit-slider' && img) {
@@ -69,15 +69,10 @@ const Images = ({
   if (watch) {
     watchRes = watch('img');
   }
-
   const onAddImages = () => {
     if (hiddenFileInput.current) {
       hiddenFileInput.current.click();
     }
-  };
-
-  const onRemoveImage = () => {
-    setPreview('');
   };
 
   const handleAddImages = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -135,16 +130,24 @@ const Images = ({
                 variant='ghost'
                 size='sm'
                 type='button'
-                onClick={onRemoveImage}
-                className='bg-sky-50 border text-slate-400 border-sky-200 border-solid rounded-full  w-1/6 h-6 cursor-pointer'
+                onClick={onAddImages}
+                className='bg-sky-50 border text-slate-400 border-sky-200 border-solid rounded-full  w-1/4 h-6 cursor-pointer'
               >
-                <FcEmptyTrash />{' '}
-                <span className='text-[10px] pl-2 '>Delete</span>
+                {modalType === 'add-slider' ? (
+                  <span>
+                    <FcAddImage size={18} />
+                  </span>
+                ) : (
+                  <FcEditImage />
+                )}
+                <span className='text-[10px] pl-2 '>
+                  {modalType === 'add-slider' ? 'add image' : 'Edit'}
+                </span>
               </Button>
             )}
           </div>
           <div>
-            {modalType === 'post' && (
+            {(modalType === 'post' || modalType === 'edit') && (
               <Button
                 variant='ghost'
                 size='sm'
@@ -153,7 +156,9 @@ const Images = ({
                 className='bg-sky-50 border text-slate-400 border-sky-200 border-solid rounded-full  w-1/6 h-6 cursor-pointer'
               >
                 <MdOutlineAddPhotoAlternate />{' '}
-                <span className='text-[10px] pl-2 '>Edit</span>
+                <span className='text-[10px] pl-2 '>
+                  {modalType === 'post' ? 'add' : 'edit'}
+                </span>
               </Button>
             )}
           </div>

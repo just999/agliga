@@ -115,6 +115,7 @@ export async function DELETE(
   // }
 
   try {
+    revalidatePath('/sliders');
     const deletedSliderImg = await db.slider.delete({
       where: { id: id },
     });

@@ -1,6 +1,7 @@
 import getCurrentUser from '@/actions/get-user';
 import cloudinary from '@/lib/cloudinary';
 import { db } from '@/lib/db';
+import { revalidatePath } from 'next/cache';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
@@ -47,6 +48,7 @@ export async function POST(req: Request) {
       imageSliderPromise.push(result.secure_url);
       const uploadedImages = await Promise.all(imageSliderPromise);
       newSliderImage.images = uploadedImages[0];
+      revalidatePath('/sliders');
     }
 
     const createdSliderImage = await db.slider.create({

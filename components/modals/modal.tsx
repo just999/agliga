@@ -51,7 +51,7 @@ const Modal = ({
 
     setTimeout(() => {
       onClose();
-    }, 300);
+    }, 100);
   }, [disabled, onClose]);
 
   const handleSubmit = useCallback(() => {

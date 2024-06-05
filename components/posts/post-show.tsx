@@ -1,3 +1,5 @@
+'use server';
+
 import Image from 'next/image';
 import { BsDot, BsTrash, BsPen } from 'react-icons/bs';
 import { Button } from '../ui/button';
@@ -19,7 +21,6 @@ type PostShowProps = {
 
 const PostShow = ({ item }: PostShowProps) => {
   if (!item) return 'no post';
-
   // const slug = item.category;
 
   return (

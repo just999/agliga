@@ -37,7 +37,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Label } from '../ui/label';
 import Images from '../candidate-form/images';
 import ImagePreview from '../image-preview';
-import usePostsStore from '@/store/use-posts-store';
+import usePostsStore, { postItems } from '@/store/use-posts-store';
 
 type ImageChangeHandler = (files: FileList) => void;
 
@@ -229,6 +229,7 @@ const PostModal = () => {
     value: '',
   };
 
+  console.log('🚀 ~ PostModal ~ text:', text);
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
 
@@ -307,17 +308,15 @@ const PostModal = () => {
       author: '',
       brief: '',
     };
-    onClose();
     setText(initialFormState);
-    clear();
+    setItem(postItems);
     reset();
+    onClose();
+    // clear();
   };
 
   const clear = () => {
-    setText((prev) => ({
-      ...prev,
-      imagesPrev: '',
-    }));
+    setText({ title: '', img: '', category: '', author: '', brief: '' });
   };
 
   // console.log('imagesPrev', imagesPrev, text.img);

@@ -51,7 +51,7 @@ export default async function RootLayout({
   const session = await auth();
   return (
     <SessionProvider session={session}>
-      <html lang='en' className='relative '>
+      <html lang='en' className='relative'>
         <body
           className={cn(
             'flex flex-col   overflow-x-hidden ',

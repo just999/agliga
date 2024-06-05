@@ -7,28 +7,32 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
 } from '@radix-ui/react-dropdown-menu';
-import { MoreVertical, Pencil } from 'lucide-react';
+import { MoreVertical } from 'lucide-react';
 import { Button } from '../ui/button';
-import Link from 'next/link';
+
 import { PostProps, SafeUser } from '@/types';
-import { BiCommentDots, BiDislike, BiLike, BiPencil } from 'react-icons/bi';
-import useFavorite from '@/hooks/use-favorite';
-import { useStore } from 'zustand';
+
 // import useFavoriteStore from '@/store/use-favorite-store';
 import { BsTrash, BsPen } from 'react-icons/bs';
-import useModal from '@/hooks/use-modal';
+import useModal, { ImageSlider } from '@/hooks/use-modal';
 import { useParams } from 'next/navigation';
+import { Slider } from '@prisma/client';
+import { cn } from '@/lib/utils';
 
 type VerticalDropdownProps = {
   item?: PostProps;
   currentUser?: SafeUser;
   title?: string;
+  img?: Slider;
+  className?: string;
 };
 
 const VerticalDropdown = ({
   item,
   currentUser,
   title,
+  img,
+  className,
 }: VerticalDropdownProps) => {
   const params = useParams();
   const id = typeof params.id === 'string' ? params.id : item?.id;
@@ -51,23 +55,31 @@ const VerticalDropdown = ({
   //   setIsFavorited(false);
   //   toggleDislike(e);
   // };
-  const { onOpen } = useModal();
+  const { onOpen, modalType, setImg } = useModal();
+
+  const handleEditSlider = (img: any) => {
+    onOpen('edit-slider');
+    setImg('edit-slider', img);
+  };
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+      <DropdownMenuTrigger asChild className={cn(className, 'z-99')}>
         <Button
           variant='ghost'
-          className='h-4 mr-4 bg-neutral-100 p-0 focus:outline-none'
+          className='h-4 mr-4  p-0 focus:outline-none hover:text-emerald-700 hover:bg-stone-200'
         >
           <span className='sr-only '>Open menu</span>
-          <MoreVertical className='h-5 w-5 text-slate-500 hover:text-emerald-700 ' />
+          <MoreVertical className='h-5 w-5 text-slate-500  ' />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className='w-full flex flex-col justify-start align-middle text-xs text-center bg-stone-200 rounded-lg px-2'>
+      <DropdownMenuContent
+        align='end'
+        className='w-full flex flex-col bg-slate-200 justify-center items-center text-xs text-center  rounded-lg  mx-2 my-1'
+      >
         <DropdownMenuLabel></DropdownMenuLabel>
         <div>
           <DropdownMenuItem className='w-full focus:outline-none'>
-            <div className='flex flex-row justify-between gap-6 mx-4 my-2 '>
+            <div className='flex flex-row justify-start  gap-2 mx-2 my-1 '>
               {/* <Button
                 variant='outline'
                 size='sm'
@@ -75,12 +87,26 @@ const VerticalDropdown = ({
                 onClick={() => onOpen('delete', item.id)}
                 className='text-neutral-400 hover:text-black hover:font-bold hover:bg-red-400/20 hover:shadow-lg bg-slate-100 '
               > */}
-              <BsTrash
-                className='text-neutral-400 h-4 w-4 m-0 p-0 cursor-pointer hover:text-red-500 hover:font-bold hover:shadow-lg '
-                onClick={() =>
-                  onOpen('delete', item?.id, (title = 'Delete post'))
-                }
-              />
+              {item?.id && (
+                <BsTrash
+                  className='text-neutral-400 h-4 w-4 m-0 p-0 cursor-pointer hover:text-red-500 hover:font-bold hover:shadow-lg '
+                  onClick={() =>
+                    onOpen('delete', item?.id, (title = 'Delete post'))
+                  }
+                />
+              )}
+              {img?.id && (
+                <BsTrash
+                  className='text-gray-700 h-3 w-3 m-0 p-0 cursor-pointer hover:text-red-500 hover:font-bold hover:shadow-lg '
+                  onClick={() =>
+                    onOpen(
+                      'delete-slider',
+                      img?.id,
+                      (title = 'Delete image slider')
+                    )
+                  }
+                />
+              )}
               {/* </Button> */}
               {/* <Button
                 onClick={() => onOpen('edit', item.id)}
@@ -89,10 +115,18 @@ const VerticalDropdown = ({
                 type='button'
                 className='text-neutral-400 hover:text-black hover:font-bold hover:bg-sky-400/20 hover:shadow-lg  bg-slate-100  '
               > */}
-              <BsPen
-                className='text-neutral-400  hover:font-bold h-4 w-4 m-0 cursor-pointer hover:text-sky-500  hover:shadow-lg'
-                onClick={() => onOpen('edit', id, (title = 'Edit post'))}
-              />
+              {item?.id && (
+                <BsPen
+                  className='text-neutral-400  hover:font-bold h-4 w-4 m-0 cursor-pointer hover:text-sky-500  hover:shadow-lg'
+                  onClick={() => onOpen('edit', id, (title = 'Edit post'))}
+                />
+              )}
+              {img?.id && (
+                <BsPen
+                  className='text-gray-700  hover:font-bold h-3 w-3 m-0 cursor-pointer hover:text-sky-500  hover:shadow-lg'
+                  onClick={() => handleEditSlider(img)}
+                />
+              )}
               {/* </Button> */}
             </div>
           </DropdownMenuItem>
