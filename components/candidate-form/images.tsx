@@ -130,7 +130,7 @@ const Images = ({
         </Avatar>
         <div className='flex flex-col gap-4 w-full '>
           <div className='w-full '>
-            {modalType === 'post' && (
+            {(modalType === 'edit-slider' || modalType === 'add-slider') && (
               <Button
                 variant='ghost'
                 size='sm'
