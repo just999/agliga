@@ -45,7 +45,9 @@ const PostItemPage = async ({ params }: PostItemPageProps) => {
                 </Suspense>
               ) : (
                 // <SkeletonLoading className='h-full, w-3/4' />
-                <Loader />
+                <div className='flex flex-col h-full items-center'>
+                  <Loader />
+                </div>
               )}
               <CommentCreateForm postId={id} />
               <CommentList postId={id} />

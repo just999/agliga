@@ -52,9 +52,9 @@ const TabsActive = ({ items }: TabsActiveProps) => {
     <li
       key={tab.id}
       className={cn(
-        'nav-item   rounded-sm mx-auto',
+        'nav-item   rounded-sm mx-auto ',
         tab.active
-          ? ' bg-orange-100/50 w-full border-b-2 border-orange-400'
+          ? ' bg-orange-100/50 w-full border-b-2 border-orange-400 '
           : ' bg-gray-50 w-full'
       )}
     >
@@ -65,7 +65,7 @@ const TabsActive = ({ items }: TabsActiveProps) => {
         type='button'
         className={cn(
           `text-center w-full text-gray-400  nav-link`,
-          tab.active ? 'active text-black' : undefined
+          tab.active ? 'active text-black ring-orange-400' : undefined
         )}
       >
         {tab.name}

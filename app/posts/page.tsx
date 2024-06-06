@@ -38,7 +38,9 @@ const PostItemsPage = async ({ searchParams }: PostItemsPageProps) => {
             {posts.length > 0 ? (
               posts.map((item: PostProps) => (
                 <div className='col-lg-3 col-md-6 ' key={item.id}>
-                  <Suspense fallback={<Loader />}>
+                  <Suspense
+                    fallback={<Loader className='align-middle h-full' />}
+                  >
                     <PostItemOne
                       pageOne={false}
                       large={false}
@@ -49,7 +51,9 @@ const PostItemsPage = async ({ searchParams }: PostItemsPageProps) => {
                 </div>
               ))
             ) : (
-              <Loader />
+              <div className='flex flex-col justify-center items-center '>
+                <Loader />
+              </div>
             )}
           </div>
         </div>

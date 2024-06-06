@@ -216,7 +216,7 @@ const Navbar = ({ currentUser, className }: NavbarProps) => {
               {/* <Search /> */}
               <DepoWdMenu routes={routes} />
               {/* <News /> */}
-              <LanguageDropdown />
+              {/* <LanguageDropdown /> */}
               <UserMenu
                 currentUser={currentUser}
                 status={status}

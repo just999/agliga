@@ -3,14 +3,13 @@
 import { useParams, useRouter } from 'next/navigation';
 import Modal from './modal';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Heading from '../heading';
 import Input from '../ui/input';
 import {
   Controller,
   FieldValues,
   SubmitHandler,
-  useFieldArray,
   useForm,
 } from 'react-hook-form';
 
@@ -26,17 +25,8 @@ import SelectInput from '../select-input';
 import { IconType } from 'react-icons';
 import { InitialPostProps } from '@/types';
 
-import { Button } from '../ui/button';
-
-import { useImageStore } from '@/store/use-image-store';
-import { FcFullTrash } from 'react-icons/fc';
-import { cn, trimFilename } from '@/lib/utils';
-
-import { PlusIcon } from 'lucide-react';
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
-import { Label } from '../ui/label';
 import Images from '../candidate-form/images';
-import ImagePreview from '../image-preview';
+
 import usePostsStore, { postItems } from '@/store/use-posts-store';
 
 type ImageChangeHandler = (files: FileList) => void;
@@ -228,8 +218,6 @@ const PostModal = () => {
     icon: '',
     value: '',
   };
-
-  console.log('🚀 ~ PostModal ~ text:', text);
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
 

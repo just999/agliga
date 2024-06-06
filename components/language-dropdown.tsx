@@ -29,12 +29,16 @@ const LanguageDropdown = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant='ghost' size='sm'>
+        <Button
+          variant='ghost'
+          size='sm'
+          className='shadow-lg bg-stone-50 h-6 px-2 rounded-full'
+        >
           <span className='text-[10px] mr-2'>Eng</span>
           <GrLanguage />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className='w-56'>
+      <DropdownMenuContent className='w-auto'>
         <Select>
           <SelectTrigger className='w-[180px] text-[10px] h-6 '>
             <SelectValue placeholder='🌐  Language' className='text-center' />
