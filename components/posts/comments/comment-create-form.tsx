@@ -49,7 +49,7 @@ export default function CommentCreateForm({
           placeholder='Enter your comment'
           // isInvalid={!!formState.errors.content}
           // errorMessage={formState.errors.content?.join(', ')}
-          className='w-full bg-stone-100 drop-shadow-xl text-gray-800 2xl:w-[750px] xl:w-3/4 border-0 focus:border-0 outline-none lg:w-full'
+          className='w-full focus:before:border-gray-900 bg-stone-100 drop-shadow-xl text-gray-800 sm:w-full 2xl:w-full xl:w-3/4 border-0 focus:border-0 outline-none lg:w-full'
         />
 
         {formState.errors._form ? (

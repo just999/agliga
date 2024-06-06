@@ -248,3 +248,28 @@ body,
   border-color: none !important;
   border-width: 0px !important;
 }
+
+.peer:focus ~ .peer-focus\:after\:border-gray-900:after {
+  /* width: 100%; */
+  border-color: red !important;
+}
+
+.peer:focus ~ .peer-focus\:before\:border-gray-900:before {
+  border-color: blue;
+}
+
+.peer:focus ~ .peer-focus\:before\:border-gray-900:before {
+  content: '';
+  border-color: pink;
+}
+
+.peer:focus ~ .peer-focus\:before\:border-t-2:before {
+  border-top-width: 8px;
+}
+*,
+:before,
+:after {
+  border-width: 100%;
+  border-style: solid;
+  --tw-content: '';
+}

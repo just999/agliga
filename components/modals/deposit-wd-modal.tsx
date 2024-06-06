@@ -25,8 +25,6 @@ const DepositWdModal = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const { data: session, status } = useSession();
-  console.log('🚀 ~ DepositWdModal ~ session:', session, status);
-
   // const [isMounted, setIsMounted] = useState(false);
 
   // useEffect(() => {
@@ -43,7 +41,6 @@ const DepositWdModal = () => {
   if (modalType === 'depo' && session) {
     const email = session.user.curUser.email;
     const bank = session.user.curUser.bank;
-    console.log('🚀 ~ DepositWdModal ~ bank:', bank);
     const accountNumber = session.user.curUser.accountNumber;
     const name = session.user.curUser.name;
 
@@ -226,8 +223,6 @@ const DepositWdModal = () => {
   ) {
     dynamicLabel = '';
   }
-  console.log('🚀 ~ DepositWdModal ~ dynamicLabel:', dynamicLabel);
-
   const bodyContent = (
     <div className='flex flex-col gap-2'>
       <Heading title={modalType === 'depo' ? 'Deposit' : 'Wd'} subtitle={''} />
