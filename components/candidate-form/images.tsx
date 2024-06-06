@@ -123,8 +123,8 @@ const Images = ({
             Post image{' '}
           </AvatarFallback>
         </Avatar>
-        <div className='flex flex-col gap-4 w-full '>
-          <div className='w-full '>
+        <div className='flex flex-col gap-4 w-1/2 '>
+          <div className='w-full left-2 '>
             {(modalType === 'edit-slider' || modalType === 'add-slider') && (
               <Button
                 variant='ghost'
@@ -153,10 +153,10 @@ const Images = ({
                 size='sm'
                 type='button'
                 onClick={onAddImages}
-                className='bg-sky-50 border text-slate-400 border-sky-200 border-solid rounded-full  w-1/6 h-6 cursor-pointer'
+                className='bg-sky-50 border text-slate-400 border-sky-200 border-solid rounded-full  w-1/4 h-6 cursor-pointer'
               >
-                <MdOutlineAddPhotoAlternate />{' '}
-                <span className='text-[10px] pl-2 '>
+                <MdOutlineAddPhotoAlternate size={14} />{' '}
+                <span className='text-[10px] px-2 '>
                   {modalType === 'post' ? 'add' : 'edit'}
                 </span>
               </Button>
