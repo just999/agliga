@@ -95,13 +95,15 @@ const Input: React.FC<InputProps> = ({
           placeholder={placeholder}
           type={type}
           className={cn(
-            `peer w-full py-2  font-light bg-stone-100  border rounded-md outline-none transition  disabled:opacity-70 disabled:cursor-not-allowed`,
+            `peer w-full py-2  font-light bg-stone-100  border rounded-md outline-none transition  disabled:opacity-70 disabled:cursor-not-allowed shadow-sm`,
             className,
             formatPrice ? 'pl-9' : 'px-4',
             errors[id]
               ? 'border-rose-500 bg-rose-100/20 border-2'
               : 'border-neutral-300',
-            errors[id] ? 'focus:border-rose-500' : 'focus:border-black'
+            errors[id]
+              ? 'focus:border-rose-500'
+              : 'focus:border-black text-black font-bold'
           )}
         />
       )}
@@ -112,7 +114,7 @@ const Input: React.FC<InputProps> = ({
           `absolute text-sm duration-150 transform -translate-y-3 top-4  origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4`,
           labelClassName,
           formatPrice ? 'left-9' : 'left-4',
-          errors[id] ? 'text-red-500' : 'text-zinc-400/50'
+          errors[id] ? 'text-red-500' : 'text-zinc-500/50'
         )}
       >
         {label}

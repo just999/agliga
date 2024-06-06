@@ -32,13 +32,13 @@
   transform: translateX(-50%);
 } */
 
-@media (max-width: 1255px) {
+/* @media (max-width: 1255px) {
   .post-content figure {
     min-width: auto;
     left: auto !important;
     transform: none;
   }
-}
+} */
 
 .post-content figure figcaption {
   font-family: var(--font-secondary);

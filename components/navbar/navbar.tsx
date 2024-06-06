@@ -78,8 +78,8 @@ const Navbar = ({ currentUser, className }: NavbarProps) => {
       //   onClose();
       //   router.push('/');
       // },
-      href: `${pathname}`,
-      active: pathname === `/${pathname}`,
+      href: `/`,
+      active: modalType === null && pathname === '/',
       className: ' p-0 m-0 hidden',
     },
     {

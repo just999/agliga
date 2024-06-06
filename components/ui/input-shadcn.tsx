@@ -1,9 +1,13 @@
 import * as React from 'react';
 
 import { cn } from '@/lib/utils';
+import { UseFormRegister, FieldValues, FieldErrors } from 'react-hook-form';
 
 export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {}
+  extends React.InputHTMLAttributes<HTMLInputElement> {
+  register?: UseFormRegister<FieldValues>;
+  errors: FieldErrors;
+}
 
 const InputShadcn = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, type, ...props }, ref) => {

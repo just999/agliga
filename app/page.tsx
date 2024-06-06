@@ -12,7 +12,6 @@ import ClientOnly from '@/lib/client-only';
 import { getPosts, getRandomPost, IPostsParams } from '@/lib/queries/posts';
 
 import { fetchSliders } from '@/lib/queries/sliders';
-import { PostProps } from '@/types';
 
 type HomeProps = {
   searchParams: IPostsParams;
@@ -41,8 +40,6 @@ const Home = async ({ searchParams }: HomeProps) => {
         size={20}
         currentUser={currentUser}
       />
-
-      {/* <CommentsList /> */}
     </ClientOnly>
   );
 };

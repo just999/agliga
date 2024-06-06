@@ -41,7 +41,7 @@ const Posts = ({ randPost, items, size, currentUser }: PostsProps) => {
   return (
     <Container>
       <section id='posts' className='posts pt-4'>
-        <div className='mx-auto px-4  bg-zinc-50 rounded-xl' data-aos='fade-up'>
+        <div className='mx-auto px-4 bg-zinc-50 rounded-xl' data-aos='fade-up'>
           <div className='flex flex-row items-center justify-around text-center w-full pb-4 rounded-xl bg-stone-300/40 '>
             <span className='opacity-0 hidden '>none</span>
             <h1

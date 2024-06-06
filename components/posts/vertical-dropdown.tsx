@@ -29,10 +29,7 @@ const VerticalDropdown = ({ item, currentUser }: VerticalDropdownProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
-          variant='ghost'
-          className='h-4 w-full bg-neutral-100 p-0 focus:outline-none'
-        >
+        <Button variant='ghost' className='h-4 w-full  p-0 focus:outline-none'>
           <span className='sr-only '>Open menu</span>
           <MoreVertical className='h-4 w-4 focus:outline-none ' />
         </Button>

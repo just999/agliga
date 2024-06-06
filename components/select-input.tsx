@@ -91,7 +91,7 @@ const SelectInput = ({
   return (
     <div
       className={cn(
-        'flex flex-col gap-8 relative',
+        'flex flex-col gap-8 relative w-full',
         errors[id]
           ? 'text-rose-500 focus:text-red-600'
           : 'text-neutral-300 focus:border-black'

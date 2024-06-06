@@ -158,7 +158,7 @@ const SliderModal = () => {
     <div className='flex flex-col gap-1 '>
       <Heading
         title={modalType === 'add-slider' ? 'New Slider' : 'Edit Slider'}
-        subtitle='Slider'
+        subtitle='Slider Image'
       />
       <Images
         control={control}
