@@ -53,7 +53,7 @@ const PostItemPage = async ({ params }: PostItemPageProps) => {
               <CommentList postId={id} />
             </div>
 
-            <div className='col-md-3 2xl:w-1/3 xl:w-1/3 md:w-1/3  bg-neutral-100 shadow-lg '>
+            <div className='col-md-3 2xl:w-1/3 xl:w-1/3 md:w-1/3 md:mx-auto  bg-neutral-100 shadow-lg '>
               <TabsActive items={items} />
 
               {/* <div className='aside-block 2xl:w-1/3  xl:w-1/3 lg:w-1/3'>
