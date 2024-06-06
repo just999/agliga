@@ -112,7 +112,7 @@ const Images = ({
         className='hidden'
         required={required}
       />
-      <div className='flex flex-row gap-2 items-center h-full my-auto '>
+      <div className='flex flex-row gap-4 items-center justify-start h-full my-auto '>
         <Avatar className='rounded-none w-auto h-20 my-auto shadow-xl  '>
           <AvatarImage
             src={preview}
