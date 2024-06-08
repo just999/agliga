@@ -1,19 +1,20 @@
-import axios from 'axios';
 import { NextResponse } from 'next/server';
+import axios from 'axios';
 
-export async function POST(req: Request, res: Response) {
+export async function POST(request: Request, response: Response) {
   const secretKey = process.env.NEXT_PUBLIC_RECAPTCHA_SECRET_KEY;
 
-  const postData = await req.json();
+  if (!secretKey) throw new Error('No secret key found!');
+
+  const postData = await request.json();
 
   const { recaptchaToken } = postData;
 
-  let result;
+  let res;
 
-  const formData = `secret=${secretKey}&res=${recaptchaToken}`;
-
+  const formData = `secret=${secretKey}&response=${recaptchaToken}`;
   try {
-    result = await axios.post(
+    res = await axios.post(
       'https://www.google.com/recaptcha/api/siteverify',
       formData,
       {
@@ -23,17 +24,13 @@ export async function POST(req: Request, res: Response) {
       }
     );
   } catch (err) {
-    console.error(err);
     return NextResponse.json({ success: false });
   }
 
-  if (result && result.data.success && result.data.score > 0.5) {
-    console.log('result.data.score:', result.data.score);
-    console.log('🚀 ~ POST ~ res:', result);
-
+  if (res && res.data?.success && res.data?.score > 0.5) {
     return NextResponse.json({
       success: true,
-      score: result.data.score,
+      score: res.data.score,
     });
   } else {
     return NextResponse.json({ success: false });

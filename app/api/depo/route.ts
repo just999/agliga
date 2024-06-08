@@ -25,9 +25,6 @@ export async function POST(req: Request) {
     } = body;
     const currentUser = await getCurrentUser();
     // if (!currentUser) return NextResponse.error()
-
-    const g = game[0];
-
     const id = new ObjectId();
 
     if (!id) throw new Error('error');
@@ -41,7 +38,7 @@ export async function POST(req: Request) {
         name,
         depoAmount,
         gameUserId,
-        game: g,
+        game,
         userId: currentUser?.id ? currentUser.id : randomId,
         bankPT,
       },

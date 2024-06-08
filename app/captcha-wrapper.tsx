@@ -10,7 +10,6 @@ export default function GoogleCaptchaWrapper({
   children,
 }: GoogleCaptchaWrapperProps) {
   const captchaKey = process.env.NEXT_PUBLIC_RECAPTCHA_KEY;
-  console.log('🚀 ~ captchaKey:', captchaKey);
   if (!captchaKey) throw new Error('No Key found!');
 
   return (

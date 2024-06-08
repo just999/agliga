@@ -38,9 +38,13 @@ const DepositWdModal = () => {
   const { getBanks, getByValue } = useBanks();
   const { getGames, getGamesByValue } = useGames();
 
-  const { isLoading: captchaLoading, error, setCaptcha } = useCaptchaStore();
+  const {
+    isLoading: captchaLoading,
+    error,
+    setCaptcha,
+    captcha,
+  } = useCaptchaStore();
   const { executeRecaptcha } = useGoogleReCaptcha();
-  console.log('🚀 ~ DepositWdModal ~ executeRecaptcha:', executeRecaptcha);
 
   const { modalType, isOpen, onOpen, onClose } = useModal();
   let items;
@@ -114,13 +118,43 @@ const DepositWdModal = () => {
   }, [bankOpt, session, setValue]);
 
   // if (!isMounted) return null;
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);
-    const gameValues: GameProps = data.game.map((val: any) => val.value);
+    // const gameValues: GameProps = data.game.map((val: any) => val.value);
+    setCaptcha('');
+    if (!executeRecaptcha) {
+      console.log('not available to execute recaptcha');
+      return;
+    }
 
-    let recaptchaToken;
-    if (executeRecaptcha) {
-      recaptchaToken = executeRecaptcha('inquirySubmit');
+    // let recaptchaToken;
+    // if (executeRecaptcha) {
+    // }
+    const recaptchaToken = await executeRecaptcha('inquirySubmit');
+    console.log(
+      '🚀 ~ const onSubmit:SubmitHandler<FieldValues>= ~ recaptchaToken:',
+      recaptchaToken
+    );
+
+    const response = await axios({
+      method: 'post',
+      url: '/api/recaptcha',
+      data: { recaptchaToken },
+      headers: {
+        Accept: 'application/json, text/plain, */*',
+        'Content-Type': 'application/json',
+      },
+    });
+    console.log(
+      '🚀 ~ const onSubmit:SubmitHandler<FieldValues>= ~ response:',
+      response
+    );
+    if (response.data.success === true) {
+      console.log(`Success with score:${response.data.score}`);
+      setCaptcha('ReCaptcha Verified and Form Submitted');
+    } else {
+      console.log(`Failure with score: ${response.data.score}`);
+      setCaptcha('Failed to verify recaptcha! you must reboot!');
     }
 
     if (modalType === 'depo') {
@@ -132,7 +166,7 @@ const DepositWdModal = () => {
         bank: bank.value,
         bankPT: bankPT.value,
         gameUserId,
-        game: gameValues,
+        game: game.value,
       };
       axios
         .post('/api/depo', data)
@@ -156,7 +190,7 @@ const DepositWdModal = () => {
         bank: bank.value,
         accountNumber,
         name,
-        game: gameValues,
+        game: game.value,
         wdAmount: +wdAmount,
         gameUserId,
       };
@@ -223,17 +257,6 @@ const DepositWdModal = () => {
   //   reset();
   // };
 
-  let dynamicLabel;
-  if (modalType === 'depo' && depoAmount === '') {
-    dynamicLabel = 'depoAmount';
-  } else if (modalType === 'wd' && depoAmount === '') {
-    dynamicLabel = 'wdAmount';
-  } else if (
-    (modalType === 'depo' || modalType === 'wd') &&
-    depoAmount !== ''
-  ) {
-    dynamicLabel = '';
-  }
   const bodyContent = (
     <div className='flex flex-col gap-2'>
       <Heading title={modalType === 'depo' ? 'Deposit' : 'Wd'} subtitle={''} />
@@ -389,8 +412,6 @@ const DepositWdModal = () => {
           )}
         </>
       )}
-
-      <div>Re-captcha</div>
     </div>
   );
 

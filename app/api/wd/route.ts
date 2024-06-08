@@ -11,8 +11,6 @@ export async function POST(req: Request) {
     const { email, bank, accountNumber, name, wdAmount, game, gameUserId } =
       body;
 
-    const g = game[0];
-
     const id = new ObjectId();
 
     if (!id) throw new Error('error');
@@ -26,7 +24,7 @@ export async function POST(req: Request) {
         name,
         wdAmount,
         gameUserId,
-        game: g,
+        game,
         userId: currentUser?.id ? currentUser.id : randomId,
       },
     });

@@ -66,7 +66,7 @@ const Posts = ({ randPost, items, size, currentUser, cat }: PostsProps) => {
               <Sci size={size} />
             </span>
           </div>
-          <div className='row  md:grid md:grid-cols-2 gap-5 mt-1 xs:grid xs:grid-cols-1 grid-flow-col'>
+          <div className='row md:grid md:grid-cols-2 gap-5 mt-1 xs:grid xs:grid-cols-1 grid-flow-col'>
             <div className='col-lg-4 rounded-xl shadow-lg'>
               {randPost && (
                 <PostItemOne
