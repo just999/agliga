@@ -53,6 +53,8 @@ jobs:
           echo "CLOUDINARY_CLOUD_NAME=${{ secrets.CLOUDINARY_CLOUD_NAME }}" >> .env.production
           echo "AUTH_FACEBOOK_ID=${{ secrets.AUTH_FACEBOOK_ID }}" >> .env.production
           echo "AUTH_FACEBOOK_SECRET=${{ secrets.AUTH_FACEBOOK_SECRET }}" >> .env.production
+          echo "NEXT_PUBLIC_RECAPTCHA_KEY=${{ secrets.NEXT_PUBLIC_RECAPTCHA_KEY }}" >> .env.production
+          echo "NEXT_PUBLIC_RECAPTCHA_SECRET_KEY=${{ secrets.NEXT_PUBLIC_RECAPTCHA_SECRET_KEY }}" >> .env.production
         working-directory: ${{ github.workspace }}
 
       - name: Print contents of .env.production file
