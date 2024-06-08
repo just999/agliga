@@ -1,6 +1,7 @@
 'use client';
 
 import Container from '@/components/container';
+import Heading from '@/components/heading';
 
 import EditDeletePostButton from '@/components/posts/edit-delete-post-button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -66,9 +67,14 @@ const SlidersPage = () => {
             </span>
           ))}
 
+      <Heading
+        center
+        title='Hero Slider'
+        subtitle='Max image slider is 20 images'
+      />
       <Container className='relative flex flex-wrap gap-4 pt-4 '>
         {!loading &&
-          images.map((img: PageProps) => (
+          images.map((img: PageProps, i) => (
             <span
               key={img.id}
               className='relative h-full  shadow-xl rounded-xl border-slate-600 border-1'
@@ -91,6 +97,9 @@ const SlidersPage = () => {
               >
                 <BiSolidEdit size={18} />
               </Button> */}
+              <span className='absolute top-0 left-0 text-gray-100 px-1 text-xs bg-stone-100/20 rounded-full'>
+                {i + 1}
+              </span>
               <EditDeletePostButton
                 img={img}
                 className2='top-0 right-0 p-0 m-0 h-5 w-5 rounded-full   '

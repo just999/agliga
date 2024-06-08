@@ -108,24 +108,14 @@ export async function POST(req: Request) {
 
   try {
     const formData = await req.formData();
-    console.log('🚀 ~ POST ~ formData:', formData);
     const img = formData.get('img');
-    console.log('🚀 ~ POST ~ img:', img);
-
     const cat = formData.get('category')?.toString();
-    console.log('🚀 ~ POST ~ cat:', cat);
     const topic = await db.topic.findUnique({
       where: {
         slug: 'badminton',
       },
     });
     const topics = await db.topic.findMany({});
-    console.log('🚀 ~ POST ~ topics:', topics);
-    console.log('🚀 ~ POST ~ topic:', topic);
-    console.log(
-      "🚀 ~ POST ~ formData.get('category')?.toString():",
-      formData.get('category')?.toString()
-    );
     if (!topic?.id) throw new Error('No topic found');
     const id = topic.id;
 
@@ -151,8 +141,6 @@ export async function POST(req: Request) {
     //     console.log(key, value);
     //   }
     // }
-
-    console.log('🚀 ~ POST ~ newPost:', newPost);
     const image = formData.get('img');
 
     let imageUploadPromises = [];

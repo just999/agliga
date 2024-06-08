@@ -78,7 +78,8 @@ const TopicModal = () => {
         id='slug'
         type='text'
         label='topic'
-        disabled={isLoading}
+        // disabled={isLoading}
+        disabled
         register={register}
         errors={errors}
         required
@@ -97,7 +98,8 @@ const TopicModal = () => {
         rows={10}
         id='description'
         label='description'
-        disabled={isLoading}
+        // disabled={isLoading}
+        disabled
         register={register}
         errors={errors}
         required
@@ -118,7 +120,8 @@ const TopicModal = () => {
       onClose={handleCloseClearForm}
       onSubmit={handleSubmit(onSubmit)}
       actionLabel='Create New Topic'
-      disabled={isLoading}
+      // disabled={isLoading}
+      disabled
       body={bodyContent}
       // footer={footerContent}
     />

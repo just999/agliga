@@ -134,11 +134,6 @@ const DepositWdModal = () => {
     // if (executeRecaptcha) {
     // }
     const recaptchaToken = await executeRecaptcha('inquirySubmit');
-    console.log(
-      '🚀 ~ const onSubmit:SubmitHandler<FieldValues>= ~ recaptchaToken:',
-      recaptchaToken
-    );
-
     const response = await axios({
       method: 'post',
       url: '/api/recaptcha',
@@ -148,10 +143,6 @@ const DepositWdModal = () => {
         'Content-Type': 'application/json',
       },
     });
-    console.log(
-      '🚀 ~ const onSubmit:SubmitHandler<FieldValues>= ~ response:',
-      response
-    );
     if (response.data.success === true) {
       console.log(`Success with score:${response.data.score}`);
       setCaptcha('ReCaptcha Verified and Form Submitted');
@@ -245,7 +236,6 @@ const DepositWdModal = () => {
   }));
 
   const handleCloseClearForm = () => {
-    console.log('🚀 ~ handleCloseClearForm ~ bank[0]:', bank);
     onClose();
     const item = {
       name,

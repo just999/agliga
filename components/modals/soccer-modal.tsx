@@ -235,7 +235,7 @@ const SoccerModal = () => {
       />
 
       <SelectInput
-        label='run'
+        label={run ? '' : 'run'}
         isMulti={false}
         id='run'
         register={register}
@@ -258,7 +258,7 @@ const SoccerModal = () => {
       <Input
         type='datetime-local'
         id='date'
-        label='Time'
+        label={date ? '' : 'Time'}
         defaultValue={newDate}
         disabled={isLoading}
         register={register}
@@ -274,7 +274,7 @@ const SoccerModal = () => {
       )}
 
       <SelectInput
-        label='teamHome'
+        label={teamHome ? '' : 'teamHome'}
         isMulti={false}
         id='teamHome'
         register={register}
@@ -296,7 +296,7 @@ const SoccerModal = () => {
       <Input
         id='score'
         type='text'
-        label='score'
+        label={score ? '' : 'score'}
         disabled={isLoading}
         register={register}
         errors={errors}
@@ -311,7 +311,7 @@ const SoccerModal = () => {
       )}
 
       <SelectInput
-        label='teamAway'
+        label={teamAway ? '' : 'teamAway'}
         isMulti={false}
         id='teamAway'
         register={register}
@@ -333,7 +333,7 @@ const SoccerModal = () => {
       <Input
         id='analysis'
         type='text'
-        label='Analysis'
+        label={analysis ? '' : 'Analysis'}
         disabled={isLoading}
         register={register}
         errors={errors}

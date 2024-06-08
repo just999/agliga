@@ -46,7 +46,7 @@ const PostItemOne = ({
   return (
     <div
       className={cn(
-        'post-entry-1 p-2 bg-yellow-50/60 shadow-xl rounded-md h-[380px]',
+        'post-entry-1 p-2 bg-yellow-50/60 shadow-xl rounded-md h-[380px] xs:flex xs:flex-col  xs:gap-2 xs:h-full',
         className,
         large ? 'lg' : undefined
       )}

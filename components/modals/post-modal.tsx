@@ -219,7 +219,6 @@ const PostModal = () => {
     value: '',
   };
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log('🚀 ~ PostModal ~ data:', data, text.img, category.value);
     setIsLoading(true);
 
     const formData = new FormData();
@@ -360,7 +359,7 @@ const PostModal = () => {
       <Input
         id='title'
         type='text'
-        label='Title'
+        label={title ? '' : 'Title'}
         disabled={isLoading}
         register={register}
         errors={errors}
@@ -478,7 +477,7 @@ const PostModal = () => {
       {/* <ProfilePicture register={register} text={text} setText={setText} /> */}
 
       <SelectInput
-        label='category'
+        label={category ? '' : 'category'}
         isMulti={false}
         id='category'
         register={register}
@@ -500,7 +499,7 @@ const PostModal = () => {
       <Input
         id='author'
         type='text'
-        label='Author'
+        label={author ? '' : 'Author'}
         disabled={isLoading}
         register={register}
         errors={errors}
@@ -517,7 +516,7 @@ const PostModal = () => {
 
       <Input
         id='brief'
-        label='Description'
+        label={brief ? '' : 'Description'}
         disabled={isLoading}
         register={register}
         errors={errors}

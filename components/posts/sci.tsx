@@ -22,13 +22,13 @@ const Sci = ({ size, iconClass, className }: SciProps) => {
           size='sm'
           type='button'
           key={soc.id}
-          className={cn('text-left', iconClass)}
+          className={cn('text-left', iconClass, className)}
         >
           <IconBox
             color={soc.color}
             icon={soc.icon}
             size={size}
-            className={cn(`flex flex-row gap-3`, iconClass)}
+            className={cn(`flex flex-row gap-3`, iconClass, className)}
           />
         </Button>
       ))}
