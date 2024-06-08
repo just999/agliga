@@ -80,6 +80,7 @@ const Images = ({
       const files = e.target.files;
       if (files && files.length > 0) {
         const file = files[0];
+        console.log('🚀 ~ handleAddImages ~ file:', file);
         const reader = new FileReader();
         reader.onload = (e) => {
           if (e.target && e.target.result) {
@@ -97,6 +98,7 @@ const Images = ({
       }
     }
   };
+  // console.log('🚀 ~ preview:', preview);
 
   return (
     <>

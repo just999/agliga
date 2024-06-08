@@ -219,6 +219,7 @@ const PostModal = () => {
     value: '',
   };
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    console.log('🚀 ~ PostModal ~ data:', data, text.img, category.value);
     setIsLoading(true);
 
     const formData = new FormData();
