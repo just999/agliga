@@ -22,6 +22,7 @@ import { depoInitialValues, wdInitialValues } from '@/lib/helper';
 import { useSession } from 'next-auth/react';
 import useCaptchaStore from '@/store/use-captcha-store';
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
+import useDepoWdStore from '@/store/use-depo-wd-store';
 
 const DepositWdModal = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -32,6 +33,8 @@ const DepositWdModal = () => {
   // useEffect(() => {
   //   setIsMounted(true);
   // }, []);
+
+  const { item, setItem } = useDepoWdStore();
 
   const router = useRouter();
 
@@ -241,21 +244,31 @@ const DepositWdModal = () => {
     icon: bank.icon,
   }));
 
-  // const handleCloseClearForm = () => {
-  //   onClose();
-  //   // items = {
-  //   //   name: '',
-  //   //   email: '',
-  //   //   bank: '',
-  //   //   game: '',
-  //   //   gameUserId: '',
-  //   //   bankPT: '',
-  //   //   accountNumber: '',
-  //   //   depoAmount: 0,
-  //   // };
-  //   // setSchedule(initialScheduleValues);
-  //   reset();
-  // };
+  const handleCloseClearForm = () => {
+    console.log('🚀 ~ handleCloseClearForm ~ bank[0]:', bank);
+    onClose();
+    const item = {
+      name,
+      email,
+      bank,
+      accountNumber,
+      game: '',
+      gameUserId: '',
+      bankPT: '',
+      depoAmount: 0,
+      wdAmount: 0,
+    };
+    setItem(item);
+    setValue('email', session?.user.curUser.email);
+    setValue('bank', bank);
+    setValue('name', session?.user.curUser.name);
+    setValue('accountNumber', session?.user.curUser.accountNumber);
+    setValue('game', '');
+    setValue('gameUserId', '');
+    setValue('depoAmount', '');
+    setValue('wdAmount', '');
+    setValue('bankPT', '');
+  };
 
   const bodyContent = (
     <div className='flex flex-col gap-2'>
@@ -440,7 +453,7 @@ const DepositWdModal = () => {
   return (
     <Modal
       isOpen={isOpen && (modalType === 'depo' || modalType === 'wd')}
-      onClose={onClose}
+      onClose={handleCloseClearForm}
       onSubmit={handleSubmit(onSubmit)}
       title={modalType === 'depo' ? 'Deposit' : 'Withdrawal'}
       actionLabel='Continue'
