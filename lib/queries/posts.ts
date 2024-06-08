@@ -28,6 +28,7 @@ export const getPostByPostId = async (id?: string) => {
 
 export type IPostsParams = {
   userId?: string;
+  category?: string;
 };
 interface Post {
   img: string;
@@ -92,25 +93,49 @@ export const getPosts = cache(async (params?: IPostsParams) => {
   }
 });
 
-export const getRandomPost = cache(async () => {
-  try {
-    const posts = await db.post.findMany({
-      where: {
-        img: {
-          not: {
-            equals: '',
+export const getRandomPost = cache(
+  async (params?: IPostsParams): Promise<PostProps | null> => {
+    try {
+      let posts: PostProps[] = [];
+      if (!params) {
+        posts = await db.post.findMany({
+          where: {
+            img: {
+              not: {
+                equals: '',
+              },
+            },
           },
-        },
-      },
-    });
-    if (posts.length === 0) return null;
-    const randPost = posts.sort(() => Math.random() - Math.random())[0];
-    return randPost;
-  } catch (err: unknown) {
-    console.error('Error fetching random post:', err);
-    return null;
+        });
+        if (posts.length === 0) return null;
+      }
+      if (params) {
+        posts = await db.post.findMany({
+          where: {
+            AND: [
+              {
+                category: params.category,
+              },
+              {
+                img: {
+                  not: {
+                    equals: '',
+                  },
+                },
+              },
+            ],
+          },
+        });
+        if (posts.length === 0) return null;
+      }
+      const randPost = posts.sort(() => Math.random() - Math.random())[0];
+      return randPost;
+    } catch (err: unknown) {
+      console.error('Error fetching random post:', err);
+      return null;
+    }
   }
-});
+);
 // export const getRandomPost = async () => {
 //   try {
 //     const randomPost = await db.post.aggregateRaw({
@@ -192,18 +217,37 @@ export const fetchPostsByUserId = async (params: IPostsParams) => {
   }
 };
 
-export const fetchPostByPostId = cache((postId: string): Promise<PostProps> => {
-  console.log('comments query making query');
-  return db.post
-    .findFirst({
-      where: { id: postId },
-      include: {
-        comments: {
-          select: {
-            content: true,
+export const fetchPostByPostId = cache(
+  async (postId: string): Promise<PostProps> => {
+    console.log('comments query making query');
+    return db.post
+      .findFirst({
+        where: { id: postId },
+        include: {
+          comments: {
+            select: {
+              content: true,
+            },
           },
         },
-      },
-    })
-    .then((post) => post as any);
-});
+      })
+      .then((post) => post as any);
+  }
+);
+
+export const fetchPostByCat = cache(
+  async (params: IPostsParams): Promise<PostProps> => {
+    return db.post
+      .findMany({
+        where: { category: params.category },
+        include: {
+          comments: {
+            select: {
+              content: true,
+            },
+          },
+        },
+      })
+      .then((post) => post as any);
+  }
+);

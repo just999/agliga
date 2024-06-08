@@ -21,13 +21,13 @@ const PageTitle = ({ title, className }: PageTitleProps) => {
   return (
     <h3
       className={cn(
-        'category-title w-full bg-zinc-100 text-center underline px-2 text-base  my-4 shadow-md',
+        'category-title w-full bg-zinc-100 text-center  px-2 text-base my-3 shadow-md',
         old.className
       )}
     >
       <span
         className={cn(
-          'shadow-sm px-2   text-zinc-500 mx-auto rounded-sm',
+          'shadow-sm px-2 text-zinc-500 mx-auto  border-b-2 border-stone-300 border-solid',
           className
         )}
       >

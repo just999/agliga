@@ -20,6 +20,8 @@ import useModal from '@/hooks/use-modal';
 
 import { depoInitialValues, wdInitialValues } from '@/lib/helper';
 import { useSession } from 'next-auth/react';
+import useCaptchaStore from '@/store/use-captcha-store';
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 
 const DepositWdModal = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -35,6 +37,10 @@ const DepositWdModal = () => {
 
   const { getBanks, getByValue } = useBanks();
   const { getGames, getGamesByValue } = useGames();
+
+  const { isLoading: captchaLoading, error, setCaptcha } = useCaptchaStore();
+  const { executeRecaptcha } = useGoogleReCaptcha();
+  console.log('🚀 ~ DepositWdModal ~ executeRecaptcha:', executeRecaptcha);
 
   const { modalType, isOpen, onOpen, onClose } = useModal();
   let items;
@@ -111,6 +117,11 @@ const DepositWdModal = () => {
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
     const gameValues: GameProps = data.game.map((val: any) => val.value);
+
+    let recaptchaToken;
+    if (executeRecaptcha) {
+      recaptchaToken = executeRecaptcha('inquirySubmit');
+    }
 
     if (modalType === 'depo') {
       data = {
@@ -196,21 +207,21 @@ const DepositWdModal = () => {
     icon: bank.icon,
   }));
 
-  const handleCloseClearForm = () => {
-    onClose();
-    // items = {
-    //   name: '',
-    //   email: '',
-    //   bank: '',
-    //   game: '',
-    //   gameUserId: '',
-    //   bankPT: '',
-    //   accountNumber: '',
-    //   depoAmount: 0,
-    // };
-    // setSchedule(initialScheduleValues);
-    reset();
-  };
+  // const handleCloseClearForm = () => {
+  //   onClose();
+  //   // items = {
+  //   //   name: '',
+  //   //   email: '',
+  //   //   bank: '',
+  //   //   game: '',
+  //   //   gameUserId: '',
+  //   //   bankPT: '',
+  //   //   accountNumber: '',
+  //   //   depoAmount: 0,
+  //   // };
+  //   // setSchedule(initialScheduleValues);
+  //   reset();
+  // };
 
   let dynamicLabel;
   if (modalType === 'depo' && depoAmount === '') {
@@ -229,7 +240,7 @@ const DepositWdModal = () => {
       <Input
         id='email'
         type='email'
-        label='email'
+        label={email ? '' : 'email'}
         disabled={isLoading}
         register={register}
         errors={errors}
@@ -243,7 +254,7 @@ const DepositWdModal = () => {
         </span>
       )}
       <SelectInput
-        label='bank'
+        label={bank ? '' : 'bank'}
         isMulti={false}
         id='bank'
         value={watch('bank')}
@@ -264,7 +275,7 @@ const DepositWdModal = () => {
       <Input
         id='accountNumber'
         type='tel'
-        label='Nomor Rekening'
+        label={accountNumber ? '' : 'No Rekening'}
         disabled={isLoading}
         register={register}
         errors={errors}
@@ -281,7 +292,7 @@ const DepositWdModal = () => {
       <Input
         id='name'
         type='text'
-        label='Nama sesuai dengan rek bank'
+        label={name ? '' : 'Nama sesuai dengan rek bank'}
         disabled={isLoading}
         register={register}
         errors={errors}
@@ -297,7 +308,13 @@ const DepositWdModal = () => {
       <Input
         id={modalType === 'depo' ? 'depoAmount' : 'wdAmount'}
         type='number'
-        label={modalType === 'depo' ? 'depoAmount' : 'wdAmount'}
+        label={
+          depoAmount || wdAmount
+            ? ''
+            : modalType === 'depo'
+            ? 'jumlah depo'
+            : 'jumlah wd'
+        }
         disabled={isLoading}
         register={register}
         errors={errors}
@@ -312,7 +329,7 @@ const DepositWdModal = () => {
       )}
 
       <SelectInput
-        label='game'
+        label={game ? '' : 'game'}
         isMulti={false}
         id='game'
         register={register}
@@ -335,7 +352,7 @@ const DepositWdModal = () => {
       <Input
         id='gameUserId'
         type='text'
-        label='Game User id'
+        label={gameUserId ? '' : 'user id game'}
         disabled={isLoading}
         register={register}
         errors={errors}
@@ -352,7 +369,7 @@ const DepositWdModal = () => {
       {modalType === 'depo' && (
         <>
           <SelectInput
-            label='bankPT'
+            label={bankPT ? '' : 'bankPT'}
             isMulti={false}
             id='bankPT'
             value={bankPT}
@@ -372,6 +389,8 @@ const DepositWdModal = () => {
           )}
         </>
       )}
+
+      <div>Re-captcha</div>
     </div>
   );
 
@@ -400,7 +419,7 @@ const DepositWdModal = () => {
   return (
     <Modal
       isOpen={isOpen && (modalType === 'depo' || modalType === 'wd')}
-      onClose={handleCloseClearForm}
+      onClose={onClose}
       onSubmit={handleSubmit(onSubmit)}
       title={modalType === 'depo' ? 'Deposit' : 'Withdrawal'}
       actionLabel='Continue'

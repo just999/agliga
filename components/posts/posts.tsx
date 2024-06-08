@@ -14,13 +14,14 @@ import Sci from './sci';
 const eb = EB_Garamond({ subsets: ['latin'] });
 
 type PostsProps = {
-  items: PostProps[];
+  items?: PostProps[];
   randPost?: PostProps;
   size?: number | string | undefined;
   currentUser?: SafeUser | null;
+  cat?: string;
 };
 
-const Posts = ({ randPost, items, size, currentUser }: PostsProps) => {
+const Posts = ({ randPost, items, size, currentUser, cat }: PostsProps) => {
   // const { randomItem } = useRandomPost();
   if (!items) return [];
 
@@ -38,6 +39,7 @@ const Posts = ({ randPost, items, size, currentUser }: PostsProps) => {
   const nextThreePosts = sliceNextThree(filteredItems); // Get the next three filtered posts
 
   if (typeof randPost === undefined) return [];
+
   return (
     <Container>
       <section id='posts' className='posts pt-4'>
@@ -49,7 +51,16 @@ const Posts = ({ randPost, items, size, currentUser }: PostsProps) => {
                 'news  2xl:text-8xl 2xs:text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-center  font-semibold drop-shadow-sm text-shadow  w-full px-2 '
               )}
             >
-              Sports News.
+              {cat ? (
+                <span>
+                  Sports News.
+                  <span className='2xl:text-4xl 2xs:text-xl xs:text-xl sm:text-2xl md:text-2xl lg:text-3xl xl:text-3xl'>
+                    {cat}{' '}
+                  </span>
+                </span>
+              ) : (
+                <span>Sports News.</span>
+              )}
             </h1>
             <span className='flex flex-row gap-2 mx-4 items-center justify-center shadow-lg rounded-lg '>
               <Sci size={size} />

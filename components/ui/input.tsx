@@ -103,7 +103,7 @@ const Input: React.FC<InputProps> = ({
               : 'border-neutral-300',
             errors[id]
               ? 'focus:border-rose-500'
-              : 'focus:border-black text-black font-bold'
+              : 'focus:border-black text-gray-500 font-semibold'
           )}
         />
       )}

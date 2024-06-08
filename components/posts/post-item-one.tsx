@@ -60,11 +60,11 @@ const PostItemOne = ({
             width={320}
             sizes='(max-width: 720px) 700vw, 100vw'
             priority
-            className='img-fluid shadow-lg rounded-md '
-            style={{
-              width: '100%',
-              height: 'auto',
-            }}
+            className='img-fluid shadow-lg rounded-md h-auto w-auto'
+            // style={{
+            //   width: '100%',
+            //   height: 'auto',
+            // }}
           />
         ) : item.img ? (
           <Image

@@ -30,6 +30,7 @@ import getCurrentUser from '@/actions/get-user';
 import UserProfileModal from '@/components/modals/user-profile-modal';
 import AddPostModal from '@/components/modals/add-post-modal';
 import SliderModal from '@/components/modals/slider-modal';
+import GoogleCaptchaWrapper from './captcha-wrapper';
 
 const inter = Nunito({ subsets: ['latin'], preload: true });
 
@@ -60,24 +61,26 @@ export default async function RootLayout({
           )}
           suppressHydrationWarning={true}
         >
-          <ToasterProvider />
-          <UserProfileModal />
-          <SoccerModal />
-          <TopicModal />
-          <LiveScoreModal />
-          <DeleteModal />
-          <DepositWdModal />
-          <PostModal />
-          {/* <AddPostModal /> */}
-          <SliderModal />
-          {/* <SearchModal /> */}
-          <NoUserModal />
-          <AuthModal />
-          <Navbar currentUser={currentUser} />
-          <div className='pb-20 flex-1'>{children}</div>
-          <div>
-            <Footer />
-          </div>
+          <GoogleCaptchaWrapper>
+            <ToasterProvider />
+            <UserProfileModal />
+            <SoccerModal />
+            <TopicModal />
+            <LiveScoreModal />
+            <DeleteModal />
+            <DepositWdModal />
+            <PostModal />
+            {/* <AddPostModal /> */}
+            <SliderModal />
+            {/* <SearchModal /> */}
+            <NoUserModal />
+            <AuthModal />
+            <Navbar currentUser={currentUser} />
+            <div className='pb-20 flex-1'>{children}</div>
+            <div>
+              <Footer />
+            </div>
+          </GoogleCaptchaWrapper>
         </body>
       </html>
     </SessionProvider>
