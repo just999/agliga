@@ -7,7 +7,7 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from './ui/dropdown-menu';
-import { Noto_Color_Emoji } from 'next/font/google';
+
 import {
   Select,
   SelectContent,
@@ -15,15 +15,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from './ui/select';
-import { cn } from '@/lib/utils';
+import { cn, noto } from '@/lib/utils';
 
 type LanguageDropdownProps = {};
-
-const noto = Noto_Color_Emoji({
-  subsets: ['emoji'],
-  weight: ['400'],
-  preload: true,
-});
 
 const LanguageDropdown = () => {
   return (

@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utils';
+import { cn, noto } from '@/lib/utils';
 import Image from 'next/image';
 import makeAnimated from 'react-select/animated';
 
@@ -80,6 +80,7 @@ const SelectInput = ({
     }),
   };
 
+  console.log('🚀 ~ options:', options());
   const animatedComponents = makeAnimated();
 
   let multi;
@@ -142,9 +143,14 @@ const SelectInput = ({
                   : 'w-6 h-6 p-0 m-0 my-auto relative'
               )}
             >
-              {id === ('category' || 'teamHome' || 'teamAway') ? (
+              {id === 'category' || id === 'teamHome' || id === 'teamAway' ? (
                 <span className='w-10 h-10 text-2xl flex flex-row items-center text-stone-900 '>
                   <option.icon />
+                </span>
+              ) : id === 'euroTeamHome' || id === 'euroTeamAway' ? (
+                <span className='w-10 h-10 text-2xl flex flex-row items-center text-stone-900 '>
+                  {/* <option.icon /> */}
+                  <span className={cn(noto.className)}>{option.icon}</span>
                 </span>
               ) : (
                 <Image

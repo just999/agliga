@@ -30,7 +30,8 @@ const CellAction = ({ data }: CellActionProps) => {
   const title = 'Delete Schedule';
 
   const { data: session, status } = useSession();
-  const role = session?.user.role;
+  const role = session?.user.curUser.role;
+  console.log('🚀 ~ CellAction ~ role:', role, session);
 
   return (
     <DropdownMenu>

@@ -204,3 +204,12 @@ export type RoutesProps = {
   active: boolean;
   admin?: any;
 };
+
+export type EuroProps = {
+  date: Date;
+  euroTeamHome: string;
+  homeScore: string | null;
+  group: string;
+  euroTeamAway: string;
+  awayScore: string | null;
+};

@@ -31,6 +31,7 @@ import UserProfileModal from '@/components/modals/user-profile-modal';
 import AddPostModal from '@/components/modals/add-post-modal';
 import SliderModal from '@/components/modals/slider-modal';
 import GoogleCaptchaWrapper from './captcha-wrapper';
+import EuroModal from '@/components/modals/euro-modal';
 
 const inter = Nunito({ subsets: ['latin'], preload: true });
 
@@ -63,6 +64,7 @@ export default async function RootLayout({
         >
           <GoogleCaptchaWrapper>
             <ToasterProvider />
+            <EuroModal />
             <UserProfileModal />
             <SoccerModal />
             <TopicModal />

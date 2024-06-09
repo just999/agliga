@@ -21,9 +21,10 @@ import { cn } from '@/lib/utils';
 export type RunTableProps = {
   toggle: (value?: number) => void;
   setIsOpen: (value: number) => void;
+  className?: string;
 };
 
-const RunTable = ({ toggle, setIsOpen }: RunTableProps) => {
+const RunTable = ({ toggle, setIsOpen, className }: RunTableProps) => {
   const params = useSearchParams();
   const run = params.get('run');
   const pathname = usePathname();
@@ -38,7 +39,12 @@ const RunTable = ({ toggle, setIsOpen }: RunTableProps) => {
   };
 
   return (
-    <Table className='e_run_tb border shadow-lg overflow-hidden overscroll-x-none border-slate-200 text-xs mx-auto w-full mb-1 2xs:mt-0 xs:mt-0 sm:mt-0 md:mt-6 lg:mt-2  '>
+    <Table
+      className={cn(
+        'e_run_tb border shadow-lg overflow-hidden overscroll-x-none border-slate-200 text-xs mx-auto w-full mb-1 2xs:mt-0 xs:mt-0 sm:mt-0 md:mt-6 lg:mt-2',
+        className
+      )}
+    >
       <TableHeader></TableHeader>
       <TableBody className='bg-stone-100 '>
         {rows.map((row, rowIndex) => (

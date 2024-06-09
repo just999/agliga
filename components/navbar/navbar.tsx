@@ -156,14 +156,12 @@ const Navbar = ({ currentUser, className }: NavbarProps) => {
     },
     {
       icon: FcFlowChart,
-      label: 'New-Topic',
-      onClick: () => onOpen('topic'),
-      href: `${pathname} `,
-      active: modalType === 'topic',
+      label: 'Euro 2024',
+      onClick: () => {},
+      href: `/euro`,
+      active: modalType === null && pathname === '/euro',
       className:
-        userRole === 'admin'
-          ? 'hidden whitespace-nowrap sm:block text-xs font-semibold px-6 py-2 border-x-[1px] flex-1 text-center  md:hidden lg:block cursor-pointer hover:shadow-md hover:bg-emerald-50'
-          : 'hidden',
+        'hidden whitespace-nowrap sm:block text-xs font-semibold px-6 py-2 border-x-[1px] flex-1 text-center  md:hidden lg:block cursor-pointer hover:shadow-md hover:bg-emerald-50',
     },
     {
       icon: GrUserAdmin,

@@ -276,3 +276,11 @@ body,
   border-style: solid;
   --tw-content: '';
 }
+
+.embla__container {
+  display: flex;
+}
+.embla__slide {
+  flex: 0 0 180px;
+  min-width: 0;
+}

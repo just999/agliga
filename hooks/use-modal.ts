@@ -34,6 +34,9 @@ type ModalStore = {
     | 'add-slider'
     | 'edit-slider'
     | 'delete-slider'
+    | 'new-euro'
+    | 'edit-euro'
+    | 'delete-euro'
     | 'deleteSchedule'
     | null;
   isOpen: boolean;
@@ -41,6 +44,7 @@ type ModalStore = {
   title?: string | undefined;
   isToggle: boolean;
   img?: ImageSlider;
+  group?: string;
 
   onOpen: (
     type:
@@ -62,10 +66,14 @@ type ModalStore = {
       | 'add-slider'
       | 'edit-slider'
       | 'delete-slider'
+      | 'new-euro'
+      | 'edit-euro'
+      | 'delete-euro'
       | 'deleteSchedule',
     id?: string | null,
     title?: string | undefined,
-    img?: ImageSlider | undefined
+    img?: ImageSlider | undefined,
+    group?: string | undefined
   ) => void;
   onClose: () => void;
   toggle: () => void;
@@ -80,6 +88,7 @@ const useModal = create<ModalStore>((set) => ({
   title: undefined,
   isToggle: false,
   img: undefined,
+  group: undefined,
 
   onOpen: (
     type:
@@ -101,11 +110,15 @@ const useModal = create<ModalStore>((set) => ({
       | 'add-slider'
       | 'edit-slider'
       | 'delete-slider'
+      | 'new-euro'
+      | 'edit-euro'
+      | 'delete-euro'
       | 'editSoccer',
     id = null,
     title,
-    img
-  ) => set({ modalType: type, isOpen: true, id, title, img }),
+    img,
+    group
+  ) => set({ modalType: type, isOpen: true, id, title, img, group }),
   onClose: () =>
     set({
       modalType: null,
@@ -113,6 +126,7 @@ const useModal = create<ModalStore>((set) => ({
       id: null,
       title: undefined,
       img: undefined,
+      group: undefined,
     }),
   toggle: () => set((state) => ({ isToggle: !state.isToggle })),
   setImg: (type: 'edit-slider', img) => set({ modalType: type, img }),

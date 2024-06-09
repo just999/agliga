@@ -41,6 +41,7 @@ model User {
   posts          Post[]
   comments       Comment[]
   sliders        Slider[]
+  Euro           Euro[]
 }
 
 model Account {
@@ -185,8 +186,22 @@ model Slider {
   images String
   userId String @db.ObjectId
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
 
+model Euro {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  date         DateTime
+  euroTeamHome String
+  homeScore    String?
+  euroTeamAway String
+  awayScore    String?
+  group        String
+  userId       String   @db.ObjectId
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

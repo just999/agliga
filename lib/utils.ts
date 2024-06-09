@@ -1,6 +1,7 @@
 import useGames from '@/hooks/use-games';
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import { Noto_Color_Emoji } from 'next/font/google';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -128,3 +129,9 @@ export function findMatchingObjects(
 
 // const matches = findMatchingObjects(games, targetValues);
 // console.log(matches);
+
+export const noto = Noto_Color_Emoji({
+  subsets: ['emoji'],
+  weight: ['400'],
+  preload: true,
+});
