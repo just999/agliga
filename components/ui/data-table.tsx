@@ -33,12 +33,13 @@ import { GrEdit } from 'react-icons/gr';
 import { BsArrowDownSquare } from 'react-icons/bs';
 import EuroCard from '../table/euro/euro-card';
 import { useGetEuros } from '@/hooks/use-get-schedule';
-import Loader from '../loader';
+
 import { Skeleton } from './skeleton';
 import { Euro24 } from '../assets/games/euro24';
 import { EuroProps } from '@/types';
-import { euroGroup } from '@/lib/helper';
+
 import { Schedule } from '@prisma/client';
+import { useSession } from 'next-auth/react';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -72,6 +73,9 @@ export function DataTable<TData, TValue>({
   const [isToggle, setIsToggle] = useState(false);
   const { items, isLoading, error } = useGetEuros();
 
+  const { data: session } = useSession();
+
+  const role = session?.user.curUser.role;
   // if (!items) return [];
   const table = useReactTable({
     data: data as TData[],
@@ -141,42 +145,32 @@ export function DataTable<TData, TValue>({
       <div className='rounded-md  '>
         <Table className='bg-amber-50 border-none '>
           <TableHeader className='bg-amber-50 '>
-            <tr
-              className={cn(
-                'rounded-full h-auto border-none',
-                euroTableClassName
-              )}
+            <TableRow
+              className={cn('rounded-full h-8 border-none', euroTableClassName)}
             >
-              <th className='flex flex-row font-semibold justify-center ml-2 bg-emerald-200 rounded-l-lg hover:bg-green-300 hover:font-semibold hover:text-gray-800 shadow-xl text-md text-gray-400 cursor-pointer'>
+              <TableHead className='flex flex-row font-semibold justify-center ml-2 bg-emerald-200 rounded-l-lg  h-8 hover:bg-green-300 hover:font-semibold hover:text-gray-800 shadow-xl text-md text-gray-400 cursor-pointer'>
                 <Euro24 />
                 <Button
                   variant='ghost'
                   size='sm'
-                  className='px-0 hover:bg-green-300 hover:font-semibold hover:text-gray-800'
+                  className={cn(
+                    'px-0 ',
+                    role !== 'admin'
+                      ? 'text-black font-semibold'
+                      : 'hover:bg-green-300 hover:font-semibold hover:text-gray-800'
+                  )}
                   onClick={() => handleOpenGroup(group)}
+                  disabled={role === 'admin' ? false : true}
                 >
                   Group {group}
                 </Button>
-              </th>
+              </TableHead>
 
-              {/* <th className='hover:bg-sky-100/50 bg-rose-100'>
+              <TableHead className='bg-amber-100 rounded-r-lg px-4 font-semibold h-8 hover:bg-orange-100/70 hover:text-gray-800 hover:font-bold shadow-xl cursor-pointer text-md text-gray-400 '>
                 <Button
                   variant='ghost'
                   size='sm'
-                  className='rounded-lg px-4 font-semibold  text-md text-gray-400  hover:text-emerald-800 shadow-xl'
-                  onClick={() => {
-                    console.log(group);
-                    onOpen('edit-euro');
-                  }}
-                >
-                  <GrEdit size={24} />
-                </Button>
-              </th> */}
-              <th className='bg-amber-100 rounded-r-lg px-4 font-semibold  hover:bg-sky-100 hover:text-gray-800 hover:font-bold shadow-xl cursor-pointer text-md text-gray-400 '>
-                <Button
-                  variant='ghost'
-                  size='sm'
-                  className='px-0'
+                  className='px-0 h-7'
                   onClick={() => {
                     if (group) {
                       setGroup('new-euro', group);
@@ -186,10 +180,10 @@ export function DataTable<TData, TValue>({
                   }}
                 >
                   {/* <pre>{JSON.stringify(euroGroup, null, 2)}</pre> */}
-                  <BsArrowDownSquare size={24} />
+                  <BsArrowDownSquare size={18} className='mx-auto ' />
                 </Button>
-              </th>
-            </tr>
+              </TableHead>
+            </TableRow>
 
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
