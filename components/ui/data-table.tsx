@@ -247,7 +247,7 @@ export function DataTable<TData, TValue>({
                 key={item.games[0].id}
                 eu={item}
                 className='bg-sky-100 mt-2'
-                groupClassName='w-full text-center bg-sky-200 shadow-xl'
+                groupClassName='w-full text-center bg-sky-200/70 py-1 shadow-xl shadow-lg'
                 footerClassName={footerClassName}
                 euroClassName={euroClassName}
                 euCardClassName={euCardClassName}

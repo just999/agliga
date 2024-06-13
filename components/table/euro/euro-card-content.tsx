@@ -4,9 +4,11 @@ import { Button } from '@/components/ui/button';
 import { CardContent, CardFooter } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import useModal from '@/hooks/use-modal';
+
 import { convertDateTime } from '@/lib/convert-date-time';
 import { cn, noto } from '@/lib/utils';
 import { EuroProps } from '@/types';
+import { useSession } from 'next-auth/react';
 
 import { BsTrashFill, BsPencilFill } from 'react-icons/bs';
 
@@ -28,6 +30,10 @@ const EuroCardContent = ({
   it: eu,
 }: EuroCardContentProps) => {
   const { onOpen, group: gr } = useModal();
+
+  const { data: session } = useSession();
+  const role = session?.user.curUser.role;
+
   if (!eu) return <Skeleton />;
 
   const title = 'Delete Euro Schedule';
@@ -80,29 +86,32 @@ const EuroCardContent = ({
         >
           Group {eu.group}
         </div>
-        <Button
-          variant='outline'
-          size='sm'
-          className={cn(
-            'p-0 m-0 w-4 h-4 text-right text-rose-500 bg-sky-100',
-            trashClassName
-          )}
-          onClick={() => onOpen('delete-euro', eu.id, title)}
-        >
-          <BsTrashFill />
-        </Button>
-        <Button
-          onClick={() => onOpen('edit-euro', eu.id)}
-          variant='outline'
-          size='sm'
-          className={cn(
-            'p-0 m-0 w-4 h-4 text-right text-sky-500 bg-sky-100',
-            trashClassName
-          )}
-        >
-          <BsPencilFill />
-        </Button>
-        {/* <Button>Deploy</Button> */}
+        {role === 'admin' && (
+          <>
+            <Button
+              variant='outline'
+              size='sm'
+              className={cn(
+                'p-0 m-0 w-4 h-4 text-right text-rose-500 bg-sky-100',
+                trashClassName
+              )}
+              onClick={() => onOpen('delete-euro', eu.id, title)}
+            >
+              <BsTrashFill />
+            </Button>
+            <Button
+              onClick={() => onOpen('edit-euro', eu.id)}
+              variant='outline'
+              size='sm'
+              className={cn(
+                'p-0 m-0 w-4 h-4 text-right text-sky-500 bg-sky-100',
+                trashClassName
+              )}
+            >
+              <BsPencilFill />
+            </Button>
+          </>
+        )}
       </CardFooter>
 
       {/* <pre>{JSON.stringify(eu.group, null, 2)}</pre> */}
