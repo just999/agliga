@@ -53,7 +53,7 @@ const RunBox = ({ label, selected, toggle }: RunBoxProps) => {
 
   return (
     <div
-      onClick={() => handleClick()}
+      onClick={handleClick}
       className={
         cn()
         // 'flex flex-col items-center gap-0 p-0 border-b-2 hover:shadow-md  hover:text-neutral-800 transition cursor-pointer',

@@ -25,7 +25,7 @@ const EditCommentPostButton = ({ item }: EditCommentPostButtonProps) => {
             variant='outline'
             size='sm'
             type='button'
-            onClick={() => onOpen('delete', item.id)}
+            onClick={() => onOpen('delete-post', item.id)}
             className='text-neutral-400 hover:text-black hover:font-bold hover:bg-red-400/20 hover:shadow-lg bg-slate-100 '
           >
             <BiPencil />

@@ -191,15 +191,35 @@ model Slider {
   updatedAt DateTime @updatedAt
 }
 
+enum Group {
+  A
+  B
+  C
+  D
+  E
+  F
+}
+
+type EuroTeamHome {
+  value String
+  icon  String
+}
+
+type EuroTeamAway {
+  value String
+  icon  String
+}
+
 model Euro {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  id           String       @id @default(auto()) @map("_id") @db.ObjectId
   date         DateTime
-  euroTeamHome String
+  euroTeamHome EuroTeamHome
+  status       String       @default("Upcoming")
   homeScore    String?
-  euroTeamAway String
+  euroTeamAway EuroTeamAway
   awayScore    String?
-  group        String
-  userId       String   @db.ObjectId
+  group        Group
+  userId       String       @db.ObjectId
 
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())

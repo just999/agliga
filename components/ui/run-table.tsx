@@ -17,6 +17,7 @@ import RunBox from '../run-box';
 import { useSearchParams, usePathname } from 'next/navigation';
 
 import { cn } from '@/lib/utils';
+import useRunToggleStore from '@/store/use-table-store';
 
 export type RunTableProps = {
   toggle: (value?: number) => void;
@@ -31,9 +32,9 @@ const RunTable = ({ toggle, setIsOpen, className }: RunTableProps) => {
 
   const isMainPage = pathname === '/soccer';
 
+  // const { isOpen } = useRunToggleStore();
   if (!isMainPage) return null;
 
-  // const { isOpen } = useRunToggleStore();
   const handleToggleRun = (run: number) => {
     toggle(run);
   };
@@ -69,6 +70,7 @@ const RunTable = ({ toggle, setIsOpen, className }: RunTableProps) => {
                 key={`${rowIndex}-${cellIndex}`}
                 className={cn(' text-blue-600  align-middle flex-1 underline p-0  cursor-pointer leading-5  my-auto text-center text-xs hover:bg-stone-300 border-neutral-200 py-2  px-3 flex flex-col items-center gap-0  border-b-2 hover:shadow-md  hover:text-neutral-800 transition', )}
               > */}
+
                 <RunBox
                   label={cellData.value}
                   selected={Number(run) === cellData.value}

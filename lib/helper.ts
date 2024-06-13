@@ -4,6 +4,7 @@ import { BlackJack } from '@/components/assets/games/black-jack';
 import { Craps } from '@/components/assets/games/craps';
 import { Domino } from '@/components/assets/games/domino';
 import { ESport } from '@/components/assets/games/e-sport';
+import { Euro24 } from '@/components/assets/games/euro24';
 import { Keno } from '@/components/assets/games/keno';
 import { Lotto } from '@/components/assets/games/lotto';
 import { Poker } from '@/components/assets/games/poker';
@@ -1019,10 +1020,17 @@ export const initialScheduleFormValues = {
 };
 export const initialEuroFormValues = {
   date: new Date(),
-  euroTeamHome: '',
+  euroTeamHome: {
+    value: '',
+    icon: '',
+  },
   homeScore: '',
+  status: '',
   awayScore: '',
-  euroTeamAway: '',
+  euroTeamAway: {
+    value: '',
+    icon: '',
+  },
   group: '',
 };
 
@@ -1138,7 +1146,7 @@ export const euros = [
   {
     id: 19,
     label: 'england',
-    icon: '🇬🇧',
+    icon: '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
     description: 'England',
   },
   {
@@ -1248,7 +1256,7 @@ export const euro = [
     homeFlag: '🇷🇸',
     away: 'England',
     awayScore: '-',
-    awayFlag: '🇬🇧',
+    awayFlag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
     group: 'Group C Round 1',
   },
   {
@@ -1373,7 +1381,7 @@ export const euroGroup = [
     c3: 'serbia',
     icon3: '🇷🇸',
     c4: 'england',
-    icon4: '🇬🇧',
+    icon4: '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
   },
   {
     group: 'Group D',
@@ -1463,7 +1471,7 @@ export const euroGroupC = [
   },
   {
     country: 'england',
-    icon: '🇬🇧',
+    icon: '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
   },
 ];
 
@@ -1521,5 +1529,32 @@ export const euroGroupF = [
   {
     country: 'turkey',
     icon: '🇹🇷',
+  },
+];
+
+export const euGroup = [
+  {
+    group: 'A',
+    icon: Euro24,
+  },
+  {
+    group: 'B',
+    icon: Euro24,
+  },
+  {
+    group: 'C',
+    icon: Euro24,
+  },
+  {
+    group: 'D',
+    icon: Euro24,
+  },
+  {
+    group: 'E',
+    icon: Euro24,
+  },
+  {
+    group: 'F',
+    icon: Euro24,
   },
 ];

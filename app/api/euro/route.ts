@@ -16,8 +16,15 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { date, euroTeamAway, euroTeamHome, group, homeScore, awayScore } =
-      body;
+    const {
+      date,
+      euroTeamAway,
+      euroTeamHome,
+      group,
+      homeScore,
+      status,
+      awayScore,
+    } = body;
     let isoDate = date + ':00.000Z';
 
     const currentUser = await getCurrentUser();
@@ -27,14 +34,13 @@ export async function POST(req: Request) {
     const id = new ObjectId();
 
     if (!id) throw new Error('error');
-
-    console.log('🚀 ~ POST ~ body:', body);
     const schedule = await db.euro.create({
       data: {
         date: isoDate,
         euroTeamAway,
         euroTeamHome,
         group,
+        status,
         homeScore,
         awayScore,
         userId: currentUser.id,

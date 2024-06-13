@@ -90,7 +90,7 @@ const VerticalDropdown = ({
               <BsTrash
                 className='text-neutral-400 h-4 w-4 m-0 p-0 cursor-pointer hover:text-red-500 hover:font-bold hover:shadow-lg '
                 onClick={() =>
-                  onOpen('delete', item?.id, (title = 'Delete post'))
+                  onOpen('delete-post', item?.id, (title = 'Delete post'))
                 }
               />
             )}

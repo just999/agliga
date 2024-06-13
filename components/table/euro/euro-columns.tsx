@@ -24,7 +24,7 @@ export const euroColumns: ColumnDef<EuroProps>[] = [
     cell: ({ row }) => (
       <div className='flex flex-row justify-start gap-2 pl-4'>
         <span className={cn(noto.className)}>{row.original.icon}</span>
-        <span className='font-bold '>{row.original.country}</span>
+        <span className='font-bold text-xs '>{row.original.country}</span>
         {/* <pre>{JSON.stringify(row, null, 2)}</pre> */}
       </div>
     ),
@@ -33,8 +33,8 @@ export const euroColumns: ColumnDef<EuroProps>[] = [
     accessorKey: 'played',
     header: 'Played',
     cell: ({ row }) => (
-      <div className='flex flex-row justify-center gap-2'>
-        <span className='font-bold'>0</span>
+      <div className='flex flex-row justify-start pl-4 gap-2'>
+        <span className='font-bold text-slate-400 text-xs'>0</span>
       </div>
     ),
   },
@@ -42,8 +42,8 @@ export const euroColumns: ColumnDef<EuroProps>[] = [
     accessorKey: 'won',
     header: 'Won',
     cell: ({ row }) => (
-      <div className='flex flex-row justify-center gap-2'>
-        <span className='font-bold'>0</span>
+      <div className='flex flex-row  justify-start pl-4 gap-2'>
+        <span className='font-bold text-slate-400 text-xs'>0</span>
       </div>
     ),
   },
@@ -51,8 +51,8 @@ export const euroColumns: ColumnDef<EuroProps>[] = [
     accessorKey: 'drawn',
     header: 'Drawn',
     cell: ({ row }) => (
-      <div className='flex flex-row justify-center gap-2'>
-        <span className='font-bold'>0</span>
+      <div className='flex flex-row  justify-start pl-4 gap-2'>
+        <span className='font-bold text-slate-400 text-xs'>0</span>
       </div>
     ),
   },
@@ -60,8 +60,8 @@ export const euroColumns: ColumnDef<EuroProps>[] = [
     accessorKey: 'lost',
     header: 'Lost',
     cell: ({ row }) => (
-      <div className='flex flex-row justify-center gap-2'>
-        <span className='font-bold'>0</span>
+      <div className='flex flex-row  justify-start pl-4 gap-2'>
+        <span className='font-bold text-slate-400 text-xs'>0</span>
       </div>
     ),
   },
@@ -69,8 +69,8 @@ export const euroColumns: ColumnDef<EuroProps>[] = [
     accessorKey: 'for',
     header: 'For',
     cell: ({ row }) => (
-      <div className='flex flex-row justify-center gap-2'>
-        <span className='font-bold'>0</span>
+      <div className='flex flex-row  justify-start pl-4 gap-2'>
+        <span className='font-bold text-slate-400 text-xs'>0</span>
       </div>
     ),
   },
@@ -78,8 +78,8 @@ export const euroColumns: ColumnDef<EuroProps>[] = [
     accessorKey: 'against',
     header: 'Against',
     cell: ({ row }) => (
-      <div className='flex flex-row justify-center gap-2'>
-        <span className='font-bold'>0</span>
+      <div className='flex flex-row  justify-start pl-4 gap-2'>
+        <span className='font-bold text-slate-400 text-xs'>0</span>
       </div>
     ),
   },
@@ -87,8 +87,8 @@ export const euroColumns: ColumnDef<EuroProps>[] = [
     accessorKey: 'goal-diff',
     header: 'Goal-diff',
     cell: ({ row }) => (
-      <div className='flex flex-row justify-center gap-2'>
-        <span className='font-bold'>0</span>
+      <div className='flex flex-row  justify-start pl-4 gap-2'>
+        <span className='font-bold text-slate-400 text-xs'>0</span>
       </div>
     ),
   },
@@ -96,8 +96,8 @@ export const euroColumns: ColumnDef<EuroProps>[] = [
     accessorKey: 'points',
     header: 'Points',
     cell: ({ row }) => (
-      <div className='flex flex-row justify-center gap-2'>
-        <span className='font-bold'>0</span>
+      <div className='flex flex-row  justify-start pl-4 gap-2'>
+        <span className='font-bold text-slate-400 text-xs'>0</span>
       </div>
     ),
   },

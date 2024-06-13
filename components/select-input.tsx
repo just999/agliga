@@ -79,8 +79,6 @@ const SelectInput = ({
       fontWeight: value && fontWeight,
     }),
   };
-
-  console.log('🚀 ~ options:', options());
   const animatedComponents = makeAnimated();
 
   let multi;

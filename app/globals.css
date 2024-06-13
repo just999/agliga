@@ -276,11 +276,20 @@ body,
   border-style: solid;
   --tw-content: '';
 }
+/* .group-card {
+  flex: 1;
+  flex-grow: 1;
+  flex-shrink: 0;
+} */
+
+/* .embla {
+  overflow: hidden;
+} */
 
 .embla__container {
   display: flex;
 }
 .embla__slide {
-  flex: 0 0 180px;
+  flex: 0 0 220px;
   min-width: 0;
 }

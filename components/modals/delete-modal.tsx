@@ -19,7 +19,7 @@ const DeleteModal = () => {
   const { modalType, onOpen, isOpen, onClose, id, title } = useModal();
 
   const onDelete = async () => {
-    if (modalType === 'delete') {
+    if (modalType === 'delete-post') {
       try {
         const res = await fetch(`/api/posts/${id}`, {
           method: 'DELETE',
@@ -76,6 +76,23 @@ const DeleteModal = () => {
       } catch (err) {
         console.error('Error fetching image', err);
       }
+    } else if (modalType === 'delete-euro') {
+      try {
+        const res = await fetch(`/api/euro/${id}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }).then((res) => {
+          if (res.status === 200) {
+            toast.success('images successfully deleted');
+            onClose();
+            router.refresh();
+          }
+        });
+      } catch (err) {
+        console.error('Error Deleting euro schedule', err);
+      }
     }
   };
 
@@ -94,9 +111,10 @@ const DeleteModal = () => {
     <Modal
       isOpen={
         isOpen &&
-        (modalType === 'delete' ||
+        (modalType === 'delete-post' ||
           modalType === 'deleteSchedule' ||
-          modalType === 'delete-slider')
+          modalType === 'delete-slider' ||
+          modalType === 'delete-euro')
       }
       onClose={onClose}
       onSubmit={onDelete}

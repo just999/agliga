@@ -9,8 +9,6 @@ import Image from 'next/image';
 import { englishPL } from '@/lib/helper';
 import { Schedule } from '@prisma/client';
 import { convertDateTime } from '@/lib/convert-date-time';
-import { Scoreboard } from '../assets/sports/scoreboard';
-import { Board } from '../assets/sports/board';
 
 export const columns: ColumnDef<Schedule>[] = [
   {

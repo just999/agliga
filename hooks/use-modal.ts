@@ -1,4 +1,3 @@
-import { type } from 'os';
 import { create } from 'zustand';
 
 // export const imageSlider = {
@@ -22,7 +21,7 @@ type ModalStore = {
     | 'wd'
     | 'post'
     | 'edit'
-    | 'delete'
+    | 'delete-post'
     | 'live'
     | 'topic'
     | 'no-user'
@@ -54,7 +53,7 @@ type ModalStore = {
       | 'wd'
       | 'post'
       | 'edit'
-      | 'delete'
+      | 'delete-post'
       | 'live'
       | 'topic'
       | 'no-user'
@@ -76,8 +75,12 @@ type ModalStore = {
     group?: string | undefined
   ) => void;
   onClose: () => void;
-  toggle: () => void;
+  toggle: (isToggle: boolean, group?: string) => void;
   setImg: (type: 'edit-slider', img: ImageSlider) => void;
+  setGroup: (
+    type: 'new-euro' | 'edit-euro' | 'delete-euro',
+    group: string
+  ) => void;
   // authModal: () => void;
 };
 
@@ -98,7 +101,7 @@ const useModal = create<ModalStore>((set) => ({
       | 'wd'
       | 'post'
       | 'edit'
-      | 'delete'
+      | 'delete-post'
       | 'live'
       | 'topic'
       | 'no-user'
@@ -128,9 +131,15 @@ const useModal = create<ModalStore>((set) => ({
       img: undefined,
       group: undefined,
     }),
-  toggle: () => set((state) => ({ isToggle: !state.isToggle })),
+  toggle: (isToggle, group) =>
+    set((state) => ({
+      isToggle: !state.isToggle,
+      group,
+    })),
   setImg: (type: 'edit-slider', img) => set({ modalType: type, img }),
   // authModal: () => set((state) => ({ isOpen: !state.isOpen })),
+  setGroup: (type: 'new-euro' | 'edit-euro' | 'delete-euro', group) =>
+    set({ modalType: type, isOpen: false, group }),
 }));
 
 export default useModal;

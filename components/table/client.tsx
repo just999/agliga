@@ -12,24 +12,29 @@ import { DataTable } from '@/components/ui/data-table';
 import useModal from '@/hooks/use-modal';
 import { Schedule } from '@prisma/client';
 import useRunToggleStore from '@/store/use-table-store';
+import { useSearchParams } from 'next/navigation';
 // import ApiList from '@/components/ui/api-list';
 
 interface ScheduleClientProps {
   data: Schedule[];
+  euroTableClassName?: string;
 }
 
-const ScheduleClient = ({ data }: ScheduleClientProps) => {
+const ScheduleClient = ({ data, euroTableClassName }: ScheduleClientProps) => {
   // const router = useRouter();
   // const params = useParams();
+  const params = useSearchParams();
+  const run = params.get('run');
   const { onOpen } = useModal();
 
-  const { run } = useRunToggleStore();
-  const filteredRunningData = data.filter((dat) => dat.run === run);
+  const { toggle } = useRunToggleStore();
+
+  const filteredRunningData = data.filter((dat) => dat.run === Number(run));
   let runData;
   if (run === null) {
     runData = data;
   } else if (run) {
-    runData = data.filter((dat) => dat.run === run);
+    runData = data.filter((dat) => dat.run === Number(run));
   }
 
   return (
@@ -51,6 +56,7 @@ const ScheduleClient = ({ data }: ScheduleClientProps) => {
       </div>
       <Separator /> */}
       <DataTable
+        euroTableClassName={euroTableClassName}
         searchKey='teamHome'
         columns={columns}
         data={run === null ? data : filteredRunningData}

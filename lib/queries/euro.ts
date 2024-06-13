@@ -7,7 +7,7 @@ export const fetchEuro = cache(async () => {
   try {
     const euros = await db.euro.findMany({
       orderBy: {
-        date: 'desc',
+        date: 'asc',
       },
     });
     return euros;

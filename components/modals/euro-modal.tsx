@@ -8,44 +8,46 @@ import Heading from '../heading';
 import Input from '../ui/input';
 import toast from 'react-hot-toast';
 
-import { useRouter } from 'next/navigation';
-import moment from 'moment';
+import { useParams, useRouter } from 'next/navigation';
 
 import SelectInput from '../select-input';
 
 import useModal from '@/hooks/use-modal';
 
-import { useRuns, useTeams } from '@/hooks/use-teams';
+import { useGetEuros } from '@/hooks/use-get-schedule';
 
-import { useGetEuros, useGetSchedules } from '@/hooks/use-get-schedule';
+import { EuroProps } from '@/types';
 
-import { EuroProps, ScheduleProps } from '@/types';
-
-import { initialEuroFormValues, initialScheduleFormValues } from '@/lib/helper';
+import { initialEuroFormValues } from '@/lib/helper';
 import { useEuros } from '@/hooks/use-euro';
-import { run } from 'node:test';
 
 const EuroModal = () => {
   const [schedule, setSchedule] = useState<EuroProps>(initialEuroFormValues);
   const [isLoading, setIsLoading] = useState(false);
+  // const params = useParams();
+
+  // const id = params.id?.toString();
 
   const { modalType, isOpen, onClose, id, group: euroGroup } = useModal();
-  console.log('🚀 ~ EuroModal ~ title:', euroGroup);
   const router = useRouter();
-  const { getTeams, getByValue } = useEuros();
-
+  const { getTeams } = useEuros();
   const { item, error, items } = useGetEuros(id ? id : undefined);
-  console.log('🚀 ~ EuroModal ~ item:', items);
-
   let initialScheduleValues;
   if (modalType === 'new-euro') {
     initialScheduleValues = {
-      date: '',
-      euroTeamHome: '',
+      date: new Date(),
+      euroTeamHome: {
+        value: '',
+        icon: '',
+      },
       homeScore: '',
+      status: '',
       awayScore: '',
-      group: '',
-      euroTeamAway: '',
+      euroTeamAway: {
+        value: '',
+        icon: '',
+      },
+      group: euroGroup,
     };
   } else if (modalType === 'edit-euro') {
     initialScheduleValues = {
@@ -75,7 +77,6 @@ const EuroModal = () => {
   }));
 
   const teamsOption = getTeams();
-  console.log('🚀 ~ EuroModal ~ teamsOption:', teamsOption);
   const selectTeamHomeOptions = teamsOption.map((euroTeamHome) => ({
     value: euroTeamHome.value,
     icon: euroTeamHome.icon,
@@ -87,11 +88,38 @@ const EuroModal = () => {
   }));
 
   useEffect(() => {
+    if (modalType === 'new-euro' && !error) {
+      const data = {
+        date: new Date(),
+        euroTeamHome: {
+          value: '',
+          icon: '',
+        },
+        homeScore: '',
+        status: '',
+        awayScore: '',
+        euroTeamAway: {
+          value: '',
+          icon: '',
+        },
+        group: euroGroup,
+      } as any;
+
+      setSchedule(data);
+
+      setValue('euroTeamHome', euroTeamHome);
+      setValue('date', new Date(item.date).toISOString().substring(0, 16));
+      setValue('euroTeamAway', euroTeamAway);
+      setValue('homeScore', homeScore);
+      setValue('awayScore', awayScore);
+      setValue('group', euroGroup);
+    }
     if (modalType === 'edit-euro' && item && !error) {
       const data = {
         euroTeamHome: item.euroTeamHome,
         date: item.date,
         euroTeamAway: item.euroTeamAway,
+        status: item.status,
         homeScore: item.homeScore,
         awayScore: item.awayScore,
         group: item.group,
@@ -99,22 +127,22 @@ const EuroModal = () => {
       setSchedule(data);
 
       const home: any = teamsOption.filter(
-        (team) => team.value === item.euroTeamHome
+        (team) => team.value === item.euroTeamHome.value
       ) || {
         icon: '',
         value: '',
       };
 
       const away: any = teamsOption.filter(
-        (team) => team.value === item.euroTeamAway
+        (team) => team.value === item.euroTeamAway.value
       ) || {
         icon: '',
         value: '',
       };
 
-      setValue('euroTeamHome', home[0]);
+      setValue('euroTeamHome', item.euroTeamHome);
       setValue('date', new Date(item.date).toISOString().substring(0, 16));
-      setValue('euroTeamAway', away[0]);
+      setValue('euroTeamAway', item.euroTeamAway);
       setValue('homeScore', item.homeScore);
       setValue('awayScore', item.awayScore);
       setValue('group', item.group);
@@ -126,6 +154,7 @@ const EuroModal = () => {
       // }
     } else if (modalType === 'new-euro') {
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [error, item, modalType, setValue, teamsOption]);
 
   // if (!item.date) return;
@@ -152,10 +181,10 @@ const EuroModal = () => {
     if (modalType === 'new-euro') {
       data = {
         date,
-        euroTeamHome: euroTeamHome.value,
+        euroTeamHome,
         homeScore,
         awayScore,
-        euroTeamAway: euroTeamAway.value,
+        euroTeamAway,
         group,
       };
       try {
@@ -179,10 +208,10 @@ const EuroModal = () => {
     } else if (modalType === 'edit-euro') {
       data = {
         date,
+        euroTeamHome,
         homeScore,
         awayScore,
-        euroTeamHome: euroTeamHome.value,
-        euroTeamAway: euroTeamAway.value,
+        euroTeamAway,
         group,
       };
       try {

@@ -32,6 +32,7 @@ import usePostsStore, { postItems } from '@/store/use-posts-store';
 import ClientOnly from '@/lib/client-only';
 import { Button } from '../ui/button';
 import LanguageDropdown from '../language-dropdown';
+import { UeFa } from '../assets/sports/uefa';
 
 type NavbarProps = {
   currentUser?: SafeUser | null;
@@ -155,7 +156,7 @@ const Navbar = ({ currentUser, className }: NavbarProps) => {
           : 'hidden',
     },
     {
-      icon: FcFlowChart,
+      icon: UeFa,
       label: 'Euro 2024',
       onClick: () => {},
       href: `/euro`,
@@ -214,7 +215,7 @@ const Navbar = ({ currentUser, className }: NavbarProps) => {
               {/* <Search /> */}
               <DepoWdMenu routes={routes} />
               {/* <News /> */}
-              {/* <LanguageDropdown /> */}
+              <LanguageDropdown />
               <UserMenu
                 currentUser={currentUser}
                 status={status}

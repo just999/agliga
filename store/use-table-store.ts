@@ -3,6 +3,7 @@ import { create } from 'zustand';
 interface ToggleState {
   isOpen: boolean;
   run?: number | null;
+  setRun: (run: number | null) => void;
   setIsOpen: (isOpen: boolean, run?: number) => void;
   toggle: (run?: number) => void;
 }
@@ -10,6 +11,7 @@ interface ToggleState {
 const useRunToggleStore = create<ToggleState>((set) => ({
   isOpen: false,
   run: null,
+  setRun: (run: number | null) => set(() => ({ run })),
   setIsOpen: (isOpen: boolean, run?: number) => {
     set((state) => ({
       ...state,
@@ -22,9 +24,9 @@ const useRunToggleStore = create<ToggleState>((set) => ({
       set({ isOpen: false, run: null }); // Close other open toggles
     }
   },
-  toggle: (run?: number) =>
+  toggle: (isOpen, run?: number) =>
     set((state) => ({
-      isOpen: true,
+      isOpen: !isOpen,
       run,
       // run: state.isOpen ? run : state.run,
     })),

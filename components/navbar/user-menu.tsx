@@ -26,7 +26,7 @@ const UserMenu = ({ currentUser, status, routes }: UserMenuProps) => {
 
   const ref = useClickOutside(() => {
     if (isToggle) {
-      toggle();
+      toggle(isToggle);
     }
   });
 
@@ -45,7 +45,7 @@ const UserMenu = ({ currentUser, status, routes }: UserMenuProps) => {
           </div>
         )}
         <div
-          onClick={() => toggle()}
+          onClick={() => toggle(isToggle)}
           className='p-4 md:py-2 md:px-3 border-[1px]  border-neutral-200 flex flex-row items-center gap-3 rounded-full cursor-pointer hover:shadow-md hover:bg-neutral-100 transition'
         >
           <AiOutlineMenu />

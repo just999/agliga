@@ -6,7 +6,7 @@ import useEuroStore from '@/store/use-euro-store';
 import useSchedulesStore from '@/store/use-schedule-store';
 import { ScheduleProps } from '@/types';
 
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 
 export const useGetSchedules = (id?: string) => {
   const {
@@ -58,6 +58,27 @@ export const useGetEuros = (id?: string) => {
     setError,
     setIsLoading,
   } = useEuroStore();
+
+  // const fetchData = useCallback(async () => {
+  //   try {
+  //     setIsLoading(true);
+
+  //     if (!id) {
+  //       const res = await fetchEuro();
+  //       if (!res) return null;
+
+  //       setItems(res);
+  //     } else if (id) {
+  //       const res = await fetchEuroById(id);
+  //       if (res) setItem(res);
+  //     }
+  //   } catch (err) {
+  //     console.error('Error fetching data', err);
+  //     setError('error');
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // }, []);
 
   useEffect(() => {
     const fetchData = async () => {

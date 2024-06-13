@@ -17,11 +17,18 @@ const initialState = {
   item: {
     id: '',
     date: new Date(),
-    euroTeamHome: '',
+    euroTeamHome: {
+      value: '',
+      icon: '',
+    },
     homeScore: '',
     awayScore: '',
+    status: '',
     group: '',
-    euroTeamAway: '',
+    euroTeamAway: {
+      value: '',
+      icon: '',
+    },
   },
   isLoading: false,
   error: null,

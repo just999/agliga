@@ -206,10 +206,18 @@ export type RoutesProps = {
 };
 
 export type EuroProps = {
+  id?: string;
   date: Date;
-  euroTeamHome: string;
-  homeScore: string | null;
+  euroTeamHome: {
+    value: string;
+    icon: string;
+  };
+  homeScore?: string | null;
+  status: string;
   group: string;
-  euroTeamAway: string;
-  awayScore: string | null;
+  euroTeamAway: {
+    value: string;
+    icon: string;
+  };
+  awayScore?: string | null;
 };
