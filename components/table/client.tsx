@@ -18,9 +18,14 @@ import { useSearchParams } from 'next/navigation';
 interface ScheduleClientProps {
   data: Schedule[];
   euroTableClassName?: string;
+  tableCellClassName?: string;
 }
 
-const ScheduleClient = ({ data, euroTableClassName }: ScheduleClientProps) => {
+const ScheduleClient = ({
+  data,
+  euroTableClassName,
+  tableCellClassName,
+}: ScheduleClientProps) => {
   // const router = useRouter();
   // const params = useParams();
   const params = useSearchParams();
@@ -57,6 +62,7 @@ const ScheduleClient = ({ data, euroTableClassName }: ScheduleClientProps) => {
       <Separator /> */}
       <DataTable
         euroTableClassName={euroTableClassName}
+        tableCellClassName={tableCellClassName}
         searchKey='teamHome'
         columns={columns}
         data={run === null ? data : filteredRunningData}

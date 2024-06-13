@@ -60,7 +60,7 @@ const UserMenu = ({ currentUser, status, routes }: UserMenuProps) => {
         <div className='absolute rounded-xl shadow-md 2xl:w-[15vw] xl:w-[15vw] lg:w-[18vw] md:w-[19vw] bg-stone-100 overflow-hidden right-0 top-12 text-sm z-10 sm:w-[20vw] '>
           <div className='flex flex-col cursor-pointer w-full '>
             <SidebarRoutes
-              userMenuClassName='flex flex-row items-center justify-center shadow-lg'
+              userMenuClassName='flex flex-row items-center justify-center'
               className='h-1/5  border-b-0 '
               iconClass='gap-2  bg-slate-100 text-facebook'
               size={16}

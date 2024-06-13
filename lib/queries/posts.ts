@@ -11,7 +11,7 @@ export type PostWithData = Post & {
   _count: { comments: number };
 };
 
-export const getPostByPostId = async (id?: string) => {
+export const getPostByPostId = cache(async (id?: string) => {
   try {
     if (!id) return;
     const data = await db.post.findUnique({
@@ -24,7 +24,7 @@ export const getPostByPostId = async (id?: string) => {
   } catch (err: unknown) {
     throw new Error('Something went wrong');
   }
-};
+});
 
 export type IPostsParams = {
   userId?: string;
@@ -179,7 +179,7 @@ export const fetchPosts = cache(async () => {
   }
 });
 
-export const fetchPostsByUserId = async (params: IPostsParams) => {
+export const fetchPostsByUserId = cache(async (params: IPostsParams) => {
   const { userId } = params;
   // return await db.post.findMany({
   //   where: { userId },
@@ -215,7 +215,7 @@ export const fetchPostsByUserId = async (params: IPostsParams) => {
     console.error('Error fetching random post:', err);
     return null;
   }
-};
+});
 
 export const fetchPostByPostId = cache(
   async (postId: string): Promise<PostProps> => {

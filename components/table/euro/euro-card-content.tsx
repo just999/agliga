@@ -1,5 +1,6 @@
 'use client';
 
+import { Euro24 } from '@/components/assets/games/euro24';
 import { Button } from '@/components/ui/button';
 import { CardContent, CardFooter } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -73,14 +74,15 @@ const EuroCardContent = ({
               </span>
               <span className='text-xs font-bold'>{eu.euroTeamAway.value}</span>
             </div>
-            <span className='pr-4 '>{eu.awayScore} - </span>
+            <span className='pr-4'>{eu.awayScore} - </span>
           </div>
         </div>
       </CardContent>
       <CardFooter className={cn('flex justify-between pb-2', footerClassName)}>
+        <Euro24 />
         <div
           className={cn(
-            'mx-auto text-xs font-semibold rounded-md px-4 bg-orange-100',
+            'mx-auto text-xs font-semibold rounded-md px-0',
             groupClassName
           )}
         >

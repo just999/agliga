@@ -56,6 +56,7 @@ interface DataTableProps<TData, TValue> {
   euroClassName?: string;
   euroTableClassName?: string;
   euCardClassName?: string;
+  tableCellClassName?: string;
 }
 
 export function DataTable<TData, TValue>({
@@ -67,6 +68,7 @@ export function DataTable<TData, TValue>({
   euroClassName,
   euroTableClassName,
   euCardClassName,
+  tableCellClassName,
 }: DataTableProps<TData, TValue>) {
   // const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [filtering, setFiltering] = useState('');
@@ -116,13 +118,10 @@ export function DataTable<TData, TValue>({
 
   const handleOpenGroup = (group: string | undefined) => {
     onOpen('new-euro');
-    // if (group) {
-    //   setGroup('new-euro', group);
-    // }
   };
 
   return (
-    <div className='drop-shadow-lg rounded-xl'>
+    <div className='rounded-xl'>
       <div
         className={cn(
           'flex flex-row items-center py-2 bg-orange-50/60 border border-solid border-orange-100 rounded-lg',
@@ -142,7 +141,7 @@ export function DataTable<TData, TValue>({
         setIsOpen={() => setIsOpen}
         className={cn(className)}
       />
-      <div className='rounded-md  '>
+      <div className='rounded-md shadow-xl'>
         <Table className='bg-amber-50 border-none '>
           <TableHeader className='bg-amber-50 '>
             <TableRow
@@ -191,7 +190,7 @@ export function DataTable<TData, TValue>({
                   return (
                     <TableHead
                       key={header.id}
-                      className=' text-xs text-stone-500 h-8 p-0  text-left px-2 '
+                      className=' text-xs text-stone-500 h-8 p-0  text-center px-2 bg-stone-100'
                     >
                       {header.isPlaceholder
                         ? null
@@ -211,12 +210,15 @@ export function DataTable<TData, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && 'selected'}
-                  className='h-8 bg-amber-50 even:bg-orange-50 odd:bg-white'
+                  className='h-8 bg-amber-50 even:bg-orange-50 odd:bg-amber-200/30'
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell
                       key={cell.id}
-                      className='p-0 text-center lg:text-sm'
+                      className={cn(
+                        'p-0 text-center lg:text-sm even:bg-indigo-50/40',
+                        tableCellClassName
+                      )}
                       style={{ height: '18px' }}
                     >
                       {flexRender(
@@ -241,7 +243,7 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
         {isToggle && (
-          <div className='flex  flex-col mx-5 gap-0 py-2 rounded-lg justify-center'>
+          <div className='flex flex-col mx-auto gap-0 py-2 rounded-lg justify-center'>
             {groupArrays.map((item) => (
               <EuroCard
                 key={item.games[0].id}
