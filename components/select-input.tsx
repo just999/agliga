@@ -104,7 +104,6 @@ const SelectInput = ({
       )}
 
       <Select
-        id={id}
         styles={customStyles}
         placeholder={placeholder}
         isClearable
@@ -136,13 +135,13 @@ const SelectInput = ({
           >
             <div
               className={cn(
-                'flex flex-row justify-center items-center hover:text-black',
+                'flex flex-row justify-center items-center hover:text-black   ',
                 placeholder === 'Banks' || id === ('bankPT' || 'teamHome')
                   ? 'w-9 h-6'
                   : 'w-6 h-6 p-0 m-0 my-auto relative'
               )}
             >
-              {id === 'category' || id === 'teamHome' || id === 'teamAway' ? (
+              {id === 'category' ? (
                 <span className='w-10 h-10 text-2xl flex flex-row items-center text-stone-900 '>
                   <option.icon />
                 </span>
@@ -167,7 +166,7 @@ const SelectInput = ({
             </div>
             <div className='cursor-pointer text-slate-600 text-xs font-semibold'>
               {option.value}
-
+              {/* <pre>{JSON.stringify(option, null, 2)}</pre> */}
               {/* <span className='text-neutral-500 ml-1 '></span> */}
             </div>
           </div>
