@@ -34,7 +34,7 @@ const VerticalDropdown = ({ item, currentUser }: VerticalDropdownProps) => {
           <MoreVertical className='h-4 w-4 focus:outline-none ' />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className='w-full flex flex-col justify-start align-middle text-xs text-center bg-stone-200 rounded-lg px-2'>
+      <DropdownMenuContent className='w-full flex flex-col justify-start align-middle text-xs text-center bg-emerald-100/30 border border-solid border-amber-100 rounded-lg px-2 backdrop-blur-sm'>
         <DropdownMenuLabel></DropdownMenuLabel>
         <DropdownMenuItem className='w-full focus:outline-none z-999'>
           <div className='flex flex-row justify-between gap-6 mx-4 my-2 '>

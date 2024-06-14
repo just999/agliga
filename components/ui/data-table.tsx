@@ -57,6 +57,7 @@ interface DataTableProps<TData, TValue> {
   euroTableClassName?: string;
   euCardClassName?: string;
   tableCellClassName?: string;
+  trashClassName?: string;
 }
 
 export function DataTable<TData, TValue>({
@@ -69,6 +70,7 @@ export function DataTable<TData, TValue>({
   euroTableClassName,
   euCardClassName,
   tableCellClassName,
+  trashClassName,
 }: DataTableProps<TData, TValue>) {
   // const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [filtering, setFiltering] = useState('');
@@ -147,16 +149,16 @@ export function DataTable<TData, TValue>({
             <TableRow
               className={cn('rounded-full h-8 border-none', euroTableClassName)}
             >
-              <TableHead className='flex flex-row font-semibold justify-center ml-2 bg-emerald-200 rounded-l-lg  h-8 hover:bg-green-300 hover:font-semibold hover:text-gray-800 shadow-xl text-md text-gray-400 cursor-pointer'>
+              <TableHead className='flex flex-row font-semibold justify-center ml-2 bg-emerald-300 rounded-l-lg  h-8 hover:bg-green-300 hover:font-semibold hover:text-gray-800 shadow-xl text-md text-gray-400 cursor-pointer'>
                 <Euro24 />
                 <Button
                   variant='ghost'
                   size='sm'
                   className={cn(
-                    'px-0 ',
+                    'p-0 h-7',
                     role !== 'admin'
-                      ? 'text-black font-semibold'
-                      : 'hover:bg-green-300 hover:font-semibold hover:text-gray-800'
+                      ? 'text-black font-semibold bg-emerald-300'
+                      : 'hover:font-semibold hover:text-gray-800 hover:bg-green-300'
                   )}
                   onClick={() => handleOpenGroup(group)}
                   disabled={role === 'admin' ? false : true}
@@ -249,10 +251,11 @@ export function DataTable<TData, TValue>({
                 key={item.games[0].id}
                 eu={item}
                 className='bg-sky-100 mt-2'
-                groupClassName='w-full text-center bg-sky-200/70 py-1 shadow-xl shadow-lg'
+                groupClassName='w-full text-center  py-1 '
                 footerClassName={footerClassName}
                 euroClassName={euroClassName}
                 euCardClassName={euCardClassName}
+                trashClassName={trashClassName}
               />
             ))}
 

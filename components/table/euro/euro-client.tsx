@@ -14,6 +14,7 @@ interface EuroClientProps {
   euroClassName?: string;
   className?: string;
   euCardClassName?: string;
+  trashClassName?: string;
 }
 
 const EuroClient = ({
@@ -23,6 +24,7 @@ const EuroClient = ({
   euroClassName,
   className,
   euCardClassName,
+  trashClassName,
 }: EuroClientProps) => {
   return (
     <div className='pt-2 border-0'>
@@ -35,6 +37,7 @@ const EuroClient = ({
         footerClassName={footerClassName}
         euroClassName={euroClassName}
         euCardClassName={euCardClassName}
+        trashClassName={trashClassName}
       />
     </div>
   );

@@ -78,23 +78,25 @@ const EuroCardContent = ({
           </div>
         </div>
       </CardContent>
-      <CardFooter className={cn('flex justify-between pb-2', footerClassName)}>
-        <Euro24 />
-        <div
-          className={cn(
-            'mx-auto text-xs font-semibold rounded-md px-0',
-            groupClassName
-          )}
-        >
-          Group {eu.group}
+      <CardFooter className={cn('flex justify-between py-0', footerClassName)}>
+        <div className='flex flex-row items-center h-8'>
+          <Euro24 />
+          <div
+            className={cn(
+              'mx-auto text-xs font-semibold rounded-md px-0',
+              groupClassName
+            )}
+          >
+            Group {eu.group}
+          </div>
         </div>
         {role === 'admin' && (
-          <>
+          <div className='flex gap-4 '>
             <Button
               variant='outline'
               size='sm'
               className={cn(
-                'p-0 m-0 w-4 h-4 text-right text-rose-500 bg-sky-100',
+                'p-0 m-0 w-4 h-4 text-right text-rose-500 bg-sky-200 hover:text-rose-700 hover:bg-sky-200',
                 trashClassName
               )}
               onClick={() => onOpen('delete-euro', eu.id, title)}
@@ -106,13 +108,13 @@ const EuroCardContent = ({
               variant='outline'
               size='sm'
               className={cn(
-                'p-0 m-0 w-4 h-4 text-right text-sky-500 bg-sky-100',
+                'p-0 m-0 w-4 h-4 text-right text-sky-500 bg-sky-200 hover:text-sky-700 hover:bg-sky-200',
                 trashClassName
               )}
             >
               <BsPencilFill />
             </Button>
-          </>
+          </div>
         )}
       </CardFooter>
 

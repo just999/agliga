@@ -334,7 +334,6 @@ const EuroModal = () => {
         options={() => selectTeamAwayOptions}
         errors={errors}
       />
-      <pre>{JSON.stringify(euroTeamAway, null, 2)}</pre>
       {errors.euroTeamAway && (
         <span className='text-sm text-red-500 '>
           <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>

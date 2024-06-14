@@ -104,6 +104,7 @@ const SelectInput = ({
       )}
 
       <Select
+        id={id}
         styles={customStyles}
         placeholder={placeholder}
         isClearable
@@ -135,7 +136,7 @@ const SelectInput = ({
           >
             <div
               className={cn(
-                'flex flex-row justify-center items-center hover:text-black   ',
+                'flex flex-row justify-center items-center hover:text-black',
                 placeholder === 'Banks' || id === ('bankPT' || 'teamHome')
                   ? 'w-9 h-6'
                   : 'w-6 h-6 p-0 m-0 my-auto relative'

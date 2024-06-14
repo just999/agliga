@@ -111,7 +111,7 @@ const EuroPage = () => {
         <EuroClient
           data={euroGroupA}
           group='A'
-          footerClassName='flex flex-row gap-2'
+          footerClassName='flex flex-row gap-2 justify-between items-center bg-sky-200/60'
           euroClassName='flex flex-wrap gap-2 justify-center group-card py-2'
           className='hidden'
           euCardClassName='pt-2 px-2 gap-0 justify-start items-center bg-emerald-50 odd:bg-zinc-100 even:bg-stone-50'
@@ -119,7 +119,7 @@ const EuroPage = () => {
         <EuroClient
           data={euroGroupB}
           group='B'
-          footerClassName='flex flex-row gap-2'
+          footerClassName='flex flex-row gap-2 justify-between items-center bg-sky-200/60'
           euroClassName='flex flex-wrap gap-2 justify-center group-card py-2'
           className='hidden'
           euCardClassName='pt-2 px-2 gap-0 justify-start items-center bg-emerald-50 even:bg-zinc-100 odd:bg-stone-50'
@@ -127,7 +127,7 @@ const EuroPage = () => {
         <EuroClient
           data={euroGroupC}
           group='C'
-          footerClassName='flex flex-row gap-2'
+          footerClassName='flex flex-row gap-2 justify-between items-center bg-sky-200/60'
           euroClassName='flex flex-wrap gap-2 justify-center group-card py-2'
           className='hidden'
           euCardClassName='pt-2 px-2 gap-0 justify-start items-center bg-emerald-50 odd:bg-zinc-100 even:bg-stone-50'
@@ -135,7 +135,7 @@ const EuroPage = () => {
         <EuroClient
           data={euroGroupD}
           group='D'
-          footerClassName='flex flex-row gap-2'
+          footerClassName='flex flex-row gap-2 justify-between items-center bg-sky-200/60'
           euroClassName='flex flex-wrap gap-2 justify-center group-card py-2'
           className='hidden'
           euCardClassName='pt-2 px-2 gap-0 justify-start items-center bg-emerald-50 even:bg-zinc-100 odd:bg-stone-50'
@@ -143,7 +143,7 @@ const EuroPage = () => {
         <EuroClient
           data={euroGroupE}
           group='E'
-          footerClassName='flex flex-row gap-2'
+          footerClassName='flex flex-row gap-2 justify-between items-center bg-sky-200/60'
           euroClassName='flex flex-wrap gap-2 justify-center group-card py-2'
           className='hidden'
           euCardClassName='pt-2 px-2 gap-0 justify-start items-center bg-emerald-50 odd:bg-zinc-100 even:bg-stone-50'
@@ -151,7 +151,7 @@ const EuroPage = () => {
         <EuroClient
           data={euroGroupF}
           group='F'
-          footerClassName='flex flex-row gap-2'
+          footerClassName='flex flex-row gap-2 justify-between items-center bg-sky-200/60'
           euroClassName='flex flex-wrap gap-2 justify-center group-card py-2'
           className='hidden'
           euCardClassName='pt-2 px-2 gap-0 justify-start items-center bg-emerald-50 even:bg-zinc-100 odd:bg-stone-50'
