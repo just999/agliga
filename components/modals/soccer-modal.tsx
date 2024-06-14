@@ -34,8 +34,6 @@ const SoccerModal = () => {
   const { getTeams, getByValue } = useTeams();
   const { getRuns, getRunsByValue } = useRuns();
   const { item, error } = useGetSchedules(id ? id : undefined);
-  console.log('🚀 ~ SoccerModal ~ item:', item);
-
   let initialScheduleValues;
   if (modalType === 'soccer') {
     initialScheduleValues = {
@@ -66,8 +64,6 @@ const SoccerModal = () => {
   } = useForm<FieldValues>({
     defaultValues: initialScheduleValues,
   });
-  console.log('🚀 ~ SoccerModal ~ schedule:', schedule);
-
   const runs = getRuns();
   const selectRunOptions = runs.map((run) => ({
     value: run.value,
@@ -110,16 +106,12 @@ const SoccerModal = () => {
         icon: '',
         value: '',
       };
-      console.log('🚀 ~ useEffect ~ home:', home);
-
       const away: any = teamsOption.filter(
         (team) => team.value === item.teamAway
       ) || {
         icon: '',
         value: '',
       };
-      console.log('🚀 ~ useEffect ~ home:', away);
-
       setValue('run', periodRun[0]);
       setValue('teamHome', home[0]);
       setValue('date', new Date(item.date).toISOString().substring(0, 16));
@@ -166,7 +158,6 @@ const SoccerModal = () => {
   };
   // if (!isMounted) return null;
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log('🚀 ~ SoccerModal ~ data:', data);
     setIsLoading(true);
     // const gameValues: GameProps = data.game.map((val: any) => val.value);
     if (modalType === 'soccer') {
