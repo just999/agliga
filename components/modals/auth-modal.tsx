@@ -87,7 +87,6 @@ const AuthModal = () => {
   const email = watch('email');
   const bank = watch('bank');
   const game = watch('game');
-  console.log('🚀 ~ AuthModal ~ game:', game);
   const phone = watch('phone');
   const accountNumber = watch('accountNumber');
   const password = watch('password');
@@ -102,7 +101,6 @@ const AuthModal = () => {
 
   if (!isMounted) return null;
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log('🚀 ~ AuthModal ~ data:', data);
     setIsLoading(true);
 
     if (modalType === 'register') {

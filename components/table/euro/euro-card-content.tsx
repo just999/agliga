@@ -163,7 +163,7 @@ const EuroCardContent = ({
         )}
       </CardFooter>
 
-      <pre>{JSON.stringify(eu, null, 2)}</pre>
+      {/* <pre>{JSON.stringify(eu, null, 2)}</pre> */}
     </div>
   );
 };

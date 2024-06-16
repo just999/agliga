@@ -26,9 +26,6 @@ export async function PUT(
   const isoDate = date + ':00.000Z';
 
   const id = params.id;
-
-  console.log('🚀 ~ body:', body);
-
   let ap: string[] = [];
   awayPenalty.forEach((va: any) => {
     const item = va.value;

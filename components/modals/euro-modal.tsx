@@ -34,7 +34,6 @@ const EuroModal = () => {
   const { getTeams } = useEuros();
   const { getPenalty } = usePenalty();
   const { item, error, items } = useGetEuros(id ? id : undefined);
-  console.log('🚀 ~ EuroModal ~ item:', item);
   let initialScheduleValues;
   if (modalType === 'new-euro') {
     initialScheduleValues = {
@@ -101,7 +100,6 @@ const EuroModal = () => {
     desc: pen.desc,
     style: pen.style,
   }));
-  console.log('🚀 ~ penaltyOptions ~ penaltyOptions:', penaltyOptions);
   useEffect(() => {
     if (modalType === 'new-euro' && !error) {
       const data = {
@@ -166,8 +164,6 @@ const EuroModal = () => {
         targetPen = item.awayPenalty;
       }
       const apen = findMatchingObjects(penalties, targetPen);
-      console.log('🚀 ~ useEffect ~ apen:', apen);
-
       setValue('euroTeamHome', item.euroTeamHome);
       setValue('homePenalty', item.homePenalty);
       setValue('date', new Date(item.date).toISOString().substring(0, 16));
@@ -241,8 +237,6 @@ const EuroModal = () => {
         console.error(err);
       }
     } else if (modalType === 'edit-euro') {
-      console.log('🚀 ~ EuroModal ~ data:', data);
-
       data = {
         date,
         euroTeamHome,
