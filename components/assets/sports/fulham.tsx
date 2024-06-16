@@ -11,6 +11,7 @@ export function Fulham() {
       version='1.1'
       viewBox='0 0 340.231 452.801'
       xmlSpace='preserve'
+      className='h-6 w-6'
     >
       <path
         fill='#FFF'

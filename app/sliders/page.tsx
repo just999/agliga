@@ -77,7 +77,7 @@ const SlidersPage = () => {
           images.map((img: PageProps, i) => (
             <span
               key={img.id}
-              className='relative h-full  shadow-xl rounded-xl border-slate-600 border-1'
+              className='relative h-[80px]  rounded-xl border-slate-600 border-1 group cursor-pointer'
             >
               <Avatar className='rounded-none w-auto h-20 my-auto  bg-slate-100 '>
                 <AvatarImage
@@ -97,13 +97,13 @@ const SlidersPage = () => {
               >
                 <BiSolidEdit size={18} />
               </Button> */}
-              <span className='absolute top-0 left-0 text-gray-100 px-1 text-xs bg-stone-100/20 rounded-full'>
+              <span className='absolute invisible group-hover:visible top-0 left-0 text-gray-100 px-1 text-xs bg-stone-100/20 rounded-full'>
                 {i + 1}
               </span>
               <EditDeletePostButton
                 img={img}
-                className2='top-0 right-0 p-0 m-0 h-5 w-5 rounded-full   '
-                className='absolute top-0 right-0 p-0 m-0 h-5 w-5 rounded-full bg-emerald-400/20 text-red-500 '
+                className='top-0 right-0 p-0 m-0 h-5 w-5 '
+                className2='absolute invisible group-hover:visible top-0 right-0 p-0 m-0 h-5 w-5  text-slate-50  hover:border hover:border-solid hover:border-amber-100/50 hover:bg-slate-50/50'
               />
               {/* <pre className='text-xl '>{JSON.stringify(img, null, 2)}</pre> */}
             </span>

@@ -21,6 +21,7 @@ type ModalProps = {
   secondaryAction?: () => void;
   secondaryActionLabel?: string;
   reset?: () => void;
+  buttonType?: string;
 };
 
 const Modal = ({
@@ -38,6 +39,7 @@ const Modal = ({
   disabled,
   secondaryAction,
   secondaryActionLabel,
+  buttonType,
 }: ModalProps) => {
   const [showModal, setShowModal] = useState(isOpen);
   useEffect(() => {
@@ -67,6 +69,13 @@ const Modal = ({
   }, [disabled, secondaryAction]);
 
   if (!isOpen) return null;
+
+  let btnType;
+  if (buttonType) {
+    btnType === buttonType;
+  } else {
+    btnType === 'submit';
+  }
 
   return (
     <div
@@ -128,7 +137,7 @@ const Modal = ({
                   />
                 )}
                 <Btn
-                  type='submit'
+                  type={btnType}
                   disabled={disabled}
                   label={actionLabel}
                   onClick={handleSubmit}

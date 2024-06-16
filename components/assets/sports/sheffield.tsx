@@ -12,6 +12,7 @@ export function Sheffield() {
       version='1.1'
       viewBox='0 0 402.374 402.362'
       xmlSpace='preserve'
+      className='h-6 w-6'
     >
       <path
         fill='#FFF'

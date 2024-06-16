@@ -1,6 +1,6 @@
 import React from 'react';
 
-function UTube() {
+export function UTube() {
   return (
     <svg viewBox='0 0 68 48'>
       <path
@@ -11,5 +11,3 @@ function UTube() {
     </svg>
   );
 }
-
-export default UTube;

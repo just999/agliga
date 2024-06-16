@@ -12,6 +12,7 @@ export function Brighton() {
       version='1.1'
       viewBox='0 0 56.75 57.083'
       xmlSpace='preserve'
+      className='h-6 w-6'
     >
       <defs>
         <path

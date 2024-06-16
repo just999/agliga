@@ -35,6 +35,10 @@ export type ValueIconProps = {
   value: string;
   icon: string;
 };
+export type RunIconProps = {
+  value: number;
+  icon: string;
+};
 
 export type BanksProps = {
   value: string;
@@ -212,6 +216,7 @@ export type EuroProps = {
     value: string;
     icon: string;
   };
+  homePenalty?: string[];
   homeScore?: string | null;
   status: string;
   group: string;
@@ -219,5 +224,6 @@ export type EuroProps = {
     value: string;
     icon: string;
   };
+  awayPenalty?: string[];
   awayScore?: string | null;
 };

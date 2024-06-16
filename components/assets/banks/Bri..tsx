@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-function Bri() {
+export function Bri() {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -108,5 +108,3 @@ function Bri() {
     </svg>
   );
 }
-
-export default Bri;

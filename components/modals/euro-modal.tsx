@@ -19,7 +19,8 @@ import { useGetEuros } from '@/hooks/use-get-schedule';
 import { EuroProps } from '@/types';
 
 import { initialEuroFormValues } from '@/lib/helper';
-import { useEuros } from '@/hooks/use-euro';
+import { useEuros, usePenalty } from '@/hooks/use-euro';
+import { cn, findMatchingObjects, noto } from '@/lib/utils';
 
 const EuroModal = () => {
   const [schedule, setSchedule] = useState<EuroProps>(initialEuroFormValues);
@@ -31,7 +32,9 @@ const EuroModal = () => {
   const { modalType, isOpen, onClose, id, group: euroGroup } = useModal();
   const router = useRouter();
   const { getTeams } = useEuros();
+  const { getPenalty } = usePenalty();
   const { item, error, items } = useGetEuros(id ? id : undefined);
+  console.log('🚀 ~ EuroModal ~ item:', item);
   let initialScheduleValues;
   if (modalType === 'new-euro') {
     initialScheduleValues = {
@@ -40,6 +43,7 @@ const EuroModal = () => {
         value: '',
         icon: '',
       },
+      homePenalty: [],
       homeScore: '',
       status: '',
       awayScore: '',
@@ -47,16 +51,19 @@ const EuroModal = () => {
         value: '',
         icon: '',
       },
+      awayPenalty: [],
       group: euroGroup,
     };
   } else if (modalType === 'edit-euro') {
     initialScheduleValues = {
       date: schedule.date,
       euroTeamHome: schedule.euroTeamHome,
+      homePenalty: schedule.homePenalty,
       homeScore: schedule.homeScore,
       awayScore: schedule.awayScore,
       group: schedule.group,
       euroTeamAway: schedule.euroTeamAway,
+      awayPenalty: schedule.awayPenalty,
     };
   }
   const {
@@ -87,6 +94,14 @@ const EuroModal = () => {
     icon: euroTeamAway.icon,
   }));
 
+  const penalties = getPenalty();
+  const penaltyOptions = penalties.map((pen) => ({
+    value: pen.value,
+    icon: pen.icon,
+    desc: pen.desc,
+    style: pen.style,
+  }));
+  console.log('🚀 ~ penaltyOptions ~ penaltyOptions:', penaltyOptions);
   useEffect(() => {
     if (modalType === 'new-euro' && !error) {
       const data = {
@@ -95,6 +110,7 @@ const EuroModal = () => {
           value: '',
           icon: '',
         },
+        homePenalty: [],
         homeScore: '',
         status: '',
         awayScore: '',
@@ -102,14 +118,17 @@ const EuroModal = () => {
           value: '',
           icon: '',
         },
+        awayPenalty: [],
         group: euroGroup,
       } as any;
 
       setSchedule(data);
 
       setValue('euroTeamHome', euroTeamHome);
+      setValue('homePenalty', homePenalty);
       setValue('date', new Date(item.date).toISOString().substring(0, 16));
       setValue('euroTeamAway', euroTeamAway);
+      setValue('awayPenalty', awayPenalty);
       setValue('homeScore', homeScore);
       setValue('awayScore', awayScore);
       setValue('group', euroGroup);
@@ -117,8 +136,10 @@ const EuroModal = () => {
     if (modalType === 'edit-euro' && item && !error) {
       const data = {
         euroTeamHome: item.euroTeamHome,
+        homePenalty: item.homePenalty,
         date: item.date,
         euroTeamAway: item.euroTeamAway,
+        awayPenalty: item.awayPenalty,
         status: item.status,
         homeScore: item.homeScore,
         awayScore: item.awayScore,
@@ -140,9 +161,18 @@ const EuroModal = () => {
         value: '',
       };
 
+      let targetPen: string[] = [];
+      if (item.awayPenalty) {
+        targetPen = item.awayPenalty;
+      }
+      const apen = findMatchingObjects(penalties, targetPen);
+      console.log('🚀 ~ useEffect ~ apen:', apen);
+
       setValue('euroTeamHome', item.euroTeamHome);
+      setValue('homePenalty', item.homePenalty);
       setValue('date', new Date(item.date).toISOString().substring(0, 16));
       setValue('euroTeamAway', item.euroTeamAway);
+      setValue('awayPenalty', apen);
       setValue('homeScore', item.homeScore);
       setValue('awayScore', item.awayScore);
       setValue('group', item.group);
@@ -162,8 +192,11 @@ const EuroModal = () => {
 
   const date = watch('date');
   const euroTeamHome = watch('euroTeamHome');
+  const homePenalty = watch('homePenalty');
   const homeScore = watch('homeScore');
   const euroTeamAway = watch('euroTeamAway');
+  const awayPenalty = watch('awayPenalty');
+
   const awayScore = watch('awayScore');
   const group = watch('group');
 
@@ -182,9 +215,11 @@ const EuroModal = () => {
       data = {
         date,
         euroTeamHome,
+        homePenalty,
         homeScore,
         awayScore,
         euroTeamAway,
+        awayPenalty,
         group,
       };
       try {
@@ -206,12 +241,16 @@ const EuroModal = () => {
         console.error(err);
       }
     } else if (modalType === 'edit-euro') {
+      console.log('🚀 ~ EuroModal ~ data:', data);
+
       data = {
         date,
         euroTeamHome,
+        homePenalty,
         homeScore,
         awayScore,
         euroTeamAway,
+        awayPenalty,
         group,
       };
       try {
@@ -265,27 +304,6 @@ const EuroModal = () => {
         </span>
       )}
 
-      {/* <SelectInput
-        label={run ? '' : 'run'}
-        isMulti={false}
-        id='run'
-        register={register}
-        required
-        value={watch('run')}
-        onChange={(value) => setCustomValue('run', value)}
-        placeholder='Run'
-        options={() => selectRunOptions}
-        errors={errors}
-      />
-
-      {errors.run && (
-        <span className='text-sm text-red-500 '>
-          <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
-            Kolom Wajib di isi...
-          </span>
-        </span>
-      )} */}
-
       <SelectInput
         label={euroTeamHome ? '' : 'euroTeamHome'}
         isMulti={false}
@@ -297,8 +315,32 @@ const EuroModal = () => {
         placeholder='euroHome'
         options={() => selectTeamHomeOptions}
         errors={errors}
+        optionIconClassName={cn(noto.className)}
+        optionClassName='text-base px-2 '
       />
       {errors.euroTeamHome && (
+        <span className='text-sm text-red-500 '>
+          <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
+            Kolom Wajib di isi...
+          </span>
+        </span>
+      )}
+
+      <SelectInput
+        label={homePenalty ? '' : 'homePenalty'}
+        isMulti={true}
+        id='homePenalty'
+        register={register}
+        value={watch('homePenalty')}
+        onChange={(value) => setCustomValue('homePenalty', value)}
+        placeholder='home penalty'
+        options={() => penaltyOptions}
+        errors={errors}
+        // optionIconClassName='text-yellow-400'
+        optionPenaltyClassName='flex flex-row-reverse justify-end gap-0'
+        optionClassName='text-xs px-0'
+      />
+      {errors.homePenalty && (
         <span className='text-sm text-red-500 '>
           <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
             Kolom Wajib di isi...
@@ -333,6 +375,8 @@ const EuroModal = () => {
         placeholder='euroAway'
         options={() => selectTeamAwayOptions}
         errors={errors}
+        optionIconClassName={cn(noto.className)}
+        optionClassName='text-base px-2 '
       />
       {errors.euroTeamAway && (
         <span className='text-sm text-red-500 '>
@@ -341,6 +385,46 @@ const EuroModal = () => {
           </span>
         </span>
       )}
+
+      {/* <Input
+        id='awayPenalty'
+        type='text'
+        label={awayPenalty ? '' : 'awayPenalty'}
+        defaultValue={watch('awayPenalty')}
+        disabled={isLoading}
+        register={register}
+        errors={errors}
+      />
+      {errors.awayPenalty && (
+        <span className='text-sm text-red-500 '>
+          <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
+            Kolom Wajib di isi...
+          </span>
+        </span>
+      )} */}
+
+      <SelectInput
+        label={awayPenalty ? '' : 'awayPenalty'}
+        isMulti={true}
+        id='awayPenalty'
+        register={register}
+        value={watch('awayPenalty')}
+        onChange={(value) => setCustomValue('awayPenalty', value)}
+        placeholder='away penalty'
+        options={() => penaltyOptions}
+        errors={errors}
+        // optionIconClassName='text-yellow-400'
+        optionPenaltyClassName='flex flex-row-reverse justify-end gap-0'
+        optionClassName='text-xs px-0'
+      />
+      {errors.awayPenalty && (
+        <span className='text-sm text-red-500 '>
+          <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
+            Kolom Wajib di isi...
+          </span>
+        </span>
+      )}
+
       <Input
         id='awayScore'
         type='text'

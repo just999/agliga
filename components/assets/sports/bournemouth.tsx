@@ -12,6 +12,7 @@ export function Bournemouth() {
       version='1.1'
       viewBox='0 0 240.882 315.83'
       xmlSpace='preserve'
+      className='h-6 w-6'
     >
       <defs>
         <path id='SVGID_1_' d='M0 -0.001H240.882V315.83000000000004H0z'></path>

@@ -1,6 +1,6 @@
 import { englishPL, EPL, runData } from '@/lib/helper';
 
-const formattedTeams = englishPL.map((team) => ({
+const formattedTeams = EPL.map((team) => ({
   value: team.name,
   icon: team.icon,
 }));

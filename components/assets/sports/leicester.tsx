@@ -8,6 +8,7 @@ export function Leichester() {
       height='400'
       version='1'
       viewBox='0 0 595.276 841.89'
+      className='h-6 w-6'
     >
       <path
         fill='#fff'

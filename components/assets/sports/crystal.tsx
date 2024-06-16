@@ -7,7 +7,9 @@ export function Crystal() {
       width='69.391'
       height='86.253'
       version='1.1'
+      viewBox='0 0 70 86'
       xmlSpace='preserve'
+      className='h-6 w-6'
     >
       <defs>
         <clipPath clipPathUnits='userSpaceOnUse'>

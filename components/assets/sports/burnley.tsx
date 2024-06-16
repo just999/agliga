@@ -8,6 +8,7 @@ export function Burnley() {
       height='339'
       fill='none'
       viewBox='0 0 295 339'
+      className='h-6 w-6'
     >
       <path
         fill='#5f0041'

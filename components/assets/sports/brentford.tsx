@@ -31,6 +31,7 @@ export function Brentford() {
       version='1.1'
       viewBox='0 0 699.997 700.002'
       xmlSpace='preserve'
+      className='h-6 w-6'
     >
       <g>
         <path

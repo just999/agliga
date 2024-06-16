@@ -1,7 +1,7 @@
 import { EuroProps } from '@/types';
 import { create } from 'zustand';
 
-type ScheduleState = {
+type EuroState = {
   items: EuroProps[];
   item: EuroProps;
   isLoading: boolean;
@@ -21,6 +21,7 @@ const initialState = {
       value: '',
       icon: '',
     },
+    homePenalty: [],
     homeScore: '',
     awayScore: '',
     status: '',
@@ -29,12 +30,13 @@ const initialState = {
       value: '',
       icon: '',
     },
+    awayPenalty: [],
   },
   isLoading: false,
   error: null,
 };
 
-const useEuroStore = create<ScheduleState>((set) => ({
+const useEuroStore = create<EuroState>((set) => ({
   ...initialState,
   setIsLoading: (isLoading) => set(() => ({ isLoading })),
   setError: (error) => set(() => ({ error })),

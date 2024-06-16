@@ -1,19 +1,25 @@
 'use client';
 
 import { cn, noto } from '@/lib/utils';
-import Image from 'next/image';
+
 import makeAnimated from 'react-select/animated';
 
 import Select, { StylesConfig } from 'react-select';
 
 import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
 import { BiDollar } from 'react-icons/bi';
+import { id } from 'date-fns/locale';
 
 export type SelectInputValue = {
   icon: string;
   value: string;
+  desc?: string;
+  style?: string;
 };
 type SelectInputProps = {
+  optionClassName?: string;
+  optionIconClassName?: string;
+  optionPenaltyClassName?: string;
   id: string;
   label?: string;
   isMulti: boolean;
@@ -41,6 +47,9 @@ const SelectInput = ({
   placeholder,
   options,
   errors,
+  optionClassName,
+  optionIconClassName,
+  optionPenaltyClassName,
 }: SelectInputProps) => {
   let color: string;
   let fontColor: string;
@@ -123,49 +132,71 @@ const SelectInput = ({
           <div
             className={cn(
               ' cursor-pointer text-gray-800  hover:text-black hover:font-normal',
+
               placeholder === 'Bank'
                 ? 'flex flex-row items-center gap-3 text-xs '
                 : 'flex flex-row items-center gap-3 text-xs w-full h-auto my-auto',
               errors[id]
                 ? 'border-rose-500 bg-rose-100/30'
                 : 'border-neutral-300',
-              errors[id] ? 'focus:border-rose-500' : 'focus:border-black'
+              errors[id] ? 'focus:border-rose-500' : 'focus:border-black',
+              optionPenaltyClassName
               // value && 'text-gray-700'
             )}
           >
             <div
               className={cn(
-                'flex flex-row justify-center items-center hover:text-black   ',
-                placeholder === 'Banks' || id === ('bankPT' || 'teamHome')
-                  ? 'w-9 h-6'
+                'flex flex-row justify-between items-center hover:text-black   ',
+                id === 'bank' ||
+                  id === 'bankPT' ||
+                  id === 'teamHome' ||
+                  id === 'teamAway'
+                  ? 'w-6 h-6'
                   : 'w-6 h-6 p-0 m-0 my-auto relative'
               )}
             >
-              {id === 'category' ? (
-                <span className='w-10 h-10 text-2xl flex flex-row items-center text-stone-900 '>
-                  <option.icon />
-                </span>
-              ) : id === 'euroTeamHome' || id === 'euroTeamAway' ? (
-                <span className='w-10 h-10 text-2xl flex flex-row items-center text-stone-900 '>
-                  {/* <option.icon /> */}
-                  <span className={cn(noto.className)}>{option.icon}</span>
-                </span>
-              ) : (
-                <Image
-                  src={option.icon}
-                  alt={option.value}
-                  width={id === 'bank' || 'bankPT' || 'teamHome' ? 50 : 30}
-                  height={id === 'bank' || 'bankPT' || 'teamHome' ? 30 : 20}
-                  priority
-                  sizes='(min-width: 10px) 100vw, (max-width: 30px) 50vw, 33vw'
-                  className={cn(
-                    'object-cover w-full border-solid border rounded  border-gray-200 drop-shadow-lg'
-                  )}
-                />
-              )}
+              {
+                // id === 'category' ||
+                // id === 'bank' ||
+                // id === 'bankPT' ||
+                // id === 'game' ||
+                // id === 'run' ||
+                // id === 'teamHome' ||
+                id === 'euroTeamHome' || id === 'euroTeamAway' ? (
+                  <span
+                    className={cn(
+                      'w-10 h-10 text-2xl rounded-lg flex flex-row items-center text-stone-900'
+                    )}
+                  >
+                    <span className={cn(optionIconClassName)}>
+                      {option.icon}
+                    </span>
+                  </span>
+                ) : (
+                  <span
+                    className={cn(
+                      'w-10 h-10 text-2xl rounded-lg flex flex-row items-center text-stone-900',
+                      optionIconClassName
+                    )}
+                  >
+                    <span
+                      className={cn(
+                        option.style,
+                        'bg-emerald-200/20 px-0 py-1 '
+                      )}
+                    >
+                      <option.icon />
+                    </span>
+                  </span>
+                )
+              }
             </div>
-            <div className='cursor-pointer text-slate-600 text-xs font-semibold'>
-              {option.value}
+            <div
+              className={cn('cursor-pointer text-slate-600', optionClassName)}
+            >
+              {option && (id === 'euroTeamHome' || id === 'euroTeamAway')
+                ? option.value
+                : option.desc}
               {/* <pre>{JSON.stringify(option, null, 2)}</pre> */}
               {/* <span className='text-neutral-500 ml-1 '></span> */}
             </div>
@@ -173,7 +204,7 @@ const SelectInput = ({
         )}
         classNames={{
           control: () =>
-            `px-3 py-1 border ${
+            `px-0 py-1 border ${
               errors[id]
                 ? 'border-rose-500 focus:border-rose-500 bg-rose-900/30!important'
                 : 'border-neutral-300 focus:border-black'

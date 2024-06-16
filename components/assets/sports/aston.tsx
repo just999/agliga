@@ -7,6 +7,7 @@ export function Aston() {
       width='574.32'
       height='843.587'
       viewBox='0 0 430.74 632.69'
+      className='h-6 w-6'
     >
       <defs>
         <clipPath id='clip1'>

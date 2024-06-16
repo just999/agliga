@@ -1,5 +1,4 @@
 import getCurrentUser from '@/actions/get-user';
-import { currentUser } from '@/lib/auth';
 
 import { db } from '@/lib/db';
 import { revalidatePath } from 'next/cache';
@@ -16,6 +15,8 @@ export async function PUT(
     date,
     euroTeamAway,
     euroTeamHome,
+    homePenalty,
+    awayPenalty,
     group,
     homeScore,
     status,
@@ -26,6 +27,13 @@ export async function PUT(
 
   const id = params.id;
 
+  console.log('🚀 ~ body:', body);
+
+  let ap: string[] = [];
+  awayPenalty.forEach((va: any) => {
+    const item = va.value;
+    ap.push(item);
+  });
   try {
     const scheduleItem = await db.euro.update({
       where: { id: id },
@@ -33,6 +41,8 @@ export async function PUT(
         date: isoDate,
         euroTeamAway,
         euroTeamHome,
+        homePenalty,
+        awayPenalty: ap,
         group,
         status,
         homeScore,

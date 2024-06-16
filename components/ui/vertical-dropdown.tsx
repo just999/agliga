@@ -25,6 +25,7 @@ type VerticalDropdownProps = {
   title?: string;
   img?: Slider;
   className?: string;
+  className2?: string;
 };
 
 const VerticalDropdown = ({
@@ -33,10 +34,10 @@ const VerticalDropdown = ({
   title,
   img,
   className,
+  className2,
 }: VerticalDropdownProps) => {
   const params = useParams();
   const id = typeof params.id === 'string' ? params.id : item?.id;
-
   // const { isFavorited, setIsFavorited } = useFavorite({
   //   currentUser,
   //   postId,
@@ -56,7 +57,6 @@ const VerticalDropdown = ({
   //   toggleDislike(e);
   // };
   const { onOpen, modalType, setImg } = useModal();
-
   const handleEditSlider = (img: any) => {
     onOpen('edit-slider');
     setImg('edit-slider', img);
@@ -66,7 +66,7 @@ const VerticalDropdown = ({
       <DropdownMenuTrigger asChild className={cn(className, 'z-99')}>
         <Button
           variant='ghost'
-          className='h-4 p-0 focus:outline-none  hover:bg-emerald-100/20'
+          className={cn('h-4 p-0 focus:outline-none ', className2)}
         >
           <span className='sr-only '>Open menu</span>
           <MoreVertical className='h-5 w-5 text-slate-500 hover:text-gray-600  ' />
@@ -74,10 +74,10 @@ const VerticalDropdown = ({
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align='end'
-        className='w-full flex flex-col bg-slate-200 justify-between  text-xs text-center  rounded-lg  mx-2 my-1'
+        className='w-full flex flex-col bg-slate-200 bg-emerald-300/30 backdrop-blur justify-between  text-xs text-center  rounded-lg  mx-2 my-1'
       >
         <DropdownMenuLabel></DropdownMenuLabel>
-        <DropdownMenuItem className='w-full focus:outline-none'>
+        <DropdownMenuItem className='w-full focus:outline-none '>
           <div className='flex flex-row justify-between w-full gap-2 px-2 py-1'>
             {/* <Button
                 variant='outline'
@@ -88,7 +88,7 @@ const VerticalDropdown = ({
               > */}
             {item?.id && (
               <BsTrash
-                className='text-neutral-400 h-4 w-4 m-0 p-0 cursor-pointer hover:text-red-500 hover:font-bold hover:shadow-lg '
+                className='text-neutral-400 h-5 w-5 m-0 p-0 cursor-pointer hover:text-red-500 hover:font-bold hover:shadow-lg '
                 onClick={() =>
                   onOpen('delete-post', item?.id, (title = 'Delete post'))
                 }
@@ -96,7 +96,7 @@ const VerticalDropdown = ({
             )}
             {img?.id && (
               <BsTrash
-                className='text-gray-700 h-3 w-3 m-0 p-0 cursor-pointer hover:text-red-500 hover:font-bold hover:shadow-lg '
+                className='text-gray-700 h-4 w-4 m-0 p-0 cursor-pointer hover:text-red-500 hover:font-bold hover:shadow-lg '
                 onClick={() =>
                   onOpen(
                     'delete-slider',
@@ -116,13 +116,13 @@ const VerticalDropdown = ({
               > */}
             {item?.id && (
               <BsPen
-                className='text-neutral-400  hover:font-bold h-4 w-4 m-0 cursor-pointer hover:text-sky-500  hover:shadow-lg'
+                className='text-neutral-400  hover:font-bold h-5 w-5 m-0 cursor-pointer hover:text-orange-500  hover:shadow-lg'
                 onClick={() => onOpen('edit', id, (title = 'Edit post'))}
               />
             )}
             {img?.id && (
               <BsPen
-                className='text-gray-700  hover:font-bold h-3 w-3 m-0 cursor-pointer hover:text-sky-500  hover:shadow-lg'
+                className='text-gray-700  hover:font-bold h-4 w-4 m-0 cursor-pointer hover:text-orange-500  hover:shadow-lg'
                 onClick={() => handleEditSlider(img)}
               />
             )}

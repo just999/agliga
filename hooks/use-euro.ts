@@ -1,4 +1,4 @@
-import { euros } from '@/lib/helper';
+import { euros, penalty } from '@/lib/helper';
 
 const formattedTeams = euros.map((team) => ({
   value: team.label,
@@ -16,4 +16,20 @@ export const useEuros = () => {
     getTeams,
     getByValue,
   };
+};
+
+const formattedPenalty = penalty.map((pen) => ({
+  value: pen.value,
+  icon: pen.icon,
+  desc: pen.description,
+  style: pen.style,
+}));
+
+export const usePenalty = () => {
+  const getPenalty = () => formattedPenalty;
+
+  const getPenaltyByValue = (value: string) => {
+    return formattedPenalty.find((pen) => pen.value === value);
+  };
+  return { getPenalty, getPenaltyByValue };
 };

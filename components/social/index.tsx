@@ -4,3 +4,4 @@ export { Twitter } from './twitter';
 export { Whatsapp } from './whatsapp';
 export { Youtube } from './youtube';
 export { Inst } from './inst';
+export { UTube } from './utube';

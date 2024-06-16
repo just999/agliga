@@ -10,6 +10,7 @@ export function Arsenal() {
       version='1.1'
       viewBox='0 0 512 512'
       xmlSpace='preserve'
+      className='h-6 w-6'
     >
       <path
         fill='#75C5F2'

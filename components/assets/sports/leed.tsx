@@ -7,6 +7,7 @@ export function Leed() {
       width='2124'
       height='2500'
       viewBox='0 0 180.086 211.951'
+      className='h-6 w-6'
     >
       <path
         fill='#393890'

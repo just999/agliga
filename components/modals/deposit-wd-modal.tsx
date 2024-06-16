@@ -15,7 +15,6 @@ import useBanks from '@/hooks/use-banks';
 import SelectInput from '../select-input';
 import useGames from '@/hooks/use-games';
 
-import { GameProps } from '@/types';
 import useModal from '@/hooks/use-modal';
 
 import { depoInitialValues, wdInitialValues } from '@/lib/helper';
@@ -290,6 +289,7 @@ const DepositWdModal = () => {
         placeholder='Banks'
         options={() => bankOptions}
         errors={errors}
+        optionClassName='text-sm ml-4'
       />
       {errors.bank && (
         <span className='text-sm text-red-500 '>
@@ -365,6 +365,7 @@ const DepositWdModal = () => {
         placeholder='Games'
         options={() => gameOption}
         errors={errors}
+        optionClassName='text-sm font-semibold'
       />
       {/* <pre>{JSON.stringify(game, null, 2)}</pre> */}
       {errors.game && (
@@ -398,13 +399,14 @@ const DepositWdModal = () => {
             label={bankPT ? '' : 'bankPT'}
             isMulti={false}
             id='bankPT'
-            value={bankPT}
+            value={watch('bankPT')}
             register={register}
             required
             onChange={(value) => setCustomValue('bankPT', value)}
             placeholder='Rekening Tujuan Deposit'
             options={() => bankPTOptions}
             errors={errors}
+            optionClassName='text-sm ml-4'
           />
           {errors.bankPT && (
             <span className='text-sm text-red-500 '>

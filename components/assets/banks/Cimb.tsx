@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Cimb() {
+export function Cimb() {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -54,5 +54,3 @@ function Cimb() {
     </svg>
   );
 }
-
-export default Cimb;

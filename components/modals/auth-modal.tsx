@@ -1,7 +1,7 @@
 'use client';
 
 import axios from 'axios';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import Modal from './modal';
 import Heading from '../heading';
@@ -9,7 +9,7 @@ import Input from '../ui/input';
 import toast from 'react-hot-toast';
 
 import { FcGoogle } from 'react-icons/fc';
-import { AiFillFacebook, AiFillGithub } from 'react-icons/ai';
+import { AiFillGithub } from 'react-icons/ai';
 import { ImFacebook2 } from 'react-icons/im';
 import { signIn } from 'next-auth/react';
 
@@ -87,6 +87,7 @@ const AuthModal = () => {
   const email = watch('email');
   const bank = watch('bank');
   const game = watch('game');
+  console.log('🚀 ~ AuthModal ~ game:', game);
   const phone = watch('phone');
   const accountNumber = watch('accountNumber');
   const password = watch('password');
@@ -101,6 +102,7 @@ const AuthModal = () => {
 
   if (!isMounted) return null;
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    console.log('🚀 ~ AuthModal ~ data:', data);
     setIsLoading(true);
 
     if (modalType === 'register') {

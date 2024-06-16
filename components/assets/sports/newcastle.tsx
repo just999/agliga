@@ -4,9 +4,15 @@ export function Newcastle() {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
-      width='300'
-      height='302'
+      x='0'
+      y='0'
+      width='324.85'
+      height='332.438'
+      enableBackground='new 0 0 512 512'
       version='1.1'
+      viewBox='0 0 325 325'
+      xmlSpace='preserve'
+      className='h-6 w-6'
     >
       <defs>
         <clipPath>

@@ -9,7 +9,6 @@ import Input from '../ui/input';
 import toast from 'react-hot-toast';
 
 import { useRouter } from 'next/navigation';
-import moment from 'moment';
 
 import SelectInput from '../select-input';
 
@@ -37,7 +36,7 @@ const SoccerModal = () => {
   let initialScheduleValues;
   if (modalType === 'soccer') {
     initialScheduleValues = {
-      run: 0,
+      run: '',
       date: '',
       teamHome: '',
       score: '',
@@ -92,14 +91,12 @@ const SoccerModal = () => {
         analysis: item.analysis,
       };
       setSchedule(data);
-
       const periodRun: any = runs.filter(
         (period) => period.value === item.run
       ) || {
         icon: '',
         value: '',
       };
-
       const home: any = teamsOption.filter(
         (team) => team.value === item.teamHome
       ) || {
@@ -125,20 +122,7 @@ const SoccerModal = () => {
       //   console.warn('item.date is not a valid Date object');
       // }
     }
-  }, [
-    error,
-    item,
-    item.date,
-    item.analysis,
-    item.run,
-    item.teamAway,
-    item.score,
-    item.teamHome,
-    modalType,
-    setValue,
-    runs,
-    teamsOption,
-  ]);
+  }, [error, item, modalType, runs, setValue, teamsOption]);
 
   // if (!item.date) return;
   const newDate = new Date(schedule.date).toISOString().substring(0, 16);

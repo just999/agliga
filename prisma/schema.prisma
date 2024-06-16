@@ -215,8 +215,10 @@ model Euro {
   date         DateTime
   euroTeamHome EuroTeamHome
   status       String       @default("Upcoming")
+  homePenalty  String[]     @default([""])
   homeScore    String?
   euroTeamAway EuroTeamAway
+  awayPenalty  String[]     @default([""])
   awayScore    String?
   group        Group
   userId       String       @db.ObjectId

@@ -6,8 +6,10 @@ export function Everton() {
       xmlns='http://www.w3.org/2000/svg'
       width='324.85'
       height='332.438'
+      viewBox='0 0 324.85 332.438'
       version='1.1'
       xmlSpace='preserve'
+      className='h-6 w-6'
     >
       <defs>
         <clipPath clipPathUnits='userSpaceOnUse'>

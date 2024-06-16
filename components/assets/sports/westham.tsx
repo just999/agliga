@@ -8,7 +8,9 @@ export function Westham() {
       width='389.998'
       height='432.996'
       version='1.1'
+      viewBox='0 0 400 400'
       xmlSpace='preserve'
+      className='h-6 w-6'
     >
       <defs>
         <clipPath clipPathUnits='userSpaceOnUse'>

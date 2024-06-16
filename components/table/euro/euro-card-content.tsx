@@ -13,6 +13,8 @@ import { useSession } from 'next-auth/react';
 
 import { BsTrashFill, BsPencilFill } from 'react-icons/bs';
 
+import Penalty from '@/components/soccer/penalty';
+
 type EuroCardContentProps = {
   it?: EuroProps;
   className?: string;
@@ -38,10 +40,11 @@ const EuroCardContent = ({
   if (!eu) return <Skeleton />;
 
   const title = 'Delete Euro Schedule';
+
   return (
     <div
       className={cn(
-        'w-[220px] rounded-lg bg-orange-50 cursor-pointer embla__slide drop-shadow-xl mr-2',
+        'w-[220px] rounded-lg bg-orange-50  embla__slide drop-shadow-xl mr-2',
         className
       )}
     >
@@ -52,8 +55,9 @@ const EuroCardContent = ({
       <CardContent className='flex flex-col px-3 pt-2 pb-0 justify-between gap-1'>
         <div className='flex flex-row justify-between text-xs '>
           <div>{convertDateTime(eu.date.toISOString())}</div>
-          <div>{eu.status}</div>
-          {/* <pre>{JSON.stringify(eu, null, 2)}</pre> */}
+          <div>{eu.date > new Date() ? 'Upcoming' : 'Score'}</div>
+          {/* <pre>{JSON.stringify(eu.date > new Date(), null, 2)}</pre>
+          <pre>{JSON.stringify(new Date(), null, 2)}</pre> */}
         </div>
         <div>
           <div className='flex flex-row justify-between '>
@@ -64,17 +68,58 @@ const EuroCardContent = ({
               <span className='text-xs font-bold '>
                 {eu.euroTeamHome.value}
               </span>
+              <span className='flex flex-row items-center   gap-1 text-xs font-bold text-gray-500 group'>
+                {eu?.homePenalty?.includes('1red') && (
+                  <Penalty className=' rounded-[25%] bg-rose-500 block' />
+                  // <div className='w-2 h-3 rounded-[25%] bg-rose-500 ' />
+                )}
+                {eu?.homePenalty?.includes('1yellow') && (
+                  <div className='w-2 h-3 rounded-[25%] bg-yellow-500 ' />
+                )}
+                {eu?.homePenalty?.includes('1penalty') && (
+                  <div className='w-2 h-3 text-sm mb-1 text-nowrap '>
+                    <span className='absolute invisible group-hover:visible top-0 right-0 text-sky-700 '>
+                      Penalty kick
+                    </span>
+                    <Penalty className='block' penClassName='block' />
+                  </div>
+                )}
+              </span>
             </div>
-            <span className='pr-4 '>{eu.homeScore} - </span>
+            <span className='pr-4 text-xs '>
+              {eu.homeScore ? eu.homeScore : '-'}
+            </span>
           </div>
           <div className='flex flex-row justify-between '>
             <div className='flex flex-row items-center gap-2 '>
               <span className={cn(noto.className, 'text-sm')}>
                 {eu.euroTeamAway.icon}
               </span>
-              <span className='text-xs font-bold'>{eu.euroTeamAway.value}</span>
+              <span className='text-xs font-bold '>
+                {eu.euroTeamAway.value}
+              </span>
+              <span className='flex flex-row items-center group  gap-1 text-xs font-bold text-gray-500'>
+                {eu?.awayPenalty?.includes('1red') && (
+                  <Penalty className=' rounded-[25%] bg-rose-500 block' />
+                  // <div className='w-2 h-3 rounded-[25%] bg-rose-500 ' />
+                )}
+                {eu?.awayPenalty?.includes('1yellow') && (
+                  <div className='w-2 h-3 rounded-[25%] bg-yellow-500 ' />
+                )}
+                {eu?.awayPenalty?.includes('1penalty') && (
+                  <div className='w-2 h-3 text-sm text-gray-700 font-semibold cursor-pointer '>
+                    {/* P<span className='text-[10px] '>⚽</span> */}
+                    <span className='absolute text-xs bg-emerald-200/10 backdrop-blur-sm px-1 py-0 invisible group-hover:visible top-8 left-12 text-violet-700 rounded-sm'>
+                      Penalty kick
+                    </span>
+                    <Penalty className='block' penClassName='block' />
+                  </div>
+                )}
+              </span>
             </div>
-            <span className='pr-4'>{eu.awayScore} - </span>
+            <span className='pr-4 text-xs'>
+              {eu.awayScore ? eu.awayScore : '-'}
+            </span>
           </div>
         </div>
       </CardContent>
@@ -118,7 +163,7 @@ const EuroCardContent = ({
         )}
       </CardFooter>
 
-      {/* <pre>{JSON.stringify(eu.group, null, 2)}</pre> */}
+      <pre>{JSON.stringify(eu, null, 2)}</pre>
     </div>
   );
 };

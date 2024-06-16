@@ -1,31 +1,10 @@
 'use server';
 
-import Loader from '@/components/loader';
-// type SchedulePageProps = {
-//   run: number;
-//   date: string;
-//   teamHome: string;
-//   vs: string;
-//   teamAway: string;
-//   analysis: string;
-// };
-
 import ScheduleClient from '@/components/table/client';
-
-// import { ScheduleColumn } from '@/components/table/columns';
 
 import { getSoccers } from '@/lib/queries/soccers';
 
 const SchedulePage = async () => {
-  // const renderedSchedule: ScheduleColumn[] = schedulePL.map((item, i) => ({
-  //   id: item.id,
-  //   run: item.run,
-  //   date: item.date,
-  //   teamHome: item.teamHome,
-  //   teamAway: item.teamAway,
-  //   analysis: item.analysis,
-  // }));
-
   const schedules = await getSoccers();
 
   if (!schedules) return [];

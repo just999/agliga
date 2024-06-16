@@ -9,6 +9,7 @@ export function Wolve() {
       height='1824'
       fill='none'
       viewBox='0 0 2048 1824'
+      className='h-6 w-6'
     >
       <path fill='url(#pattern0_54_2)' d='M0 0H2048V1824H0z'></path>
       <defs>

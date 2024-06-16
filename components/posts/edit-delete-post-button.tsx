@@ -32,7 +32,12 @@ const EditDeletePostButton = ({
     >
       <h1 className='text-2xl font-bold '>{item?.title}</h1>
       {status === 'authenticated' && userRole === 'admin' && (
-        <VerticalDropdown item={item} img={img} className={className2} />
+        <VerticalDropdown
+          item={item}
+          img={img}
+          className2={className2}
+          className={className}
+        />
         // <div className='flex justify-center gap-4 items-center '>
         //   <Button
         //     variant='outline'

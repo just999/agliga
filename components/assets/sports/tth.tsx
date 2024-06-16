@@ -12,6 +12,7 @@ export function Tth() {
       version='1.2'
       viewBox='0 0 320.546 632.83'
       xmlSpace='preserve'
+      className='h-6 w-6'
     >
       <path
         fill='#001C58'
