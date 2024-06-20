@@ -7,6 +7,7 @@ export function Bri() {
       xmlnsXlink='http://www.w3.org/1999/xlink'
       width='100'
       height='72'
+      className='w-8 h-8'
       viewBox='0 0 100 72'
     >
       <defs>

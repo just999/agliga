@@ -5,6 +5,7 @@ export const Dan = (props: any) => (
     id='Layer_1'
     data-name='Layer 1'
     viewBox='0 0 382 109.22'
+    className='w-8 h-8'
     {...props}
   >
     <defs>

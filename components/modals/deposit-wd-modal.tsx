@@ -289,7 +289,7 @@ const DepositWdModal = () => {
         placeholder='Banks'
         options={() => bankOptions}
         errors={errors}
-        optionClassName='text-sm ml-4'
+        optionClassName='text-sm ml-4 text-gray-600 font-bold'
       />
       {errors.bank && (
         <span className='text-sm text-red-500 '>
@@ -406,7 +406,7 @@ const DepositWdModal = () => {
             placeholder='Rekening Tujuan Deposit'
             options={() => bankPTOptions}
             errors={errors}
-            optionClassName='text-sm ml-4'
+            optionClassName='text-sm ml-4 text-gray-600 font-bold'
           />
           {errors.bankPT && (
             <span className='text-sm text-red-500 '>

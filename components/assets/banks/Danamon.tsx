@@ -364,6 +364,7 @@ export const Danamon = (props: any) => (
     style={{
       enableBackground: 'new -153-46 652 652',
     }}
+    className='w-8 h-8'
     viewBox='-153 -46 652 652'
     {...props}
   >

@@ -8,15 +8,17 @@ import useModal from '@/hooks/use-modal';
 
 import { convertDateTime } from '@/lib/convert-date-time';
 import { cn, noto } from '@/lib/utils';
-import { EuroProps } from '@/types';
+import { EuroProps, EuroWithIconProps } from '@/types';
 import { useSession } from 'next-auth/react';
 
 import { BsTrashFill, BsPencilFill } from 'react-icons/bs';
 
 import Penalty from '@/components/soccer/penalty';
 
+import { useEuros } from '@/hooks/use-euro';
+
 type EuroCardContentProps = {
-  it?: EuroProps;
+  it?: EuroWithIconProps;
   className?: string;
   footerClassName?: string;
   groupClassName?: string;
@@ -32,15 +34,56 @@ const EuroCardContent = ({
   playDate,
   it: eu,
 }: EuroCardContentProps) => {
-  const { onOpen, group: gr } = useModal();
+  const { onOpen } = useModal();
 
   const { data: session } = useSession();
   const role = session?.user.curUser.role;
 
+  const { getTeams } = useEuros();
+
+  const teamsOption = getTeams();
+
+  const home = teamsOption.filter(
+    (ta) => ta.value === eu?.euroTeamHome.value
+  ) || {
+    value: '',
+    icon: '',
+    group: '',
+  };
+
+  const away = teamsOption.filter(
+    (ta) => ta.value === eu?.euroTeamAway.value
+  ) || {
+    value: '',
+    icon: '',
+    group: '',
+  };
+
+  // const filteredHome = useMemo(
+  //   () =>
+  //     teamsOption
+  //       .map((euroTeamHome) => ({
+  //         value: euroTeamHome.value,
+  //         icon: euroTeamHome.icon,
+  //       }))
+  //       .filter((th) => th.value === item?.euroTeamHome),
+  //   [item?.euroTeamHome, teamsOption]
+  // );
+  // const home = teamsOption
+  //   .map((euroTeamHome) => ({
+  //     value: euroTeamHome.value,
+  //     icon: euroTeamHome.icon,
+  //   }))
+  //   .filter((th) => th.value === eu?.euroTeamHome);
+  // const away = teamsOption
+  //   .map((euroTeamAway) => ({
+  //     value: euroTeamAway.value,
+  //     icon: euroTeamAway.icon,
+  //   }))
+  //   .filter((ta) => ta.value === eu?.euroTeamAway);
   if (!eu) return <Skeleton />;
 
   const title = 'Delete Euro Schedule';
-
   return (
     <div
       className={cn(
@@ -63,11 +106,9 @@ const EuroCardContent = ({
           <div className='flex flex-row justify-between '>
             <div className='flex flex-row items-center gap-2 '>
               <span className={cn(noto.className, 'text-sm')}>
-                {eu.euroTeamHome.icon}
+                {home[0].icon}
               </span>
-              <span className='text-xs font-bold '>
-                {eu.euroTeamHome.value}
-              </span>
+              <span className='text-xs font-bold '>{home[0]?.value}</span>
               <span className='flex flex-row items-center   gap-1 text-xs font-bold text-gray-500 group'>
                 {eu?.homePenalty?.includes('1red') && (
                   <Penalty className=' rounded-[25%] bg-rose-500 block' />
@@ -93,11 +134,9 @@ const EuroCardContent = ({
           <div className='flex flex-row justify-between '>
             <div className='flex flex-row items-center gap-2 '>
               <span className={cn(noto.className, 'text-sm')}>
-                {eu.euroTeamAway.icon}
+                {away[0]?.icon}
               </span>
-              <span className='text-xs font-bold '>
-                {eu.euroTeamAway.value}
-              </span>
+              <span className='text-xs font-bold '>{away[0].value}</span>
               <span className='flex flex-row items-center group  gap-1 text-xs font-bold text-gray-500'>
                 {eu?.awayPenalty?.includes('1red') && (
                   <Penalty className=' rounded-[25%] bg-rose-500 block' />
@@ -163,7 +202,7 @@ const EuroCardContent = ({
         )}
       </CardFooter>
 
-      {/* <pre>{JSON.stringify(eu, null, 2)}</pre> */}
+      {/* <pre>{JSON.stringify(eu.id, null, 2)}</pre> */}
     </div>
   );
 };

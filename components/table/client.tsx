@@ -65,7 +65,7 @@ const ScheduleClient = ({
         tableCellClassName={tableCellClassName}
         searchKey='teamHome'
         columns={columns}
-        data={run === null ? data : filteredRunningData}
+        eu={run === null ? data : filteredRunningData}
       />
       {/* <Heading title='API' description='API calls for Schedules' /> */}
       {/* <Separator /> */}

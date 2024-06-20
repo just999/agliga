@@ -2,7 +2,6 @@
 
 import {
   ColumnDef,
-  ColumnFiltersState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
@@ -21,7 +20,7 @@ import {
 
 import { InputCustom } from './inputCustom';
 import { Button } from './button';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import useRunToggleStore from '@/store/use-table-store';
 import RunTable from './run-table';
@@ -29,29 +28,24 @@ import { cn } from '@/lib/utils';
 
 import useModal from '@/hooks/use-modal';
 
-import { GrEdit } from 'react-icons/gr';
 import { BsArrowDownSquare } from 'react-icons/bs';
 import EuroCard from '../table/euro/euro-card';
 import { useGetEuros } from '@/hooks/use-get-schedule';
 
 import { Skeleton } from './skeleton';
 import { Euro24 } from '../assets/games/euro24';
-import { EuroProps } from '@/types';
+import { EuroWithIconProps } from '@/types';
 
-import { Schedule } from '@prisma/client';
 import { useSession } from 'next-auth/react';
+import { useEuros } from '@/hooks/use-euro';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
-  data?:
-    | {
-        country: string;
-        icon: string;
-      }[]
-    | Schedule[];
+  eu?: any;
   searchKey?: string;
   className?: string;
-  group?: string;
+  group?: any;
+  mergedData?: any;
   footerClassName?: string;
   euroClassName?: string;
   euroTableClassName?: string;
@@ -62,7 +56,7 @@ interface DataTableProps<TData, TValue> {
 
 export function DataTable<TData, TValue>({
   columns,
-  data,
+  eu,
   className,
   group,
   footerClassName,
@@ -71,18 +65,18 @@ export function DataTable<TData, TValue>({
   euCardClassName,
   tableCellClassName,
   trashClassName,
+  mergedData,
 }: DataTableProps<TData, TValue>) {
   // const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [filtering, setFiltering] = useState('');
   const [isToggle, setIsToggle] = useState(false);
-  const { items, isLoading, error } = useGetEuros();
+  const { items } = useGetEuros();
 
   const { data: session } = useSession();
 
   const role = session?.user.curUser.role;
-  // if (!items) return [];
   const table = useReactTable({
-    data: data as TData[],
+    data: mergedData as TData[],
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -98,10 +92,10 @@ export function DataTable<TData, TValue>({
   });
 
   const { toggle, setIsOpen } = useRunToggleStore();
-  const { onOpen, setGroup, group: gr } = useModal();
-  if (!items || items.length === 0) return <Skeleton />;
+  const { onOpen, setGroup, isOpen } = useModal();
+  const { getTeams } = useEuros();
 
-  let itemsFiltered = items.filter((item) => item.group === group);
+  let itemsFiltered = items.filter((item) => item.group === group[0]);
   const groups = itemsFiltered.reduce((groups, game) => {
     const date = new Date(game.date).toLocaleDateString('id-ID').split('T')[0];
     if (!groups[date]) {
@@ -109,7 +103,7 @@ export function DataTable<TData, TValue>({
     }
     groups[date].push(game);
     return groups;
-  }, {} as { [date: string]: EuroProps[] });
+  }, {} as { [date: string]: EuroWithIconProps[] });
   // Edit: to add it in the array format instead
   const groupArrays = Object.keys(groups).map((date) => {
     return {
@@ -117,10 +111,31 @@ export function DataTable<TData, TValue>({
       games: groups[date],
     };
   });
-
-  const handleOpenGroup = (group: string | undefined) => {
-    onOpen('new-euro');
+  const handleOpenGroup = (group?: string) => {
+    if (group) {
+      onOpen('new-euro');
+      setGroup('new-euro', isOpen === false, group);
+    }
   };
+
+  const teamsOption = getTeams();
+
+  const home = teamsOption.filter(
+    (ta) => ta.value === items[0]?.euroTeamHome.value
+  ) || {
+    value: '',
+    icon: '',
+    group: '',
+  };
+
+  const away = teamsOption.filter(
+    (ta) => ta.value === items[0]?.euroTeamAway.value
+  ) || {
+    value: '',
+    icon: '',
+    group: '',
+  };
+  if (!items || items.length === 0) return <Skeleton />;
 
   return (
     <div className='rounded-xl'>
@@ -174,7 +189,7 @@ export function DataTable<TData, TValue>({
                   className='px-0 h-7'
                   onClick={() => {
                     if (group) {
-                      setGroup('new-euro', group);
+                      setGroup('new-euro', isOpen === true, group);
                     }
 
                     setIsToggle((prev) => !prev);
@@ -227,7 +242,9 @@ export function DataTable<TData, TValue>({
                         cell.column.columnDef.cell,
                         cell.getContext()
                       )}
-                      {/* <pre>{JSON.stringify(cell, null, 2)}</pre> */}
+                      {/* <pre className='flex flex-col '>
+                        {JSON.stringify(cell, null, 2)}
+                      </pre> */}
                     </TableCell>
                   ))}
                 </TableRow>
@@ -259,7 +276,7 @@ export function DataTable<TData, TValue>({
               />
             ))}
 
-            {/* <pre>{JSON.stringify(groupArrays, null, 2)}</pre> */}
+            {/* <pre>{JSON.stringify(items, null, 2)}</pre> */}
           </div>
         )}
       </div>

@@ -209,21 +209,46 @@ export type RoutesProps = {
   admin?: any;
 };
 
+export type EuroTeamSubGroupProps = {
+  value: string;
+  icon: string;
+  group?: string;
+};
 export type EuroProps = {
   id?: string;
   date: Date;
-  euroTeamHome: {
-    value: string;
-    icon: string;
-  };
+  euroTeamHome: EuroTeamSubGroupProps;
   homePenalty?: string[];
   homeScore?: string | null;
-  status: string;
-  group: string;
-  euroTeamAway: {
-    value: string;
-    icon: string;
-  };
+  group?: string;
+  euroTeamAway: EuroTeamSubGroupProps;
   awayPenalty?: string[];
   awayScore?: string | null;
 };
+export type EuroWithIconProps = {
+  id?: string;
+  date: Date;
+  euroTeamHome: EuroTeamSubGroupProps;
+  homePenalty?: string[];
+  homeScore?: string | null;
+  group?: string;
+  euroTeamAway: EuroTeamSubGroupProps;
+  awayPenalty?: string[];
+  awayScore?: string | null;
+};
+
+export type EuroGroupProps = [
+  EuroTeamSubGroupProps,
+  EuroTeamSubGroupProps,
+  EuroTeamSubGroupProps,
+  EuroTeamSubGroupProps
+];
+
+export type EuroTeamGroupProps = [
+  euroGroupA: EuroGroupProps[],
+  euroGroupB: EuroGroupProps[],
+  euroGroupC: EuroGroupProps[],
+  euroGroupD: EuroGroupProps[],
+  euroGroupE: EuroGroupProps[],
+  euroGroupF: EuroGroupProps[]
+];

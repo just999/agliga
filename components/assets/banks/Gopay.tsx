@@ -6,6 +6,7 @@ function Gopay() {
       xmlns='http://www.w3.org/2000/svg'
       width='308'
       height='63'
+      className='w-8 h-8'
       viewBox='0 0 308 63'
     >
       <g fill='none' fillRule='evenodd'>

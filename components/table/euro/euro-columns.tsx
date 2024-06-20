@@ -2,39 +2,81 @@
 
 import { ColumnDef } from '@tanstack/react-table';
 
-import { BsCalendar } from 'react-icons/bs';
-import Link from 'next/link';
-import Image from 'next/image';
-import { englishPL } from '@/lib/helper';
-import { Schedule } from '@prisma/client';
-import { convertDateTime } from '@/lib/convert-date-time';
-
-import { Button } from '@/components/ui/button';
 import { cn, noto } from '@/lib/utils';
+import { EuroProps, EuroTeamSubGroupProps } from '@/types';
+import { ITable } from '@/lib/league';
+import { TeamStats } from '@/hooks/use-league';
 
-type EuroProps = {
-  country: string;
-  icon: string;
+type TEuroProps = {
+  team: {
+    drawn: number;
+    goalDifference: number;
+    goalsAgainst: number;
+    goalsScored: number;
+    group: string;
+    lost: number;
+    name: { value: string; icon: string };
+    played: number;
+    points: number;
+    won: number;
+  };
+  // date?: Date;
+  // euroTeamHome: EuroTeamSubGroupProps;
+  // homePenalty?: string[];
+  // homeScore?: string | null;
+  // status?: string;
+  // euroTeamAway: EuroTeamSubGroupProps;
+  // awayPenalty?: string[];
+  // awayScore?: string | null;
+  // winner?: EuroTeamSubGroupProps;
+  // loser?: EuroTeamSubGroupProps;
+  // homeGoalDiff?: number;
+  // awayGoalDiff?: number;
 };
 
-export const euroColumns: ColumnDef<EuroProps>[] = [
+export const euroColumns: ColumnDef<TeamStats>[] = [
   {
     accessorKey: 'country',
     header: '',
     cell: ({ row }) => (
       <div className='flex flex-row justify-start gap-2 px-4'>
-        <span className={cn(noto.className)}>{row.original.icon}</span>
-        <span className='font-bold text-xs '>{row.original.country}</span>
-        {/* <pre>{JSON.stringify(row, null, 2)}</pre> */}
+        <span className={cn(noto.className)}>{row.original.team.icon}</span>
+        <span className='font-bold text-xs '>{row.original.team.value}</span>
+        {/* <pre>{JSON.stringify(row.original.country?.value, null, 2)}</pre> */}
       </div>
     ),
   },
   {
     accessorKey: 'played',
     header: 'Played',
-    cell: ({ row }) => (
+    cell: ({ cell, row }) => (
       <div className='flex flex-row justify-center px-4 gap-2 '>
-        <span className='font-bold text-slate-400 text-xs'>0</span>
+        <span className='font-bold text-slate-400 text-xs'>
+          {/* <pre>{JSON.stringify(row, null, 2)}</pre> */}
+
+          <span>
+            {/* <pre>
+              {JSON.stringify(
+                row.original?.date?.toString() < new Date().toString() ? 1 : 0,
+                null,
+                2
+              )}
+            </pre> */}
+            {/* {row?.original?.date.toISOString()} */}
+          </span>
+
+          {/* <pre>
+            {JSON.stringify(
+              (row.original?.euroTeamHome?.value ||
+                row.original?.euroTeamAway?.value) === row.original?.country
+                ? row.original?.id
+                : 'none',
+              null,
+              2
+            )}
+          </pre> */}
+          {row.original.played}
+        </span>
       </div>
     ),
   },
@@ -43,16 +85,28 @@ export const euroColumns: ColumnDef<EuroProps>[] = [
     header: 'Won',
     cell: ({ row }) => (
       <div className='flex flex-row  justify-center px-4 gap-2'>
-        <span className='font-bold text-slate-400 text-xs'>0</span>
+        <span className='font-bold text-slate-400 text-xs'>
+          {/* <pre>{JSON.stringify(row, null, 2)}</pre> */}
+          {row.original.won}
+        </span>
       </div>
     ),
   },
   {
-    accessorKey: 'drawn',
-    header: 'Drawn',
+    accessorKey: 'draw',
+    header: 'Draw',
     cell: ({ row }) => (
-      <div className='flex flex-row  justify-center px-4 gap-2'>
-        <span className='font-bold text-slate-400 text-xs'>0</span>
+      <div className='flex flex-row  justify-center px-4 gap-2 text-xs'>
+        {/* <pre>
+          {JSON.stringify(
+            Number(row.original.homeScore) === Number(row.original.awayScore)
+              ? 1
+              : 0,
+            null,
+            2
+          )}
+        </pre> */}
+        {row.original.drawn}
       </div>
     ),
   },
@@ -60,8 +114,15 @@ export const euroColumns: ColumnDef<EuroProps>[] = [
     accessorKey: 'lost',
     header: 'Lost',
     cell: ({ row }) => (
-      <div className='flex flex-row  justify-center px-4 gap-2'>
-        <span className='font-bold text-slate-400 text-xs'>0</span>
+      <div className='flex flex-row  justify-center px-4 text-xs gap-2'>
+        {/* <pre>
+          {JSON.stringify(
+            row.original?.loser?.value === row.original.country ? 1 : 0,
+            null,
+            2
+          )}
+        </pre> */}
+        {row.original.lost}
       </div>
     ),
   },
@@ -70,7 +131,18 @@ export const euroColumns: ColumnDef<EuroProps>[] = [
     header: 'For',
     cell: ({ row }) => (
       <div className='flex flex-row  justify-center px-4 gap-2'>
-        <span className='font-bold text-slate-400 text-xs'>0</span>
+        <span className='font-bold text-slate-400 text-xs'>
+          {/* <pre>
+            {JSON.stringify(
+              row.original?.euroTeamHome?.value === row.original.country
+                ? Number(row.original?.homeScore)
+                : Number(row.original?.awayScore),
+              null,
+              2
+            )}
+          </pre> */}
+          {row.original.goalsScored}
+        </span>
       </div>
     ),
   },
@@ -79,16 +151,40 @@ export const euroColumns: ColumnDef<EuroProps>[] = [
     header: 'Against',
     cell: ({ row }) => (
       <div className='flex flex-row  justify-center px-4 gap-2'>
-        <span className='font-bold text-slate-400 text-xs'>0</span>
+        <span className='font-bold text-slate-400 text-xs'>
+          {/* <pre>
+            {JSON.stringify(
+              row.original?.euroTeamHome?.value === row.original.country
+                ? Number(row.original?.awayScore)
+                : Number(row.original?.homeScore),
+              null,
+              2
+            )}
+          </pre> */}
+          {row.original.goalsAgainst}
+        </span>
       </div>
     ),
   },
   {
-    accessorKey: 'goal-diff',
-    header: 'Goal-diff',
+    accessorKey: 'goalDiff',
+    header: 'GoalDiff',
     cell: ({ row }) => (
       <div className='flex flex-row  justify-center px-4 gap-2'>
-        <span className='font-bold text-slate-400 text-xs'>0</span>
+        <span className='font-bold text-slate-400 text-xs'>
+          {/* <pre>
+            {JSON.stringify(
+              row.original?.euroTeamHome?.value === row.original.country
+                ? Number(row.original?.homeScore) -
+                    Number(row.original?.awayScore)
+                : Number(row.original?.awayScore) -
+                    Number(row.original?.homeScore),
+              null,
+              2
+            )}
+          </pre> */}
+          {row.original.goalDifference}
+        </span>
       </div>
     ),
   },
@@ -97,7 +193,16 @@ export const euroColumns: ColumnDef<EuroProps>[] = [
     header: 'Points',
     cell: ({ row }) => (
       <div className='flex flex-row  justify-center px-4 gap-2'>
-        <span className='font-bold text-slate-400 text-xs'>0</span>
+        <span className='font-bold text-slate-400 text-xs'>
+          {/* <pre>
+            {JSON.stringify(
+              row.original?.winner?.value === row.original.country ? 3 : 0,
+              null,
+              2
+            )}
+          </pre> */}
+          {row.original.points}
+        </span>
       </div>
     ),
   },

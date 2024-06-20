@@ -20,6 +20,10 @@ export async function PUT(
     group,
     homeScore,
     status,
+    winner,
+    loser,
+    homeGoalDiff,
+    awayGoalDiff,
     awayScore,
   } = body;
   if (!body) NextResponse.error();
@@ -31,19 +35,41 @@ export async function PUT(
     const item = va.value;
     ap.push(item);
   });
+
+  // let win: any = '';
+  // let los: any = '';
+  // if (+homeScore > +awayScore) {
+  //   win === euroTeamHome;
+  // } else {
+  //   los === euroTeamAway;
+  // }
+
+  // let hg;
+  // if (homeScore & awayScore) {
+  //   hg = +homeScore - +awayScore;
+  // }
+
+  // let ag;
+  // if (homeScore & awayScore) {
+  //   ag = +awayScore - +homeScore;
+  // }
+
   try {
     const scheduleItem = await db.euro.update({
       where: { id: id },
       data: {
         date: isoDate,
-        euroTeamAway,
         euroTeamHome,
         homePenalty,
-        awayPenalty: ap,
-        group,
         status,
         homeScore,
+        euroTeamAway,
+        group,
         awayScore,
+        winner,
+        loser,
+        homeGoalDiff: Number(homeGoalDiff),
+        awayGoalDiff: Number(awayGoalDiff),
         userId: currentUser.id,
       },
     });
@@ -57,7 +83,6 @@ export async function PUT(
       );
 
     // return NextResponse.json(scheduleItem);
-
     return new Response(JSON.stringify(scheduleItem), {
       headers: {
         'Content-Type': 'application/json',

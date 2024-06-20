@@ -8,7 +8,6 @@ import Select, { StylesConfig } from 'react-select';
 
 import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
 import { BiDollar } from 'react-icons/bi';
-import { id } from 'date-fns/locale';
 
 export type SelectInputValue = {
   icon: string;
@@ -146,7 +145,7 @@ const SelectInput = ({
           >
             <div
               className={cn(
-                'flex flex-row justify-between items-center hover:text-black   ',
+                'flex flex-row justify-between items-center hover:text-black',
                 id === 'bank' ||
                   id === 'bankPT' ||
                   id === 'teamHome' ||
@@ -162,7 +161,10 @@ const SelectInput = ({
                 // id === 'game' ||
                 // id === 'run' ||
                 // id === 'teamHome' ||
-                id === 'euroTeamHome' || id === 'euroTeamAway' ? (
+                id === 'euroTeamHome' ||
+                id === 'euroTeamAway' ||
+                id === 'winner' ||
+                id === 'loser' ? (
                   <span
                     className={cn(
                       'w-10 h-10 text-2xl rounded-lg flex flex-row items-center text-stone-900'
@@ -194,10 +196,16 @@ const SelectInput = ({
             <div
               className={cn('cursor-pointer text-slate-600', optionClassName)}
             >
-              {option && (id === 'euroTeamHome' || id === 'euroTeamAway')
+              {option &&
+              (id === 'euroTeamHome' ||
+                id === 'euroTeamAway' ||
+                id === 'bank' ||
+                id === 'bankPT' ||
+                id === 'winner' ||
+                id === 'loser')
                 ? option.value
                 : option.desc}
-              {/* <pre>{JSON.stringify(option, null, 2)}</pre> */}
+              {/* <pre>{JSON.stringify(option.value, null, 2)}</pre> */}
               {/* <span className='text-neutral-500 ml-1 '></span> */}
             </div>
           </div>

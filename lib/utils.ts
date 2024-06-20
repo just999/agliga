@@ -2,6 +2,7 @@ import useGames from '@/hooks/use-games';
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { Noto_Color_Emoji } from 'next/font/google';
+import { date } from 'zod';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -135,3 +136,175 @@ export const noto = Noto_Color_Emoji({
   weight: ['400'],
   preload: true,
 });
+
+export type Team = {
+  country?: {
+    value: string;
+    icon: string;
+  };
+  date: string;
+  group: string;
+  played: number; // Played
+  won: number; // Won
+  draw: number; // Drawn
+  lost: number; // Lost
+  for: number; // Goals For
+  against: number; // Goals Against
+  goalDiff: number; // Goal Difference
+  points: number; // Points
+};
+
+// export type MatchesProps = {
+//   home?: string;
+//   away?: string;
+//   result?: string;
+//   group?: string;
+// };
+// let matches: TMatchesProps[] = [
+//   { home: 'Puskas Lovers', away: 'Cruyff FC', result: '1-1' },
+//   { home: 'Catenaccio', away: 'Maradona+10', result: '2-3' },
+//   { home: 'Puskas Lovers', away: 'Catenaccio', result: '0-0' },
+//   { home: 'Cruyff FC', away: 'Maradona+10', result: '2-0' },
+//   { home: 'Catenaccio', away: 'Cruyff FC', result: '1-0' },
+//   { home: 'Maradona+10', away: 'Puskas Lovers', result: '1-1' },
+//   { home: 'Cruyff FC', away: 'Puskas Lovers', result: '3-3' },
+//   { home: 'Maradona+10', away: 'Catenaccio', result: '1-0' },
+//   { home: 'Catenaccio', away: 'Puskas Lovers', result: '1-2' },
+//   { home: 'Maradona+10', away: 'Cruyff FC', result: '3-1' },
+//   { home: 'Cruyff FC', away: 'Catenaccio', result: '1-1' },
+//   { home: 'Puskas Lovers', away: 'Maradona+10', result: '1-0' },
+// ];
+
+interface Match {
+  euroTeamHome: {
+    value: string;
+    icon: string;
+  };
+  euroTeamAway: {
+    value: string;
+    icon: string;
+  };
+  result: string;
+  date: string;
+  group: string;
+}
+
+let data: Team[] = [];
+
+export function getDataFromMatches(matches: Match[]) {
+  if (!matches) throw new Error('no data');
+  Array.isArray(matches) &&
+    matches.forEach((match) => {
+      if (!match.euroTeamHome || !match.euroTeamAway) {
+        console.error('Missing home or away team in match data:', match);
+        // Handle missing data (e.g., skip processing or provide defaults)
+        return;
+      }
+      let homeTeam = match.euroTeamHome.value;
+      let awayTeam = match.euroTeamAway.value;
+      let homeIcon = match.euroTeamHome.icon;
+      let awayIcon = match.euroTeamAway.icon;
+      let group = match.group;
+      // let matchedDate = match.date;
+      const homeGoals = parseInt(match.result.split('-')[0], 10);
+      const awayGoals = parseInt(match.result.split('-')[1], 10);
+
+      const updateTeamData = (
+        teamName: string,
+        icon: string,
+        group: string
+        // date: string
+      ): Team => {
+        let index = data.findIndex(
+          (team) =>
+            team.country?.value === teamName &&
+            team.country.icon === icon &&
+            team.group === group
+          // && team.date === date
+        );
+        // Home team non-existant in array, let's create it with default scores
+
+        if (index === -1) {
+          const newTeam: Team = {
+            country: { value: teamName, icon: icon },
+            group: group,
+            date: match.date,
+            played: 0,
+            won: 0,
+            draw: 0,
+            lost: 0,
+            for: 0,
+            against: 0,
+            goalDiff: 0,
+            points: 0,
+          };
+          data.push(newTeam);
+          return newTeam;
+        }
+        return data[index];
+      };
+      if (group === undefined) throw new Error('no group found');
+      const homeTeamData = updateTeamData(
+        homeTeam,
+        homeIcon,
+        group
+        // matchedDate
+      );
+      const awayTeamData = updateTeamData(
+        awayTeam,
+        awayIcon,
+        group
+        // matchedDate
+      );
+
+      if (match.result !== '' && Date.parse(homeTeamData.date) < Date.now()) {
+        homeTeamData.played += 1;
+        homeTeamData.for += homeGoals;
+        homeTeamData.against += awayGoals;
+        homeTeamData.goalDiff = homeTeamData.for - homeTeamData.against;
+        // Common data (away) - plus one played and registering the goals
+      }
+
+      if (match.result && new Date(homeTeamData.date) < new Date()) {
+        awayTeamData.played += 1;
+        awayTeamData.for += awayGoals;
+        awayTeamData.against += homeGoals;
+        awayTeamData.goalDiff = awayTeamData.for - awayTeamData.against;
+      }
+
+      if (homeGoals === awayGoals) {
+        // Home team register a draw
+        homeTeamData.draw += 1;
+        homeTeamData.points += 1;
+        // Away team register a draw
+        awayTeamData.draw += 1;
+        awayTeamData.points += 1;
+      }
+      // Home win
+      if (homeGoals > awayGoals) {
+        // Home team register a win
+        homeTeamData.won += 1;
+        homeTeamData.points += 3;
+        // Away team register a loss
+        awayTeamData.lost += 1;
+      }
+      // Away win
+      if (homeGoals < awayGoals) {
+        // Away team register a win
+        awayTeamData.won += 1;
+        awayTeamData.points += 3;
+        // Home team register a loss
+        homeTeamData.lost += 1;
+      }
+    });
+
+  data.sort(
+    (teamA, teamB) =>
+      teamA.points - teamB.points ||
+      teamA.goalDiff - teamB.goalDiff ||
+      teamA.for - teamB.for
+  );
+  data.reverse();
+
+  return data;
+}

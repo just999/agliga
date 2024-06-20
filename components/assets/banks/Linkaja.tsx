@@ -7,6 +7,7 @@ function Linkaja() {
       xmlnsXlink='http://www.w3.org/1999/xlink'
       width='92'
       height='92'
+      className='w-8 h-8'
       viewBox='0 0 92 92'
     >
       <defs>

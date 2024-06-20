@@ -11,7 +11,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import useModal from '@/hooks/use-modal';
 import { convertDateMonthYear, convertDateTime } from '@/lib/convert-date-time';
 import { cn, noto } from '@/lib/utils';
-import { EuroProps } from '@/types';
+import { EuroProps, EuroWithIconProps } from '@/types';
 
 import { BsPencilFill, BsTrashFill } from 'react-icons/bs';
 import EuroCardContent from './euro-card-content';
@@ -19,7 +19,7 @@ import EuroCardContent from './euro-card-content';
 type EuroCardProps = {
   eu?: {
     date: string;
-    games: EuroProps[];
+    games: EuroWithIconProps[];
   };
   className?: string;
   groupClassName?: string;
@@ -42,12 +42,12 @@ const EuroCard = ({
 }: EuroCardProps) => {
   if (!eu) return <Skeleton />;
 
-  const filterGroupLength = eu.games.filter(
-    (it) => convertDateMonthYear(it.date.toISOString()) === eu.date
-  ).length;
-  const filterGroup = eu.games
-    .filter((it) => convertDateMonthYear(it.date.toISOString()) === eu.date)
-    .map((t) => t.id);
+  // const filterGroupLength = eu.games.filter(
+  //   (it) => convertDateMonthYear(it.date.toISOString()) === eu.date
+  // ).length;
+  // const filterGroup = eu.games
+  //   .filter((it) => convertDateMonthYear(it.date.toISOString()) === eu.date)
+  //   .map((t) => t.id);
   return (
     <div className={cn('flex flex-col justify-stretch ', euCardClassName)}>
       <div

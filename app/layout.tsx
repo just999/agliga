@@ -51,6 +51,7 @@ export default async function RootLayout({
 }: Readonly<RootLayoutProps>) {
   const currentUser = await getCurrentUser();
   const session = await auth();
+
   return (
     <SessionProvider session={session}>
       <html lang='en' className='relative'>

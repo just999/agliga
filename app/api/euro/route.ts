@@ -6,6 +6,7 @@ import { ObjectId } from 'mongodb';
 import getCurrentUser from '@/actions/get-user';
 
 import { NextApiRequest, NextApiResponse } from 'next';
+import { EuroTeamSubGroupProps } from '@/types';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   // Run the cors middleware
@@ -21,8 +22,13 @@ export async function POST(req: Request) {
       euroTeamAway,
       euroTeamHome,
       group,
+      homePenalty,
       homeScore,
       status,
+      winner,
+      loser,
+      homeGoalDiff,
+      awayGoalDiff,
       awayScore,
     } = body;
     let isoDate = date + ':00.000Z';
@@ -33,16 +39,38 @@ export async function POST(req: Request) {
 
     const id = new ObjectId();
 
+    // let win: any = '';
+    // let los: any = '';
+    // if (Number(homeScore) > Number(awayScore)) {
+    //   win === euroTeamHome;
+    // } else {
+    //   los === euroTeamAway;
+    // }
+
+    // let hg;
+    // if (homeScore & awayScore) {
+    //   hg = Number(homeScore) - Number(awayScore);
+    // }
+
+    // let ag;
+    // if (homeScore & awayScore) {
+    //   ag = Number(awayScore) - Number(homeScore);
+    // }
     if (!id) throw new Error('error');
     const schedule = await db.euro.create({
       data: {
         date: isoDate,
-        euroTeamAway,
         euroTeamHome,
-        group,
+        homePenalty,
         status,
         homeScore,
+        euroTeamAway,
+        group,
         awayScore,
+        winner,
+        loser,
+        homeGoalDiff: Number(homeGoalDiff),
+        awayGoalDiff: Number(awayGoalDiff),
         userId: currentUser.id,
       },
     });
@@ -50,6 +78,7 @@ export async function POST(req: Request) {
     // return NextResponse.json('successfully submit soccer');
   } catch (err) {
     console.log(err);
+    console.error(err);
     return NextResponse.json(
       { message: 'Internal Server Error' },
       { status: 500 }

@@ -1222,20 +1222,37 @@ export const initialScheduleFormValues = {
 };
 export const initialEuroFormValues = {
   date: new Date(),
-  euroTeamHome: {
-    value: '',
-    icon: '',
-  },
+  euroTeamHome: '',
   homePenalty: [],
   homeScore: '',
   status: '',
   awayScore: '',
-  euroTeamAway: {
-    value: '',
-    icon: '',
-  },
+  euroTeamAway: '',
   awayPenalty: [],
   group: '',
+};
+
+export const team = {
+  value: '',
+  icon: '',
+  group: '',
+  played: 0,
+};
+
+export const initialEuroFormWithIconValues = {
+  date: new Date(),
+  euroTeamHome: team,
+  homePenalty: [],
+  homeScore: '',
+  awayScore: '',
+  status: '',
+  group: '',
+  euroTeamAway: team,
+  awayPenalty: [],
+  winner: team,
+  loser: team,
+  homeGoalDiff: 0,
+  awayGoalDiff: 0,
 };
 
 export const euros = [
@@ -1553,72 +1570,765 @@ export const euro = [
   },
 ];
 
-export const euroGroup = [
+// export const euroGroup = [
+//   {
+//     subGroup: [
+//       {
+//         id: '1a',
+//         group: 'A',
+//         country: 'germany',
+//         icon: '🇩🇪',
+//         style: 'odd:bg-zinc-100 even:bg-stone-50',
+//       },
+//       {
+//         id: '2a',
+//         group: 'A',
+//         country: 'scotland',
+//         icon: '🏴󠁧󠁢󠁳󠁣󠁴󠁿',
+//         style: 'odd:bg-zinc-100 even:bg-stone-50',
+//       },
+//       {
+//         id: '3a',
+//         group: 'A',
+//         country: 'hungary',
+//         icon: '🇭🇺',
+//         style: 'odd:bg-zinc-100 even:bg-stone-50',
+//       },
+//       {
+//         id: '4a',
+//         group: 'A',
+//         country: 'switzerland',
+//         icon: '🇨🇭',
+//         style: 'odd:bg-zinc-100 even:bg-stone-50',
+//       },
+//     ],
+//   },
+//   {
+//     subGroup: [
+//       {
+//         id: '1b',
+//         group: 'B',
+//         country: 'spain',
+//         icon: '🇪🇸',
+//         style: 'even:bg-zinc-100 odd:bg-stone-50',
+//       },
+//       {
+//         id: '2b',
+//         group: 'B',
+//         country: 'croatia',
+//         icon: '🇭🇷',
+//         style: 'even:bg-zinc-100 odd:bg-stone-50',
+//       },
+//       {
+//         id: '3b',
+//         group: 'B',
+//         country: 'italy',
+//         icon: '🇮🇹',
+//         style: 'even:bg-zinc-100 odd:bg-stone-50',
+//       },
+//       {
+//         id: '4b',
+//         group: 'B',
+//         country: 'albania',
+//         icon: '🇦🇱',
+//         style: 'even:bg-zinc-100 odd:bg-stone-50',
+//       },
+//     ],
+//   },
+//   {
+//     subGroup: [
+//       {
+//         id: '1c',
+//         group: 'C',
+//         country: 'slovenia',
+//         icon: '🇸🇮',
+//         style: 'odd:bg-zinc-100 even:bg-stone-50',
+//       },
+//       {
+//         id: '2c',
+//         group: 'C',
+//         country: 'denmark',
+//         icon: '🇩🇰',
+//         style: 'odd:bg-zinc-100 even:bg-stone-50',
+//       },
+//       {
+//         id: '3c',
+//         group: 'C',
+//         country: 'serbia',
+//         icon: '🇷🇸',
+//         style: 'odd:bg-zinc-100 even:bg-stone-50',
+//       },
+//       {
+//         id: '4c',
+//         group: 'C',
+//         country: 'england',
+//         icon: '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
+//         style: 'odd:bg-zinc-100 even:bg-stone-50',
+//       },
+//     ],
+//   },
+//   {
+//     subGroup: [
+//       {
+//         id: '1d',
+//         group: 'D',
+//         country: 'netherlands',
+//         icon: '🇳🇱',
+//         style: 'even:bg-zinc-100 odd:bg-stone-50',
+//       },
+//       {
+//         id: '2d',
+//         group: 'D',
+//         country: 'france',
+//         icon: '🇫🇷',
+//         style: 'even:bg-zinc-100 odd:bg-stone-50',
+//       },
+//       {
+//         id: '3d',
+//         group: 'D',
+//         country: 'poland',
+//         icon: '🇵🇱',
+//         style: 'even:bg-zinc-100 odd:bg-stone-50',
+//       },
+//       {
+//         id: '4d',
+//         group: 'D',
+//         country: 'austria',
+//         icon: '🇦🇹',
+//         style: 'even:bg-zinc-100 odd:bg-stone-50',
+//       },
+//     ],
+//   },
+//   {
+//     subGroup: [
+//       {
+//         id: '1e',
+//         group: 'E',
+//         country: 'ukraine',
+//         icon: '🇺🇦',
+//         style: 'odd:bg-zinc-100 even:bg-stone-50',
+//       },
+//       {
+//         id: '2e',
+//         group: 'E',
+//         country: 'slovakia',
+//         icon: '🇸🇰',
+//         style: 'odd:bg-zinc-100 even:bg-stone-50',
+//       },
+//       {
+//         id: '3e',
+//         group: 'E',
+//         country: 'belgium',
+//         icon: '🇧🇪',
+//         style: 'odd:bg-zinc-100 even:bg-stone-50',
+//       },
+//       {
+//         id: '4e',
+//         group: 'E',
+//         country: 'romania',
+//         icon: '🇷🇴',
+//         style: 'odd:bg-zinc-100 even:bg-stone-50',
+//       },
+//     ],
+//   },
+//   {
+//     subGroup: [
+//       {
+//         id: '1F',
+//         group: 'F',
+//         country: 'portugal',
+//         icon: '🇵🇹',
+//         style: 'even:bg-zinc-100 odd:bg-stone-50',
+//       },
+//       {
+//         id: '2F',
+//         group: 'F',
+//         country: 'czechia',
+//         icon: '🇨🇿',
+//         style: 'even:bg-zinc-100 odd:bg-stone-50',
+//       },
+//       {
+//         id: '3F',
+//         group: 'F',
+//         country: 'georgia',
+//         icon: '🇬🇪',
+//         style: 'even:bg-zinc-100 odd:bg-stone-50',
+//       },
+//       {
+//         id: '4F',
+//         group: 'F',
+//         country: 'turkey',
+//         icon: '🇹🇷',
+//         style: 'even:bg-zinc-100 odd:bg-stone-50',
+//       },
+//     ],
+//   },
+// ];
+
+export type TMatchesSubProps = {
+  group?: string;
+  home?: {
+    value: string;
+    icon: string;
+  };
+  away?: {
+    value: string;
+    icon: string;
+  };
+  result?: string;
+  date?: string;
+};
+
+export const uefaA = [
   {
-    group: 'Group A',
-    c1: 'germany',
-    icon1: '🇩🇪',
-    c2: 'scotland',
-    icon2: '🏴󠁧󠁢󠁳󠁣󠁴󠁿',
-    c3: 'hungary',
-    icon3: '🇭🇺',
-    c4: 'switzerland',
-    icon4: '🇨🇭',
+    group: 'A',
+    euroTeamHome: {
+      value: 'germany',
+      icon: '🇩🇪',
+    },
+    euroTeamAway: {
+      value: 'scotland',
+      icon: '🏴󠁧󠁢󠁳󠁣󠁴󠁿',
+    },
+    date: '2024-06-14T19:00:00.000+00:00',
+    // result: '5-1',
+    homeGoals: 5,
+    awayGoals: 1,
   },
   {
-    group: 'Group B',
-    c1: 'spain',
-    icon1: '🇪🇸',
-    c2: 'croatia',
-    icon2: '🇭🇷',
-    c3: 'italy',
-    icon3: '🇮🇹',
-    c4: 'albania',
-    icon4: '🇦🇱',
+    group: 'A',
+    euroTeamHome: {
+      value: 'hungary',
+      icon: '🇭🇺',
+    },
+    euroTeamAway: {
+      value: 'switzerland',
+      icon: '🇨🇭',
+    },
+    date: '2024-06-15T13:00:00.000+00:00',
+    // result: '1-3',
+    homeGoals: 1,
+    awayGoals: 3,
   },
   {
-    group: 'Group C',
-    c1: 'slovenia',
-    icon1: '🇸🇮',
-    c2: 'denmark',
-    icon2: '🇩🇰',
-    c3: 'serbia',
-    icon3: '🇷🇸',
-    c4: 'england',
-    icon4: '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
+    group: 'A',
+    euroTeamHome: {
+      value: 'germany',
+      icon: '🇩🇪',
+    },
+    euroTeamAway: {
+      value: 'hungary',
+      icon: '🇭🇺',
+    },
+    date: '2024-06-19T16:00:00.000+00:00',
+    // result: '2-1',
+    homeGoals: 2,
+    awayGoals: 1,
   },
   {
-    group: 'Group D',
-    c1: 'netherlands',
-    icon1: '🇳🇱',
-    c2: 'france',
-    icon2: '🇫🇷',
-    c3: 'poland',
-    icon3: '🇵🇱',
-    c4: 'austria',
-    icon4: '🇦🇹',
+    group: 'A',
+    euroTeamHome: {
+      value: 'scotland',
+      icon: '🏴󠁧󠁢󠁳󠁣󠁴󠁿',
+    },
+    euroTeamAway: {
+      value: 'switzerland',
+      icon: '🇨🇭',
+    },
+    date: '2024-06-19T19:00:00.000+00:00',
+    // result: '1-1',
+    homeGoals: 1,
+    awayGoals: 1,
   },
   {
-    group: 'Group E',
-    c1: 'ukraine',
-    icon1: '🇺🇦',
-    c2: 'slovakia',
-    icon2: '🇸🇰',
-    c3: 'belgium',
-    icon3: '🇧🇪',
-    c4: 'romania',
-    icon4: '🇷🇴',
+    group: 'A',
+    euroTeamHome: {
+      value: 'switzerland',
+      icon: '🇨🇭',
+    },
+    euroTeamAway: {
+      value: 'germany',
+      icon: '🇩🇪',
+    },
+    date: '2024-06-23T19:00:00.000+00:00',
+    // result: '',
+    homeGoals: null,
+    awayGoals: null,
   },
   {
-    group: 'Group F',
-    c1: 'portugal',
-    icon1: '🇵🇹',
-    c2: 'czechia',
-    icon2: '🇨🇿',
-    c3: 'georgia',
-    icon3: '🇬🇪',
-    c4: 'turkey',
-    icon4: '🇹🇷',
+    group: 'A',
+    euroTeamHome: {
+      value: 'scotland',
+      icon: '🏴󠁧󠁢󠁳󠁣󠁴󠁿',
+    },
+    euroTeamAway: {
+      value: 'hungary',
+      icon: '🇭🇺',
+    },
+    date: '2024-06-23T19:00:00.000+00:00',
+    // result: '',
+    homeGoals: null,
+    awayGoals: null,
+  },
+];
+export const uefaB = [
+  {
+    group: 'B',
+    euroTeamHome: {
+      value: 'spain',
+      icon: '🇪🇸',
+    },
+    euroTeamAway: {
+      value: 'croatia',
+      icon: '🇭🇷',
+    },
+    date: '2024-06-15T16:00:00.000+00:00',
+    // result: '3-1',
+    homeGoals: 3,
+    awayGoals: 1,
+  },
+  {
+    group: 'B',
+    euroTeamHome: {
+      value: 'italy',
+      icon: '🇮🇹',
+    },
+    euroTeamAway: {
+      value: 'albania',
+      icon: '🇦🇱',
+    },
+    date: '2024-06-15T19:00:00.000+00:00',
+    // result: '2-1',
+    homeGoals: 2,
+    awayGoals: 1,
+  },
+  {
+    group: 'B',
+    euroTeamHome: {
+      value: 'croatia',
+      icon: '🇭🇷',
+    },
+    euroTeamAway: {
+      value: 'albania',
+      icon: '🇦🇱',
+    },
+    date: '2024-06-19T13:00:00.000+00:00',
+    // result: '2-2',
+    homeGoals: 2,
+    awayGoals: 2,
+  },
+  {
+    group: 'B',
+    euroTeamHome: {
+      value: 'spain',
+      icon: '🇪🇸',
+    },
+    euroTeamAway: {
+      value: 'italy',
+      icon: '🇮🇹',
+    },
+    date: '2024-06-20T19:00:00.000+00:00',
+    // result: '',
+    homeGoals: undefined,
+    awayGoals: undefined,
+  },
+  {
+    group: 'B',
+    euroTeamHome: {
+      value: 'albania',
+      icon: '🇦🇱',
+    },
+    euroTeamAway: {
+      value: 'spain',
+      icon: '🇪🇸',
+    },
+    date: '2024-06-24T19:00:00.000+00:00',
+    // result: '',
+    homeGoals: undefined,
+    awayGoals: undefined,
+  },
+  {
+    group: 'B',
+    euroTeamHome: {
+      value: 'croatia',
+      icon: '🇭🇷',
+    },
+    euroTeamAway: {
+      value: 'italy',
+      icon: '🇮🇹',
+    },
+    date: '2024-06-24T19:00:00.000+00:00',
+    // result: '',
+    homeGoals: undefined,
+    awayGoals: undefined,
+  },
+];
+export const uefaC = [
+  {
+    group: 'C',
+    euroTeamHome: {
+      value: 'slovenia',
+      icon: '🇸🇮',
+    },
+    euroTeamAway: {
+      value: 'denmark',
+      icon: '🇩🇰',
+    },
+    date: '2024-06-16T16:00:00.000+00:00',
+    // result: '1-1',
+    homeGoals: 1,
+    awayGoals: 1,
+  },
+  {
+    group: 'C',
+    euroTeamHome: {
+      value: 'serbia',
+      icon: '🇷🇸',
+    },
+    euroTeamAway: {
+      value: 'england',
+      icon: '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
+    },
+    date: '2024-06-16T19:00:00.000+00:00',
+    // result: '0-1',
+    homeGoals: 0,
+    awayGoals: 1,
+  },
+  {
+    group: 'C',
+    euroTeamHome: {
+      value: 'slovenia',
+      icon: '🇸🇮',
+    },
+    euroTeamAway: {
+      value: 'serbia',
+      icon: '🇷🇸',
+    },
+    date: '2024-06-20T13:00:00.000+00:00',
+    // result: '',
+    homeGoals: undefined,
+    awayGoals: undefined,
+  },
+  {
+    group: 'C',
+    euroTeamHome: {
+      value: 'denmark',
+      icon: '🇩🇰',
+    },
+    euroTeamAway: {
+      value: 'england',
+      icon: '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
+    },
+    date: '2024-06-20T16:00:00.000+00:00',
+    // result: '',
+    homeGoals: undefined,
+    awayGoals: undefined,
+  },
+  {
+    group: 'C',
+    euroTeamHome: {
+      value: 'denmark',
+      icon: '🇩🇰',
+    },
+    euroTeamAway: {
+      value: 'serbia',
+      icon: '🇷🇸',
+    },
+    date: '2024-06-25T19:00:00.000+00:00',
+    // result: '',
+    homeGoals: undefined,
+    awayGoals: undefined,
+  },
+  {
+    group: 'C',
+    euroTeamHome: {
+      value: 'england',
+      icon: '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
+    },
+    euroTeamAway: {
+      value: 'slovenia',
+      icon: '🇸🇮',
+    },
+    date: '2024-06-25T07:00:00.000+00:00',
+    // result: '',
+    homeGoals: undefined,
+    awayGoals: undefined,
+  },
+];
+export const uefaD = [
+  {
+    group: 'D',
+    euroTeamHome: {
+      value: 'poland',
+      icon: '🇵🇱',
+    },
+    euroTeamAway: {
+      value: 'netherlands',
+      icon: '🇳🇱',
+    },
+    date: '2024-06-16T13:00:00.000+00:00',
+    // result: '1-2',
+    homeGoals: 1,
+    awayGoals: 2,
+  },
+  {
+    group: 'D',
+    euroTeamHome: {
+      value: 'austria',
+      icon: '🇦🇹',
+    },
+    euroTeamAway: {
+      value: 'france',
+      icon: '🇫🇷',
+    },
+    date: '2024-06-17T19:00:00.000+00:00',
+    // result: '0-1',
+    homeGoals: 0,
+    awayGoals: 1,
+  },
+  {
+    group: 'D',
+    euroTeamHome: {
+      value: 'poland',
+      icon: '🇵🇱',
+    },
+    euroTeamAway: {
+      value: 'austria',
+      icon: '🇦🇹',
+    },
+    date: '2024-06-21T16:00:00.000+00:00',
+    // result: '',
+    homeGoals: undefined,
+    awayGoals: undefined,
+  },
+  {
+    group: 'D',
+    euroTeamHome: {
+      value: 'netherlands',
+      icon: '🇳🇱',
+    },
+    euroTeamAway: {
+      value: 'france',
+      icon: '🇫🇷',
+    },
+    date: '2024-06-21T19:00:00.000+00:00',
+    // result: '',
+    homeGoals: undefined,
+    awayGoals: undefined,
+  },
+  {
+    group: 'D',
+    euroTeamHome: {
+      value: 'netherlands',
+      icon: '🇳🇱',
+    },
+    euroTeamAway: {
+      value: 'austria',
+      icon: '🇦🇹',
+    },
+    date: '2024-06-25T16:00:00.000+00:00',
+    // result: '',
+    homeGoals: undefined,
+    awayGoals: undefined,
+  },
+  {
+    group: 'D',
+    euroTeamHome: {
+      value: 'france',
+      icon: '🇫🇷',
+    },
+    euroTeamAway: {
+      value: 'poland',
+      icon: '🇵🇱',
+    },
+    date: '2024-06-25T16:00:00.000+00:00',
+    // result: '',
+    homeGoals: undefined,
+    awayGoals: undefined,
+  },
+];
+export const uefaE = [
+  {
+    group: 'E',
+    euroTeamHome: {
+      value: 'romania',
+      icon: '🇷🇴',
+    },
+    euroTeamAway: {
+      value: 'ukraine',
+      icon: '🇺🇦',
+    },
+    date: '2024-06-17T13:00:00.000+00:00',
+    // result: '3-0',
+    homeGoals: 3,
+    awayGoals: 0,
+  },
+  {
+    group: 'E',
+    euroTeamHome: {
+      value: 'belgium',
+      icon: '🇧🇪',
+    },
+    euroTeamAway: {
+      value: 'slovakia',
+      icon: '🇸🇰',
+    },
+    date: '2024-06-17T16:00:00.000+00:00',
+    // result: '0-1',
+    homeGoals: 0,
+    awayGoals: 1,
+  },
+  {
+    group: 'E',
+    euroTeamHome: {
+      value: 'slovakia',
+      icon: '🇸🇰',
+    },
+    euroTeamAway: {
+      value: 'ukraine',
+      icon: '🇺🇦',
+    },
+    date: '2024-06-21T13:00:00.000+00:00',
+    // result: '',
+    homeGoals: undefined,
+    awayGoals: undefined,
+  },
+  {
+    group: 'E',
+    euroTeamHome: {
+      value: 'belgium',
+      icon: '🇧🇪',
+    },
+    euroTeamAway: {
+      value: 'romania',
+      icon: '🇷🇴',
+    },
+    date: '2024-06-22T19:00:00.000+00:00',
+    // result: '',
+    homeGoals: undefined,
+    awayGoals: undefined,
+  },
+  {
+    group: 'E',
+    euroTeamHome: {
+      value: 'slovakia',
+      icon: '🇸🇰',
+    },
+    euroTeamAway: {
+      value: 'romania',
+      icon: '🇷🇴',
+    },
+    date: '2024-06-26T16:00:00.000+00:00',
+    // result: '',
+    homeGoals: undefined,
+    awayGoals: undefined,
+  },
+  {
+    group: 'E',
+    euroTeamHome: {
+      value: 'ukraine',
+      icon: '🇺🇦',
+    },
+    euroTeamAway: {
+      value: 'belgium',
+      icon: '🇧🇪',
+    },
+    date: '2024-06-26T16:00:00.000+00:00',
+    // result: '',
+    homeGoals: undefined,
+    awayGoals: undefined,
+  },
+];
+export const uefaF = [
+  {
+    group: 'F',
+    euroTeamHome: {
+      value: 'turkey',
+      icon: '🇹🇷',
+    },
+    euroTeamAway: {
+      value: 'georgia',
+      icon: '🇬🇪',
+    },
+    date: '2024-06-26T16:00:00.000+00:00',
+    // result: '3-1',
+    homeGoals: 3,
+    awayGoals: 1,
+  },
+  {
+    group: 'F',
+    euroTeamHome: {
+      value: 'portugal',
+      icon: '🇵🇹',
+    },
+    euroTeamAway: {
+      value: 'czechia',
+      icon: '🇨🇿',
+    },
+    date: '2024-06-18T19:00:00.000+00:00',
+    // result: '2-1',
+    homeGoals: 2,
+    awayGoals: 1,
+  },
+  {
+    group: 'F',
+    euroTeamHome: {
+      value: 'georgia',
+      icon: '🇬🇪',
+    },
+    euroTeamAway: {
+      value: 'czechia',
+      icon: '🇨🇿',
+    },
+    date: '2024-06-22T13:00:00.000+00:00',
+    // result: '',
+    homeGoals: undefined,
+    awayGoals: undefined,
+  },
+  {
+    group: 'F',
+    euroTeamHome: {
+      value: 'turkey',
+      icon: '🇹🇷',
+    },
+    euroTeamAway: {
+      value: 'portugal',
+      icon: '🇵🇹',
+    },
+    date: '2024-06-22T16:00:00.000+00:00',
+    // result: '',
+    homeGoals: undefined,
+    awayGoals: undefined,
+  },
+  {
+    group: 'F',
+    euroTeamHome: {
+      value: 'czechia',
+      icon: '🇨🇿',
+    },
+    euroTeamAway: {
+      value: 'turkey',
+      icon: '🇹🇷',
+    },
+    date: '2024-06-26T19:00:00.000+00:00',
+    // result: '',
+    homeGoals: undefined,
+    awayGoals: undefined,
+  },
+  {
+    group: 'F',
+    euroTeamHome: {
+      value: 'georgia',
+      icon: '🇬🇪',
+    },
+    euroTeamAway: {
+      value: 'portugal',
+      icon: '🇵🇹',
+    },
+    date: '2024-06-26T19:00:00.000+00:00',
+    // result: '',
+    homeGoals: undefined,
+    awayGoals: undefined,
   },
 ];
 
@@ -1626,18 +2336,22 @@ export const euroGroupA = [
   {
     country: 'germany',
     icon: '🇩🇪',
+    group: 'A',
   },
   {
     country: 'scotland',
     icon: '🏴󠁧󠁢󠁳󠁣󠁴󠁿',
+    group: 'A',
   },
   {
     country: 'hungary',
     icon: '🇭🇺',
+    group: 'A',
   },
   {
     country: 'switzerland',
     icon: '🇨🇭',
+    group: 'A',
   },
 ];
 
@@ -1645,18 +2359,22 @@ export const euroGroupB = [
   {
     country: 'spain',
     icon: '🇪🇸',
+    group: 'B',
   },
   {
     country: 'croatia',
     icon: '🇭🇷',
+    group: 'B',
   },
   {
     country: 'italy',
     icon: '🇮🇹',
+    group: 'B',
   },
   {
     country: 'albania',
     icon: '🇦🇱',
+    group: 'B',
   },
 ];
 
@@ -1664,76 +2382,104 @@ export const euroGroupC = [
   {
     country: 'slovenia',
     icon: '🇸🇮',
+    group: 'C',
   },
   {
     country: 'denmark',
     icon: '🇩🇰',
+    group: 'C',
   },
   {
     country: 'serbia',
     icon: '🇷🇸',
+    group: 'C',
   },
   {
     country: 'england',
     icon: '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
+    group: 'C',
   },
 ];
 
 export const euroGroupD = [
   {
-    country: 'netherlands',
+    value: 'netherlands',
     icon: '🇳🇱',
+    group: 'D',
   },
   {
-    country: 'france',
+    value: 'france',
     icon: '🇫🇷',
+    group: 'D',
   },
   {
-    country: 'poland',
+    value: 'poland',
     icon: '🇵🇱',
+    group: 'D',
   },
   {
-    country: 'austria',
+    value: 'austria',
     icon: '🇦🇹',
+    group: 'D',
   },
 ];
 
 export const euroGroupE = [
   {
-    country: 'ukraine',
+    value: 'ukraine',
     icon: '🇺🇦',
+    group: 'E',
   },
   {
-    country: 'slovakia',
+    value: 'slovakia',
     icon: '🇸🇰',
+    group: 'E',
   },
   {
-    country: 'belgium',
+    value: 'belgium',
     icon: '🇧🇪',
+    group: 'E',
   },
   {
-    country: 'romania',
+    value: 'romania',
     icon: '🇷🇴',
+    group: 'E',
   },
 ];
 
 export const euroGroupF = [
   {
-    country: 'portugal',
+    value: 'portugal',
     icon: '🇵🇹',
+    group: 'F',
   },
   {
-    country: 'czechia',
+    value: 'czechia',
     icon: '🇨🇿',
+    group: 'F',
   },
   {
-    country: 'georgia',
+    value: 'georgia',
     icon: '🇬🇪',
+    group: 'F',
   },
   {
-    country: 'turkey',
+    value: 'turkey',
     icon: '🇹🇷',
+    group: 'F',
   },
+];
+export const euroGroup = [
+  euroGroupA,
+  euroGroupB,
+  euroGroupC,
+  euroGroupD,
+  euroGroupE,
+  euroGroupF,
+];
+export const uefaMatches = [
+  uefaA,
+  // uefaB, uefaC, uefaD, uefaE, uefaF
 ];
 
 export const euGroup = [

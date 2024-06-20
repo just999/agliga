@@ -79,6 +79,7 @@ type ModalStore = {
   setImg: (type: 'edit-slider', img: ImageSlider) => void;
   setGroup: (
     type: 'new-euro' | 'edit-euro' | 'delete-euro',
+    isOpen: boolean,
     group: string
   ) => void;
   // authModal: () => void;
@@ -138,8 +139,11 @@ const useModal = create<ModalStore>((set) => ({
     })),
   setImg: (type: 'edit-slider', img) => set({ modalType: type, img }),
   // authModal: () => set((state) => ({ isOpen: !state.isOpen })),
-  setGroup: (type: 'new-euro' | 'edit-euro' | 'delete-euro', group) =>
-    set({ modalType: type, isOpen: false, group }),
+  setGroup: (
+    type: 'new-euro' | 'edit-euro' | 'delete-euro',
+    isOpen: boolean,
+    group: string
+  ) => set({ modalType: type, isOpen, group }),
 }));
 
 export default useModal;

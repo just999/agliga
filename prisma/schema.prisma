@@ -200,30 +200,76 @@ enum Group {
   F
 }
 
-type EuroTeamHome {
-  value String
-  icon  String
+type Team {
+  value  String
+  icon   String
+  played Int?
+  group  String?
 }
 
-type EuroTeamAway {
-  value String
-  icon  String
+type Penalty {
+  redCard     String?
+  yellowCard  String?
+  penaltyKick String?
 }
 
 model Euro {
-  id           String       @id @default(auto()) @map("_id") @db.ObjectId
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
   date         DateTime
-  euroTeamHome EuroTeamHome
-  status       String       @default("Upcoming")
-  homePenalty  String[]     @default([""])
+  euroTeamHome Team
+  homePenalty  String[] @default([""])
   homeScore    String?
-  euroTeamAway EuroTeamAway
-  awayPenalty  String[]     @default([""])
+  euroTeamAway Team
+  awayPenalty  String[] @default([""])
   awayScore    String?
-  group        Group
-  userId       String       @db.ObjectId
+  group        Group?
+  userId       String   @db.ObjectId
 
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+// model Euro {
+//   id           String   @id @default(auto()) @map("_id") @db.ObjectId
+//   date         DateTime
+//   euroTeamHome Team
+//   status       String   @default("Upcoming")
+//   homePenalty  String[] @default([""])
+//   homeScore    String?
+//   euroTeamAway Team
+//   awayPenalty  String[] @default([""])
+//   awayScore    String?
+//   group        Group?
+//   winner       Team?
+//   loser        Team?
+//   homeGoalDiff Int?
+//   awayGoalDiff Int?
+//   userId       String   @db.ObjectId
+
+//   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+// }
+
+// model Euro {
+//   id           String   @id @default(auto()) @map("_id") @db.ObjectId
+//   date         DateTime
+//   euroTeamHome Team
+//   status       String   @default("Upcoming")
+//   homePenalty  String[] @default([""])
+//   homeScore    String?
+//   euroTeamAway Team
+//   awayPenalty  String[] @default([""])
+//   awayScore    String?
+//   group        Group?
+//   winner       Team?
+//   loser        Team?
+//   homeGoalDiff Int?
+//   awayGoalDiff Int?
+//   userId       String   @db.ObjectId
+
+//   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+// }

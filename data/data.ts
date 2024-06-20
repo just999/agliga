@@ -1,12 +1,4 @@
 import {
-  Facebook,
-  Inst,
-  Instagram,
-  Twitter,
-  Whatsapp,
-  Youtube,
-} from '@/components/social';
-import {
   BsFacebook,
   BsInstagram,
   BsMessenger,
@@ -16,13 +8,6 @@ import {
   BsWhatsapp,
   BsYoutube,
 } from 'react-icons/bs';
-import {
-  FcAbout,
-  FcAddDatabase,
-  FcContacts,
-  FcHome,
-  FcNews,
-} from 'react-icons/fc';
 
 import { TfiYoutube } from 'react-icons/tfi';
 

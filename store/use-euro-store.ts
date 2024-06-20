@@ -1,15 +1,16 @@
-import { EuroProps } from '@/types';
+import { team } from '@/lib/helper';
+import { EuroWithIconProps } from '@/types';
 import { create } from 'zustand';
 
 type EuroState = {
-  items: EuroProps[];
-  item: EuroProps;
+  items: EuroWithIconProps[];
+  item: EuroWithIconProps;
   isLoading: boolean;
   error: any;
   setIsLoading: (isLoading: boolean) => void;
   setError: (error: any) => void;
-  setItems: (items: EuroProps[]) => void;
-  setItem: (item: EuroProps) => void;
+  setItems: (items: EuroWithIconProps[]) => void;
+  setItem: (item: EuroWithIconProps) => void;
 };
 
 const initialState = {
@@ -17,19 +18,12 @@ const initialState = {
   item: {
     id: '',
     date: new Date(),
-    euroTeamHome: {
-      value: '',
-      icon: '',
-    },
+    euroTeamHome: team,
     homePenalty: [],
     homeScore: '',
     awayScore: '',
-    status: '',
+    euroTeamAway: team,
     group: '',
-    euroTeamAway: {
-      value: '',
-      icon: '',
-    },
     awayPenalty: [],
   },
   isLoading: false,
@@ -40,8 +34,8 @@ const useEuroStore = create<EuroState>((set) => ({
   ...initialState,
   setIsLoading: (isLoading) => set(() => ({ isLoading })),
   setError: (error) => set(() => ({ error })),
-  setItems: (items: EuroProps[]) => set(() => ({ items })),
-  setItem: (item: EuroProps) => set(() => ({ item })),
+  setItems: (items: EuroWithIconProps[]) => set(() => ({ items })),
+  setItem: (item: EuroWithIconProps) => set(() => ({ item })),
 }));
 
 export default useEuroStore;

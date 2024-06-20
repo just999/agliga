@@ -8,7 +8,7 @@ import Heading from '../heading';
 import Input from '../ui/input';
 import toast from 'react-hot-toast';
 
-import { useParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 import SelectInput from '../select-input';
 
@@ -16,20 +16,29 @@ import useModal from '@/hooks/use-modal';
 
 import { useGetEuros } from '@/hooks/use-get-schedule';
 
-import { EuroProps } from '@/types';
+import { EuroWithIconProps } from '@/types';
 
-import { initialEuroFormValues } from '@/lib/helper';
+import { initialEuroFormWithIconValues, team } from '@/lib/helper';
 import { useEuros, usePenalty } from '@/hooks/use-euro';
 import { cn, findMatchingObjects, noto } from '@/lib/utils';
 
 const EuroModal = () => {
-  const [schedule, setSchedule] = useState<EuroProps>(initialEuroFormValues);
+  const [schedule, setSchedule] = useState<EuroWithIconProps>(
+    initialEuroFormWithIconValues
+  );
   const [isLoading, setIsLoading] = useState(false);
   // const params = useParams();
 
   // const id = params.id?.toString();
 
-  const { modalType, isOpen, onClose, id, group: euroGroup } = useModal();
+  const {
+    modalType,
+    isOpen,
+    onClose,
+    setGroup,
+    id,
+    group: euroGroup,
+  } = useModal();
   const router = useRouter();
   const { getTeams } = useEuros();
   const { getPenalty } = usePenalty();
@@ -38,18 +47,11 @@ const EuroModal = () => {
   if (modalType === 'new-euro') {
     initialScheduleValues = {
       date: new Date(),
-      euroTeamHome: {
-        value: '',
-        icon: '',
-      },
+      euroTeamHome: team,
       homePenalty: [],
       homeScore: '',
-      status: '',
       awayScore: '',
-      euroTeamAway: {
-        value: '',
-        icon: '',
-      },
+      euroTeamAway: team,
       awayPenalty: [],
       group: euroGroup,
     };
@@ -76,12 +78,6 @@ const EuroModal = () => {
     defaultValues: initialScheduleValues,
   });
 
-  const teams = getTeams();
-  const selectRunOptions = teams.map((team) => ({
-    value: team.value,
-    icon: team.icon,
-  }));
-
   const teamsOption = getTeams();
   const selectTeamHomeOptions = teamsOption.map((euroTeamHome) => ({
     value: euroTeamHome.value,
@@ -100,26 +96,19 @@ const EuroModal = () => {
     desc: pen.desc,
     style: pen.style,
   }));
+
   useEffect(() => {
     if (modalType === 'new-euro' && !error) {
       const data = {
         date: new Date(),
-        euroTeamHome: {
-          value: '',
-          icon: '',
-        },
+        euroTeamHome: team,
         homePenalty: [],
         homeScore: '',
-        status: '',
         awayScore: '',
-        euroTeamAway: {
-          value: '',
-          icon: '',
-        },
+        euroTeamAway: team,
         awayPenalty: [],
         group: euroGroup,
       } as any;
-
       setSchedule(data);
 
       setValue('euroTeamHome', euroTeamHome);
@@ -138,7 +127,6 @@ const EuroModal = () => {
         date: item.date,
         euroTeamAway: item.euroTeamAway,
         awayPenalty: item.awayPenalty,
-        status: item.status,
         homeScore: item.homeScore,
         awayScore: item.awayScore,
         group: item.group,
@@ -148,15 +136,19 @@ const EuroModal = () => {
       const home: any = teamsOption.filter(
         (team) => team.value === item.euroTeamHome.value
       ) || {
-        icon: '',
         value: '',
+        icon: '',
+        group: '',
+        played: '',
       };
 
       const away: any = teamsOption.filter(
         (team) => team.value === item.euroTeamAway.value
       ) || {
-        icon: '',
         value: '',
+        icon: '',
+        group: '',
+        played: '',
       };
 
       let targetPen: string[] = [];
@@ -164,10 +156,10 @@ const EuroModal = () => {
         targetPen = item.awayPenalty;
       }
       const apen = findMatchingObjects(penalties, targetPen);
-      setValue('euroTeamHome', item.euroTeamHome);
+      setValue('euroTeamHome', home[0]);
       setValue('homePenalty', item.homePenalty);
       setValue('date', new Date(item.date).toISOString().substring(0, 16));
-      setValue('euroTeamAway', item.euroTeamAway);
+      setValue('euroTeamAway', away[0]);
       setValue('awayPenalty', apen);
       setValue('homeScore', item.homeScore);
       setValue('awayScore', item.awayScore);
@@ -182,7 +174,6 @@ const EuroModal = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [error, item, modalType, setValue, teamsOption]);
-
   // if (!item.date) return;
   const newDate = new Date(schedule.date).toISOString().substring(0, 16);
 
@@ -192,7 +183,6 @@ const EuroModal = () => {
   const homeScore = watch('homeScore');
   const euroTeamAway = watch('euroTeamAway');
   const awayPenalty = watch('awayPenalty');
-
   const awayScore = watch('awayScore');
   const group = watch('group');
 
@@ -268,7 +258,7 @@ const EuroModal = () => {
 
   const handleCloseClearForm = () => {
     onClose();
-    setSchedule(initialEuroFormValues);
+    setSchedule(initialEuroFormWithIconValues);
     reset();
   };
 
@@ -320,7 +310,7 @@ const EuroModal = () => {
         </span>
       )}
 
-      <SelectInput
+      {/* <SelectInput
         label={homePenalty ? '' : 'homePenalty'}
         isMulti={true}
         id='homePenalty'
@@ -332,7 +322,7 @@ const EuroModal = () => {
         errors={errors}
         // optionIconClassName='text-yellow-400'
         optionPenaltyClassName='flex flex-row-reverse justify-end gap-0'
-        optionClassName='text-xs px-0'
+        optionClassName='text-sm px-0 font-semibold'
       />
       {errors.homePenalty && (
         <span className='text-sm text-red-500 '>
@@ -340,7 +330,7 @@ const EuroModal = () => {
             Kolom Wajib di isi...
           </span>
         </span>
-      )}
+      )} */}
 
       <Input
         id='homeScore'
@@ -350,7 +340,7 @@ const EuroModal = () => {
         register={register}
         errors={errors}
       />
-      {errors.score && (
+      {errors.homeScore && (
         <span className='text-sm text-red-500 '>
           <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
             Kolom Wajib di isi...
@@ -396,7 +386,7 @@ const EuroModal = () => {
           </span>
         </span>
       )} */}
-
+      {/* 
       <SelectInput
         label={awayPenalty ? '' : 'awayPenalty'}
         isMulti={true}
@@ -409,7 +399,7 @@ const EuroModal = () => {
         errors={errors}
         // optionIconClassName='text-yellow-400'
         optionPenaltyClassName='flex flex-row-reverse justify-end gap-0'
-        optionClassName='text-xs px-0'
+        optionClassName='text-sm px-0 font-semibold'
       />
       {errors.awayPenalty && (
         <span className='text-sm text-red-500 '>
@@ -417,7 +407,7 @@ const EuroModal = () => {
             Kolom Wajib di isi...
           </span>
         </span>
-      )}
+      )} */}
 
       <Input
         id='awayScore'
@@ -427,7 +417,7 @@ const EuroModal = () => {
         register={register}
         errors={errors}
       />
-      {errors.score && (
+      {errors.awayScore && (
         <span className='text-sm text-red-500 '>
           <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
             Kolom Wajib di isi...
@@ -440,17 +430,94 @@ const EuroModal = () => {
         type='text'
         label={group ? '' : 'Group'}
         disabled={isLoading}
+        defaultValue={watch('group')}
         register={register}
         errors={errors}
         required
       />
-      {errors.analysis && (
+      {errors.group && (
         <span className='text-sm text-red-500 '>
           <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
             Kolom Wajib di isi...
           </span>
         </span>
       )}
+      {/* <SelectInput
+        label={winner ? '' : 'winner'}
+        isMulti={false}
+        id='winner'
+        register={register}
+        value={watch('winner')}
+        onChange={(value) => setCustomValue('winner', value)}
+        placeholder='euroAway'
+        options={() => selectTeamHomeOptions}
+        errors={errors}
+        optionIconClassName={cn(noto.className)}
+        optionClassName='text-base px-2 '
+      />
+      {errors.winner && (
+        <span className='text-sm text-red-500 '>
+          <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
+            Kolom Wajib di isi...
+          </span>
+        </span>
+      )}
+
+      <SelectInput
+        label={loser ? '' : 'loser'}
+        isMulti={false}
+        id='loser'
+        register={register}
+        value={watch('loser')}
+        onChange={(value) => setCustomValue('loser', value)}
+        placeholder='euroAway'
+        options={() => selectTeamHomeOptions}
+        errors={errors}
+        optionIconClassName={cn(noto.className)}
+        optionClassName='text-base px-2 '
+      />
+      {errors.loser && (
+        <span className='text-sm text-red-500 '>
+          <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
+            Kolom Wajib di isi...
+          </span>
+        </span>
+      )}
+
+      <Input
+        id='homeGoalDiff'
+        type='text'
+        label={homeGoalDiff ? '' : 'homeGoalDiff'}
+        disabled={isLoading}
+        defaultValue={watch('homeGoalDiff')}
+        register={register}
+        errors={errors}
+      />
+      {errors.homeGoalDiff && (
+        <span className='text-sm text-red-500 '>
+          <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
+            Kolom Wajib di isi...
+          </span>
+        </span>
+      )}
+      <Input
+        id='awayGoalDiff'
+        type='text'
+        label={awayGoalDiff ? '' : 'awayGoalDiff'}
+        disabled={isLoading}
+        defaultValue={watch('awayGoalDiff')}
+        register={register}
+        errors={errors}
+      />
+      {errors.awayGoalDiff && (
+        <span className='text-sm text-red-500 '>
+          <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
+            Kolom Wajib di isi...
+          </span>
+        </span>
+      )}
+
+       */}
     </div>
   );
 
