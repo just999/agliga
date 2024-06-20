@@ -8,30 +8,30 @@ import ToasterProvider from '@/providers/toaster-provider';
 
 import { auth } from '@/auth';
 
-import AuthModal from '@/components/modals/auth-modal';
-
-// import SearchModal from '@/components/modals/search-modal';
-import DepositWdModal from '@/components/modals/deposit-wd-modal';
-
-// import ClientOnly from '@/lib/client-only';
 import { cn } from '@/lib/utils';
-import PostModal from '@/components/modals/post-modal';
-import DeleteModal from '@/components/modals/delete-modal';
 
 import Footer from '@/components/footer';
 
-import LiveScoreModal from '@/components/modals/live-score-modal';
-
-import TopicModal from '@/components/modals/topic-modal';
 import { SessionProvider } from 'next-auth/react';
-import NoUserModal from '@/components/modals/no-user-modal';
-import SoccerModal from '@/components/modals/soccer-modal';
+
 import getCurrentUser from '@/actions/get-user';
-import UserProfileModal from '@/components/modals/user-profile-modal';
-import AddPostModal from '@/components/modals/add-post-modal';
-import SliderModal from '@/components/modals/slider-modal';
+
 import GoogleCaptchaWrapper from './captcha-wrapper';
-import EuroModal from '@/components/modals/euro-modal';
+import {
+  UserProfileModal,
+  SoccerModal,
+  LiveScoreModal,
+  DeleteModal,
+  DepositWdModal,
+  PostModal,
+  SliderModal,
+  NoUserModal,
+  AuthModal,
+  TopicModal,
+  EuroModal,
+} from '@/components/modals';
+
+// import EuroModal from '@/components/modals/euro-modal';
 
 const inter = Nunito({ subsets: ['latin'], preload: true });
 

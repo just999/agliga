@@ -31,14 +31,11 @@ const ScheduleClient = ({
   const { toggle } = useRunToggleStore();
 
   const filteredRunningData = data.filter((dat) => dat.run === Number(run));
-  console.log('🚀 ~ data:', data);
-  console.log('🚀 ~ filteredRunningData:', filteredRunningData);
   let runData;
   if (run === null) {
     runData = data;
   } else if (run) {
     runData = data.filter((dat) => dat.run === Number(run));
-    console.log('🚀 ~ runData:', runData);
   }
 
   return (

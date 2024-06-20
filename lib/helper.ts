@@ -1236,7 +1236,6 @@ export const team = {
   value: '',
   icon: '',
   group: '',
-  played: 0,
 };
 
 export const initialEuroFormWithIconValues = {
@@ -1245,14 +1244,9 @@ export const initialEuroFormWithIconValues = {
   homePenalty: [],
   homeScore: '',
   awayScore: '',
-  status: '',
   group: '',
   euroTeamAway: team,
   awayPenalty: [],
-  winner: team,
-  loser: team,
-  homeGoalDiff: 0,
-  awayGoalDiff: 0,
 };
 
 export const euros = [

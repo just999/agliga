@@ -6,9 +6,11 @@ import { db } from '../db';
 export const fetchEuro = cache(async () => {
   try {
     const euros = await db.euro.findMany({
-      orderBy: {
-        date: 'asc',
-      },
+      orderBy: [
+        {
+          date: 'asc',
+        },
+      ],
     });
     return euros;
   } catch (err) {

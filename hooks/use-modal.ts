@@ -33,6 +33,7 @@ type ModalStore = {
     | 'add-slider'
     | 'edit-slider'
     | 'delete-slider'
+    | 'fixture'
     | 'new-euro'
     | 'edit-euro'
     | 'delete-euro'
@@ -44,7 +45,6 @@ type ModalStore = {
   isToggle: boolean;
   img?: ImageSlider;
   group?: string;
-
   onOpen: (
     type:
       | 'login'
@@ -65,6 +65,7 @@ type ModalStore = {
       | 'add-slider'
       | 'edit-slider'
       | 'delete-slider'
+      | 'fixture'
       | 'new-euro'
       | 'edit-euro'
       | 'delete-euro'
@@ -114,6 +115,7 @@ const useModal = create<ModalStore>((set) => ({
       | 'add-slider'
       | 'edit-slider'
       | 'delete-slider'
+      | 'fixture'
       | 'new-euro'
       | 'edit-euro'
       | 'delete-euro'

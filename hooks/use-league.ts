@@ -572,13 +572,6 @@ const calculateTeamStats = (match: Match, teamStats: TeamStats): TeamStats => {
     const goalsFor = isHomeTeam
       ? Number(homeScore) || 0
       : Number(awayScore) || 0;
-    console.log(
-      '🚀 ~ calculateTeamStats ~ goalsFor:',
-      isHomeTeam,
-      goalsFor,
-      euroTeamHome.value,
-      euroTeamAway.value
-    );
     const goalsAgainst = isHomeTeam
       ? Number(awayScore) || 0
       : Number(homeScore) || 0;
@@ -587,14 +580,6 @@ const calculateTeamStats = (match: Match, teamStats: TeamStats): TeamStats => {
     teamStats.goalsAgainst += Number(goalsAgainst);
 
     if (Number(goalsFor) > Number(goalsAgainst)) {
-      console.log(
-        '🚀 ~ calculateTeamStats ~ goalsFor:',
-        euroTeamHome.value,
-        goalsFor,
-        '>',
-        goalsAgainst,
-        euroTeamAway.value
-      );
       teamStats.won++;
       teamStats.points += +3;
     } else if (Number(goalsFor) === Number(goalsAgainst)) {
@@ -622,8 +607,6 @@ const useLeague = (matches: Match[]): TeamStats[] => {
       const { euroTeamHome, euroTeamAway, group, date, homeScore, awayScore } =
         match;
       const matchDate = new Date(date);
-
-      console.log('🚀 ~ matches.forEach ~ match:', match);
       // Skip matches that haven't been played yet
       if (matchDate > now) {
         return;

@@ -3,7 +3,7 @@
 import { DataTable } from '@/components/ui/data-table';
 
 import { euroColumns } from './euro-columns';
-import { EuroGroupProps } from '@/types';
+import { EuroGroupProps, EuroWithIconProps } from '@/types';
 import { useEffect, useState } from 'react';
 import React from 'react';
 import ClientOnly from '@/lib/client-only';
@@ -14,6 +14,10 @@ interface EuroClientProps {
   eu?: any;
   data?: any;
   group?: any;
+  groupArrays?: {
+    date: string;
+    games: EuroWithIconProps[];
+  }[];
   footerClassName?: string;
   euroClassName?: string;
   className?: string;
@@ -25,14 +29,13 @@ const EuroClient = ({
   eu,
   group,
   data,
+  groupArrays,
   footerClassName,
   euroClassName,
   className,
   euCardClassName,
   trashClassName,
 }: EuroClientProps) => {
-  console.log('🚀 ~ eu:', eu);
-
   const [dat, setDat] = useState<TeamStats[]>([]);
   // const [dat, setDat] = useState<TeamStats[]>([]);
 
@@ -74,6 +77,7 @@ const EuroClient = ({
   return (
     <div className='pt-2 border-0'>
       <DataTable
+        groupArrays={groupArrays}
         searchKey='teamHome'
         columns={euroColumns}
         eu={dat}

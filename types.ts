@@ -212,7 +212,7 @@ export type RoutesProps = {
 export type EuroTeamSubGroupProps = {
   value: string;
   icon: string;
-  group?: string;
+  group?: string | null;
 };
 export type EuroProps = {
   id?: string;
@@ -231,7 +231,7 @@ export type EuroWithIconProps = {
   euroTeamHome: EuroTeamSubGroupProps;
   homePenalty?: string[];
   homeScore?: string | null;
-  group?: string;
+  group?: string | undefined | null;
   euroTeamAway: EuroTeamSubGroupProps;
   awayPenalty?: string[];
   awayScore?: string | null;

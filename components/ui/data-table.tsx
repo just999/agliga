@@ -39,11 +39,17 @@ import { EuroWithIconProps } from '@/types';
 import { useSession } from 'next-auth/react';
 import { useEuros } from '@/hooks/use-euro';
 import { Schedule } from '@prisma/client';
+import { FcParallelTasks } from 'react-icons/fc';
+import FixtureTable from '../table/euro/fixture/fixture-table';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data?: any;
   eu?: any;
+  groupArrays?: {
+    date: string;
+    games: EuroWithIconProps[];
+  }[];
   searchKey?: string;
   className?: string;
   group?: any;
@@ -62,6 +68,7 @@ export function DataTable<TData, TValue>({
   className,
   group,
   data,
+  groupArrays,
   footerClassName,
   euroClassName,
   euroTableClassName,
@@ -70,10 +77,10 @@ export function DataTable<TData, TValue>({
   trashClassName,
 }: // mergedData,
 DataTableProps<TData, TValue>) {
-  console.log('🚀 ~ eu:', eu);
   // const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [filtering, setFiltering] = useState('');
   const [isToggle, setIsToggle] = useState(false);
+  const [isToggleFixture, setIsToggleFixture] = useState(false);
   const { items } = useGetEuros();
 
   const { data: session } = useSession();
@@ -97,24 +104,24 @@ DataTableProps<TData, TValue>) {
 
   const { toggle, setIsOpen } = useRunToggleStore();
   const { onOpen, setGroup, isOpen } = useModal();
-  const { getTeams } = useEuros();
+  // const { getTeams } = useEuros();
 
-  let itemsFiltered = items.filter((item) => item.group === group[0]);
-  const groups = itemsFiltered.reduce((groups, game) => {
-    const date = new Date(game.date).toLocaleDateString('id-ID').split('T')[0];
-    if (!groups[date]) {
-      groups[date] = [];
-    }
-    groups[date].push(game);
-    return groups;
-  }, {} as { [date: string]: EuroWithIconProps[] });
-  // Edit: to add it in the array format instead
-  const groupArrays = Object.keys(groups).map((date) => {
-    return {
-      date,
-      games: groups[date],
-    };
-  });
+  // let itemsFiltered = items.filter((item) => item.group === group[0]);
+  // const groups = itemsFiltered.reduce((groups, game) => {
+  //   const date = new Date(game.date).toLocaleDateString('id-ID').split('T')[0];
+  //   if (!groups[date]) {
+  //     groups[date] = [];
+  //   }
+  //   groups[date].push(game);
+  //   return groups;
+  // }, {} as { [date: string]: EuroWithIconProps[] });
+  // // Edit: to add it in the array format instead
+  // const groupArrays = Object.keys(groups).map((date) => {
+  //   return {
+  //     date,
+  //     games: groups[date],
+  //   };
+  // });
   const handleOpenGroup = (group?: string) => {
     if (group) {
       onOpen('new-euro');
@@ -122,23 +129,23 @@ DataTableProps<TData, TValue>) {
     }
   };
 
-  const teamsOption = getTeams();
+  // const teamsOption = getTeams();
 
-  const home = teamsOption.filter(
-    (ta) => ta.value === items[0]?.euroTeamHome.value
-  ) || {
-    value: '',
-    icon: '',
-    group: '',
-  };
+  // const home = teamsOption.filter(
+  //   (ta) => ta.value === items[0]?.euroTeamHome.value
+  // ) || {
+  //   value: '',
+  //   icon: '',
+  //   group: '',
+  // };
 
-  const away = teamsOption.filter(
-    (ta) => ta.value === items[0]?.euroTeamAway.value
-  ) || {
-    value: '',
-    icon: '',
-    group: '',
-  };
+  // const away = teamsOption.filter(
+  //   (ta) => ta.value === items[0]?.euroTeamAway.value
+  // ) || {
+  //   value: '',
+  //   icon: '',
+  //   group: '',
+  // };
   if (!items || items.length === 0) return <Skeleton />;
 
   return (
@@ -201,6 +208,23 @@ DataTableProps<TData, TValue>) {
                 >
                   {/* <pre>{JSON.stringify(euroGroup, null, 2)}</pre> */}
                   <BsArrowDownSquare size={18} className='mx-auto ' />
+                </Button>
+              </TableHead>
+              <TableHead className='bg-amber-100 rounded-r-lg px-4 font-semibold h-8 hover:bg-orange-100/70 hover:text-gray-800 hover:font-bold shadow-xl cursor-pointer text-md text-gray-400 '>
+                <Button
+                  variant='ghost'
+                  size='sm'
+                  className='px-0 h-7'
+                  onClick={() => {
+                    if (group) {
+                      setGroup('new-euro', isOpen === true, group);
+                    }
+
+                    setIsToggleFixture((prev) => !prev);
+                  }}
+                >
+                  {/* <pre>{JSON.stringify(euroGroup, null, 2)}</pre> */}
+                  <FcParallelTasks size={18} className='mx-auto ' />
                 </Button>
               </TableHead>
             </TableRow>
@@ -267,7 +291,7 @@ DataTableProps<TData, TValue>) {
         </Table>
         {isToggle && (
           <div className='flex flex-col mx-auto gap-0 py-2 rounded-lg justify-center'>
-            {groupArrays.map((item) => (
+            {groupArrays?.map((item) => (
               <EuroCard
                 key={item.games[0].id}
                 eu={item}
@@ -279,6 +303,13 @@ DataTableProps<TData, TValue>) {
                 trashClassName={trashClassName}
               />
             ))}
+
+            {/* <pre>{JSON.stringify(items, null, 2)}</pre> */}
+          </div>
+        )}
+        {isToggleFixture && (
+          <div className='flex flex-col mx-auto gap-0 py-2 rounded-lg justify-center'>
+            <FixtureTable />
 
             {/* <pre>{JSON.stringify(items, null, 2)}</pre> */}
           </div>

@@ -8,11 +8,18 @@ import { BsChevronDoubleLeft, BsChevronDoubleRight } from 'react-icons/bs';
 import { Button } from '@/components/ui/button';
 
 import { useGetEuros } from '@/hooks/use-get-schedule';
-import { EuroProps } from '@/types';
 
-type EuroCarouselProps = {};
+import { Skeleton } from '../ui/skeleton';
+import { EuroWithIconProps } from '@/types';
 
-const EuroCarousel = () => {
+type EuroCarouselProps = {
+  groupArrays?: {
+    date: string;
+    games: EuroWithIconProps[];
+  }[];
+};
+
+const EuroCarousel = ({ groupArrays }: EuroCarouselProps) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
     Autoplay({ delay: 8000 }),
   ]);
@@ -25,26 +32,7 @@ const EuroCarousel = () => {
     if (emblaApi) emblaApi.scrollNext();
   }, [emblaApi]);
 
-  const { items } = useGetEuros();
-  if (!items || items.length === 0) return [];
-  let itemsFiltered = items.filter((item) => item.date);
-
-  // console.log(groupArrays);
-  const groups = itemsFiltered.reduce((groups, game) => {
-    const date = new Date(game.date).toLocaleDateString('id-ID').split('T')[0];
-    if (!groups[date]) {
-      groups[date] = [];
-    }
-    groups[date].push(game);
-    return groups;
-  }, {} as { [date: string]: EuroProps[] });
-  // Edit: to add it in the array format instead
-  const groupArrays = Object.keys(groups).map((date) => {
-    return {
-      date,
-      games: groups[date],
-    };
-  });
+  if (!groupArrays) return <Skeleton />;
   return (
     <div className='flex flex-row justify-center bg-lime-100/30 items-center'>
       <div className='w-full flex flex-row justify-end gap-4 pr-2'>
