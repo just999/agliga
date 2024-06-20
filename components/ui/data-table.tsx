@@ -38,9 +38,11 @@ import { EuroWithIconProps } from '@/types';
 
 import { useSession } from 'next-auth/react';
 import { useEuros } from '@/hooks/use-euro';
+import { Schedule } from '@prisma/client';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
+  data?: any;
   eu?: any;
   searchKey?: string;
   className?: string;
@@ -59,14 +61,16 @@ export function DataTable<TData, TValue>({
   eu,
   className,
   group,
+  data,
   footerClassName,
   euroClassName,
   euroTableClassName,
   euCardClassName,
   tableCellClassName,
   trashClassName,
-  mergedData,
-}: DataTableProps<TData, TValue>) {
+}: // mergedData,
+DataTableProps<TData, TValue>) {
+  console.log('🚀 ~ eu:', eu);
   // const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [filtering, setFiltering] = useState('');
   const [isToggle, setIsToggle] = useState(false);
@@ -76,7 +80,7 @@ export function DataTable<TData, TValue>({
 
   const role = session?.user.curUser.role;
   const table = useReactTable({
-    data: mergedData as TData[],
+    data: eu as TData[],
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),

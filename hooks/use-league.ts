@@ -569,19 +569,34 @@ const calculateTeamStats = (match: Match, teamStats: TeamStats): TeamStats => {
   if (isHomeTeam || isAwayTeam) {
     teamStats.played++;
 
-    const goalsFor = isHomeTeam ? Number(homeScore) : Number(awayScore);
-    const goalsAgainst = isHomeTeam ? Number(awayScore) : Number(homeScore);
+    const goalsFor = isHomeTeam
+      ? Number(homeScore) || 0
+      : Number(awayScore) || 0;
+    console.log(
+      '🚀 ~ calculateTeamStats ~ goalsFor:',
+      isHomeTeam,
+      goalsFor,
+      euroTeamHome.value,
+      euroTeamAway.value
+    );
+    const goalsAgainst = isHomeTeam
+      ? Number(awayScore) || 0
+      : Number(homeScore) || 0;
 
-    teamStats.goalsScored += Number(goalsFor) ?? 0;
-    teamStats.goalsAgainst += Number(goalsAgainst) ?? 0;
+    teamStats.goalsScored += Number(goalsFor);
+    teamStats.goalsAgainst += Number(goalsAgainst);
 
-    if (
-      Number(goalsFor) &&
-      Number(goalsAgainst) &&
-      Number(goalsFor) > Number(goalsAgainst)
-    ) {
+    if (Number(goalsFor) > Number(goalsAgainst)) {
+      console.log(
+        '🚀 ~ calculateTeamStats ~ goalsFor:',
+        euroTeamHome.value,
+        goalsFor,
+        '>',
+        goalsAgainst,
+        euroTeamAway.value
+      );
       teamStats.won++;
-      teamStats.points += 3;
+      teamStats.points += +3;
     } else if (Number(goalsFor) === Number(goalsAgainst)) {
       teamStats.drawn++;
       teamStats.points += 1;
@@ -589,7 +604,8 @@ const calculateTeamStats = (match: Match, teamStats: TeamStats): TeamStats => {
       teamStats.lost++;
     }
 
-    teamStats.goalDifference = teamStats.goalsScored - teamStats.goalsAgainst;
+    teamStats.goalDifference =
+      Number(teamStats.goalsScored) - Number(teamStats.goalsAgainst);
   }
 
   return teamStats;
@@ -607,6 +623,7 @@ const useLeague = (matches: Match[]): TeamStats[] => {
         match;
       const matchDate = new Date(date);
 
+      console.log('🚀 ~ matches.forEach ~ match:', match);
       // Skip matches that haven't been played yet
       if (matchDate > now) {
         return;

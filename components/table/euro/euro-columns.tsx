@@ -132,15 +132,7 @@ export const euroColumns: ColumnDef<TeamStats>[] = [
     cell: ({ row }) => (
       <div className='flex flex-row  justify-center px-4 gap-2'>
         <span className='font-bold text-slate-400 text-xs'>
-          {/* <pre>
-            {JSON.stringify(
-              row.original?.euroTeamHome?.value === row.original.country
-                ? Number(row.original?.homeScore)
-                : Number(row.original?.awayScore),
-              null,
-              2
-            )}
-          </pre> */}
+          {/* <pre>{JSON.stringify(row, null, 2)}</pre> */}
           {row.original.goalsScored}
         </span>
       </div>

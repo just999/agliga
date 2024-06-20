@@ -126,8 +126,8 @@ const EuroPage = async () => {
         {euroGroup.map((gr, i) => (
           <EuroClient
             key={i}
-            data={gr}
-            group={gr?.map((g) => g.group)}
+            eu={gr}
+            group={gr?.map((g) => g.group).slice(1, 2)}
             footerClassName='flex flex-row gap-2 justify-between items-center bg-sky-200/60'
             euroClassName='flex flex-wrap gap-2 justify-center group-card py-2'
             className='hidden'

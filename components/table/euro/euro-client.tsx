@@ -11,7 +11,7 @@ import ClientOnly from '@/lib/client-only';
 import useLeague, { TeamStats } from '@/hooks/use-league';
 
 interface EuroClientProps {
-  eu?: EuroGroupProps;
+  eu?: any;
   data?: any;
   group?: any;
   footerClassName?: string;
@@ -31,11 +31,13 @@ const EuroClient = ({
   euCardClassName,
   trashClassName,
 }: EuroClientProps) => {
+  console.log('🚀 ~ eu:', eu);
+
   const [dat, setDat] = useState<TeamStats[]>([]);
   // const [dat, setDat] = useState<TeamStats[]>([]);
 
   // const table = useLeague(data);
-  const table = useLeague(data);
+  const table = useLeague(eu);
   // const res = getDataFromMatches(uefaMatches);
   useEffect(() => {
     // if (!data) throw new Error('error fetching data');
@@ -74,10 +76,10 @@ const EuroClient = ({
       <DataTable
         searchKey='teamHome'
         columns={euroColumns}
-        // eu={dat}
+        eu={dat}
         className={className}
-        group={sliceGroup}
-        mergedData={dat}
+        group={group}
+        // mergedData={dat}
         footerClassName={footerClassName}
         euroClassName={euroClassName}
         euCardClassName={euCardClassName}

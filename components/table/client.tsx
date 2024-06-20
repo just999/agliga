@@ -1,10 +1,5 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
-import Heading from '@/components/ui/heading';
-import { Separator } from '@/components/ui/separator';
-
-import { Plus } from 'lucide-react';
 // import { useParams, useRouter } from 'next/navigation';
 import { columns } from './columns';
 import { DataTable } from '@/components/ui/data-table';
@@ -13,6 +8,7 @@ import useModal from '@/hooks/use-modal';
 import { Schedule } from '@prisma/client';
 import useRunToggleStore from '@/store/use-table-store';
 import { useSearchParams } from 'next/navigation';
+import { runData } from '@/lib/helper';
 // import ApiList from '@/components/ui/api-list';
 
 interface ScheduleClientProps {
@@ -35,11 +31,14 @@ const ScheduleClient = ({
   const { toggle } = useRunToggleStore();
 
   const filteredRunningData = data.filter((dat) => dat.run === Number(run));
+  console.log('🚀 ~ data:', data);
+  console.log('🚀 ~ filteredRunningData:', filteredRunningData);
   let runData;
   if (run === null) {
     runData = data;
   } else if (run) {
     runData = data.filter((dat) => dat.run === Number(run));
+    console.log('🚀 ~ runData:', runData);
   }
 
   return (
