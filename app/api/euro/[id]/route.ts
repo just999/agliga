@@ -19,11 +19,6 @@ export async function PUT(
     awayPenalty,
     group,
     homeScore,
-    status,
-    winner,
-    loser,
-    homeGoalDiff,
-    awayGoalDiff,
     awayScore,
   } = body;
   if (!body) NextResponse.error();
@@ -61,15 +56,10 @@ export async function PUT(
         date: isoDate,
         euroTeamHome,
         homePenalty,
-        status,
         homeScore,
         euroTeamAway,
         group,
         awayScore,
-        winner,
-        loser,
-        homeGoalDiff: Number(homeGoalDiff),
-        awayGoalDiff: Number(awayGoalDiff),
         userId: currentUser.id,
       },
     });
