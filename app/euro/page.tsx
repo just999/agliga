@@ -58,6 +58,7 @@ const EuroPage = async () => {
           <EuroClient
             key={i}
             eu={gr}
+            groupArrays={groupArrays}
             group={gr?.map((g) => g.group).slice(1, 2)}
             footerClassName='flex flex-row gap-2 justify-between items-center bg-sky-200/60'
             euroClassName='flex flex-wrap gap-2 justify-center group-card py-2'
