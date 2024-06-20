@@ -24,11 +24,6 @@ export async function POST(req: Request) {
       group,
       homePenalty,
       homeScore,
-      status,
-      winner,
-      loser,
-      homeGoalDiff,
-      awayGoalDiff,
       awayScore,
     } = body;
     let isoDate = date + ':00.000Z';
@@ -62,15 +57,10 @@ export async function POST(req: Request) {
         date: isoDate,
         euroTeamHome,
         homePenalty,
-        status,
         homeScore,
         euroTeamAway,
         group,
         awayScore,
-        winner,
-        loser,
-        homeGoalDiff: Number(homeGoalDiff),
-        awayGoalDiff: Number(awayGoalDiff),
         userId: currentUser.id,
       },
     });
