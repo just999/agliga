@@ -231,8 +231,30 @@ export type EuroWithIconProps = {
   euroTeamHome: EuroTeamSubGroupProps;
   homePenalty?: string[];
   homeScore?: string | null;
+  homeHTScore?: string | null;
   group?: string | undefined | null;
   euroTeamAway: EuroTeamSubGroupProps;
+  awayPenalty?: string[];
+  awayScore?: string | null;
+  awayHTScore?: string | null;
+};
+
+export type TeamProps = {
+  value: string;
+  icon: string;
+  group?: string | null;
+  week?: string | null;
+};
+
+export type FixtureProps = {
+  id?: string;
+  name: string;
+  date: Date;
+  euroTeamHome: TeamProps;
+  homePenalty?: string[];
+  homeScore?: string | null;
+  group?: string | undefined | null;
+  euroTeamAway: TeamProps;
   awayPenalty?: string[];
   awayScore?: string | null;
 };

@@ -3,21 +3,20 @@
 import { DataTable } from '@/components/ui/data-table';
 
 import { euroColumns } from './euro-columns';
-import { EuroGroupProps, EuroWithIconProps } from '@/types';
+import { EuroGroupProps, EuroProps, EuroWithIconProps } from '@/types';
 import { useEffect, useState } from 'react';
 import React from 'react';
 import ClientOnly from '@/lib/client-only';
 // import useLeague, { ITable } from '@/lib/league';
 import useLeague, { TeamStats } from '@/hooks/use-league';
+import { Skeleton } from '@/components/ui/skeleton';
+import { fixtureFiltered } from '@/lib/utils';
 
 interface EuroClientProps {
   eu?: any;
   data?: any;
   group?: any;
-  groupArrays?: {
-    date: string;
-    games: EuroWithIconProps[];
-  }[];
+  items?: EuroWithIconProps[];
   footerClassName?: string;
   euroClassName?: string;
   className?: string;
@@ -29,12 +28,12 @@ const EuroClient = ({
   eu,
   group,
   data,
-  groupArrays,
   footerClassName,
   euroClassName,
   className,
   euCardClassName,
   trashClassName,
+  items,
 }: EuroClientProps) => {
   const [dat, setDat] = useState<TeamStats[]>([]);
   // const [dat, setDat] = useState<TeamStats[]>([]);
@@ -73,17 +72,21 @@ const EuroClient = ({
 
   // const filteredData = dat.filter((d) => d.);
 
-  const sliceGroup = group.slice(1, 2);
+  if (!items) return <Skeleton />;
+
+  let itemsFiltered = items.filter((item) => item.group === group);
+
+  const groupArrays = fixtureFiltered(itemsFiltered);
   return (
     <div className='pt-2 border-0'>
       <DataTable
-        groupArrays={groupArrays}
         searchKey='teamHome'
         columns={euroColumns}
         eu={dat}
         className={className}
         group={group}
         // mergedData={dat}
+        groupArrays={groupArrays}
         footerClassName={footerClassName}
         euroClassName={euroClassName}
         euCardClassName={euCardClassName}

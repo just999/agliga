@@ -3,6 +3,7 @@ import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { Noto_Color_Emoji } from 'next/font/google';
 import { date } from 'zod';
+import { EuroWithIconProps } from '@/types';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -308,3 +309,23 @@ export function getDataFromMatches(matches: Match[]) {
 
   return data;
 }
+
+export const fixtureFiltered = (teams: EuroWithIconProps[]) => {
+  const groups = teams.reduce((groups, game) => {
+    const date = new Date(game.date).toLocaleDateString('id-ID').split('T')[0];
+    if (!groups[date]) {
+      groups[date] = [];
+    }
+    groups[date].push(game);
+    return groups;
+  }, {} as { [date: string]: EuroWithIconProps[] });
+  // Edit: to add it in the array format instead
+  const groupArrays = Object.keys(groups).map((date) => {
+    return {
+      date,
+      games: groups[date],
+    };
+  });
+
+  return groupArrays;
+};

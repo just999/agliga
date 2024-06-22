@@ -36,6 +36,8 @@ type ModalStore = {
     | 'fixture'
     | 'new-euro'
     | 'edit-euro'
+    | 'new-fixture'
+    | 'edit-fixture'
     | 'delete-euro'
     | 'deleteSchedule'
     | null;
@@ -68,6 +70,8 @@ type ModalStore = {
       | 'fixture'
       | 'new-euro'
       | 'edit-euro'
+      | 'new-fixture'
+      | 'edit-fixture'
       | 'delete-euro'
       | 'deleteSchedule',
     id?: string | null,
@@ -118,6 +122,8 @@ const useModal = create<ModalStore>((set) => ({
       | 'fixture'
       | 'new-euro'
       | 'edit-euro'
+      | 'new-fixture'
+      | 'edit-fixture'
       | 'delete-euro'
       | 'editSoccer',
     id = null,

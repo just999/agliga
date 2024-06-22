@@ -42,6 +42,7 @@ model User {
   comments       Comment[]
   sliders        Slider[]
   Euro           Euro[]
+  Fixture        Fixture[]
 }
 
 model Account {
@@ -230,46 +231,23 @@ model Euro {
   updatedAt DateTime @updatedAt
 }
 
-// model Euro {
-//   id           String   @id @default(auto()) @map("_id") @db.ObjectId
-//   date         DateTime
-//   euroTeamHome Team
-//   status       String   @default("Upcoming")
-//   homePenalty  String[] @default([""])
-//   homeScore    String?
-//   euroTeamAway Team
-//   awayPenalty  String[] @default([""])
-//   awayScore    String?
-//   group        Group?
-//   winner       Team?
-//   loser        Team?
-//   homeGoalDiff Int?
-//   awayGoalDiff Int?
-//   userId       String   @db.ObjectId
+model Fixture {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  date         DateTime
+  euroTeamHome Team
+  homePenalty  String[] @default([""])
+  homeScore    String?
+  homeHTScore  String?
+  euroTeamAway Team
+  awayPenalty  String[] @default([""])
+  awayScore    String?
+  awayHTScore  String?
+  group        Group?
+  week         Int?
+  userId       String   @db.ObjectId
 
-//   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
-// }
-
-// model Euro {
-//   id           String   @id @default(auto()) @map("_id") @db.ObjectId
-//   date         DateTime
-//   euroTeamHome Team
-//   status       String   @default("Upcoming")
-//   homePenalty  String[] @default([""])
-//   homeScore    String?
-//   euroTeamAway Team
-//   awayPenalty  String[] @default([""])
-//   awayScore    String?
-//   group        Group?
-//   winner       Team?
-//   loser        Team?
-//   homeGoalDiff Int?
-//   awayGoalDiff Int?
-//   userId       String   @db.ObjectId
-
-//   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
-// }
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

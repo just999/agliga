@@ -26,7 +26,7 @@ import { capitalizeFirstCharacter, cn } from '@/lib/utils';
 // } from 'react-icons/fc';
 import useProfileStore from '@/store/use-profile-store';
 import { useEffect, useMemo, useState } from 'react';
-import { FaUserTie } from 'react-icons/fa';
+
 import { RoutesProps } from '@/types';
 
 type SidebarRoutesProps = {

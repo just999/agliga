@@ -37,19 +37,14 @@ import { Euro24 } from '../assets/games/euro24';
 import { EuroWithIconProps } from '@/types';
 
 import { useSession } from 'next-auth/react';
-import { useEuros } from '@/hooks/use-euro';
-import { Schedule } from '@prisma/client';
+
 import { FcParallelTasks } from 'react-icons/fc';
 import FixtureTable from '../table/euro/fixture/fixture-table';
+import Heading from './heading';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
-  data?: any;
   eu?: any;
-  groupArrays?: {
-    date: string;
-    games: EuroWithIconProps[];
-  }[];
   searchKey?: string;
   className?: string;
   group?: any;
@@ -60,6 +55,7 @@ interface DataTableProps<TData, TValue> {
   euCardClassName?: string;
   tableCellClassName?: string;
   trashClassName?: string;
+  groupArrays?: any;
 }
 
 export function DataTable<TData, TValue>({
@@ -67,14 +63,13 @@ export function DataTable<TData, TValue>({
   eu,
   className,
   group,
-  data,
-  groupArrays,
   footerClassName,
   euroClassName,
   euroTableClassName,
   euCardClassName,
   tableCellClassName,
   trashClassName,
+  groupArrays,
 }: // mergedData,
 DataTableProps<TData, TValue>) {
   // const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -103,25 +98,8 @@ DataTableProps<TData, TValue>) {
   });
 
   const { toggle, setIsOpen } = useRunToggleStore();
-  const { onOpen, setGroup, isOpen } = useModal();
-  // const { getTeams } = useEuros();
+  const { onOpen, setGroup, isOpen, group: gr } = useModal();
 
-  // let itemsFiltered = items.filter((item) => item.group === group[0]);
-  // const groups = itemsFiltered.reduce((groups, game) => {
-  //   const date = new Date(game.date).toLocaleDateString('id-ID').split('T')[0];
-  //   if (!groups[date]) {
-  //     groups[date] = [];
-  //   }
-  //   groups[date].push(game);
-  //   return groups;
-  // }, {} as { [date: string]: EuroWithIconProps[] });
-  // // Edit: to add it in the array format instead
-  // const groupArrays = Object.keys(groups).map((date) => {
-  //   return {
-  //     date,
-  //     games: groups[date],
-  //   };
-  // });
   const handleOpenGroup = (group?: string) => {
     if (group) {
       onOpen('new-euro');
@@ -129,23 +107,6 @@ DataTableProps<TData, TValue>) {
     }
   };
 
-  // const teamsOption = getTeams();
-
-  // const home = teamsOption.filter(
-  //   (ta) => ta.value === items[0]?.euroTeamHome.value
-  // ) || {
-  //   value: '',
-  //   icon: '',
-  //   group: '',
-  // };
-
-  // const away = teamsOption.filter(
-  //   (ta) => ta.value === items[0]?.euroTeamAway.value
-  // ) || {
-  //   value: '',
-  //   icon: '',
-  //   group: '',
-  // };
   if (!items || items.length === 0) return <Skeleton />;
 
   return (
@@ -163,6 +124,12 @@ DataTableProps<TData, TValue>) {
           onChange={(event) => setFiltering(event.target.value)}
           className='max-w-sm text-stone-700 mx-2 bg-zinc-50'
         />
+        <div className='w-full'>
+          <Heading
+            title='English Premier League 24 - 25'
+            className='news text-rose-500 pl-10 text-3xl'
+          />
+        </div>
       </div>
       <RunTable
         toggle={toggle}
@@ -291,7 +258,7 @@ DataTableProps<TData, TValue>) {
         </Table>
         {isToggle && (
           <div className='flex flex-col mx-auto gap-0 py-2 rounded-lg justify-center'>
-            {groupArrays?.map((item) => (
+            {groupArrays?.map((item: any) => (
               <EuroCard
                 key={item.games[0].id}
                 eu={item}

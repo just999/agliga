@@ -41,7 +41,6 @@ const EuroCard = ({
   euCardClassName,
 }: EuroCardProps) => {
   if (!eu) return <Skeleton />;
-
   // const filterGroupLength = eu.games.filter(
   //   (it) => convertDateMonthYear(it.date.toISOString()) === eu.date
   // ).length;

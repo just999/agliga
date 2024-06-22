@@ -9,6 +9,7 @@ import EuroCarousel from '@/components/soccer/euro-carousel';
 import { EuroWithIconProps } from '@/types';
 
 import { fetchEuro } from '@/lib/queries/euro';
+import { fixtureFiltered } from '@/lib/utils';
 
 type EuroPageProps = {};
 
@@ -16,23 +17,25 @@ const EuroPage = async () => {
   const items = await fetchEuro();
 
   if (!items || items.length === 0) return [];
+
   let itemsFiltered = items.filter((item) => item.date);
 
-  const groups = itemsFiltered.reduce((groups, game) => {
-    const date = new Date(game.date).toLocaleDateString('id-ID').split('T')[0];
-    if (!groups[date]) {
-      groups[date] = [];
-    }
-    groups[date].push(game);
-    return groups;
-  }, {} as { [date: string]: EuroWithIconProps[] });
-  const groupArrays = Object.keys(groups).map((date) => {
-    return {
-      date,
-      games: groups[date],
-    };
-  });
+  // const groups = itemsFiltered.reduce((groups, game) => {
+  //   const date = new Date(game.date).toLocaleDateString('id-ID').split('T')[0];
+  //   if (!groups[date]) {
+  //     groups[date] = [];
+  //   }
+  //   groups[date].push(game);
+  //   return groups;
+  // }, {} as { [date: string]: EuroWithIconProps[] });
+  // const groupArrays = Object.keys(groups).map((date) => {
+  //   return {
+  //     date,
+  //     games: groups[date],
+  //   };
+  // });
 
+  const groupArrays = fixtureFiltered(itemsFiltered);
   const euro = await fetchEuro();
 
   const groupA = euro?.filter((gr) => gr.group === 'A');
@@ -58,8 +61,8 @@ const EuroPage = async () => {
           <EuroClient
             key={i}
             eu={gr}
-            groupArrays={groupArrays}
-            group={gr?.map((g) => g.group).slice(1, 2)}
+            items={items}
+            group={gr?.map((g) => g.group).slice(1, 2)[0]}
             footerClassName='flex flex-row gap-2 justify-between items-center bg-sky-200/60'
             euroClassName='flex flex-wrap gap-2 justify-center group-card py-2'
             className='hidden'

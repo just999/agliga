@@ -1244,6 +1244,8 @@ export const initialEuroFormWithIconValues = {
   homePenalty: [],
   homeScore: '',
   awayScore: '',
+  homeHTScore: '',
+  awayHTScore: '',
   group: '',
   euroTeamAway: team,
   awayPenalty: [],

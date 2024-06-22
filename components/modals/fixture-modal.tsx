@@ -22,7 +22,7 @@ import { initialEuroFormWithIconValues, team } from '@/lib/helper';
 import { useEuros, usePenalty } from '@/hooks/use-euro';
 import { cn, findMatchingObjects, noto } from '@/lib/utils';
 
-const EuroModal = () => {
+const FixtureModal = () => {
   const [schedule, setSchedule] = useState<EuroWithIconProps>(
     initialEuroFormWithIconValues
   );
@@ -51,8 +51,6 @@ const EuroModal = () => {
       homePenalty: [],
       homeScore: '',
       awayScore: '',
-      homeHTScore: '',
-      awayHTScore: '',
       euroTeamAway: team,
       awayPenalty: [],
       group: euroGroup,
@@ -64,8 +62,6 @@ const EuroModal = () => {
       homePenalty: schedule.homePenalty,
       homeScore: schedule.homeScore,
       awayScore: schedule.awayScore,
-      homeHTScore: schedule.homeHTScore,
-      awayHTScore: schedule.awayHTScore,
       group: schedule.group,
       euroTeamAway: schedule.euroTeamAway,
       awayPenalty: schedule.awayPenalty,
@@ -109,8 +105,6 @@ const EuroModal = () => {
         homePenalty: [],
         homeScore: '',
         awayScore: '',
-        homeHTScore: '',
-        awayHTScore: '',
         euroTeamAway: team,
         awayPenalty: [],
         group: euroGroup,
@@ -124,8 +118,6 @@ const EuroModal = () => {
       setValue('awayPenalty', awayPenalty);
       setValue('homeScore', homeScore);
       setValue('awayScore', awayScore);
-      setValue('homeHTScore', homeHTScore);
-      setValue('awayHTScore', awayHTScore);
       setValue('group', euroGroup);
     }
     if (modalType === 'edit-euro' && item && !error) {
@@ -137,8 +129,6 @@ const EuroModal = () => {
         awayPenalty: item.awayPenalty,
         homeScore: item.homeScore,
         awayScore: item.awayScore,
-        homeHTScore: item.homeHTScore,
-        awayHTScore: item.awayHTScore,
         group: item.group,
       };
       setSchedule(data);
@@ -173,8 +163,6 @@ const EuroModal = () => {
       setValue('awayPenalty', apen);
       setValue('homeScore', item.homeScore);
       setValue('awayScore', item.awayScore);
-      setValue('homeHTScore', item.homeHTScore);
-      setValue('awayHTScore', item.awayHTScore);
       setValue('group', item.group);
 
       // if (item.date instanceof Date) {
@@ -193,11 +181,9 @@ const EuroModal = () => {
   const euroTeamHome = watch('euroTeamHome');
   const homePenalty = watch('homePenalty');
   const homeScore = watch('homeScore');
-  const homeHTScore = watch('homeHTScore');
   const euroTeamAway = watch('euroTeamAway');
   const awayPenalty = watch('awayPenalty');
   const awayScore = watch('awayScore');
-  const awayHTScore = watch('awayHTScore');
   const group = watch('group');
 
   const setCustomValue = (id: string, value: any) => {
@@ -218,8 +204,6 @@ const EuroModal = () => {
         homePenalty,
         homeScore,
         awayScore,
-        homeHTScore,
-        awayHTScore,
         euroTeamAway,
         awayPenalty,
         group,
@@ -249,8 +233,6 @@ const EuroModal = () => {
         homePenalty,
         homeScore,
         awayScore,
-        homeHTScore,
-        awayHTScore,
         euroTeamAway,
         awayPenalty,
         group,
@@ -344,22 +326,6 @@ const EuroModal = () => {
         </span>
       )}
 
-      <Input
-        id='homeHTScore'
-        type='text'
-        label={homeHTScore ? '' : 'homeHTScore'}
-        disabled={isLoading}
-        register={register}
-        errors={errors}
-      />
-      {errors.homeHTScore && (
-        <span className='text-sm text-red-500 '>
-          <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
-            Kolom Wajib di isi...
-          </span>
-        </span>
-      )}
-
       <SelectInput
         label={euroTeamAway ? '' : 'euroTeamAway'}
         isMulti={false}
@@ -397,21 +363,6 @@ const EuroModal = () => {
           </span>
         </span>
       )}
-      <Input
-        id='awayHTScore'
-        type='text'
-        label={awayHTScore ? '' : 'awayHTScore'}
-        disabled={isLoading}
-        register={register}
-        errors={errors}
-      />
-      {errors.awayHTScore && (
-        <span className='text-sm text-red-500 '>
-          <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
-            Kolom Wajib di isi...
-          </span>
-        </span>
-      )}
 
       <Input
         id='group'
@@ -435,10 +386,12 @@ const EuroModal = () => {
 
   return (
     <Modal
-      isOpen={isOpen && (modalType === 'new-euro' || modalType === 'edit-euro')}
+      isOpen={
+        isOpen && (modalType === 'new-fixture' || modalType === 'edit-fixture')
+      }
       onClose={handleCloseClearForm}
       onSubmit={handleSubmit(onSubmit)}
-      title={modalType === 'new-euro' ? 'add-euro' : 'Edit Euro'}
+      title={modalType === 'new-fixture' ? 'add-fixture' : 'Edit Fixture'}
       actionLabel='Submit'
       disabled={isLoading}
       body={bodyContent}
@@ -448,4 +401,4 @@ const EuroModal = () => {
   );
 };
 
-export default EuroModal;
+export default FixtureModal;
