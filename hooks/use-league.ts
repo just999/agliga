@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 
 type Match = {
@@ -58,7 +60,10 @@ const calculateTeamStats = (match: Match, teamStats: TeamStats): TeamStats => {
   const isHomeTeam = euroTeamHome.value === teamStats.team.value;
   const isAwayTeam = euroTeamAway.value === teamStats.team.value;
 
-  if (isHomeTeam || isAwayTeam) {
+  if (
+    (isHomeTeam || isAwayTeam) &&
+    (homeScore !== null || awayScore !== null)
+  ) {
     teamStats.played++;
 
     const goalsFor = isHomeTeam

@@ -7,6 +7,8 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
   useReactTable,
+  SortingState,
+  getSortedRowModel,
 } from '@tanstack/react-table';
 
 import {
@@ -73,6 +75,7 @@ export function DataTable<TData, TValue>({
 }: // mergedData,
 DataTableProps<TData, TValue>) {
   // const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [sorting, setSorting] = useState<SortingState>([]);
   const [filtering, setFiltering] = useState('');
   const [isToggle, setIsToggle] = useState(false);
   const [isToggleFixture, setIsToggleFixture] = useState(false);
@@ -88,11 +91,14 @@ DataTableProps<TData, TValue>) {
     getPaginationRowModel: getPaginationRowModel(),
     // onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
     // state: {
     //   columnFilters,
     // },
     state: {
       globalFilter: filtering,
+      sorting,
     },
     onGlobalFilterChange: setFiltering,
   });
@@ -126,7 +132,7 @@ DataTableProps<TData, TValue>) {
         />
         <div className='w-full'>
           <Heading
-            title='English Premier League 24 - 25'
+            title='English Premier League 23 - 24'
             className='news text-rose-500 pl-10 text-3xl'
           />
         </div>

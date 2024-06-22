@@ -6,6 +6,8 @@ import { cn, noto } from '@/lib/utils';
 import { EuroProps, EuroTeamSubGroupProps } from '@/types';
 import { ITable } from '@/lib/league';
 import { TeamStats } from '@/hooks/use-league';
+import { Button } from '@/components/ui/button';
+import { ArrowUpDown } from 'lucide-react';
 
 type TEuroProps = {
   team: {
@@ -182,7 +184,19 @@ export const euroColumns: ColumnDef<TeamStats>[] = [
   },
   {
     accessorKey: 'points',
-    header: 'Points',
+    // header: 'Points',
+    header: ({ column }) => {
+      return (
+        <Button
+          variant='ghost'
+          className='p-0 '
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Points
+          <ArrowUpDown className='ml-0 h-3 w-3' />
+        </Button>
+      );
+    },
     cell: ({ row }) => (
       <div className='flex flex-row  justify-center px-4 gap-2'>
         <span className='font-bold text-slate-400 text-xs'>

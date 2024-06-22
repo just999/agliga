@@ -31,6 +31,11 @@ export async function PUT(
     ap.push(item);
   });
 
+  let score;
+  if (homeScore || awayScore === '') {
+    score === null;
+  }
+
   // let win: any = '';
   // let los: any = '';
   // if (+homeScore > +awayScore) {
@@ -56,10 +61,10 @@ export async function PUT(
         date: isoDate,
         euroTeamHome,
         homePenalty,
-        homeScore,
+        homeScore: homeScore === '' ? null : homeScore,
         euroTeamAway,
         group,
-        awayScore,
+        awayScore: awayScore === '' ? null : awayScore,
         userId: currentUser.id,
       },
     });

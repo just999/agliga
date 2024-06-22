@@ -15,7 +15,6 @@ type EuroPageProps = {};
 
 const EuroPage = async () => {
   const items = await fetchEuro();
-
   if (!items || items.length === 0) return [];
 
   let itemsFiltered = items.filter((item) => item.date);
