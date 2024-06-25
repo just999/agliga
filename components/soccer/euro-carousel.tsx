@@ -7,7 +7,7 @@ import EuroCard from '@/components/table/euro/euro-card';
 import { BsChevronDoubleLeft, BsChevronDoubleRight } from 'react-icons/bs';
 import { Button } from '@/components/ui/button';
 
-import { useGetEuros } from '@/hooks/use-get-schedule';
+// import { useGetEuros } from '@/hooks/use-get-schedule';
 
 import { Skeleton } from '../ui/skeleton';
 import { EuroWithIconProps } from '@/types';
@@ -21,7 +21,7 @@ type EuroCarouselProps = {
 
 const EuroCarousel = ({ groupArrays }: EuroCarouselProps) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
-    Autoplay({ delay: 8000 }),
+    // Autoplay({ delay: 8000 }),
   ]);
 
   const scrollPrev = useCallback(() => {

@@ -5,7 +5,7 @@ interface ToggleState {
   run?: number | null;
   setRun: (run: number | null) => void;
   setIsOpen: (isOpen: boolean, run?: number) => void;
-  toggle: (run?: number) => void;
+  toggle: (isOpen: boolean, run?: number) => void;
 }
 
 const useRunToggleStore = create<ToggleState>((set) => ({
@@ -24,7 +24,7 @@ const useRunToggleStore = create<ToggleState>((set) => ({
       set({ isOpen: false, run: null }); // Close other open toggles
     }
   },
-  toggle: (isOpen, run?: number) =>
+  toggle: (isOpen: boolean, run?: number) =>
     set((state) => ({
       isOpen: !isOpen,
       run,

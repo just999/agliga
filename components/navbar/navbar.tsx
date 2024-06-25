@@ -33,6 +33,7 @@ import ClientOnly from '@/lib/client-only';
 import { Button } from '../ui/button';
 import LanguageDropdown from '../language-dropdown';
 import { UeFa } from '../assets/sports/uefa';
+import { EPLPeriod } from '@/lib/helper';
 
 type NavbarProps = {
   currentUser?: SafeUser | null;
@@ -45,7 +46,8 @@ const Navbar = ({ currentUser, className }: NavbarProps) => {
   const { modalType, onOpen, onClose } = useModal();
   const userRole = session?.user.curUser.role;
 
-  const { setItem } = usePostsStore();
+  const last = EPLPeriod.at(-1);
+  const period = last?.value;
   let username: string;
   let role: string;
 
@@ -122,7 +124,7 @@ const Navbar = ({ currentUser, className }: NavbarProps) => {
       //   onClose();
       //   router.push('/soccer');
       // },
-      href: `/soccer`,
+      href: `/soccer?period=${period}`,
       active: modalType === null && pathname === '/soccer',
       className:
         'hidden whitespace-nowrap sm:block text-xs font-semibold px-6 py-2 border-x-[1px] flex-1 text-center  md:hidden lg:block cursor-pointer hover:shadow-md hover:bg-emerald-50',

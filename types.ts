@@ -1,6 +1,6 @@
 // import { Comment User } from '@prisma/client';
 // import { User } from 'next-auth';
-import { Slider, User } from '@prisma/client';
+import { Post, Slider, User } from '@prisma/client';
 import { IconType } from 'react-icons';
 
 // export type SafeListing = Omit<Listing, 'createdAt'> & {
@@ -61,17 +61,17 @@ type TComment = {
 };
 
 export type PostProps = {
+  author: string | null;
+  avatar: string;
+  brief: string | null;
+  category: string;
   comments?: TComment[];
+  date: string | Date;
   id: string;
   img: string | null;
-  category: string;
   title: string;
-  date: string | Date;
-  brief: string | null;
-  avatar: string;
-  author: string | null;
-  topicId: string;
   top: boolean | null;
+  topicId: string;
   trending?: boolean | null;
 };
 
@@ -247,16 +247,19 @@ export type TeamProps = {
 };
 
 export type FixtureProps = {
-  id?: string;
+  id?: string | null;
   name: string;
-  date: Date;
-  euroTeamHome: TeamProps;
+  week?: number | undefined | null;
+  run?: number | undefined | null;
+  date: Date | string;
+  teamHome?: string | null;
   homePenalty?: string[];
   homeScore?: string | null;
-  group?: string | undefined | null;
-  euroTeamAway: TeamProps;
+  homeHTScore?: string | null;
+  teamAway?: string | null;
   awayPenalty?: string[];
   awayScore?: string | null;
+  awayHTScore?: string | null;
 };
 
 export type EuroGroupProps = [

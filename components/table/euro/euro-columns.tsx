@@ -3,38 +3,10 @@
 import { ColumnDef } from '@tanstack/react-table';
 
 import { cn, noto } from '@/lib/utils';
-import { EuroProps, EuroTeamSubGroupProps } from '@/types';
-import { ITable } from '@/lib/league';
+
 import { TeamStats } from '@/hooks/use-league';
 import { Button } from '@/components/ui/button';
 import { ArrowUpDown } from 'lucide-react';
-
-type TEuroProps = {
-  team: {
-    drawn: number;
-    goalDifference: number;
-    goalsAgainst: number;
-    goalsScored: number;
-    group: string;
-    lost: number;
-    name: { value: string; icon: string };
-    played: number;
-    points: number;
-    won: number;
-  };
-  // date?: Date;
-  // euroTeamHome: EuroTeamSubGroupProps;
-  // homePenalty?: string[];
-  // homeScore?: string | null;
-  // status?: string;
-  // euroTeamAway: EuroTeamSubGroupProps;
-  // awayPenalty?: string[];
-  // awayScore?: string | null;
-  // winner?: EuroTeamSubGroupProps;
-  // loser?: EuroTeamSubGroupProps;
-  // homeGoalDiff?: number;
-  // awayGoalDiff?: number;
-};
 
 export const euroColumns: ColumnDef<TeamStats>[] = [
   {

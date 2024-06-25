@@ -29,6 +29,7 @@ export const getPostByPostId = cache(async (id?: string) => {
 export type IPostsParams = {
   userId?: string;
   category?: string;
+  postId?: string;
 };
 interface Post {
   img: string;
@@ -251,3 +252,52 @@ export const fetchPostByCat = cache(
       .then((post) => post as any);
   }
 );
+// export const fetchAllPosts = cache(async (params?: IPostsParams) => {
+//   try {
+//     let posts;
+//     if (!params) {
+//       posts = await db.post.findMany({
+//         orderBy: {
+//           createdAt: 'desc',
+//         },
+//         include: {
+//           comments: true,
+//         },
+//       });
+//       if (posts.length === 0) throw new Error('No data');
+
+//       return posts;
+//     } else if ({ category: params.category }) {
+//       posts = await db.post
+//         .findMany({
+//           where: { category: params.category },
+//           include: {
+//             comments: {
+//               select: {
+//                 content: true,
+//               },
+//             },
+//           },
+//         })
+//         .then((post) => post);
+//       return posts;
+//     } else if ({ postId: params.postId }) {
+//       posts = await db.post
+//         .findFirst({
+//           where: { id: params.postId },
+//           include: {
+//             comments: {
+//               select: {
+//                 content: true,
+//               },
+//             },
+//           },
+//         })
+//         .then((post) => post);
+//       return posts;
+//     }
+//   } catch (err) {
+//     console.error('Error fetching random post:', err);
+//     return null;
+//   }
+// });

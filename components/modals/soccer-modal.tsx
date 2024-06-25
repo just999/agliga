@@ -14,7 +14,7 @@ import SelectInput from '../select-input';
 
 import useModal from '@/hooks/use-modal';
 
-import { useRuns, useTeams } from '@/hooks/use-teams';
+import { useTeams, useWeeks } from '@/hooks/use-teams';
 
 import { useGetSchedules } from '@/hooks/use-get-schedule';
 
@@ -31,7 +31,8 @@ const SoccerModal = () => {
   const { modalType, isOpen, onClose, id } = useModal();
   const router = useRouter();
   const { getTeams, getByValue } = useTeams();
-  const { getRuns, getRunsByValue } = useRuns();
+  // const { getRuns, getRunsByValue } = useRuns();
+  const { getWeeks } = useWeeks();
   const { item, error } = useGetSchedules(id ? id : undefined);
   let initialScheduleValues;
   if (modalType === 'soccer') {
@@ -63,7 +64,7 @@ const SoccerModal = () => {
   } = useForm<FieldValues>({
     defaultValues: initialScheduleValues,
   });
-  const runs = getRuns();
+  const runs = getWeeks();
   const selectRunOptions = runs.map((run) => ({
     value: run.value,
     icon: run.icon,

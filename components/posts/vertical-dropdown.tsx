@@ -17,6 +17,7 @@ import useFavorite from '@/hooks/use-favorite';
 type VerticalDropdownProps = {
   item: PostProps;
   currentUser?: SafeUser;
+  value?: string;
 };
 
 const VerticalDropdown = ({ item, currentUser }: VerticalDropdownProps) => {

@@ -7,7 +7,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import useModal from '@/hooks/use-modal';
 
 import { convertDateTime } from '@/lib/convert-date-time';
-import { cn, noto } from '@/lib/utils';
+import { cn, getMatchStatus, noto } from '@/lib/utils';
 import { EuroWithIconProps } from '@/types';
 import { useSession } from 'next-auth/react';
 
@@ -84,6 +84,13 @@ const EuroCardContent = ({
   if (!eu) return <Skeleton />;
 
   const title = 'Delete Euro Schedule';
+
+  const match = {
+    startTime: eu.date,
+    duration: 90,
+  };
+
+  const matchStatus = getMatchStatus(match) ? 'playing' : 'not playing yet';
   return (
     <div
       className={cn(
@@ -99,6 +106,7 @@ const EuroCardContent = ({
         <div className='flex flex-row justify-between text-xs '>
           <div>{convertDateTime(eu.date.toISOString())}</div>
           <div>{eu.date > new Date() ? 'Upcoming' : 'Score'}</div>
+          {/* <div>{eu.date > new Date() ? 'Upcoming' : 'Score'}</div> */}
           {/* <pre>{JSON.stringify(eu.date > new Date(), null, 2)}</pre>
           <pre>{JSON.stringify(new Date(), null, 2)}</pre> */}
         </div>
@@ -110,21 +118,28 @@ const EuroCardContent = ({
               </span>
               <span className='text-xs font-bold '>{home[0]?.value}</span>
               <span className='flex flex-row items-center   gap-1 text-xs font-bold text-gray-500 group'>
-                {eu?.homePenalty?.includes('1red') && (
+                {eu.homePenalty && eu?.homePenalty[0]?.startsWith('red', 1) && (
                   <Penalty className=' rounded-[25%] bg-rose-500 block' />
                   // <div className='w-2 h-3 rounded-[25%] bg-rose-500 ' />
                 )}
-                {eu?.homePenalty?.includes('1yellow') && (
-                  <div className='w-2 h-3 rounded-[25%] bg-yellow-500 ' />
-                )}
-                {eu?.homePenalty?.includes('1penalty') && (
-                  <div className='w-2 h-3 text-sm mb-1 text-nowrap '>
-                    <span className='absolute invisible group-hover:visible top-0 right-0 text-sky-700 '>
-                      Penalty kick
+                {eu.homePenalty &&
+                  eu?.homePenalty[0]?.startsWith('yellow', 1) && (
+                    <span className='text-amber-800 flex items-center  text-[10px] font-bold'>
+                      {eu?.homePenalty && eu.homePenalty[0].slice(0, 1)}
+                      <div className='w-2 h-3 rounded-[25%] bg-yellow-500 ' />
                     </span>
-                    <Penalty className='block' penClassName='block' />
-                  </div>
-                )}
+                  )}
+                {eu.homePenalty &&
+                  (eu?.homePenalty[0]?.startsWith('penalty', 1) ||
+                    eu?.homePenalty[1]?.startsWith('penalty', 1) ||
+                    eu?.homePenalty[2]?.startsWith('penalty', 1)) && (
+                    <div className='w-2 h-3 text-sm mb-1 text-nowrap '>
+                      <span className='absolute invisible group-hover:visible top-0 right-0 text-sky-700 '>
+                        Penalty kick
+                      </span>
+                      <Penalty className='block' penClassName='block' />
+                    </div>
+                  )}
               </span>
             </div>
             <span className='pr-4 text-xs '>
@@ -138,22 +153,33 @@ const EuroCardContent = ({
               </span>
               <span className='text-xs font-bold '>{away[0].value}</span>
               <span className='flex flex-row items-center group  gap-1 text-xs font-bold text-gray-500'>
-                {eu?.awayPenalty?.includes('1red') && (
+                {eu.awayPenalty && eu?.awayPenalty[0]?.startsWith('red', 1) && (
                   <Penalty className=' rounded-[25%] bg-rose-500 block' />
                   // <div className='w-2 h-3 rounded-[25%] bg-rose-500 ' />
                 )}
-                {eu?.awayPenalty?.includes('1yellow') && (
-                  <div className='w-2 h-3 rounded-[25%] bg-yellow-500 ' />
-                )}
-                {eu?.awayPenalty?.includes('1penalty') && (
-                  <div className='w-2 h-3 text-sm text-gray-700 font-semibold cursor-pointer '>
-                    {/* P<span className='text-[10px] '>⚽</span> */}
-                    <span className='absolute text-xs bg-emerald-200/10 backdrop-blur-sm px-1 py-0 invisible group-hover:visible top-8 left-12 text-violet-700 rounded-sm'>
-                      Penalty kick
+                {eu.awayPenalty &&
+                  (eu?.awayPenalty[0]?.startsWith('yellow', 1) ||
+                    eu?.awayPenalty[1]?.startsWith('yellow', 1)) && (
+                    <span className='text-amber-800 flex items-center text-[10px] font-bold'>
+                      {eu?.awayPenalty &&
+                      Number(eu.awayPenalty[0].slice(0, 1)) <= 1
+                        ? ''
+                        : eu.awayPenalty[0].slice(0, 1)}
+                      <div className='w-2 h-3 rounded-[25%] bg-yellow-500 ' />
                     </span>
-                    <Penalty className='block' penClassName='block' />
-                  </div>
-                )}
+                  )}
+                {eu.awayPenalty &&
+                  (eu?.awayPenalty[0]?.startsWith('penalty', 1) ||
+                    eu?.awayPenalty[1]?.startsWith('penalty', 1) ||
+                    eu?.awayPenalty[2]?.startsWith('penalty', 1)) && (
+                    <div className='w-2 h-3 text-sm text-gray-700 font-semibold cursor-pointer '>
+                      {/* P<span className='text-[10px] '>⚽</span> */}
+                      <span className='absolute text-xs bg-emerald-200/10 backdrop-blur-sm px-1 py-0 invisible group-hover:visible top-8 left-12 text-violet-700 rounded-sm'>
+                        Penalty kick
+                      </span>
+                      <Penalty className='block' penClassName='block' />
+                    </div>
+                  )}
               </span>
             </div>
             <span className='pr-4 text-xs'>

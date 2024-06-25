@@ -14,7 +14,7 @@ import Sci from './sci';
 const eb = EB_Garamond({ subsets: ['latin'] });
 
 type PostsProps = {
-  items?: PostProps[];
+  items: PostProps[];
   randPost?: PostProps;
   size?: number | string | undefined;
   currentUser?: SafeUser | null;

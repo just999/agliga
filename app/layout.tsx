@@ -30,6 +30,7 @@ import {
   TopicModal,
   EuroModal,
 } from '@/components/modals';
+import FixtureModal from '@/components/modals/fixture-modal';
 
 // import EuroModal from '@/components/modals/euro-modal';
 
@@ -65,6 +66,7 @@ export default async function RootLayout({
         >
           <GoogleCaptchaWrapper>
             <ToasterProvider />
+            <FixtureModal />
             <EuroModal />
             <UserProfileModal />
             <SoccerModal />

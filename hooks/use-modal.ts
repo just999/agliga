@@ -38,6 +38,7 @@ type ModalStore = {
     | 'edit-euro'
     | 'new-fixture'
     | 'edit-fixture'
+    | 'delete-fixture'
     | 'delete-euro'
     | 'deleteSchedule'
     | null;
@@ -47,6 +48,7 @@ type ModalStore = {
   isToggle: boolean;
   img?: ImageSlider;
   group?: string;
+  period?: string;
   onOpen: (
     type:
       | 'login'
@@ -72,20 +74,29 @@ type ModalStore = {
       | 'edit-euro'
       | 'new-fixture'
       | 'edit-fixture'
+      | 'delete-fixture'
       | 'delete-euro'
       | 'deleteSchedule',
     id?: string | null,
     title?: string | undefined,
     img?: ImageSlider | undefined,
-    group?: string | undefined
+    group?: string | undefined,
+    period?: string | undefined
   ) => void;
   onClose: () => void;
   toggle: (isToggle: boolean, group?: string) => void;
   setImg: (type: 'edit-slider', img: ImageSlider) => void;
   setGroup: (
-    type: 'new-euro' | 'edit-euro' | 'delete-euro',
-    isOpen: boolean,
-    group: string
+    type:
+      | 'new-euro'
+      | 'edit-euro'
+      | 'delete-euro'
+      | 'new-fixture'
+      | 'edit-fixture'
+      | 'delete-fixture',
+    isOpen?: boolean,
+    group?: string,
+    period?: string
   ) => void;
   // authModal: () => void;
 };
@@ -98,7 +109,7 @@ const useModal = create<ModalStore>((set) => ({
   isToggle: false,
   img: undefined,
   group: undefined,
-
+  period: undefined,
   onOpen: (
     type:
       | 'login'
@@ -124,13 +135,15 @@ const useModal = create<ModalStore>((set) => ({
       | 'edit-euro'
       | 'new-fixture'
       | 'edit-fixture'
+      | 'delete-fixture'
       | 'delete-euro'
       | 'editSoccer',
     id = null,
     title,
     img,
-    group
-  ) => set({ modalType: type, isOpen: true, id, title, img, group }),
+    group,
+    period
+  ) => set({ modalType: type, isOpen: true, id, title, img, group, period }),
   onClose: () =>
     set({
       modalType: null,
@@ -139,6 +152,7 @@ const useModal = create<ModalStore>((set) => ({
       title: undefined,
       img: undefined,
       group: undefined,
+      period: undefined,
     }),
   toggle: (isToggle, group) =>
     set((state) => ({
@@ -148,10 +162,17 @@ const useModal = create<ModalStore>((set) => ({
   setImg: (type: 'edit-slider', img) => set({ modalType: type, img }),
   // authModal: () => set((state) => ({ isOpen: !state.isOpen })),
   setGroup: (
-    type: 'new-euro' | 'edit-euro' | 'delete-euro',
-    isOpen: boolean,
-    group: string
-  ) => set({ modalType: type, isOpen, group }),
+    type:
+      | 'new-euro'
+      | 'edit-euro'
+      | 'delete-euro'
+      | 'new-fixture'
+      | 'edit-fixture'
+      | 'delete-fixture',
+    isOpen?: boolean,
+    group?: string,
+    period?: string
+  ) => set({ modalType: type, isOpen, group, period }),
 }));
 
 export default useModal;

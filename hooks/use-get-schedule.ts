@@ -1,10 +1,20 @@
 'use client';
 
 import { fetchEuro, fetchEuroById } from '@/lib/queries/euro';
+import {
+  fetchFixtures,
+  fetchFixtureById,
+  fetchEPL2122,
+  fetchEPL2223,
+  fetchEPL2324,
+  fetchEPL2425,
+} from '@/lib/queries/fixtures';
 import { fetchSchedule, fetchScheduleById } from '@/lib/queries/schedule';
 import useEuroStore from '@/store/use-euro-store';
+import useFixturesStore from '@/store/use-fixture-store';
 import useSchedulesStore from '@/store/use-schedule-store';
 import { EuroWithIconProps } from '@/types';
+import { id } from 'date-fns/locale';
 
 import { useEffect } from 'react';
 
@@ -37,6 +47,124 @@ export const useGetSchedules = (id?: string) => {
         } else if (id) {
           const res = await fetchScheduleById(id);
           if (res) setItem(res);
+        }
+      } catch (err) {
+        console.error('Error fetching data', err);
+        setError('error');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchData();
+    return () => {
+      ignore = true;
+    };
+  }, [id, setError, setIsLoading, setItem, setItems]);
+
+  return { isLoading, error, items, item, setIsLoading };
+};
+
+export const useGetEPLFixtures = (period?: string) => {
+  const {
+    items,
+    item,
+    isLoading,
+    setItems,
+    error,
+    setItem,
+    setError,
+    setIsLoading,
+  } = useFixturesStore();
+
+  useEffect(() => {
+    let ignore = false;
+    const fetchData = async () => {
+      if (!period) throw new Error('no period found');
+      try {
+        setIsLoading(true);
+        let filteredEPL;
+        if (period === '21-22') {
+          const res = await fetchEPL2122();
+          filteredEPL = res?.filter((fix) => fix.name === '21-22');
+          if (ignore) return;
+
+          if (res) setItems(res);
+        } else if (period === '22-23') {
+          const res = await fetchEPL2223();
+          filteredEPL = res?.filter((fix) => fix.name === '22-23');
+          if (ignore) return;
+
+          if (res) setItems(res);
+        } else if (period === '23-24') {
+          const res = await fetchEPL2324();
+          filteredEPL = res?.filter((fix) => fix.name === '23-24');
+          if (ignore) return;
+
+          if (res) setItems(res);
+        } else if (period === '24-25') {
+          const res = await fetchEPL2425();
+          filteredEPL = res?.filter((fix) => fix.name === '24-25');
+          if (ignore) return;
+
+          if (res) setItems(res);
+        }
+        return filteredEPL;
+      } catch (err) {
+        console.error('Error fetching data', err);
+        setError('error');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchData();
+    return () => {
+      ignore = true;
+    };
+  }, [id, setError, setIsLoading, setItem, setItems]);
+
+  return { isLoading, error, items, item, setIsLoading };
+};
+
+export const useGetFixtures = (id?: string) => {
+  const {
+    items,
+    item,
+    isLoading,
+    setItems,
+    error,
+    setItem,
+    setError,
+    setIsLoading,
+  } = useFixturesStore();
+
+  useEffect(() => {
+    let ignore = false;
+    const fetchData = async () => {
+      try {
+        setIsLoading(true);
+
+        if (!id) {
+          const res = await fetchFixtures();
+          if (ignore) {
+            return;
+          }
+          if (res) {
+            const updatedRes = res.map((item) => ({
+              ...item,
+              date: new Date(item.date).toISOString(),
+            }));
+            setItems(updatedRes);
+          }
+        } else if (id) {
+          const res = await fetchFixtureById(id);
+
+          if (res) {
+            const updatedItem = {
+              ...res,
+              date: new Date(res.date).toISOString(),
+            };
+            setItem(updatedItem);
+          }
         }
       } catch (err) {
         console.error('Error fetching data', err);

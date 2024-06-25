@@ -194,15 +194,20 @@ const SelectInput = ({
               }
             </div>
             <div
-              className={cn('cursor-pointer text-slate-600', optionClassName)}
+              className={cn(
+                'cursor-pointer text-sm text-slate-600',
+                optionClassName
+              )}
             >
               {option &&
               (id === 'euroTeamHome' ||
                 id === 'euroTeamAway' ||
+                id === 'teamHome' ||
+                id === 'teamAway' ||
                 id === 'bank' ||
                 id === 'bankPT' ||
-                id === 'winner' ||
-                id === 'loser')
+                id === 'week' ||
+                id === 'run')
                 ? option.value
                 : option.desc}
               {/* <pre>{JSON.stringify(option.value, null, 2)}</pre> */}
@@ -212,13 +217,13 @@ const SelectInput = ({
         )}
         classNames={{
           control: () =>
-            `px-0 py-1 border ${
+            `px-0 py-1 text-amber-700 font-semibold ${
               errors[id]
                 ? 'border-rose-500 focus:border-rose-500 bg-rose-900/30!important'
                 : 'border-neutral-300 focus:border-black'
             }`,
           input: () =>
-            `text-sm ${
+            `text-sm  ${
               errors[id]
                 ? 'border-rose-500 focus:border-rose-500 bg-rose-900/30!important'
                 : 'border-neutral-300 focus:border-black'

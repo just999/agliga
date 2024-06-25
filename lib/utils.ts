@@ -4,6 +4,7 @@ import { twMerge } from 'tailwind-merge';
 import { Noto_Color_Emoji } from 'next/font/google';
 import { date } from 'zod';
 import { EuroWithIconProps } from '@/types';
+import { format, parse } from 'date-fns';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -328,4 +329,82 @@ export const fixtureFiltered = (teams: EuroWithIconProps[]) => {
   });
 
   return groupArrays;
+};
+
+type MatchProps = {
+  id?: string;
+  startTime: Date;
+  duration: number;
+};
+
+type MatchWithStatus = Match & {
+  status: 'upcoming' | 'playing' | 'already played';
+};
+
+export const getMatchStatus = (
+  match: MatchProps
+): 'upcoming' | 'playing' | 'already played' => {
+  const currentTime = new Date().toISOString();
+
+  const matchStartTime = new Date(match.startTime);
+  const matchEndTime = new Date(
+    matchStartTime.getTime() + match.duration * 60000
+  );
+
+  if (currentTime < matchStartTime.toISOString()) {
+    return 'upcoming';
+  } else if (
+    currentTime >= matchStartTime.toISOString() &&
+    currentTime <= matchEndTime.toISOString()
+  ) {
+    return 'playing';
+  } else {
+    return 'already played';
+  }
+};
+
+// Input date string
+let inputDateStr = '14/09/2024 21:00';
+
+// Split the date and time parts
+let [datePart, timePart] = inputDateStr.split(' ');
+
+// Split the day, month, and year
+let [day, month, year] = datePart.split('/').map(Number);
+
+// Split the hour and minute
+let [hours, minutes] = timePart.split(':').map(Number);
+
+// Create a new Date object
+let periodDate = new Date(year, month - 1, day, hours, minutes);
+
+// console.log(periodDate.toISOString());
+
+export const convertDate = (date: string) => {
+  let [datePart, timePart] = date.split(' ');
+
+  // Split the day, month, and year
+  let [day, month, year] = datePart.split('/').map(Number);
+
+  // Split the hour and minute
+  let [hours, minutes] = timePart.split(':').map(Number);
+
+  let periodDate = new Date(year, month - 1, day, hours, minutes);
+
+  return periodDate;
+};
+
+export const parseAndFormatDate = (dateStr: string) => {
+  const originalFormat = 'yyyy-MM-dd HH:mm:ssX'; // Define the input format
+
+  // Parse the original date string using date-fns
+  const date = parse(dateStr, originalFormat, new Date());
+
+  if (isNaN(date.getTime())) {
+    throw new Error('Invalid date string');
+  }
+
+  // Format the date to the desired ISO 8601 format with milliseconds and UTC offset
+  const formattedDate = format(date, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
+  return formattedDate;
 };

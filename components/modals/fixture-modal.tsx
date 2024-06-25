@@ -8,65 +8,71 @@ import Heading from '../heading';
 import Input from '../ui/input';
 import toast from 'react-hot-toast';
 
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 import SelectInput from '../select-input';
 
 import useModal from '@/hooks/use-modal';
 
-import { useGetEuros } from '@/hooks/use-get-schedule';
+import { useWeeks, useTeams } from '@/hooks/use-teams';
 
-import { EuroWithIconProps } from '@/types';
+import { useGetFixtures, useGetSchedules } from '@/hooks/use-get-schedule';
 
-import { initialEuroFormWithIconValues, team } from '@/lib/helper';
-import { useEuros, usePenalty } from '@/hooks/use-euro';
-import { cn, findMatchingObjects, noto } from '@/lib/utils';
+import { FixtureProps } from '@/types';
+
+import { euroGroup, initialFixtureFormValues, team } from '@/lib/helper';
+import { usePenalty } from '@/hooks/use-euro';
+import { convertDate, findMatchingObjects } from '@/lib/utils';
+import useRunToggleStore from '@/store/use-table-store';
+import { run } from 'node:test';
 
 const FixtureModal = () => {
-  const [schedule, setSchedule] = useState<EuroWithIconProps>(
-    initialEuroFormWithIconValues
+  const [fixture, setFixture] = useState<FixtureProps>(
+    initialFixtureFormValues
   );
   const [isLoading, setIsLoading] = useState(false);
-  // const params = useParams();
 
-  // const id = params.id?.toString();
+  const params = useSearchParams();
+  const w = params.get('week');
 
-  const {
-    modalType,
-    isOpen,
-    onClose,
-    setGroup,
-    id,
-    group: euroGroup,
-  } = useModal();
+  const { modalType, isOpen, onClose, id, group, period } = useModal();
+
   const router = useRouter();
-  const { getTeams } = useEuros();
+  const { getTeams, getByValue } = useTeams();
   const { getPenalty } = usePenalty();
-  const { item, error, items } = useGetEuros(id ? id : undefined);
-  let initialScheduleValues;
-  if (modalType === 'new-euro') {
-    initialScheduleValues = {
+  const { getWeeks, getWeeksByValue } = useWeeks();
+  const { item, error } = useGetFixtures(id ? id : undefined);
+  let initialFixtureValues;
+  if (modalType === 'new-fixture') {
+    initialFixtureValues = {
+      name: group,
+      week: null,
       date: new Date(),
-      euroTeamHome: team,
+      teamHome: '',
       homePenalty: [],
       homeScore: '',
+      homeHTScore: '',
       awayScore: '',
-      euroTeamAway: team,
+      awayHTScore: '',
       awayPenalty: [],
-      group: euroGroup,
+      teamAway: '',
     };
-  } else if (modalType === 'edit-euro') {
-    initialScheduleValues = {
-      date: schedule.date,
-      euroTeamHome: schedule.euroTeamHome,
-      homePenalty: schedule.homePenalty,
-      homeScore: schedule.homeScore,
-      awayScore: schedule.awayScore,
-      group: schedule.group,
-      euroTeamAway: schedule.euroTeamAway,
-      awayPenalty: schedule.awayPenalty,
+  } else if (modalType === 'edit-fixture') {
+    initialFixtureValues = {
+      name: fixture.name,
+      week: fixture.week,
+      date: fixture.date,
+      teamHome: fixture.teamHome,
+      homePenalty: fixture.homePenalty,
+      homeScore: fixture.homeScore,
+      homeHTScore: fixture.homeHTScore,
+      awayHTScore: fixture.awayHTScore,
+      awayScore: fixture.awayScore,
+      teamAway: fixture.teamAway,
+      awayPenalty: fixture.awayPenalty,
     };
   }
+
   const {
     register,
     handleSubmit,
@@ -75,18 +81,40 @@ const FixtureModal = () => {
     formState: { errors },
     reset,
   } = useForm<FieldValues>({
-    defaultValues: initialScheduleValues,
+    defaultValues: initialFixtureValues,
   });
 
-  const teamsOption = getTeams();
-  const selectTeamHomeOptions = teamsOption.map((euroTeamHome) => ({
-    value: euroTeamHome.value,
-    icon: euroTeamHome.icon,
+  const pDate = '19/09/2023 01:45';
+  const convertedDate = convertDate(pDate);
+
+  const newDate = new Date(fixture.date).toISOString().substring(0, 16);
+  const name = watch('name');
+  const week = watch('week');
+  const date = watch('date');
+  const teamHome = watch('teamHome');
+  const homeScore = watch('homeScore');
+  const homeHTScore = watch('homeHTScore');
+  const homePenalty = watch('homePenalty');
+  const awayScore = watch('awayScore');
+  const awayHTScore = watch('awayHTScore');
+  const awayPenalty = watch('awayPenalty');
+  const teamAway = watch('teamAway');
+
+  const weeks = getWeeks();
+  const selectWeekOptions = weeks.map((week) => ({
+    value: week.value,
+    icon: week.icon,
   }));
 
-  const selectTeamAwayOptions = teamsOption.map((euroTeamAway) => ({
-    value: euroTeamAway.value,
-    icon: euroTeamAway.icon,
+  const teamsOption = getTeams();
+  const selectTeamHomeOptions = teamsOption.map((teamHome) => ({
+    value: teamHome.value,
+    icon: teamHome.icon,
+  }));
+
+  const selectTeamAwayOptions = teamsOption.map((teamAway) => ({
+    value: teamAway.value,
+    icon: teamAway.icon,
   }));
 
   const penalties = getPenalty();
@@ -98,93 +126,140 @@ const FixtureModal = () => {
   }));
 
   useEffect(() => {
-    if (modalType === 'new-euro' && !error) {
+    const periodWeek: any = weeks.filter(
+      (period) => period.value === Number(w)
+    ) || {
+      icon: '',
+      value: '',
+    };
+    if (modalType === 'new-fixture' && !error) {
       const data = {
+        name: group,
+        week: periodWeek[0],
         date: new Date(),
-        euroTeamHome: team,
+        teamHome: '',
         homePenalty: [],
         homeScore: '',
         awayScore: '',
-        euroTeamAway: team,
+        homeHTScore: '',
+        awayHTScore: '',
+        teamAway: '',
         awayPenalty: [],
-        group: euroGroup,
       } as any;
-      setSchedule(data);
+      setFixture(data);
 
-      setValue('euroTeamHome', euroTeamHome);
-      setValue('homePenalty', homePenalty);
-      setValue('date', new Date(item.date).toISOString().substring(0, 16));
-      setValue('euroTeamAway', euroTeamAway);
-      setValue('awayPenalty', awayPenalty);
-      setValue('homeScore', homeScore);
-      setValue('awayScore', awayScore);
-      setValue('group', euroGroup);
-    }
-    if (modalType === 'edit-euro' && item && !error) {
-      const data = {
-        euroTeamHome: item.euroTeamHome,
-        homePenalty: item.homePenalty,
-        date: item.date,
-        euroTeamAway: item.euroTeamAway,
-        awayPenalty: item.awayPenalty,
-        homeScore: item.homeScore,
-        awayScore: item.awayScore,
-        group: item.group,
-      };
-      setSchedule(data);
+      // if (w === null) {
+      //   w = item.week;
+      // }
 
       const home: any = teamsOption.filter(
-        (team) => team.value === item.euroTeamHome.value
+        (team) => team.value === item.teamHome
       ) || {
         value: '',
         icon: '',
-        group: '',
-        played: '',
       };
-
       const away: any = teamsOption.filter(
-        (team) => team.value === item.euroTeamAway.value
+        (team) => team.value === item.teamAway
       ) || {
         value: '',
         icon: '',
-        group: '',
-        played: '',
       };
 
-      let targetPen: string[] = [];
+      setValue('name', group);
+      setValue('week', fixture.week);
+      setValue('teamHome', home[0]);
+      setValue('homePenalty', homePenalty);
+      setValue('homeScore', homeScore);
+      setValue('awayPenalty', awayPenalty);
+      setValue('date', new Date(convertedDate).toISOString().substring(0, 16));
+      setValue('teamAway', away[0]);
+      setValue('awayScore', awayScore);
+      setValue('homeHTScore', homeHTScore);
+      setValue('awayHTScore', awayHTScore);
+    }
+
+    if (modalType === 'edit-fixture' && item && !error) {
+      const data = {
+        name: item.name,
+        week: item.week,
+        teamHome: item.teamHome,
+        date: item.date,
+        teamAway: item.teamAway,
+        homeScore: item.homeScore,
+        homeHTScore: item.homeHTScore,
+        homePenalty: item.homePenalty,
+        awayScore: item.awayScore,
+        awayHTScore: item.awayHTScore,
+        awayPenalty: item.awayPenalty,
+      };
+      setFixture(data);
+      const periodWeek: any = weeks.filter(
+        (period) => period.value === item.week
+      ) || {
+        icon: '',
+        value: '',
+      };
+      const home: any = teamsOption.filter(
+        (team) => team.value === item.teamHome
+      ) || {
+        value: '',
+        icon: '',
+      };
+      const away: any = teamsOption.filter(
+        (team) => team.value === item.teamAway
+      ) || {
+        value: '',
+        icon: '',
+      };
+      let targetAPen: string[] = [];
       if (item.awayPenalty) {
-        targetPen = item.awayPenalty;
+        targetAPen = item.awayPenalty;
       }
-      const apen = findMatchingObjects(penalties, targetPen);
-      setValue('euroTeamHome', home[0]);
-      setValue('homePenalty', item.homePenalty);
+      let targetHPen: string[] = [];
+      if (item.homePenalty) {
+        targetHPen = item.homePenalty;
+      }
+      const apen = findMatchingObjects(penalties, targetAPen);
+      const hPen = findMatchingObjects(penalties, targetHPen);
+
+      setValue('name', group);
+      setValue('week', periodWeek[0]);
+      setValue('teamHome', home[0]);
       setValue('date', new Date(item.date).toISOString().substring(0, 16));
-      setValue('euroTeamAway', away[0]);
-      setValue('awayPenalty', apen);
+      setValue('teamAway', away[0]);
       setValue('homeScore', item.homeScore);
+      setValue('homeHTScore', item.homeHTScore);
+      setValue('homePenalty', hPen);
       setValue('awayScore', item.awayScore);
-      setValue('group', item.group);
+      setValue('awayHTScore', item.awayHTScore);
+      setValue('awayPenalty', apen);
 
       // if (item.date instanceof Date) {
       //   const formattedDate = moment(item.date).format('MM/DD/YYYY hh:mm A');
       // } else {
       //   console.warn('item.date is not a valid Date object');
       // }
-    } else if (modalType === 'new-euro') {
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [error, item, modalType, setValue, teamsOption]);
-  // if (!item.date) return;
-  const newDate = new Date(schedule.date).toISOString().substring(0, 16);
-
-  const date = watch('date');
-  const euroTeamHome = watch('euroTeamHome');
-  const homePenalty = watch('homePenalty');
-  const homeScore = watch('homeScore');
-  const euroTeamAway = watch('euroTeamAway');
-  const awayPenalty = watch('awayPenalty');
-  const awayScore = watch('awayScore');
-  const group = watch('group');
+  }, [
+    error,
+    item,
+    modalType,
+    setValue,
+    teamsOption,
+    group,
+    penalties,
+    weeks,
+    date,
+    awayHTScore,
+    awayPenalty,
+    awayScore,
+    homeHTScore,
+    homePenalty,
+    homeScore,
+    convertedDate,
+    fixture.week,
+    w,
+  ]);
 
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
@@ -197,20 +272,21 @@ const FixtureModal = () => {
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
     // const gameValues: GameProps = data.game.map((val: any) => val.value);
-    if (modalType === 'new-euro') {
-      data = {
-        date,
-        euroTeamHome,
-        homePenalty,
-        homeScore,
-        awayScore,
-        euroTeamAway,
-        awayPenalty,
-        group,
-      };
+    if (modalType === 'new-fixture') {
       try {
+        data = {
+          name,
+          week,
+          date,
+          teamHome,
+          homeScore,
+          homePenalty,
+          awayScore,
+          awayPenalty,
+          teamAway,
+        };
         axios
-          .post('/api/euro', data)
+          .post('/api/fixtures', data)
           .then(() => {
             toast.success('Deposit form success di kirim!');
             router.refresh();
@@ -226,20 +302,23 @@ const FixtureModal = () => {
       } catch (err) {
         console.error(err);
       }
-    } else if (modalType === 'edit-euro') {
+    } else if (modalType === 'edit-fixture') {
       data = {
+        name,
+        week,
         date,
-        euroTeamHome,
-        homePenalty,
+        teamHome,
         homeScore,
+        homeHTScore,
+        homePenalty,
         awayScore,
-        euroTeamAway,
+        awayHTScore,
         awayPenalty,
-        group,
+        teamAway,
       };
       try {
         const res = axios
-          .put(`/api/euro/${id}`, data)
+          .put(`/api/fixtures/${id}`, data)
           .then(() => {
             toast.success('Schedule successfully edited');
             router.refresh();
@@ -257,19 +336,74 @@ const FixtureModal = () => {
   };
 
   const handleCloseClearForm = () => {
-    onClose();
-    setSchedule(initialEuroFormWithIconValues);
+    setFixture({
+      name: '',
+      date: new Date(),
+      teamHome: '',
+      homePenalty: [],
+      homeScore: '',
+      week: null,
+      teamAway: '',
+      awayPenalty: [],
+      awayScore: '',
+    });
     reset();
+    onClose();
   };
 
   const bodyContent = (
     <div className='flex flex-col gap-1'>
       <Heading
-        title={modalType === 'new-euro' ? 'New Euro' : 'Edit Euro'}
+        title={
+          modalType === 'new-fixture'
+            ? `New Week period ${group}`
+            : `Edit weekly period ${group}`
+        }
         subtitle={
-          modalType === 'new-euro' ? 'Add new Euro Schedule?' : 'Editing Euro'
+          modalType === 'new-fixture' ? 'Weeks period?' : 'Editing Matches'
         }
       />
+
+      <Input
+        id='name'
+        type='text'
+        label={name ? '' : 'Name'}
+        defaultValue={watch('name')}
+        disabled
+        register={register}
+        errors={errors}
+        required
+      />
+
+      {errors.name && (
+        <span className='text-sm text-red-500 '>
+          <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
+            Kolom Wajib di isi...
+          </span>
+        </span>
+      )}
+
+      <SelectInput
+        label={week ? '' : 'week'}
+        isMulti={false}
+        id='week'
+        register={register}
+        required
+        value={watch('week')}
+        onChange={(value) => setCustomValue('week', value)}
+        placeholder='Week'
+        options={() => selectWeekOptions}
+        errors={errors}
+      />
+
+      {errors.week && (
+        <span className='text-sm text-red-500 '>
+          <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
+            Kolom Wajib di isi...
+          </span>
+        </span>
+      )}
+
       <Input
         type='datetime-local'
         id='date'
@@ -289,20 +423,18 @@ const FixtureModal = () => {
       )}
 
       <SelectInput
-        label={euroTeamHome ? '' : 'euroTeamHome'}
+        label={teamHome ? '' : 'teamHome'}
         isMulti={false}
-        id='euroTeamHome'
+        id='teamHome'
         register={register}
         required
-        value={watch('euroTeamHome')}
-        onChange={(value) => setCustomValue('euroTeamHome', value)}
-        placeholder='euroHome'
+        value={watch('teamHome')}
+        onChange={(value) => setCustomValue('teamHome', value)}
+        placeholder='Team Home'
         options={() => selectTeamHomeOptions}
         errors={errors}
-        optionIconClassName={cn(noto.className)}
-        optionClassName='text-base px-2 '
       />
-      {errors.euroTeamHome && (
+      {errors.teamHome && (
         <span className='text-sm text-red-500 '>
           <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
             Kolom Wajib di isi...
@@ -310,77 +442,156 @@ const FixtureModal = () => {
         </span>
       )}
 
-      <Input
-        id='homeScore'
-        type='text'
-        label={homeScore ? '' : 'homeScore'}
-        disabled={isLoading}
-        register={register}
-        errors={errors}
-      />
-      {errors.homeScore && (
-        <span className='text-sm text-red-500 '>
-          <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
-            Kolom Wajib di isi...
-          </span>
-        </span>
+      {modalType === 'edit-fixture' && (
+        <>
+          <Input
+            id='homeScore'
+            type='text'
+            label={homeScore ? '' : 'homeScore'}
+            disabled={isLoading}
+            register={register}
+            errors={errors}
+          />
+          {errors.homeScore && (
+            <span className='text-sm text-red-500 '>
+              <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
+                Kolom Wajib di isi...
+              </span>
+            </span>
+          )}
+
+          <Input
+            id='homeHTScore'
+            type='text'
+            label={homeHTScore ? '' : 'homeHTScore'}
+            disabled={isLoading}
+            register={register}
+            errors={errors}
+          />
+          {errors.homeHTScore && (
+            <span className='text-sm text-red-500 '>
+              <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
+                Kolom Wajib di isi...
+              </span>
+            </span>
+          )}
+
+          <SelectInput
+            label={homePenalty ? '' : 'homePenalty'}
+            isMulti={true}
+            id='homePenalty'
+            register={register}
+            value={watch('homePenalty')}
+            onChange={(value) => setCustomValue('homePenalty', value)}
+            placeholder='home penalty'
+            options={() => penaltyOptions}
+            errors={errors}
+            // optionIconClassName='text-yellow-400'
+            optionPenaltyClassName='flex flex-row-reverse justify-end gap-0'
+            optionClassName='text-sm px-0 font-semibold'
+          />
+          {errors.homePenalty && (
+            <span className='text-sm text-red-500 '>
+              <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
+                Kolom Wajib di isi...
+              </span>
+            </span>
+          )}
+        </>
       )}
 
       <SelectInput
-        label={euroTeamAway ? '' : 'euroTeamAway'}
+        label={teamAway ? '' : 'teamAway'}
         isMulti={false}
-        id='euroTeamAway'
+        id='teamAway'
         register={register}
         required
-        value={watch('euroTeamAway')}
-        onChange={(value) => setCustomValue('euroTeamAway', value)}
-        placeholder='euroAway'
+        value={watch('teamAway')}
+        onChange={(value) => setCustomValue('teamAway', value)}
+        placeholder='Team Away'
         options={() => selectTeamAwayOptions}
         errors={errors}
-        optionIconClassName={cn(noto.className)}
-        optionClassName='text-base px-2 '
       />
-      {errors.euroTeamAway && (
+      {errors.teamAway && (
         <span className='text-sm text-red-500 '>
           <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
             Kolom Wajib di isi...
           </span>
         </span>
       )}
+      {modalType === 'edit-fixture' && (
+        <>
+          <Input
+            id='awayScore'
+            type='text'
+            label={awayScore ? '' : 'awayScore'}
+            disabled={isLoading}
+            register={register}
+            errors={errors}
+          />
+          {errors.awayScore && (
+            <span className='text-sm text-red-500 '>
+              <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
+                Kolom Wajib di isi...
+              </span>
+            </span>
+          )}
 
-      <Input
-        id='awayScore'
-        type='text'
-        label={awayScore ? '' : 'awayScore'}
-        disabled={isLoading}
-        register={register}
-        errors={errors}
-      />
-      {errors.awayScore && (
-        <span className='text-sm text-red-500 '>
-          <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
-            Kolom Wajib di isi...
-          </span>
-        </span>
+          <Input
+            id='awayHTScore'
+            type='text'
+            label={awayHTScore ? '' : 'awayHTScore'}
+            disabled={isLoading}
+            register={register}
+            errors={errors}
+          />
+          {errors.awayHTScore && (
+            <span className='text-sm text-red-500 '>
+              <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
+                Kolom Wajib di isi...
+              </span>
+            </span>
+          )}
+
+          <SelectInput
+            label={awayPenalty ? '' : 'awayPenalty'}
+            isMulti={true}
+            id='awayPenalty'
+            register={register}
+            value={watch('awayPenalty')}
+            onChange={(value) => setCustomValue('awayPenalty', value)}
+            placeholder='home penalty'
+            options={() => penaltyOptions}
+            errors={errors}
+            // optionIconClassName='text-yellow-400'
+            optionPenaltyClassName='flex flex-row-reverse justify-end gap-0'
+            optionClassName='text-sm px-0 font-semibold'
+          />
+          {errors.awayPenalty && (
+            <span className='text-sm text-red-500 '>
+              <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
+                Kolom Wajib di isi...
+              </span>
+            </span>
+          )}
+        </>
       )}
-
-      <Input
-        id='group'
+      {/* <Input
+        id='analysis'
         type='text'
-        label={group ? '' : 'Group'}
+        label={analysis ? '' : 'Analysis'}
         disabled={isLoading}
-        defaultValue={watch('group')}
         register={register}
         errors={errors}
         required
       />
-      {errors.group && (
+      {errors.analysis && (
         <span className='text-sm text-red-500 '>
           <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
             Kolom Wajib di isi...
           </span>
         </span>
-      )}
+      )} */}
     </div>
   );
 
@@ -391,7 +602,7 @@ const FixtureModal = () => {
       }
       onClose={handleCloseClearForm}
       onSubmit={handleSubmit(onSubmit)}
-      title={modalType === 'new-fixture' ? 'add-fixture' : 'Edit Fixture'}
+      title={modalType === 'new-fixture' ? 'New fixture' : 'Edit Fixture'}
       actionLabel='Submit'
       disabled={isLoading}
       body={bodyContent}
@@ -402,3 +613,504 @@ const FixtureModal = () => {
 };
 
 export default FixtureModal;
+
+// 'use client';
+
+// import axios from 'axios';
+// import { useEffect, useState } from 'react';
+// import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
+// import Modal from './modal';
+// import Heading from '../heading';
+// import Input from '../ui/input';
+// import toast from 'react-hot-toast';
+
+// import { useRouter } from 'next/navigation';
+
+// import SelectInput from '../select-input';
+
+// import useModal from '@/hooks/use-modal';
+
+// import { useWeeks, useTeams } from '@/hooks/use-teams';
+
+// import { useGetFixtures } from '@/hooks/use-get-schedule';
+
+// import { FixtureProps } from '@/types';
+
+// import { initialFixtureFormValues, team } from '@/lib/helper';
+// import { usePenalty } from '@/hooks/use-euro';
+// import { findMatchingObjects } from '@/lib/utils';
+
+// const FixtureModal = () => {
+//   const [fixture, setFixture] = useState<FixtureProps>(
+//     initialFixtureFormValues
+//   );
+//   const [isLoading, setIsLoading] = useState(false);
+
+//   const { modalType, isOpen, onClose, id, group } = useModal();
+//   const router = useRouter();
+//   const { getTeams } = useTeams();
+//   const { getPenalty } = usePenalty();
+//   const { getWeeks } = useWeeks();
+//   const { item, error } = useGetFixtures(id ? id : undefined);
+
+//   // Define variables before they are used
+//   const weeks = getWeeks();
+//   const selectWeekOptions = weeks.map((week) => ({
+//     value: week.value,
+//     icon: week.icon,
+//   }));
+
+//   const teamsOption = getTeams();
+//   const selectTeamHomeOptions = teamsOption.map((teamHome) => ({
+//     value: teamHome.value,
+//     icon: teamHome.icon,
+//   }));
+
+//   const selectTeamAwayOptions = teamsOption.map((teamAway) => ({
+//     value: teamAway.value,
+//     icon: teamAway.icon,
+//   }));
+
+//   const penalties = getPenalty();
+//   const penaltyOptions = penalties.map((pen) => ({
+//     value: pen.value,
+//     icon: pen.icon,
+//     desc: pen.desc,
+//     style: pen.style,
+//   }));
+
+//   // Define initial fixture values conditionally based on modal type
+//   const initialFixtureValues =
+//     modalType === 'new-fixture'
+//       ? {
+//           name: group,
+//           week: null,
+//           date: new Date().toISOString(),
+//           teamHome: team,
+//           homePenalty: [],
+//           homeScore: '',
+//           homeHTScore: '',
+//           awayScore: '',
+//           awayHTScore: '',
+//           awayPenalty: [],
+//           teamAway: team,
+//         }
+//       : fixture;
+
+//   const {
+//     register,
+//     handleSubmit,
+//     setValue,
+//     watch,
+//     formState: { errors },
+//     reset,
+//   } = useForm<FieldValues>({
+//     defaultValues: initialFixtureValues,
+//   });
+
+//   useEffect(() => {
+//     if (
+//       (modalType === 'new-fixture' || modalType === 'edit-fixture') &&
+//       !error
+//     ) {
+//       const data: any =
+//         modalType === 'new-fixture'
+//           ? {
+//               name: group,
+//               week: null,
+//               date: new Date().toISOString(),
+//               teamHome: team,
+//               homePenalty: [],
+//               homeScore: '',
+//               homeHTScore: '',
+//               awayScore: '',
+//               awayHTScore: '',
+//               awayPenalty: [],
+//               teamAway: team,
+//             }
+//           : {
+//               name: item.name,
+//               week: item.week,
+//               teamHome: item.teamHome,
+//               date: item.date,
+//               teamAway: item.teamAway,
+//               homeScore: item.homeScore,
+//               homeHTScore: item.homeHTScore,
+//               homePenalty: item.homePenalty,
+//               awayScore: item.awayScore,
+//               awayHTScore: item.awayHTScore,
+//               awayPenalty: item.awayPenalty,
+//             };
+
+//       setFixture(data);
+
+//       const periodWeek = weeks.find(
+//         (period) =>
+//           period.value === (modalType === 'new-fixture' ? null : item.week)
+//       ) || { icon: '', value: '' };
+//       const home = teamsOption.find(
+//         (team) =>
+//           team.value ===
+//           (modalType === 'new-fixture' ? '' : item.teamHome.value)
+//       ) || {
+//         value: '',
+//         icon: '',
+//         group: '',
+//         played: '',
+//       };
+//       const away = teamsOption.find(
+//         (team) =>
+//           team.value ===
+//           (modalType === 'new-fixture' ? '' : item.teamAway.value)
+//       ) || {
+//         value: '',
+//         icon: '',
+//         group: '',
+//         played: '',
+//       };
+
+//       const targetAPen = item.awayPenalty || [];
+//       const targetHPen = item.homePenalty || [];
+//       const apen = findMatchingObjects(penalties, targetAPen);
+//       const hPen = findMatchingObjects(penalties, targetHPen);
+
+//       setValue('name', group);
+//       setValue('week', periodWeek);
+//       setValue('teamHome', home);
+//       setValue('date', new Date(data.date).toISOString().substring(0, 16)); // Ensuring the date is always formatted as a string
+//       setValue('teamAway', away);
+//       setValue('homeScore', data.homeScore || '');
+//       setValue('homeHTScore', data.homeHTScore || '');
+//       setValue('homePenalty', hPen);
+//       setValue('awayScore', data.awayScore || '');
+//       setValue('awayHTScore', data.awayHTScore || '');
+//       setValue('awayPenalty', apen);
+//     }
+//   }, [modalType, error, item, setValue, teamsOption, weeks, penalties, group]);
+
+//   const newDate = new Date(fixture.date).toISOString().substring(0, 16);
+
+//   const name = watch('name');
+//   const week = watch('week');
+//   const date = watch('date');
+//   const teamHome = watch('teamHome');
+//   const homeScore = watch('homeScore');
+//   const homeHTScore = watch('homeHTScore');
+//   const homePenalty = watch('homePenalty');
+//   const awayScore = watch('awayScore');
+//   const awayHTScore = watch('awayHTScore');
+//   const awayPenalty = watch('awayPenalty');
+//   const teamAway = watch('teamAway');
+
+//   const setCustomValue = (id: string, value: any) => {
+//     setValue(id, value, {
+//       shouldDirty: true,
+//       shouldTouch: true,
+//       shouldValidate: true,
+//     });
+//   };
+
+//   const onSubmit: SubmitHandler<FieldValues> = (data) => {
+//     setIsLoading(true);
+
+//     if (modalType === 'new-fixture') {
+//       try {
+//         data = {
+//           name,
+//           week,
+//           date: new Date().toISOString(),
+//           teamHome,
+//           homeScore,
+//           homePenalty,
+//           awayScore,
+//           awayPenalty,
+//           teamAway,
+//         };
+//         axios
+//           .post('/api/fixtures', data)
+//           .then(() => {
+//             toast.success('Fixture successfully created!');
+//             router.refresh();
+//             reset();
+//             onClose();
+//           })
+//           .catch((error) => {
+//             toast.error('Something Went Wrong', error);
+//           })
+//           .finally(() => {
+//             setIsLoading(false);
+//           });
+//       } catch (err) {
+//         console.error(err);
+//       }
+//     } else if (modalType === 'edit-fixture') {
+//       data = {
+//         name,
+//         week,
+//         date,
+//         teamHome,
+//         homeScore,
+//         homeHTScore,
+//         homePenalty,
+//         awayScore,
+//         awayHTScore,
+//         awayPenalty,
+//         teamAway,
+//       };
+//       try {
+//         axios
+//           .put(`/api/fixtures/${id}`, data)
+//           .then(() => {
+//             toast.success('Fixture successfully edited');
+//             router.refresh();
+//             reset();
+//             onClose();
+//           })
+//           .catch((err) => {
+//             toast.error('Something went wrong', err);
+//           })
+//           .finally(() => setIsLoading(false));
+//       } catch (err) {
+//         console.error(err);
+//       }
+//     }
+//   };
+
+//   const handleCloseClearForm = () => {
+//     onClose();
+//     setFixture(initialFixtureFormValues);
+//     reset();
+//   };
+
+//   const bodyContent = (
+//     <div className='flex flex-col gap-1'>
+//       <Heading
+//         title={
+//           modalType === 'new-fixture'
+//             ? `New Week period ${group}`
+//             : `Edit weekly period ${group}`
+//         }
+//         subtitle={
+//           modalType === 'new-fixture' ? 'Weeks period?' : 'Editing Matches'
+//         }
+//       />
+//       <Input
+//         id='name'
+//         type='text'
+//         label={name ? '' : 'Name'}
+//         defaultValue={group}
+//         disabled={isLoading}
+//         register={register}
+//         errors={errors}
+//         required
+//       />
+//       {errors.name && (
+//         <span className='text-sm text-red-500 '>
+//           <span className='text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4'>
+//             Kolom Wajib di isi...
+//           </span>
+//         </span>
+//       )}
+//       <SelectInput
+//         label={week ? '' : 'week'}
+//         isMulti={false}
+//         id='week'
+//         register={register}
+//         required
+//         value={watch('week')}
+//         onChange={(value) => setCustomValue('week', value)}
+//         placeholder='Week'
+//         options={() => selectWeekOptions}
+//         errors={errors}
+//       />
+//       {errors.week && (
+//         <span className='text-sm text-red-500 '>
+//           <span className='text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4'>
+//             Kolom Wajib di isi...
+//           </span>
+//         </span>
+//       )}
+//       <Input
+//         type='datetime-local'
+//         id='date'
+//         label={date ? '' : 'Time'}
+//         defaultValue={newDate}
+//         disabled={isLoading}
+//         register={register}
+//         errors={errors}
+//         required
+//       />
+//       {errors.date && (
+//         <span className='text-sm text-red-500 '>
+//           <span className='text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4'>
+//             Kolom Wajib di isi...
+//           </span>
+//         </span>
+//       )}
+//       <SelectInput
+//         label={teamHome ? '' : 'teamHome'}
+//         isMulti={false}
+//         id='teamHome'
+//         register={register}
+//         required
+//         value={watch('teamHome')}
+//         onChange={(value) => setCustomValue('teamHome', value)}
+//         placeholder='Team Home'
+//         options={() => selectTeamHomeOptions}
+//         errors={errors}
+//       />
+//       {errors.teamHome && (
+//         <span className='text-sm text-red-500 '>
+//           <span className='text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4'>
+//             Kolom Wajib di isi...
+//           </span>
+//         </span>
+//       )}
+//       {modalType === 'edit-fixture' && (
+//         <>
+//           <Input
+//             id='homeScore'
+//             type='text'
+//             label={homeScore ? '' : 'homeScore'}
+//             disabled={isLoading}
+//             register={register}
+//             errors={errors}
+//             required
+//           />
+//           {errors.homeScore && (
+//             <span className='text-sm text-red-500 '>
+//               <span className='text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4'>
+//                 Kolom Wajib di isi...
+//               </span>
+//             </span>
+//           )}
+//           <Input
+//             id='homeHTScore'
+//             type='text'
+//             label={homeHTScore ? '' : 'homeHTScore'}
+//             disabled={isLoading}
+//             register={register}
+//             errors={errors}
+//           />
+//           {errors.homeHTScore && (
+//             <span className='text-sm text-red-500 '>
+//               <span className='text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4'>
+//                 Kolom Wajib di isi...
+//               </span>
+//             </span>
+//           )}
+//           <SelectInput
+//             label={homePenalty ? '' : 'homePenalty'}
+//             isMulti={true}
+//             id='homePenalty'
+//             register={register}
+//             value={watch('homePenalty')}
+//             onChange={(value) => setCustomValue('homePenalty', value)}
+//             placeholder='home penalty'
+//             options={() => penaltyOptions}
+//             errors={errors}
+//             optionPenaltyClassName='flex flex-row-reverse justify-end gap-0'
+//             optionClassName='text-sm px-0 font-semibold'
+//           />
+//           {errors.homePenalty && (
+//             <span className='text-sm text-red-500 '>
+//               <span className='text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4'>
+//                 Kolom Wajib di isi...
+//               </span>
+//             </span>
+//           )}
+//         </>
+//       )}
+//       <SelectInput
+//         label={teamAway ? '' : 'teamAway'}
+//         isMulti={false}
+//         id='teamAway'
+//         register={register}
+//         required
+//         value={watch('teamAway')}
+//         onChange={(value) => setCustomValue('teamAway', value)}
+//         placeholder='Team Away'
+//         options={() => selectTeamAwayOptions}
+//         errors={errors}
+//       />
+//       {errors.teamAway && (
+//         <span className='text-sm text-red-500 '>
+//           <span className='text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4'>
+//             Kolom Wajib di isi...
+//           </span>
+//         </span>
+//       )}
+//       {modalType === 'edit-fixture' && (
+//         <>
+//           <Input
+//             id='awayScore'
+//             type='text'
+//             label={awayScore ? '' : 'awayScore'}
+//             disabled={isLoading}
+//             register={register}
+//             errors={errors}
+//             required
+//           />
+//           {errors.awayScore && (
+//             <span className='text-sm text-red-500 '>
+//               <span className='text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4'>
+//                 Kolom Wajib di isi...
+//               </span>
+//             </span>
+//           )}
+//           <Input
+//             id='awayHTScore'
+//             type='text'
+//             label={awayHTScore ? '' : 'awayHTScore'}
+//             disabled={isLoading}
+//             register={register}
+//             errors={errors}
+//           />
+//           {errors.awayHTScore && (
+//             <span className='text-sm text-red-500 '>
+//               <span className='text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4'>
+//                 Kolom Wajib di isi...
+//               </span>
+//             </span>
+//           )}
+//           <SelectInput
+//             label={awayPenalty ? '' : 'awayPenalty'}
+//             isMulti={true}
+//             id='awayPenalty'
+//             register={register}
+//             value={watch('awayPenalty')}
+//             onChange={(value) => setCustomValue('awayPenalty', value)}
+//             placeholder='away penalty'
+//             options={() => penaltyOptions}
+//             errors={errors}
+//             optionPenaltyClassName='flex flex-row-reverse justify-end gap-0'
+//             optionClassName='text-sm px-0 font-semibold'
+//           />
+//           {errors.awayPenalty && (
+//             <span className='text-sm text-red-500 '>
+//               <span className='text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4'>
+//                 Kolom Wajib di isi...
+//               </span>
+//             </span>
+//           )}
+//         </>
+//       )}
+//     </div>
+//   );
+
+//   return (
+//     <Modal
+//       isOpen={
+//         isOpen && (modalType === 'new-fixture' || modalType === 'edit-fixture')
+//       }
+//       onClose={handleCloseClearForm}
+//       onSubmit={handleSubmit(onSubmit)}
+//       title={modalType === 'new-fixture' ? 'New fixture' : 'Edit Fixture'}
+//       actionLabel='Submit'
+//       disabled={isLoading}
+//       body={bodyContent}
+//     />
+//   );
+// };
+
+// export default FixtureModal;

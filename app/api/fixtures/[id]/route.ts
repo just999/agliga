@@ -1,7 +1,5 @@
 import getCurrentUser from '@/actions/get-user';
-
 import { db } from '@/lib/db';
-import { revalidatePath } from 'next/cache';
 import { NextResponse } from 'next/server';
 
 export async function PUT(
@@ -10,11 +8,13 @@ export async function PUT(
 ) {
   const currentUser = await getCurrentUser();
   if (!currentUser || currentUser.role !== 'admin') return NextResponse.error();
+
   const body = await req.json();
   const {
     date,
-    euroTeamAway,
-    euroTeamHome,
+    week,
+    teamAway,
+    teamHome,
     homePenalty,
     awayPenalty,
     group,
@@ -43,34 +43,17 @@ export async function PUT(
     score === null;
   }
 
-  // let win: any = '';
-  // let los: any = '';
-  // if (+homeScore > +awayScore) {
-  //   win === euroTeamHome;
-  // } else {
-  //   los === euroTeamAway;
-  // }
-
-  // let hg;
-  // if (homeScore & awayScore) {
-  //   hg = +homeScore - +awayScore;
-  // }
-
-  // let ag;
-  // if (homeScore & awayScore) {
-  //   ag = +awayScore - +homeScore;
-  // }
-
   try {
-    const scheduleItem = await db.euro.update({
+    const scheduleItem = await db.fixture.update({
       where: { id: id },
       data: {
         date: isoDate,
-        euroTeamHome,
+        week: week.value,
+        teamHome: teamHome.value,
         homePenalty: hp,
         homeScore: homeScore === '' ? null : homeScore,
         homeHTScore: homeHTScore === '' ? null : homeHTScore,
-        euroTeamAway,
+        teamAway: teamAway.value,
         awayPenalty: ap,
         group,
         awayScore: awayScore === '' ? null : awayScore,
@@ -97,46 +80,6 @@ export async function PUT(
     // return new Response(JSON.stringify({ message: 'Success' }), {
     //   status: 200,
     // });
-  } catch (err) {
-    return new Response(JSON.stringify({ message: 'Server Error' }), {
-      status: 500,
-    });
-  }
-}
-
-export async function DELETE(
-  req: Request,
-  { params }: { params: { id: string } }
-) {
-  const currentUser = await getCurrentUser();
-  if (!currentUser) return NextResponse.error();
-
-  const id = params.id;
-  // const formData = await req.formData();
-  // const images = formData.get('images');
-  // const updatedSliderImage = {
-  //   images,
-  //   userId: currentUser.id,
-  // } as any;
-
-  try {
-    const eu = await db.euro.findUnique({
-      where: {
-        id: params.id,
-      },
-    });
-
-    if (!eu) return new NextResponse('Invalid ID', { status: 400 });
-
-    const deletedEuro = await db.euro.delete({
-      where: {
-        id: params.id,
-      },
-    });
-    // return NextResponse.json({ message: 'update success!' });
-
-    revalidatePath('/euro');
-    return new Response(JSON.stringify(deletedEuro), { status: 200 });
   } catch (err) {
     return new Response(JSON.stringify({ message: 'Server Error' }), {
       status: 500,

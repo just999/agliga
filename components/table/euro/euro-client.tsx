@@ -35,7 +35,6 @@ const EuroClient = ({
   trashClassName,
   items,
 }: EuroClientProps) => {
-  const itemsFil = items?.filter((fi) => fi.group === 'F');
   const [dat, setDat] = useState<TeamStats[]>([]);
   // const [dat, setDat] = useState<TeamStats[]>([]);
 

@@ -43,6 +43,11 @@ model User {
   sliders        Slider[]
   Euro           Euro[]
   Fixture        Fixture[]
+  EPL2324        EPL2324[]
+  EPL2223        EPL2223[]
+  EPL2122        EPL2122[]
+
+  EPL2425 EPL2425[]
 }
 
 model Account {
@@ -220,9 +225,11 @@ model Euro {
   euroTeamHome Team
   homePenalty  String[] @default([""])
   homeScore    String?
+  homeHTScore  String?
   euroTeamAway Team
   awayPenalty  String[] @default([""])
   awayScore    String?
+  awayHTScore  String?
   group        Group?
   userId       String   @db.ObjectId
 
@@ -232,20 +239,104 @@ model Euro {
 }
 
 model Fixture {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
-  name         String
-  date         DateTime
-  euroTeamHome Team
-  homePenalty  String[] @default([""])
-  homeScore    String?
-  homeHTScore  String?
-  euroTeamAway Team
-  awayPenalty  String[] @default([""])
-  awayScore    String?
-  awayHTScore  String?
-  group        Group?
-  week         Int?
-  userId       String   @db.ObjectId
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  date        DateTime
+  teamHome    String?
+  homePenalty String[] @default([""])
+  homeScore   String?
+  homeHTScore String?
+  teamAway    String?
+  awayPenalty String[] @default([""])
+  awayScore   String?
+  awayHTScore String?
+  group       Group?
+  week        Int?
+  userId      String   @db.ObjectId
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model EPL2324 {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  date        DateTime
+  teamHome    String?
+  homePenalty String[] @default([""])
+  homeScore   String?
+  homeHTScore String?
+  teamAway    String?
+  awayPenalty String[] @default([""])
+  awayScore   String?
+  awayHTScore String?
+  group       Group?
+  week        Int?
+  userId      String   @db.ObjectId
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model EPL2223 {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  date        DateTime
+  teamHome    String?
+  homePenalty String[] @default([""])
+  homeScore   String?
+  homeHTScore String?
+  teamAway    String?
+  awayPenalty String[] @default([""])
+  awayScore   String?
+  awayHTScore String?
+  group       Group?
+  week        Int?
+  userId      String   @db.ObjectId
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model EPL2122 {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  date        DateTime
+  teamHome    String?
+  homePenalty String[] @default([""])
+  homeScore   String?
+  homeHTScore String?
+  teamAway    String?
+  awayPenalty String[] @default([""])
+  awayScore   String?
+  awayHTScore String?
+  group       Group?
+  week        Int?
+  userId      String   @db.ObjectId
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model EPL2425 {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  date        DateTime
+  teamHome    String?
+  homePenalty String[] @default([""])
+  homeScore   String?
+  homeHTScore String?
+  teamAway    String?
+  awayPenalty String[] @default([""])
+  awayScore   String?
+  awayHTScore String?
+  group       Group?
+  week        Int?
+  userId      String   @db.ObjectId
 
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())

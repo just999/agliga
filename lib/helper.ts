@@ -30,6 +30,7 @@ import {
 import {
   Arsenal,
   Aston,
+  AstonVilla,
   Bournemouth,
   Brentford,
   Brighton,
@@ -38,6 +39,7 @@ import {
   Crystal,
   Everton,
   Fulham,
+  Ipswich,
   Leed,
   Leichester,
   Liverpool,
@@ -47,10 +49,12 @@ import {
   MU,
   Newcastle,
   Nottingham,
+  PL,
   Red,
   Sheffield,
   Southampton,
   Tth,
+  Watford,
   Westham,
   Wolve,
   Yellow,
@@ -64,6 +68,7 @@ import {
   LiveCasino338a,
   Sbo,
 } from '@/components/assets/user-games';
+import { BsCalendarWeek } from 'react-icons/bs';
 import { FaSwimmer, FaSkiing, FaChess } from 'react-icons/fa';
 import {
   GiSoccerKick,
@@ -868,6 +873,12 @@ export const englishPL = [
     href: 'https://team.7msport.com/239/index.shtml',
   },
   {
+    id: 25,
+    name: 'Man Utd',
+    icon: '/images/mu.svg',
+    href: 'https://team.7msport.com/239/index.shtml',
+  },
+  {
     id: 4,
     name: 'Newcastle',
     icon: '/images/newcastle.svg',
@@ -894,6 +905,12 @@ export const englishPL = [
   {
     id: 8,
     name: 'Tottenham',
+    icon: '/images/tth.svg',
+    href: 'https://team.7msport.com/175/index.shtml',
+  },
+  {
+    id: 27,
+    name: 'Spurs',
     icon: '/images/tth.svg',
     href: 'https://team.7msport.com/175/index.shtml',
   },
@@ -941,7 +958,7 @@ export const englishPL = [
   },
   {
     id: 16,
-    name: 'Nottm Forest',
+    name: 'Nottingham Forest',
     icon: '/images/nottingham.svg',
     href: 'https://team.7msport.com/195/index.shtml',
   },
@@ -958,8 +975,20 @@ export const englishPL = [
     href: 'https://team.7msport.com/293/index.shtml',
   },
   {
+    id: 28,
+    name: 'Leicester',
+    icon: '/images/leicester.svg',
+    href: 'https://team.7msport.com/293/index.shtml',
+  },
+  {
     id: 19,
     name: 'Leeds United',
+    icon: '/images/leed.svg',
+    href: 'https://team.7msport.com/867/index.shtml',
+  },
+  {
+    id: 26,
+    name: 'Leeds',
     icon: '/images/leed.svg',
     href: 'https://team.7msport.com/867/index.shtml',
   },
@@ -976,8 +1005,20 @@ export const englishPL = [
     href: 'https://team.7msport.com/615/index.shtml',
   },
   {
+    id: 29,
+    name: 'Luton',
+    icon: '/images/luton.svg',
+    href: 'https://team.7msport.com/615/index.shtml',
+  },
+  {
     id: 22,
     name: 'Sheffield United',
+    icon: '/images/sheffield.svg',
+    href: 'https://team.7msport.com/44/index.shtml',
+  },
+  {
+    id: 22,
+    name: 'Sheffield Utd',
     icon: '/images/sheffield.svg',
     href: 'https://team.7msport.com/44/index.shtml',
   },
@@ -986,6 +1027,24 @@ export const englishPL = [
     name: 'Burnley',
     icon: '/images/burnley.svg',
     href: 'https://team.7msport.com/498/index.shtml',
+  },
+  {
+    id: 24,
+    name: 'Ipswich',
+    icon: '/images/ipswich.svg',
+    href: 'https://team.7msport.com/44/index.shtml',
+  },
+  {
+    id: 30,
+    name: 'Watford',
+    icon: '/images/watford.svg',
+    href: 'https://team.7msport.com/44/index.shtml',
+  },
+  {
+    id: 31,
+    name: 'Norwich',
+    icon: '/images/norwich.svg',
+    href: 'https://team.7msport.com/44/index.shtml',
   },
 ];
 export const EPL = [
@@ -1003,6 +1062,12 @@ export const EPL = [
   },
   {
     name: 'Man United',
+    icon: MU,
+    description: 'MU',
+    href: 'https://team.7msport.com/239/index.shtml',
+  },
+  {
+    name: 'Man Utd',
     icon: MU,
     description: 'MU',
     href: 'https://team.7msport.com/239/index.shtml',
@@ -1027,7 +1092,7 @@ export const EPL = [
   },
   {
     name: 'Aston Villa',
-    icon: Aston,
+    icon: AstonVilla,
     description: 'Aston Villa',
     href: 'https://team.7msport.com/571/index.shtml',
   },
@@ -1080,7 +1145,7 @@ export const EPL = [
     href: 'https://team.7msport.com/674/index.shtml',
   },
   {
-    name: 'Nottinghamm Forest',
+    name: 'Nottingham Forest',
     icon: Nottingham,
     description: 'Nottingham',
     href: 'https://team.7msport.com/195/index.shtml',
@@ -1099,6 +1164,12 @@ export const EPL = [
   },
   {
     name: 'Leeds United',
+    icon: Leed,
+    description: 'Leed',
+    href: 'https://team.7msport.com/867/index.shtml',
+  },
+  {
+    name: 'Leeds',
     icon: Leed,
     description: 'Leed',
     href: 'https://team.7msport.com/867/index.shtml',
@@ -1125,6 +1196,18 @@ export const EPL = [
     name: 'Burnley',
     icon: Burnley,
     description: 'Burnley',
+    href: 'https://team.7msport.com/498/index.shtml',
+  },
+  {
+    name: 'Ipswich',
+    icon: Ipswich,
+    description: 'Ipswich',
+    href: 'https://team.7msport.com/498/index.shtml',
+  },
+  {
+    name: 'Watford',
+    icon: Watford,
+    description: 'Ipswich',
     href: 'https://team.7msport.com/498/index.shtml',
   },
 ];
@@ -1220,6 +1303,19 @@ export const initialScheduleFormValues = {
   teamAway: '',
   analysis: '',
 };
+
+export const initialFixtureFormValues = {
+  name: '',
+  date: new Date(),
+  teamHome: '',
+  homePenalty: [],
+  homeScore: '',
+  week: null,
+  teamAway: '',
+  awayPenalty: [],
+  awayScore: '',
+};
+
 export const initialEuroFormValues = {
   date: new Date(),
   euroTeamHome: '',
@@ -2615,4 +2711,114 @@ export const penalty = [
     style: 'text-emerald-800',
     description: '8',
   },
+];
+
+export const EPLPeriod = [
+  {
+    value: '21-22',
+    label: '2021 - 2022',
+    icon: PL,
+  },
+  {
+    value: '22-23',
+    label: '2022 - 2023',
+    icon: PL,
+  },
+  {
+    value: '23-24',
+    label: '2023 - 2024',
+    icon: PL,
+  },
+  {
+    value: '24-25',
+    label: '2024 - 2025',
+    icon: PL,
+  },
+];
+
+type TableData = { value: number; className?: string };
+
+export const weeksTableRows: TableData[][] = [
+  [
+    { value: 1, className: 'lsm2' },
+    { value: 2, className: 'lsm2' },
+    { value: 3, className: 'lsm2' },
+    { value: 4, className: 'lsm2' },
+    { value: 5, className: 'lsm2' },
+    { value: 6, className: 'lsm2' },
+    { value: 7, className: 'lsm2' },
+    { value: 8, className: 'lsm2' },
+    { value: 9, className: 'lsm2' },
+    { value: 10, className: 'lsm2' },
+    { value: 11, className: 'lsm2' },
+    { value: 12, className: 'lsm2' },
+    { value: 13, className: 'lsm2' },
+    { value: 14, className: 'lsm2' },
+    { value: 15, className: 'lsm2' },
+    { value: 16, className: 'lsm2' },
+    { value: 17, className: 'lsm2' },
+    { value: 18, className: 'lsm2' },
+    { value: 19, className: 'lsm2' },
+    { value: 20, className: 'lsm2' },
+    { value: 21, className: 'lsm2' },
+    { value: 22, className: 'lsm2' },
+    { value: 23, className: 'lsm2' },
+    { value: 24, className: 'lsm2' },
+    { value: 25, className: 'lsm2' },
+    { value: 26, className: 'lsm2' },
+    { value: 27, className: 'lsm2' },
+    { value: 28, className: 'lsm2' },
+    { value: 29, className: 'lsm2' },
+    { value: 30, className: 'lsm2' },
+    { value: 31, className: 'lsm2' },
+    { value: 32, className: 'lsm2' },
+    { value: 33, className: 'lsm2' },
+    { value: 34, className: 'lsm2' },
+    { value: 35, className: 'lsm2' },
+    { value: 36, className: 'lsm2' },
+    { value: 37, className: 'lsm2' },
+    { value: 38, className: 'lsm2' },
+    // { value: 39, className: 'lsm2' },
+  ],
+];
+
+export const weeks = [
+  { value: 1, className: 'lsm2', icon: BsCalendarWeek },
+  { value: 2, className: 'lsm2', icon: BsCalendarWeek },
+  { value: 3, className: 'lsm2', icon: BsCalendarWeek },
+  { value: 4, className: 'lsm2', icon: BsCalendarWeek },
+  { value: 5, className: 'lsm2', icon: BsCalendarWeek },
+  { value: 6, className: 'lsm2', icon: BsCalendarWeek },
+  { value: 7, className: 'lsm2', icon: BsCalendarWeek },
+  { value: 8, className: 'lsm2', icon: BsCalendarWeek },
+  { value: 9, className: 'lsm2', icon: BsCalendarWeek },
+  { value: 10, className: 'lsm2', icon: BsCalendarWeek },
+  { value: 11, className: 'lsm2', icon: BsCalendarWeek },
+  { value: 12, className: 'lsm2', icon: BsCalendarWeek },
+  { value: 13, className: 'lsm2', icon: BsCalendarWeek },
+  { value: 14, className: 'lsm2', icon: BsCalendarWeek },
+  { value: 15, className: 'lsm2', icon: BsCalendarWeek },
+  { value: 16, className: 'lsm2', icon: BsCalendarWeek },
+  { value: 17, className: 'lsm2', icon: BsCalendarWeek },
+  { value: 18, className: 'lsm2', icon: BsCalendarWeek },
+  { value: 19, className: 'lsm2', icon: BsCalendarWeek },
+  { value: 20, className: 'lsm2', icon: BsCalendarWeek },
+  { value: 21, className: 'lsm2', icon: BsCalendarWeek },
+  { value: 22, className: 'lsm2', icon: BsCalendarWeek },
+  { value: 23, className: 'lsm2', icon: BsCalendarWeek },
+  { value: 24, className: 'lsm2', icon: BsCalendarWeek },
+  { value: 25, className: 'lsm2', icon: BsCalendarWeek },
+  { value: 26, className: 'lsm2', icon: BsCalendarWeek },
+  { value: 27, className: 'lsm2', icon: BsCalendarWeek },
+  { value: 28, className: 'lsm2', icon: BsCalendarWeek },
+  { value: 29, className: 'lsm2', icon: BsCalendarWeek },
+  { value: 30, className: 'lsm2', icon: BsCalendarWeek },
+  { value: 31, className: 'lsm2', icon: BsCalendarWeek },
+  { value: 32, className: 'lsm2', icon: BsCalendarWeek },
+  { value: 33, className: 'lsm2', icon: BsCalendarWeek },
+  { value: 34, className: 'lsm2', icon: BsCalendarWeek },
+  { value: 35, className: 'lsm2', icon: BsCalendarWeek },
+  { value: 36, className: 'lsm2', icon: BsCalendarWeek },
+  { value: 37, className: 'lsm2', icon: BsCalendarWeek },
+  { value: 38, className: 'lsm2', icon: BsCalendarWeek },
 ];

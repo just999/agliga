@@ -18,9 +18,12 @@ import useModal, { ImageSlider } from '@/hooks/use-modal';
 import { useParams } from 'next/navigation';
 import { Slider } from '@prisma/client';
 import { cn } from '@/lib/utils';
+import { TbNewSection } from 'react-icons/tb';
 
 type VerticalDropdownProps = {
   item?: PostProps;
+  value?: string | undefined;
+  period?: string | null;
   currentUser?: SafeUser;
   title?: string;
   img?: Slider;
@@ -30,6 +33,8 @@ type VerticalDropdownProps = {
 
 const VerticalDropdown = ({
   item,
+  period,
+  value,
   currentUser,
   title,
   img,
@@ -56,10 +61,15 @@ const VerticalDropdown = ({
   //   setIsFavorited(false);
   //   toggleDislike(e);
   // };
-  const { onOpen, modalType, setImg } = useModal();
+  const { onOpen, modalType, setImg, isOpen, setGroup, group } = useModal();
   const handleEditSlider = (img: any) => {
     onOpen('edit-slider');
     setImg('edit-slider', img);
+  };
+
+  const handlePeriod = (value: string) => {
+    onOpen('new-fixture', (period = value));
+    // setGroup('new-fixture', isOpen === false, period);
   };
   return (
     <DropdownMenu>
@@ -127,6 +137,9 @@ const VerticalDropdown = ({
               />
             )}
             {/* </Button> */}
+            {value && value && (
+              <TbNewSection onClick={() => handlePeriod(value)} />
+            )}
           </div>
         </DropdownMenuItem>
       </DropdownMenuContent>

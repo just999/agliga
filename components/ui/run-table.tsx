@@ -10,14 +10,15 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { rows } from '../table/run-table';
+// import { rows } from '../table/run-table';
 // import useRunToggleStore from '@/store/use-table-store';
 
 import RunBox from '../run-box';
 import { useSearchParams, usePathname } from 'next/navigation';
 
 import { cn } from '@/lib/utils';
-import useRunToggleStore from '@/store/use-table-store';
+
+import { weeksTableRows } from '@/lib/helper';
 
 export type RunTableProps = {
   toggle: (value?: number) => void;
@@ -27,7 +28,7 @@ export type RunTableProps = {
 
 const RunTable = ({ toggle, setIsOpen, className }: RunTableProps) => {
   const params = useSearchParams();
-  const run = params.get('run');
+  const week = params.get('week');
   const pathname = usePathname();
 
   const isMainPage = pathname === '/soccer';
@@ -35,9 +36,9 @@ const RunTable = ({ toggle, setIsOpen, className }: RunTableProps) => {
   // const { isOpen } = useRunToggleStore();
   if (!isMainPage) return null;
 
-  const handleToggleRun = (run: number) => {
-    toggle(run);
-  };
+  // const handleToggleRun = (run: number) => {
+  //   toggle(run);
+  // };
 
   return (
     <Table
@@ -48,7 +49,7 @@ const RunTable = ({ toggle, setIsOpen, className }: RunTableProps) => {
     >
       <TableHeader></TableHeader>
       <TableBody className='bg-stone-100 '>
-        {rows.map((row, rowIndex) => (
+        {weeksTableRows.map((row, rowIndex) => (
           <TableRow
             key={rowIndex}
             className='text-center text-xs h-full w-full flex flex-wrap gap-0 py-1'
@@ -57,28 +58,23 @@ const RunTable = ({ toggle, setIsOpen, className }: RunTableProps) => {
               <TableCell
                 key={`${rowIndex}-${cellIndex}`}
                 className={cn(
-                  'w-m p-0  flex-grow cursor-pointer leading-5 xs:px-2 sm:px-4  md:px-4 lg:px-4 xl:px-4 2xl:px-7  my-auto text-center text-xs border-b-2 hover:bg-zinc-200 hover:rounded-md  hover:drop-shadow-md  hover:text-neutral-800 transition',
-                  Number(run) === cellData.value
+                  'w-m p-0  flex-grow cursor-pointer leading-5 xs:px-2 sm:px-4  md:px-4 lg:px-4 xl:px-4 2xl:px-5  my-auto text-center text-xs border-b-2 hover:bg-zinc-200 hover:rounded-md  hover:drop-shadow-md  hover:text-neutral-800 transition',
+                  Number(week) === cellData.value
                     ? 'border-b-indigo-500/40 bg-indigo-50 drop-shadow-md rounded-sm'
                     : 'border-transparent',
-                  Number(run) === cellData.value
+                  Number(week) === cellData.value
                     ? 'text-stone-900'
                     : 'text-neutral-400'
                 )}
               >
-                {/* <TableCell
-                key={`${rowIndex}-${cellIndex}`}
-                className={cn(' text-blue-600  align-middle flex-1 underline p-0  cursor-pointer leading-5  my-auto text-center text-xs hover:bg-stone-300 border-neutral-200 py-2  px-3 flex flex-col items-center gap-0  border-b-2 hover:shadow-md  hover:text-neutral-800 transition', )}
-              > */}
-
                 <RunBox
                   label={cellData.value}
-                  selected={Number(run) === cellData.value}
+                  selected={Number(week) === cellData.value}
                   toggle={toggle}
                   // onClick={() => handleToggleRun(cellData.value)}
                 />
 
-                {/* {cellData.value} */}
+                {Number(week) === cellData.value}
               </TableCell>
             ))}
           </TableRow>

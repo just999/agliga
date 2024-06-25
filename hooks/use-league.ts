@@ -12,8 +12,8 @@ type Match = {
     icon: string;
   };
   group: string;
-  homeScore?: number | null; // Indicate it might be unplayed
-  awayScore?: number | null; // Indicate it might be unplayed
+  homeScore: number | null; // Indicate it might be unplayed
+  awayScore: number | null; // Indicate it might be unplayed
   date: string; // Date of the match in ISO format
 };
 
@@ -56,7 +56,7 @@ const initializeTeamStats = (
 });
 
 const calculateTeamStats = (match: Match, teamStats: TeamStats): TeamStats => {
-  const { euroTeamHome, euroTeamAway, homeScore, awayScore } = match;
+  const { euroTeamHome, euroTeamAway, homeScore, awayScore, date } = match;
   const isHomeTeam = euroTeamHome.value === teamStats.team.value;
   const isAwayTeam = euroTeamAway.value === teamStats.team.value;
 
@@ -124,7 +124,6 @@ const useLeague = (matches: Match[]): TeamStats[] => {
           group
         );
       }
-
       // console.log(
       //   'Before update:',
       //   initialTable[euroTeamHome.value],

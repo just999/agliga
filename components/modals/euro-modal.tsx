@@ -161,13 +161,19 @@ const EuroModal = () => {
         played: '',
       };
 
-      let targetPen: string[] = [];
+      let targetAPen: string[] = [];
       if (item.awayPenalty) {
-        targetPen = item.awayPenalty;
+        targetAPen = item.awayPenalty;
       }
-      const apen = findMatchingObjects(penalties, targetPen);
+      let targetHPen: string[] = [];
+      if (item.homePenalty) {
+        targetHPen = item.homePenalty;
+      }
+      const apen = findMatchingObjects(penalties, targetAPen);
+      const hPen = findMatchingObjects(penalties, targetHPen);
+
       setValue('euroTeamHome', home[0]);
-      setValue('homePenalty', item.homePenalty);
+      setValue('homePenalty', hPen);
       setValue('date', new Date(item.date).toISOString().substring(0, 16));
       setValue('euroTeamAway', away[0]);
       setValue('awayPenalty', apen);
@@ -182,7 +188,6 @@ const EuroModal = () => {
       // } else {
       //   console.warn('item.date is not a valid Date object');
       // }
-    } else if (modalType === 'new-euro') {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [error, item, modalType, setValue, teamsOption]);
@@ -328,6 +333,28 @@ const EuroModal = () => {
         </span>
       )}
 
+      <SelectInput
+        label={homePenalty ? '' : 'homePenalty'}
+        isMulti={true}
+        id='homePenalty'
+        register={register}
+        value={watch('homePenalty')}
+        onChange={(value) => setCustomValue('homePenalty', value)}
+        placeholder='home penalty'
+        options={() => penaltyOptions}
+        errors={errors}
+        // optionIconClassName='text-yellow-400'
+        optionPenaltyClassName='flex flex-row-reverse justify-end gap-0'
+        optionClassName='text-sm px-0 font-semibold'
+      />
+      {errors.homePenalty && (
+        <span className='text-sm text-red-500 '>
+          <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
+            Kolom Wajib di isi...
+          </span>
+        </span>
+      )}
+
       <Input
         id='homeScore'
         type='text'
@@ -375,6 +402,28 @@ const EuroModal = () => {
         optionClassName='text-base px-2 '
       />
       {errors.euroTeamAway && (
+        <span className='text-sm text-red-500 '>
+          <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
+            Kolom Wajib di isi...
+          </span>
+        </span>
+      )}
+
+      <SelectInput
+        label={awayPenalty ? '' : 'awayPenalty'}
+        isMulti={true}
+        id='awayPenalty'
+        register={register}
+        value={watch('awayPenalty')}
+        onChange={(value) => setCustomValue('awayPenalty', value)}
+        placeholder='home penalty'
+        options={() => penaltyOptions}
+        errors={errors}
+        // optionIconClassName='text-yellow-400'
+        optionPenaltyClassName='flex flex-row-reverse justify-end gap-0'
+        optionClassName='text-sm px-0 font-semibold'
+      />
+      {errors.awayPenalty && (
         <span className='text-sm text-red-500 '>
           <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
             Kolom Wajib di isi...
@@ -430,6 +479,82 @@ const EuroModal = () => {
           </span>
         </span>
       )}
+      {/* <SelectInput
+        label={winner ? '' : 'winner'}
+        isMulti={false}
+        id='winner'
+        register={register}
+        value={watch('winner')}
+        onChange={(value) => setCustomValue('winner', value)}
+        placeholder='euroAway'
+        options={() => selectTeamHomeOptions}
+        errors={errors}
+        optionIconClassName={cn(noto.className)}
+        optionClassName='text-base px-2 '
+      />
+      {errors.winner && (
+        <span className='text-sm text-red-500 '>
+          <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
+            Kolom Wajib di isi...
+          </span>
+        </span>
+      )}
+
+      <SelectInput
+        label={loser ? '' : 'loser'}
+        isMulti={false}
+        id='loser'
+        register={register}
+        value={watch('loser')}
+        onChange={(value) => setCustomValue('loser', value)}
+        placeholder='euroAway'
+        options={() => selectTeamHomeOptions}
+        errors={errors}
+        optionIconClassName={cn(noto.className)}
+        optionClassName='text-base px-2 '
+      />
+      {errors.loser && (
+        <span className='text-sm text-red-500 '>
+          <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
+            Kolom Wajib di isi...
+          </span>
+        </span>
+      )}
+
+      <Input
+        id='homeGoalDiff'
+        type='text'
+        label={homeGoalDiff ? '' : 'homeGoalDiff'}
+        disabled={isLoading}
+        defaultValue={watch('homeGoalDiff')}
+        register={register}
+        errors={errors}
+      />
+      {errors.homeGoalDiff && (
+        <span className='text-sm text-red-500 '>
+          <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
+            Kolom Wajib di isi...
+          </span>
+        </span>
+      )}
+      <Input
+        id='awayGoalDiff'
+        type='text'
+        label={awayGoalDiff ? '' : 'awayGoalDiff'}
+        disabled={isLoading}
+        defaultValue={watch('awayGoalDiff')}
+        register={register}
+        errors={errors}
+      />
+      {errors.awayGoalDiff && (
+        <span className='text-sm text-red-500 '>
+          <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
+            Kolom Wajib di isi...
+          </span>
+        </span>
+      )}
+
+       */}
     </div>
   );
 
