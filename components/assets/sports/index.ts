@@ -19,6 +19,7 @@ import { Matches } from './matches';
 import { MC } from './mc';
 import { MU } from './mu';
 import { Newcastle } from './newcastle';
+import { Norwich } from './norwich';
 import { Nottingham } from './nottingham';
 import { PL } from './pl';
 import { Red } from './red';
@@ -64,4 +65,5 @@ export {
   AstonVilla,
   Ipswich,
   Watford,
+  Norwich,
 };

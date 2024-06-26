@@ -8,7 +8,7 @@ import Heading from '../heading';
 import Input from '../ui/input';
 import toast from 'react-hot-toast';
 
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 import SelectInput from '../select-input';
 
@@ -16,36 +16,29 @@ import useModal from '@/hooks/use-modal';
 
 import { useWeeks, useTeams } from '@/hooks/use-teams';
 
-import { useGetFixtures, useGetSchedules } from '@/hooks/use-get-schedule';
-
 import { FixtureProps } from '@/types';
 
 import { euroGroup, initialFixtureFormValues, team } from '@/lib/helper';
 import { usePenalty } from '@/hooks/use-euro';
-import { convertDate, findMatchingObjects } from '@/lib/utils';
-import useRunToggleStore from '@/store/use-table-store';
-import { run } from 'node:test';
+import { findMatchingObjects } from '@/lib/utils';
+import { useGetFixtures } from '@/hooks/use-get-schedule';
 
 const FixtureModal = () => {
   const [fixture, setFixture] = useState<FixtureProps>(
     initialFixtureFormValues
   );
-  const [isLoading, setIsLoading] = useState(false);
-
-  const params = useSearchParams();
-  const w = params.get('week');
 
   const { modalType, isOpen, onClose, id, group, period } = useModal();
-
   const router = useRouter();
   const { getTeams, getByValue } = useTeams();
   const { getPenalty } = usePenalty();
   const { getWeeks, getWeeksByValue } = useWeeks();
-  const { item, error } = useGetFixtures(id ? id : undefined);
+  const { isLoading, error, item, items, setItems, setIsLoading } =
+    useGetFixtures(id ? id : undefined, period);
   let initialFixtureValues;
   if (modalType === 'new-fixture') {
     initialFixtureValues = {
-      name: group,
+      name: period,
       week: null,
       date: new Date(),
       teamHome: '',
@@ -72,7 +65,6 @@ const FixtureModal = () => {
       awayPenalty: fixture.awayPenalty,
     };
   }
-
   const {
     register,
     handleSubmit,
@@ -83,23 +75,6 @@ const FixtureModal = () => {
   } = useForm<FieldValues>({
     defaultValues: initialFixtureValues,
   });
-
-  const pDate = '19/09/2023 01:45';
-  const convertedDate = convertDate(pDate);
-
-  const newDate = new Date(fixture.date).toISOString().substring(0, 16);
-  const name = watch('name');
-  const week = watch('week');
-  const date = watch('date');
-  const teamHome = watch('teamHome');
-  const homeScore = watch('homeScore');
-  const homeHTScore = watch('homeHTScore');
-  const homePenalty = watch('homePenalty');
-  const awayScore = watch('awayScore');
-  const awayHTScore = watch('awayHTScore');
-  const awayPenalty = watch('awayPenalty');
-  const teamAway = watch('teamAway');
-
   const weeks = getWeeks();
   const selectWeekOptions = weeks.map((week) => ({
     value: week.value,
@@ -126,16 +101,10 @@ const FixtureModal = () => {
   }));
 
   useEffect(() => {
-    const periodWeek: any = weeks.filter(
-      (period) => period.value === Number(w)
-    ) || {
-      icon: '',
-      value: '',
-    };
     if (modalType === 'new-fixture' && !error) {
       const data = {
-        name: group,
-        week: periodWeek[0],
+        name: period,
+        week: null,
         date: new Date(),
         teamHome: '',
         homePenalty: [],
@@ -148,10 +117,12 @@ const FixtureModal = () => {
       } as any;
       setFixture(data);
 
-      // if (w === null) {
-      //   w = item.week;
-      // }
-
+      const periodWeek: any = weeks.filter(
+        (period) => period.value === item.week
+      ) || {
+        icon: '',
+        value: '',
+      };
       const home: any = teamsOption.filter(
         (team) => team.value === item.teamHome
       ) || {
@@ -164,14 +135,13 @@ const FixtureModal = () => {
         value: '',
         icon: '',
       };
-
       setValue('name', group);
-      setValue('week', fixture.week);
+      setValue('week', week);
       setValue('teamHome', home[0]);
       setValue('homePenalty', homePenalty);
       setValue('homeScore', homeScore);
       setValue('awayPenalty', awayPenalty);
-      setValue('date', new Date(convertedDate).toISOString().substring(0, 16));
+      setValue('date', new Date(item.date).toISOString().substring(0, 16));
       setValue('teamAway', away[0]);
       setValue('awayScore', awayScore);
       setValue('homeHTScore', homeHTScore);
@@ -180,6 +150,7 @@ const FixtureModal = () => {
 
     if (modalType === 'edit-fixture' && item && !error) {
       const data = {
+        id: item.id,
         name: item.name,
         week: item.week,
         teamHome: item.teamHome,
@@ -222,7 +193,7 @@ const FixtureModal = () => {
       const apen = findMatchingObjects(penalties, targetAPen);
       const hPen = findMatchingObjects(penalties, targetHPen);
 
-      setValue('name', group);
+      setValue('name', period);
       setValue('week', periodWeek[0]);
       setValue('teamHome', home[0]);
       setValue('date', new Date(item.date).toISOString().substring(0, 16));
@@ -240,26 +211,21 @@ const FixtureModal = () => {
       //   console.warn('item.date is not a valid Date object');
       // }
     }
-  }, [
-    error,
-    item,
-    modalType,
-    setValue,
-    teamsOption,
-    group,
-    penalties,
-    weeks,
-    date,
-    awayHTScore,
-    awayPenalty,
-    awayScore,
-    homeHTScore,
-    homePenalty,
-    homeScore,
-    convertedDate,
-    fixture.week,
-    w,
-  ]);
+  }, [error, item, modalType, setValue, teamsOption]);
+
+  if (!item.date) return;
+  const newDate = new Date(fixture.date).toISOString().substring(0, 16);
+  const name = watch('name');
+  const week = watch('week');
+  const date = watch('date');
+  const teamHome = watch('teamHome');
+  const homeScore = watch('homeScore');
+  const homeHTScore = watch('homeHTScore');
+  const homePenalty = watch('homePenalty');
+  const awayScore = watch('awayScore');
+  const awayHTScore = watch('awayHTScore');
+  const awayPenalty = watch('awayPenalty');
+  const teamAway = watch('teamAway');
 
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
@@ -286,7 +252,7 @@ const FixtureModal = () => {
           teamAway,
         };
         axios
-          .post('/api/fixtures', data)
+          .post(`/api/fixtures/${period}`, data)
           .then(() => {
             toast.success('Deposit form success di kirim!');
             router.refresh();
@@ -337,6 +303,7 @@ const FixtureModal = () => {
 
   const handleCloseClearForm = () => {
     setFixture({
+      id: '',
       name: '',
       date: new Date(),
       teamHome: '',
@@ -346,6 +313,8 @@ const FixtureModal = () => {
       teamAway: '',
       awayPenalty: [],
       awayScore: '',
+      homeHTScore: '',
+      awayHTScore: '',
     });
     reset();
     onClose();
@@ -357,7 +326,7 @@ const FixtureModal = () => {
         title={
           modalType === 'new-fixture'
             ? `New Week period ${group}`
-            : `Edit weekly period ${group}`
+            : `Edit week  ${group}`
         }
         subtitle={
           modalType === 'new-fixture' ? 'Weeks period?' : 'Editing Matches'

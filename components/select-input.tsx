@@ -207,7 +207,7 @@ const SelectInput = ({
                 id === 'bank' ||
                 id === 'bankPT' ||
                 id === 'week' ||
-                id === 'run')
+                id === 'loser')
                 ? option.value
                 : option.desc}
               {/* <pre>{JSON.stringify(option.value, null, 2)}</pre> */}

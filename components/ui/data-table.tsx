@@ -2,7 +2,6 @@
 
 import {
   ColumnDef,
-  ColumnFiltersState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
@@ -56,8 +55,7 @@ import Periods from '../soccer/periods';
 import { useSearchParams } from 'next/navigation';
 import { TbNewSection } from 'react-icons/tb';
 import { GrEdit } from 'react-icons/gr';
-import { Fixture } from '@prisma/client';
-import { Skeleton } from './skeleton';
+import useFixturesStore from '@/store/use-fixture-store';
 
 type GroupArrayProps = {
   date: string;
@@ -66,10 +64,10 @@ type GroupArrayProps = {
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
-  eu?: any;
+  eu?: FixtureProps[] | any[];
   searchKey?: string;
   className?: string;
-  group?: string;
+  group?: any;
   mergedData?: any;
   footerClassName?: string;
   euroClassName?: string;
@@ -96,21 +94,23 @@ export function DataTable<TData, TValue>({
   period,
 }: // mergedData,
 DataTableProps<TData, TValue>) {
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  // const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [filtering, setFiltering] = useState('');
   const [isToggle, setIsToggle] = useState(false);
   const [isToggleFixture, setIsToggleFixture] = useState(false);
 
   // const { items } = useGetEuros();
+
   const { data: session } = useSession();
+
   const role = session?.user.curUser.role;
   const table = useReactTable({
     data: eu as TData[],
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    onColumnFiltersChange: setColumnFilters,
+    // onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
@@ -124,6 +124,16 @@ DataTableProps<TData, TValue>) {
     onGlobalFilterChange: setFiltering,
   });
 
+  const {
+    items,
+    item,
+    isLoading,
+    error,
+    setItem,
+    setItems,
+    setError,
+    setIsLoading,
+  } = useFixturesStore();
   const { toggle, setIsOpen } = useRunToggleStore();
   const { modalType, onOpen, setGroup, isOpen } = useModal();
 
@@ -148,7 +158,6 @@ DataTableProps<TData, TValue>) {
 
   const year1 = period?.slice(0, 2);
   const year2 = period?.slice(3, 5);
-  if (Array.isArray(eu) === false) return <Skeleton />;
   return (
     <div className='rounded-xl mx-auto w-3/4'>
       <div
@@ -164,28 +173,38 @@ DataTableProps<TData, TValue>) {
           onChange={(event) => setFiltering(event.target.value)}
           className='max-w-sm text-stone-700 mx-2 bg-zinc-50'
         />
-        {modalType === 'new-fixture' ||
-          (period && (
-            <div className='w-full flex flex-row justify-around'>
-              <Heading
-                title={`English Premier League ${period}`}
-                className=' text-zinc-500  text-lg nowrap'
-              />
-              <div className='flex flex-row justify-end gap-4 w-1/2 '>
-                <div className='break-keep'>
+        {period && (
+          <div className='w-full flex flex-row justify-around'>
+            <Heading
+              title={`English Premier League ${period}`}
+              className=' text-zinc-500  text-lg nowrap 2xs:text-[8px] xs:text-xs sm:text-sm 2xl:text-xl '
+            />
+            <div className='flex flex-row justify-end gap-4 w-1/2 '>
+              <div className='break-keep'>
+                <Button
+                  className='w-6 h-6'
+                  variant='outline'
+                  size='sm'
+                  type='button'
+                  onClick={() => handleNewFixture()}
+                >
+                  <TbNewSection />
+                </Button>
+              </div>
+              {/* <div>
                   <Button
                     className='w-6 h-6'
                     variant='outline'
                     size='sm'
                     type='button'
-                    onClick={() => handleNewFixture()}
+                    onClick={() => handleEditFixture()}
                   >
-                    <TbNewSection />
+                    <GrEdit />
                   </Button>
-                </div>
-              </div>
+                </div> */}
             </div>
-          ))}
+          </div>
+        )}
       </div>
 
       <div className='flex flex-row gap-8'>
@@ -369,7 +388,7 @@ DataTableProps<TData, TValue>) {
                 onClick={() => table.previousPage()}
                 disabled={!table.getCanPreviousPage()}
                 className={cn(
-                  'w-1/6 bg-amber-100 mx-6 text-stone-900 hover:bg-amber-200 hover:text-black hover:font-semibold hover:drop-shadow-xl shadow-lg text-xs ',
+                  'w-1/6 bg-amber-100 mx-6 text-stone-900 hover:bg-amber-200 hover:text-black hover:font-semibold hover:drop-shadow-xl shadow-lg text-xs',
                   !table.getCanPreviousPage() && 'text-zinc-600'
                 )}
               >

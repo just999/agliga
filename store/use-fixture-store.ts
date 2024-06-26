@@ -5,18 +5,23 @@ type FixtureState = {
   items: FixtureProps[];
   item: FixtureProps;
   isLoading: boolean;
-  error: any;
+  error: string | null;
   setIsLoading: (isLoading: boolean) => void;
-  setError: (error: any) => void;
+  setError: (error: string | null) => void;
   setItems: (items: FixtureProps[]) => void;
   setItem: (item: FixtureProps) => void;
 };
 
-const initialState = {
+const initialState: Omit<
+  FixtureState,
+  'setIsLoading' | 'setError' | 'setItems' | 'setItem'
+> = {
   items: [],
   item: {
+    id: '',
     name: '',
-    date: new Date().toISOString(),
+    date: new Date(),
+    week: null,
     teamHome: '',
     homePenalty: [],
     homeScore: '',
@@ -25,8 +30,6 @@ const initialState = {
     awayPenalty: [],
     awayScore: '',
     awayHTScore: '',
-    week: null,
-    userId: '',
   },
   isLoading: false,
   error: null,
@@ -36,8 +39,8 @@ const useFixturesStore = create<FixtureState>((set) => ({
   ...initialState,
   setIsLoading: (isLoading) => set(() => ({ isLoading })),
   setError: (error) => set(() => ({ error })),
-  setItems: (items: FixtureProps[]) => set(() => ({ items })),
-  setItem: (item: FixtureProps) => set(() => ({ item })),
+  setItems: (items) => set(() => ({ items })),
+  setItem: (item) => set(() => ({ item })),
 }));
 
 export default useFixturesStore;

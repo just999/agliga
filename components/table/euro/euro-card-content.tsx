@@ -34,7 +34,7 @@ const EuroCardContent = ({
   playDate,
   it: eu,
 }: EuroCardContentProps) => {
-  const { onOpen } = useModal();
+  const { modalType, onOpen } = useModal();
 
   const { data: session } = useSession();
   const role = session?.user.curUser.role;

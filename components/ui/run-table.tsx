@@ -36,9 +36,9 @@ const RunTable = ({ toggle, setIsOpen, className }: RunTableProps) => {
   // const { isOpen } = useRunToggleStore();
   if (!isMainPage) return null;
 
-  // const handleToggleRun = (run: number) => {
-  //   toggle(run);
-  // };
+  const handleToggleRun = (run: number) => {
+    toggle(run);
+  };
 
   return (
     <Table
@@ -74,7 +74,7 @@ const RunTable = ({ toggle, setIsOpen, className }: RunTableProps) => {
                   // onClick={() => handleToggleRun(cellData.value)}
                 />
 
-                {Number(week) === cellData.value}
+                {/* {cellData.value} */}
               </TableCell>
             ))}
           </TableRow>

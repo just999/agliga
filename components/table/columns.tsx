@@ -6,10 +6,11 @@ import { Button } from '../ui/button';
 import { BsCalendar } from 'react-icons/bs';
 import Link from 'next/link';
 import Image from 'next/image';
-import { englishPL } from '@/lib/helper';
+import { englishPL, EPL, team } from '@/lib/helper';
 import { Schedule } from '@prisma/client';
 import { convertDateTime } from '@/lib/convert-date-time';
 import { FixtureProps } from '@/types';
+import { cn, orbit } from '@/lib/utils';
 
 // export const columns: ColumnDef<Schedule>[] = [
 export const columns: ColumnDef<FixtureProps>[] = [
@@ -24,9 +25,9 @@ export const columns: ColumnDef<FixtureProps>[] = [
   {
     accessorKey: 'home',
     cell: ({ row }) => (
-      <div className='flex gap-2 items-center justify-start pl-4 cursor-pointer '>
+      <div className='flex gap-2 items-center justify-start pl-4 cursor-pointer'>
         <span className='h-4 w-4'>
-          <Image
+          {/* <Image
             src={
               englishPL
                 .filter((team) => team.name === row.original.teamHome)
@@ -37,9 +38,14 @@ export const columns: ColumnDef<FixtureProps>[] = [
             height={2}
             priority
             className='h-4 w-auto'
-          />
+          /> */}
         </span>
-        {/* <pre>{JSON.stringify(row, null, 2)}</pre> */}
+        {/* <pre>{JSON.stringify(row.original, null, 2)}</pre> */}
+        {EPL.filter((team) => team.name === row.original.teamHome).map(
+          (it, i) => (
+            <it.icon key={i} />
+          )
+        )}
         <span>{row.original.teamHome}</span>
       </div>
     ),
@@ -47,19 +53,27 @@ export const columns: ColumnDef<FixtureProps>[] = [
   {
     accessorKey: 'homeScore',
     header: 'h-goal',
-    cell: ({ row }) => <div>{row.original.homeScore}</div>,
+    cell: ({ row }) => (
+      <div className={cn(' text-gray-700 text-sm font-bold ', orbit.className)}>
+        {row.original.homeScore}
+      </div>
+    ),
   },
   {
     accessorKey: 'awayScore',
     header: 'a-goal',
-    cell: ({ row }) => <div>{row.original.awayScore}</div>,
+    cell: ({ row }) => (
+      <div className={cn(' text-gray-700 text-sm font-bold ', orbit.className)}>
+        {row.original.awayScore}
+      </div>
+    ),
   },
   {
     accessorKey: 'away',
     cell: ({ row }) => (
       <div className='flex gap-2 items-center justify-start pl-4 cursor-pointer '>
         <span className='h-4 w-4  '>
-          <Image
+          {/* <Image
             src={
               englishPL
                 .filter((team) => team.name === row.original.teamAway)
@@ -70,8 +84,13 @@ export const columns: ColumnDef<FixtureProps>[] = [
             height={2}
             priority
             className='h-4 w-auto'
-          />
+          /> */}
         </span>
+        {EPL.filter((team) => team.name === row.original.teamAway).map(
+          (it, i) => (
+            <it.icon key={i} />
+          )
+        )}
 
         <span>{row.original.teamAway}</span>
       </div>

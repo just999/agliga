@@ -246,20 +246,20 @@ export type TeamProps = {
   week?: string | null;
 };
 
+// src/types/index.ts
 export type FixtureProps = {
-  id?: string | null;
+  id: string;
   name: string;
-  week?: number | undefined | null;
-  run?: number | undefined | null;
-  date: Date | string;
-  teamHome?: string | null;
-  homePenalty?: string[];
-  homeScore?: string | null;
-  homeHTScore?: string | null;
-  teamAway?: string | null;
-  awayPenalty?: string[];
-  awayScore?: string | null;
-  awayHTScore?: string | null;
+  date: Date;
+  week: number | null;
+  teamHome: string | null;
+  homePenalty: string[];
+  homeScore: string | null;
+  homeHTScore: string | null;
+  teamAway: string | null;
+  awayPenalty: string[];
+  awayScore: string | null;
+  awayHTScore: string | null;
 };
 
 export type EuroGroupProps = [

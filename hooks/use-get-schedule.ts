@@ -2,8 +2,6 @@
 
 import { fetchEuro, fetchEuroById } from '@/lib/queries/euro';
 import {
-  fetchFixtures,
-  fetchFixtureById,
   fetchEPL2122,
   fetchEPL2223,
   fetchEPL2324,
@@ -47,124 +45,6 @@ export const useGetSchedules = (id?: string) => {
         } else if (id) {
           const res = await fetchScheduleById(id);
           if (res) setItem(res);
-        }
-      } catch (err) {
-        console.error('Error fetching data', err);
-        setError('error');
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchData();
-    return () => {
-      ignore = true;
-    };
-  }, [id, setError, setIsLoading, setItem, setItems]);
-
-  return { isLoading, error, items, item, setIsLoading };
-};
-
-export const useGetEPLFixtures = (period?: string) => {
-  const {
-    items,
-    item,
-    isLoading,
-    setItems,
-    error,
-    setItem,
-    setError,
-    setIsLoading,
-  } = useFixturesStore();
-
-  useEffect(() => {
-    let ignore = false;
-    const fetchData = async () => {
-      if (!period) throw new Error('no period found');
-      try {
-        setIsLoading(true);
-        let filteredEPL;
-        if (period === '21-22') {
-          const res = await fetchEPL2122();
-          filteredEPL = res?.filter((fix) => fix.name === '21-22');
-          if (ignore) return;
-
-          if (res) setItems(res);
-        } else if (period === '22-23') {
-          const res = await fetchEPL2223();
-          filteredEPL = res?.filter((fix) => fix.name === '22-23');
-          if (ignore) return;
-
-          if (res) setItems(res);
-        } else if (period === '23-24') {
-          const res = await fetchEPL2324();
-          filteredEPL = res?.filter((fix) => fix.name === '23-24');
-          if (ignore) return;
-
-          if (res) setItems(res);
-        } else if (period === '24-25') {
-          const res = await fetchEPL2425();
-          filteredEPL = res?.filter((fix) => fix.name === '24-25');
-          if (ignore) return;
-
-          if (res) setItems(res);
-        }
-        return filteredEPL;
-      } catch (err) {
-        console.error('Error fetching data', err);
-        setError('error');
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchData();
-    return () => {
-      ignore = true;
-    };
-  }, [id, setError, setIsLoading, setItem, setItems]);
-
-  return { isLoading, error, items, item, setIsLoading };
-};
-
-export const useGetFixtures = (id?: string) => {
-  const {
-    items,
-    item,
-    isLoading,
-    setItems,
-    error,
-    setItem,
-    setError,
-    setIsLoading,
-  } = useFixturesStore();
-
-  useEffect(() => {
-    let ignore = false;
-    const fetchData = async () => {
-      try {
-        setIsLoading(true);
-
-        if (!id) {
-          const res = await fetchFixtures();
-          if (ignore) {
-            return;
-          }
-          if (res) {
-            const updatedRes = res.map((item) => ({
-              ...item,
-              date: new Date(item.date).toISOString(),
-            }));
-            setItems(updatedRes);
-          }
-        } else if (id) {
-          const res = await fetchFixtureById(id);
-
-          if (res) {
-            const updatedItem = {
-              ...res,
-              date: new Date(res.date).toISOString(),
-            };
-            setItem(updatedItem);
-          }
         }
       } catch (err) {
         console.error('Error fetching data', err);
@@ -340,13 +220,13 @@ export const useGetEuros = (id?: string) => {
         if (!id) {
           const res = await fetchEuro();
           if (ignore) return;
-          if (!res) throw new Error('No data');
+          if (!res) return null;
 
           const transformed = transformData(res);
           setItems(transformed);
         } else {
           const res = await fetchEuroById(id);
-          if (!res) throw new Error('No data');
+          if (!res) return null;
 
           // Transform the single item
           const transformed = {
@@ -377,6 +257,66 @@ export const useGetEuros = (id?: string) => {
       ignore = true;
     };
   }, [id, setError, setIsLoading, setItem, setItems]);
+
+  return { isLoading, error, item, items, setItems, setIsLoading };
+};
+
+export const useGetFixtures = (id?: string, period?: string) => {
+  const {
+    items,
+    item,
+    isLoading,
+    error,
+    setItem,
+    setItems,
+    setError,
+    setIsLoading,
+  } = useFixturesStore();
+
+  useEffect(() => {
+    let ignore = false;
+    const fetchData = async () => {
+      try {
+        setIsLoading(true);
+
+        if (!period || !['21-22', '22-23', '23-24', '24-25'].includes(period)) {
+          return null;
+        }
+        const apiMap = {
+          '21-22': fetchEPL2122,
+          '22-23': fetchEPL2223,
+          '23-24': fetchEPL2324,
+          '24-25': fetchEPL2425,
+        } as const;
+
+        const fetchFunction = apiMap[period as keyof typeof apiMap];
+
+        if (id) {
+          const res = (await fetchFunction(id)) as any;
+          if (ignore) return;
+          if (!res) return null;
+          setItem(res);
+        } else if (!id) {
+          const res = (await fetchFunction()) as any;
+          if (ignore) return;
+          if (!res) return null;
+          setItems(res);
+        }
+        setIsLoading(false);
+      } catch (err) {
+        console.error('Error fetching data', err);
+        setError('error');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+
+    return () => {
+      ignore = true;
+    };
+  }, [id, period, setError, setIsLoading, setItem, setItems]);
 
   return { isLoading, error, item, items, setItems, setIsLoading };
 };

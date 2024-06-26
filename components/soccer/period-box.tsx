@@ -1,11 +1,19 @@
 'use client';
 
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { IconType } from 'react-icons';
 import qs from 'query-string';
 import useModal from '@/hooks/use-modal';
+import axios from 'axios';
+import {
+  fetchEPL2122,
+  fetchEPL2223,
+  fetchEPL2324,
+  fetchEPL2425,
+} from '@/lib/queries/fixtures';
+import useFixturesStore from '@/store/use-fixture-store';
 
 type PeriodBoxProps = {
   label: string;
@@ -31,7 +39,18 @@ const PeriodBox = ({
   const router = useRouter();
   const params = useSearchParams();
 
-  const { isOpen, setGroup } = useModal();
+  const {
+    items,
+    item,
+    isLoading,
+    error,
+    setItem,
+    setItems,
+    setError,
+    setIsLoading,
+  } = useFixturesStore();
+
+  const { isOpen, setGroup, id } = useModal();
 
   const handleClick = useCallback(() => {
     let currentQuery = {};
@@ -47,7 +66,6 @@ const PeriodBox = ({
     // if (params.get('period') === value) {
     //   delete updatedQuery.period;
     // }
-
     const url = qs.stringifyUrl(
       {
         url: '/soccer',
@@ -59,7 +77,51 @@ const PeriodBox = ({
     );
     setGroup('new-fixture', isOpen, value, url);
     router.push(url);
-  }, [params, router, value, isOpen, selected, setGroup]);
+
+    let ignore = false;
+    const fetchData = async () => {
+      try {
+        const period = updatedQuery.period;
+
+        if (!period || !['21-22', '22-23', '23-24', '24-25'].includes(period))
+          return null;
+
+        const apiMap = {
+          '21-22': fetchEPL2122,
+          '22-23': fetchEPL2223,
+          '23-24': fetchEPL2324,
+          '24-25': fetchEPL2425,
+        };
+
+        const fetchFunction = apiMap[period as keyof typeof apiMap];
+
+        if (id) {
+          const res = (await fetchFunction(id)) as any;
+          if (ignore) return;
+          if (!res) return null;
+          setItem(res);
+        } else if (!id) {
+          const res = (await fetchFunction()) as any;
+          if (ignore) return;
+          if (!res) return null;
+          setItems(res);
+        }
+        setIsLoading(false);
+      } catch (err: any) {
+        console.error('Error fetching data', err);
+        setError(err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+
+    return () => {
+      ignore = true;
+    };
+  }, [params, router, value, isOpen, setGroup]);
+
   if (!last) return;
   const lastVal = last;
   return (

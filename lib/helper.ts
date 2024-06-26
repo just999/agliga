@@ -48,6 +48,7 @@ import {
   MC,
   MU,
   Newcastle,
+  Norwich,
   Nottingham,
   PL,
   Red,
@@ -1103,6 +1104,12 @@ export const EPL = [
     href: 'https://team.7msport.com/175/index.shtml',
   },
   {
+    name: 'Spurs',
+    icon: Tth,
+    description: 'Tth',
+    href: 'https://team.7msport.com/175/index.shtml',
+  },
+  {
     name: 'Brentford',
     icon: Brentford,
     description: 'Brentford',
@@ -1163,6 +1170,12 @@ export const EPL = [
     href: 'https://team.7msport.com/293/index.shtml',
   },
   {
+    name: 'Leicester',
+    icon: Leichester,
+    description: 'Leicester',
+    href: 'https://team.7msport.com/293/index.shtml',
+  },
+  {
     name: 'Leeds United',
     icon: Leed,
     description: 'Leed',
@@ -1187,6 +1200,18 @@ export const EPL = [
     href: 'https://team.7msport.com/615/index.shtml',
   },
   {
+    name: 'Luton',
+    icon: Luton,
+    description: 'Luton',
+    href: 'https://team.7msport.com/615/index.shtml',
+  },
+  {
+    name: 'Sheffield Utd',
+    icon: Sheffield,
+    description: 'Sheffield',
+    href: 'https://team.7msport.com/44/index.shtml',
+  },
+  {
     name: 'Sheffield United',
     icon: Sheffield,
     description: 'Sheffield',
@@ -1207,7 +1232,13 @@ export const EPL = [
   {
     name: 'Watford',
     icon: Watford,
-    description: 'Ipswich',
+    description: 'Watford',
+    href: 'https://team.7msport.com/498/index.shtml',
+  },
+  {
+    name: 'Norwich',
+    icon: Norwich,
+    description: 'Norwich',
     href: 'https://team.7msport.com/498/index.shtml',
   },
 ];
@@ -1305,15 +1336,18 @@ export const initialScheduleFormValues = {
 };
 
 export const initialFixtureFormValues = {
+  id: '',
   name: '',
   date: new Date(),
   teamHome: '',
   homePenalty: [],
   homeScore: '',
+  homeHTScore: '',
   week: null,
   teamAway: '',
   awayPenalty: [],
   awayScore: '',
+  awayHTScore: '',
 };
 
 export const initialEuroFormValues = {

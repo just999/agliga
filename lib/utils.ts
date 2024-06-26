@@ -1,7 +1,7 @@
 import useGames from '@/hooks/use-games';
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
-import { Noto_Color_Emoji } from 'next/font/google';
+import { Noto_Color_Emoji, Orbitron } from 'next/font/google';
 import { date } from 'zod';
 import { EuroWithIconProps } from '@/types';
 import { format, parse } from 'date-fns';
@@ -138,6 +138,8 @@ export const noto = Noto_Color_Emoji({
   weight: ['400'],
   preload: true,
 });
+
+export const orbit = Orbitron({ subsets: ['latin'], preload: true });
 
 export type Team = {
   country?: {

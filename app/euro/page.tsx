@@ -10,6 +10,7 @@ import { EuroWithIconProps } from '@/types';
 
 import { fetchEuro } from '@/lib/queries/euro';
 import { fixtureFiltered } from '@/lib/utils';
+import { euroGroup } from '@/lib/helper';
 
 type EuroPageProps = {};
 
@@ -46,6 +47,7 @@ const EuroPage = async () => {
   let euroGroup = [];
 
   euroGroup.push(groupA, groupB, groupC, groupD, groupE, groupF);
+
   return (
     <div className='w-full mx-auto'>
       <EuroCarousel groupArrays={groupArrays} />

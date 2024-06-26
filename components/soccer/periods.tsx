@@ -29,9 +29,9 @@ const Periods = () => {
     setDefaultPeriod();
   }, [setDefaultPeriod]);
 
-  // if (!isMainPage) return null;
+  if (!isMainPage) return null;
   return (
-    <div className='flex flex-col bg-stone-50'>
+    <div className='flex flex-col bg-stone-50 '>
       {EPLPeriod.map((per, i) => (
         <PeriodBox
           key={per.value}

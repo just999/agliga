@@ -15,7 +15,6 @@ import { Schedule } from '@prisma/client';
 import useModal from '@/hooks/use-modal';
 import { useSession } from 'next-auth/react';
 import { FixtureProps } from '@/types';
-import { id } from 'date-fns/locale';
 
 type CellActionProps = {
   data: FixtureProps;
@@ -27,16 +26,22 @@ const CellAction = ({ data }: CellActionProps) => {
   //   toast.success('Billboard Id copied to clipboard');
   // };
 
-  const { onOpen, setGroup, isOpen, group } = useModal();
+  const { onOpen, setGroup, isOpen, id, group } = useModal();
   const title = 'Delete Fixture';
 
   const { data: session, status } = useSession();
   const role = session?.user.curUser.role;
 
+  if (!data.week) {
+    return;
+  }
+
+  const week = data.week;
+
   const handleEditFixture = () => {
     const id = data.id;
     onOpen('edit-fixture', id);
-    setGroup('edit-fixture', isOpen === false, data.name);
+    setGroup('edit-fixture', isOpen === false, week.toString(), data.name);
   };
   return (
     <DropdownMenu>

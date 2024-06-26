@@ -89,63 +89,140 @@ export const fetchFixtureByPeriod = cache(async (params: TFixtureParams) => {
   }
 });
 
-export const fetchEPL2122 = cache(async () => {
+export const fetchEPL2122 = cache(async (id?: string) => {
   try {
-    const epl = await db.ePL2122.findMany({
-      orderBy: {
-        week: 'desc',
-      },
-    });
-    if (!epl) return null;
-    return epl;
+    if (!id) {
+      const epl = await db.ePL2122.findMany({
+        where: {
+          name: '21-22',
+        },
+        orderBy: {
+          week: 'desc',
+        },
+      });
+      if (!epl) return null;
+      return epl;
+    } else if (id) {
+      const epl = await db.ePL2122.findFirst({
+        where: {
+          AND: [
+            {
+              name: '21-22',
+            },
+            {
+              id: id,
+            },
+          ],
+        },
+      });
+      if (!epl) return null;
+      return epl;
+    }
   } catch (err) {
     console.error('Error fetching fixture', err);
     return null;
   }
 });
 
-export const fetchEPL2223 = cache(async () => {
+export const fetchEPL2223 = cache(async (id?: string) => {
   try {
-    const epl = await db.ePL2223.findMany({
-      orderBy: {
-        week: 'desc',
-      },
-    });
+    if (!id) {
+      const epl = await db.ePL2223.findMany({
+        where: {
+          name: '22-23',
+        },
+        orderBy: {
+          week: 'desc',
+        },
+      });
 
-    if (!epl) return null;
-    return epl;
+      if (!epl) return null;
+      return epl;
+    } else if (id) {
+      const epl = await db.ePL2223.findFirst({
+        where: {
+          AND: [
+            {
+              name: '22-23',
+            },
+            {
+              id: id,
+            },
+          ],
+        },
+      });
+      if (!epl) return null;
+      return epl;
+    }
   } catch (err) {
     console.error('Error fetching fixture', err);
     return null;
   }
 });
 
-export const fetchEPL2324 = cache(async () => {
+export const fetchEPL2324 = cache(async (id?: string) => {
   try {
-    const epl = await db.ePL2324.findMany({
-      orderBy: {
-        week: 'desc',
-      },
-    });
+    if (!id) {
+      const epl = await db.ePL2324.findMany({
+        where: {
+          name: '23-24',
+        },
+        orderBy: {
+          week: 'desc',
+        },
+      });
 
-    if (!epl) return null;
-    return epl;
+      if (!epl) return null;
+      return epl;
+    } else if (id) {
+      const epl = await db.ePL2324.findFirst({
+        where: {
+          AND: [
+            {
+              name: '23-24',
+            },
+            {
+              id: id,
+            },
+          ],
+        },
+      });
+      if (!epl) return null;
+      return epl;
+    }
   } catch (err) {
     console.error('Error fetching fixture', err);
     return null;
   }
 });
 
-export const fetchEPL2425 = cache(async () => {
+export const fetchEPL2425 = cache(async (id?: string) => {
   try {
-    const epl = await db.ePL2425.findMany({
-      orderBy: {
-        week: 'desc',
-      },
-    });
+    if (!id) {
+      const epl = await db.ePL2425.findMany({
+        orderBy: {
+          week: 'desc',
+        },
+      });
 
-    if (!epl) return null;
-    return epl;
+      if (!epl) return null;
+      return epl;
+    } else if (id) {
+      const epl = await db.ePL2425.findFirst({
+        where: {
+          AND: [
+            {
+              name: '24-25',
+            },
+            {
+              id: id,
+            },
+          ],
+        },
+      });
+      if (!epl) return null;
+      return epl;
+    }
   } catch (err) {
     console.error('Error fetching fixture', err);
     return null;
