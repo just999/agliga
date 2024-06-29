@@ -139,14 +139,17 @@ const PeriodBox = ({
     <div
       onClick={handleClick}
       className={cn(
-        'flex  flex-row justify-center items-center gap-2 px-4 py-2 hover:text-nowrap  hover:shadow-md  hover:text-gray-800 transition cursor-pointer ',
+        'flex  flex-row justify-center items-center gap-2 px-4 py-2 hover:text-nowrap  hover:shadow-md  hover:text-gray-800 transition cursor-pointer grayscale hover:grayscale-0',
         selected
-          ? ' bg-indigo-50  rounded-sm text-stone-900 text-nowrap border-x-4 border-indigo-600 shadow-xl underline decoration-indigo-300'
+          ? ' bg-indigo-50  rounded-sm text-stone-900 text-nowrap border-x-4 even:border-indigo-600 even:text-sky-700 shadow-xl underline decoration-indigo-300 grayscale-0 font-bold odd:border-orange-600 odd:text-amber-900'
           : 'border-transparent text-neutral-400'
       )}
     >
-      <Icon size={12} className='w-4 h-4 ' />
-      <div className='text-xs break-keep'>{label}</div>
+      <Icon
+        size={12}
+        className='w-5 h-5  hover:grayscale-0 hover:text-sky-600'
+      />
+      <div className='text-sm font-semibold break-keep'>{label}</div>
       {/* <VerticalDropdown period={period} value={value} /> */}
     </div>
   );

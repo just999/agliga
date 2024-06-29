@@ -17,7 +17,18 @@ import { ArrowUpDown } from 'lucide-react';
 export const columns: ColumnDef<FixtureProps>[] = [
   {
     accessorKey: 'week',
-    header: 'week',
+    header: ({ column }) => {
+      return (
+        <Button
+          variant='ghost'
+          className='p-0 text-xs'
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Week
+          <ArrowUpDown className='ml-0 h-3 w-3' />
+        </Button>
+      );
+    },
     cell: ({ row }) => <span>{row.original.week}</span>,
   },
   {

@@ -22,11 +22,11 @@ import {
 
 import { InputCustom } from './inputCustom';
 import { Button } from './button';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import useRunToggleStore from '@/store/use-table-store';
 import RunTable from './run-table';
-import { cn } from '@/lib/utils';
+import { cn, orbit } from '@/lib/utils';
 
 import useModal from '@/hooks/use-modal';
 
@@ -36,28 +36,22 @@ import {
   BsChevronDoubleRight,
 } from 'react-icons/bs';
 import EuroCard from '../table/euro/euro-card';
-// import { useGetEuros } from '@/hooks/use-get-schedule';
 
-// import { Skeleton } from './skeleton';
 import { Euro24 } from '../assets/games/euro24';
-// import { EuroWithIconProps } from '@/types';
 
 import { useSession } from 'next-auth/react';
 
 import { FcParallelTasks } from 'react-icons/fc';
 import FixtureTable from '../table/euro/fixture/fixture-table';
 import Heading from './heading';
-import { EuroWithIconProps, FixtureProps } from '@/types';
+import { EuroWithIconProps } from '@/types';
 import { EPL } from '../assets/sports';
-import { Badge } from './badge';
-import { EPLPeriod } from '@/lib/helper';
+
 import Periods from '../soccer/periods';
-import { useSearchParams } from 'next/navigation';
+
 import { TbNewSection } from 'react-icons/tb';
-import { GrEdit } from 'react-icons/gr';
-import useFixturesStore from '@/store/use-fixture-store';
+
 import { Fixture } from '@prisma/client';
-import { columns } from '../table/columns';
 
 type GroupArrayProps = {
   date: string;
@@ -175,16 +169,6 @@ DataTableProps<TData, TValue>) {
     }
   };
 
-  // const handleNewFixture = (week: any) => {
-  //   onOpen('new-fixture');
-  //   setGroup('new-fixture', isOpen === false, week, period);
-  // };
-
-  // const handleEditFixture = (week: any) => {
-  //   onOpen('edit-fixture');
-  //   setGroup('edit-fixture', isOpen, week, period);
-  // };
-
   const year1 = period?.slice(0, 2);
   const year2 = period?.slice(3, 5);
   return (
@@ -203,13 +187,13 @@ DataTableProps<TData, TValue>) {
           className='max-w-sm text-stone-700 mx-2 bg-zinc-50'
         />
         {period && (
-          <div className='w-full flex flex-row items-center justify-center'>
+          <div className='w-full flex flex-row items-center justify-center '>
             <Heading
               title={`English Premier League ${period}`}
-              className=' text-zinc-500  w-full  text-lg text-nowrap 2xs:text-[8px] xs:text-xs sm:text-sm 2xl:text-xl '
+              className=' text-zinc-500  w-full  text-lg text-nowrap 2xs:text-[8px] xs:text-xs sm:text-sm 2xl:text-base '
             />
             <div className='flex flex-row justify-start gap-4 w-full '>
-              <div className='break-keep'>
+              <div className='hidden text-nowrap lg:block'>
                 <Button
                   className='w-full h-6 p-4 flex flex-row hover:shadow-lg hover:text-cyan-500 hover:bg-amber-100'
                   variant='ghost'
@@ -236,7 +220,7 @@ DataTableProps<TData, TValue>) {
 
       <div
         className={cn(
-          'flex flex-row w-full gap-8 md:gap-2 md:w-full lg:gap-4 justify-center'
+          'flex flex-row w-full gap-4 md:gap-4 md:w-full lg:gap-4 justify-center'
         )}
       >
         <div>
@@ -456,9 +440,9 @@ DataTableProps<TData, TValue>) {
             </div>
           </div>
         </div>
-        <div className={cn(' rounded-lg mt-2', className)}>
-          <div className=' w-full border rounded-lg mx-auto pb-2'>
-            <EPL />
+        <div className={cn('rounded-lg mt-2', className)}>
+          <div className='w-full border rounded-lg mx-auto py-2'>
+            <EPL className='mx-auto xs:h-30 sm:h-40 lg:h-50 xl:h-60' />
             {/* {EPLPeriod.map((per) => (
               <Badge
                 variant='outline'
@@ -468,7 +452,12 @@ DataTableProps<TData, TValue>) {
                 <span className='pl-2 '> {per.value}</span>
               </Badge>
             ))} */}
-            <div className='px-4 text-center w-full text-md font-bold py-2 mb-4  text-[#340239] bg-purple-50 shadow-md'>
+            <div
+              className={cn(
+                'px-4 text-center w-full text-base text-nowrap font-bold py-2 text-[#340239] bg-purple-50 drop-shadow-md sm:text-xs',
+                orbit.className
+              )}
+            >
               20{year1} - 20{year2}{' '}
             </div>
             <Periods />

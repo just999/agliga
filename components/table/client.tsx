@@ -43,7 +43,7 @@ const ScheduleClient = ({
     weekData = data.filter((dat) => dat.week === Number(week));
   }
   return (
-    <div className='pt-20 '>
+    <div className='pt-48 w-4/6 mx-auto'>
       {/* <div className='flex items-center justify-between pt-20 '>
         <Heading
           title={`Schedules (${data.length})`}

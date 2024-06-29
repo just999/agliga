@@ -59,18 +59,20 @@ const CategoryBox = ({
     <div
       onClick={handleClick}
       className={cn(
-        'flex flex-col items-center gap-2 p-3 border-b-2 hover:shadow-md  hover:text-neutral-800 transition cursor-pointer',
-
+        'flex flex-col items-center gap-2 p-3 border-b-2 hover:shadow-md hover:text-neutral-800 transition cursor-pointer',
         selected
-          ? 'border-b-indigo-500/40 bg-indigo-50 drop-shadow-md rounded-sm text-stone-900'
+          ? 'border-b-indigo-500/40 bg-indigo-50 drop-shadow-md rounded-sm text-sky-900 scale-105 font-extrabold'
           : 'border-transparent  text-neutral-400'
       )}
     >
       <Icon
         size={26}
-        className='w-8 h-8 grayscale hover:grayscale-0 transition ease-in-out delay-50  hover:-translate-y-1 hover:scale-150 hover:bg-slate-100 duration-300'
+        className={cn(
+          'w-8 h-8 grayscale hover:grayscale-0 transition ease-in-out delay-50  hover:-translate-y-1 hover:scale-150 hover:bg-slate-100 duration-300',
+          selected && 'grayscale-0 -translate-y-1 scale-125'
+        )}
       />
-      <div className='font-medium text-xs '>{label}</div>
+      <div className='font-medium text-xs'>{label}</div>
     </div>
   );
 };

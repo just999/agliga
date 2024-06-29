@@ -10,11 +10,11 @@ import { categories } from '@/lib/helper';
 const Categories = () => {
   const params = useSearchParams();
   const category = params.get('category');
-  const pathname = usePathname();
+  // const pathname = usePathname();
 
-  const isMainPage = pathname === '/';
+  // const isMainPage = pathname === '/soccer';
 
-  if (!isMainPage) return null;
+  // if (!isMainPage) return null;
 
   return (
     <div className='bg-zinc-50 drop-shadow-md'>

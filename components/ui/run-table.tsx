@@ -58,7 +58,7 @@ const RunTable = ({ toggle, setIsOpen, className }: RunTableProps) => {
               <TableCell
                 key={`${rowIndex}-${cellIndex}`}
                 className={cn(
-                  'w-m p-0  flex-grow cursor-pointer leading-5 xs:px-2 sm:px-4  md:px-4 lg:px-4 xl:px-4 2xl:px-5  my-auto text-center text-xs border-b-2 hover:bg-zinc-200 hover:rounded-md  hover:drop-shadow-md  hover:text-neutral-800 transition',
+                  'w-m p-0  flex-grow cursor-pointer leading-5 xs:px-1 sm:px-1  md:px-1 lg:px-2 xl:px-2 2xl:px-3 my-auto text-center text-xs border-b-2 hover:bg-zinc-200 hover:rounded-md  hover:drop-shadow-md  hover:text-neutral-800 transition',
                   Number(week) === cellData.value
                     ? 'border-b-indigo-500/40 bg-indigo-50 drop-shadow-md rounded-sm'
                     : 'border-transparent',

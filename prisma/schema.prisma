@@ -221,6 +221,7 @@ type Penalty {
 
 model Euro {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  category     String?
   date         DateTime
   euroTeamHome Team
   homePenalty  String[] @default([""])
@@ -242,6 +243,7 @@ model Euro {
 
 model Fixture {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  category    String?
   name        String
   date        DateTime
   teamHome    String?
@@ -263,6 +265,7 @@ model Fixture {
 
 model EPL2324 {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  category    String?
   name        String
   date        DateTime
   teamHome    String?
@@ -284,6 +287,7 @@ model EPL2324 {
 
 model EPL2223 {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  category    String?
   name        String
   date        DateTime
   teamHome    String?
@@ -305,6 +309,7 @@ model EPL2223 {
 
 model EPL2122 {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  category    String?
   name        String
   date        DateTime
   teamHome    String?
@@ -326,6 +331,7 @@ model EPL2122 {
 
 model EPL2425 {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  category    String?
   name        String
   date        DateTime
   teamHome    String?

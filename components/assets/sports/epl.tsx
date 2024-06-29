@@ -1,6 +1,11 @@
+import { cn } from '@/lib/utils';
 import React from 'react';
 
-export function EPL() {
+type FootballClubProps = {
+  className?: string;
+};
+
+export function EPL({ className }: FootballClubProps) {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -9,7 +14,7 @@ export function EPL() {
       height='2476'
       fill='none'
       viewBox='0 0 1532 2476'
-      className='h-60 w-auto'
+      className={cn('h-60 w-auto', className)}
     >
       <path fill='url(#pattern0_80_2)' d='M0 0H1532V2476H0z'></path>
       <defs>

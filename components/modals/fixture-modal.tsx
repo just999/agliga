@@ -269,7 +269,7 @@ const FixtureModal = () => {
           teamAway,
         };
         axios
-          .post(`/api/fixtures/${period}`, data)
+          .post(`/api/fixtures`, data)
           .then(() => {
             toast.success('Deposit form success di kirim!');
             router.refresh();
