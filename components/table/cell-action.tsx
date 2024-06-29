@@ -17,7 +17,7 @@ import { useSession } from 'next-auth/react';
 import { FixtureProps } from '@/types';
 
 type CellActionProps = {
-  data: FixtureProps;
+  data: FixtureProps | any;
 };
 
 const CellAction = ({ data }: CellActionProps) => {
@@ -26,9 +26,7 @@ const CellAction = ({ data }: CellActionProps) => {
   //   toast.success('Billboard Id copied to clipboard');
   // };
 
-  const { onOpen, setGroup, isOpen, id, group } = useModal();
-  const title = 'Delete Fixture';
-
+  const { modalType, onOpen, setGroup, isOpen, id, group } = useModal();
   const { data: session, status } = useSession();
   const role = session?.user.curUser.role;
 
@@ -38,23 +36,48 @@ const CellAction = ({ data }: CellActionProps) => {
 
   const week = data.week;
 
+  const period = data.name;
+  const newPeriod = period.slice(0, 2) + period.slice(3);
+  const newDeleteModalType = `delete-epl${newPeriod}`;
+  const newEditModalType = `edit-epl${newPeriod}`;
+
   const handleEditFixture = () => {
     const id = data.id;
-    onOpen('edit-fixture', id);
-    setGroup('edit-fixture', isOpen === false, week.toString(), data.name);
+
+    if (data?.group) {
+      onOpen('edit-euro');
+      setGroup('edit-euro', isOpen === false, data.group);
+    } else if (data.round) {
+      onOpen('edit-euro', id);
+      setGroup('edit-euro', isOpen === false, data.round);
+    } else if (
+      week &&
+      (newEditModalType === 'edit-epl2122' ||
+        newEditModalType === 'edit-epl2223' ||
+        newEditModalType === 'edit-epl2324' ||
+        newEditModalType === 'edit-epl2425')
+    ) {
+      onOpen(newEditModalType, id);
+      setGroup(newEditModalType, isOpen === false, week.toString(), data.name);
+    }
   };
+  const title = `${newDeleteModalType}`;
+
   return (
     <DropdownMenu>
       {role === 'admin' && data.id && (
         <>
           <DropdownMenuTrigger asChild>
-            <Button variant='ghost' className='h-4 w-4 p-0 '>
+            <Button variant='ghost' className='h-4 w-4 p-0'>
               <span className='sr-only '>Open Menu</span>
               <MoreHorizontal className='h-4 w-4' />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align='end'>
-            <DropdownMenuLabel className='text-[10px] '></DropdownMenuLabel>
+          <DropdownMenuContent
+            align='end'
+            className='backdrop-blur-sm bg-white/20'
+          >
+            {/* <DropdownMenuLabel className='text-xs '></DropdownMenuLabel> */}
             {/* <DropdownMenuItem
           onClick={() => onCopy(data.id)}
           className='text-[10px] cursor-pointer '
@@ -64,18 +87,27 @@ const CellAction = ({ data }: CellActionProps) => {
         </DropdownMenuItem> */}
             <DropdownMenuItem
               onClick={() => handleEditFixture()}
-              className='text-xs text-slate-500 hover:text-black cursor-pointer '
+              className='text-xs text-slate-500 hover:text-black cursor-pointer hover:bg-emerald-100 '
             >
               <Edit className='mr-4 h-4 w-4' />
               Update
             </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() => onOpen('delete-fixture', data.id, title)}
-              className='text-xs text-slate-500 hover:text-black cursor-pointer '
-            >
-              <Trash className='mr-4 h-4 w-4 ' />
-              Delete
-            </DropdownMenuItem>
+            {(newDeleteModalType === 'delete-epl2122' ||
+              newDeleteModalType === 'delete-epl2223' ||
+              newDeleteModalType === 'delete-epl2324' ||
+              newDeleteModalType === 'delete-epl2425' ||
+              newDeleteModalType === 'delete-fixture') && (
+              <DropdownMenuItem
+                onClick={() => {
+                  onOpen(newDeleteModalType, data.id, title);
+                  setGroup(newDeleteModalType, isOpen === false, week, period);
+                }}
+                className='text-xs text-slate-500 hover:text-black hover:bg-emerald-100 cursor-pointer '
+              >
+                <Trash className='mr-4 h-4 w-4 ' />
+                Delete
+              </DropdownMenuItem>
+            )}
           </DropdownMenuContent>
         </>
       )}

@@ -221,6 +221,7 @@ export type EuroProps = {
   homePenalty?: string[];
   homeScore?: string | null;
   group?: string;
+  round?: string;
   euroTeamAway: EuroTeamSubGroupProps;
   awayPenalty?: string[];
   awayScore?: string | null;
@@ -233,6 +234,8 @@ export type EuroWithIconProps = {
   homeScore?: string | null;
   homeHTScore?: string | null;
   group?: string | undefined | null;
+  round?: string | undefined | null;
+  qRound?: string | undefined | null;
   euroTeamAway: EuroTeamSubGroupProps;
   awayPenalty?: string[];
   awayScore?: string | null;

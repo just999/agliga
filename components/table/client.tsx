@@ -42,7 +42,6 @@ const ScheduleClient = ({
   } else if (week) {
     weekData = data.filter((dat) => dat.week === Number(week));
   }
-
   return (
     <div className='pt-20 '>
       {/* <div className='flex items-center justify-between pt-20 '>

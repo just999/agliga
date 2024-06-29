@@ -6,53 +6,71 @@ import { Button } from '../ui/button';
 import { BsCalendar } from 'react-icons/bs';
 import Link from 'next/link';
 import Image from 'next/image';
-import { englishPL, EPL, team } from '@/lib/helper';
+import { englishPL, EPL, penalty, team } from '@/lib/helper';
 import { Schedule } from '@prisma/client';
 import { convertDateTime } from '@/lib/convert-date-time';
 import { FixtureProps } from '@/types';
 import { cn, orbit } from '@/lib/utils';
+import { ArrowUpDown } from 'lucide-react';
 
 // export const columns: ColumnDef<Schedule>[] = [
 export const columns: ColumnDef<FixtureProps>[] = [
   {
     accessorKey: 'week',
     header: 'week',
+    cell: ({ row }) => <span>{row.original.week}</span>,
   },
   {
     accessorKey: 'date',
-    cell: ({ row }) => convertDateTime(row.original.date.toLocaleString()),
+    header: ({ column }) => {
+      return (
+        <Button
+          variant='ghost'
+          className='p-0 text-xs'
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Date
+          <ArrowUpDown className='ml-0 h-3 w-3' />
+        </Button>
+      );
+    },
+    cell: ({ row }) => (
+      <div>
+        <span> {convertDateTime(row.original.date.toLocaleString())}</span>
+      </div>
+    ),
   },
   {
-    accessorKey: 'home',
+    accessorKey: 'Home',
     cell: ({ row }) => (
-      <div className='flex gap-2 items-center justify-start pl-4 cursor-pointer'>
-        <span className='h-4 w-4'>
-          {/* <Image
-            src={
-              englishPL
-                .filter((team) => team.name === row.original.teamHome)
-                .map((item) => item.icon)[0]
-            }
-            alt='team away'
-            width={2}
-            height={2}
-            priority
-            className='h-4 w-auto'
-          /> */}
-        </span>
-        {/* <pre>{JSON.stringify(row.original, null, 2)}</pre> */}
+      <div className='flex flex-row gap-2 items-center justify-start pl-4 cursor-pointer'>
+        {/* <pre>{JSON.stringify(row.original.homePenalty[0], null, 2)}</pre> */}
         {EPL.filter((team) => team.name === row.original.teamHome).map(
           (it, i) => (
             <it.icon key={i} />
           )
         )}
         <span>{row.original.teamHome}</span>
+        {penalty
+          .filter((pen) => pen.value === row.original.homePenalty[0])
+          .map((hp, i) => (
+            <div
+              key={i}
+              className='flex flex-row gap-1 justify-center items-center'
+            >
+              <span>{hp.description}</span>
+              <span>
+                <hp.icon className='h-4 w-auto ' />
+              </span>
+            </div>
+          ))}
+        {/* <span>{row.original.homePenalty[0]}</span> */}
       </div>
     ),
   },
   {
     accessorKey: 'homeScore',
-    header: 'h-goal',
+    header: 'H-goal',
     cell: ({ row }) => (
       <div className={cn(' text-gray-700 text-sm font-bold ', orbit.className)}>
         {row.original.homeScore}
@@ -61,7 +79,7 @@ export const columns: ColumnDef<FixtureProps>[] = [
   },
   {
     accessorKey: 'awayScore',
-    header: 'a-goal',
+    header: 'A-goal',
     cell: ({ row }) => (
       <div className={cn(' text-gray-700 text-sm font-bold ', orbit.className)}>
         {row.original.awayScore}
@@ -71,21 +89,21 @@ export const columns: ColumnDef<FixtureProps>[] = [
   {
     accessorKey: 'away',
     cell: ({ row }) => (
-      <div className='flex gap-2 items-center justify-start pl-4 cursor-pointer '>
-        <span className='h-4 w-4  '>
-          {/* <Image
-            src={
-              englishPL
-                .filter((team) => team.name === row.original.teamAway)
-                .map((item) => item.icon)[0]
-            }
-            alt='team away'
-            width={2}
-            height={2}
-            priority
-            className='h-4 w-auto'
-          /> */}
-        </span>
+      <div className='flex w-full gap-2 items-center justify-start pl-4 cursor-pointer '>
+        {penalty
+          .filter((pen) => pen.value === row.original.awayPenalty[0])
+          .map((hp, i) => (
+            <div
+              key={i}
+              className='flex flex-row gap-1 justify-center items-center'
+            >
+              <span>{hp.description}</span>
+              <span>
+                <hp.icon className='h-4 w-auto ' />
+              </span>
+            </div>
+          ))}
+
         {EPL.filter((team) => team.name === row.original.teamAway).map(
           (it, i) => (
             <it.icon key={i} />
@@ -109,7 +127,7 @@ export const columns: ColumnDef<FixtureProps>[] = [
   // },
   {
     id: 'actions',
-    header: 'actions',
+    header: 'Actions',
     // cell: ({ row }) => <pre>{JSON.stringify(row, null, 2)}</pre>,
     cell: ({ row }) => <CellAction data={row.original} />,
   },

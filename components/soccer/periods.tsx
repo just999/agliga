@@ -26,8 +26,10 @@ const Periods = () => {
   }, [period, last, pathname, params, router]);
 
   useEffect(() => {
-    setDefaultPeriod();
-  }, [setDefaultPeriod]);
+    if (pathname === '/soccer') {
+      setDefaultPeriod();
+    }
+  }, [setDefaultPeriod, pathname]);
 
   if (!isMainPage) return null;
   return (

@@ -120,7 +120,18 @@ const PeriodBox = ({
     return () => {
       ignore = true;
     };
-  }, [params, router, value, isOpen, setGroup]);
+  }, [
+    params,
+    router,
+    value,
+    isOpen,
+    setGroup,
+    id,
+    setError,
+    setIsLoading,
+    setItem,
+    setItems,
+  ]);
 
   if (!last) return;
   const lastVal = last;

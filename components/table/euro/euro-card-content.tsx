@@ -82,7 +82,6 @@ const EuroCardContent = ({
   //   }))
   //   .filter((ta) => ta.value === eu?.euroTeamAway);
   if (!eu) return <Skeleton />;
-
   const title = 'Delete Euro Schedule';
 
   const match = {
@@ -100,7 +99,7 @@ const EuroCardContent = ({
     >
       {/* <CardHeader className='hidden '>
           <CardTitle>Create project</CardTitle>
-      <CardDescription>Deploy your new project in one-click.</CardDescription>
+          <CardDescription>Deploy your new project in one-click.</CardDescription>
         </CardHeader> */}
       <CardContent className='flex flex-col px-3 pt-2 pb-0 justify-between gap-1'>
         <div className='flex flex-row justify-between text-xs '>
@@ -197,7 +196,7 @@ const EuroCardContent = ({
               groupClassName
             )}
           >
-            Group {eu.group}
+            {eu.group ? ` Group ${eu.group}` : ` Round ${eu.round}`}
           </div>
         </div>
         {role === 'admin' && (

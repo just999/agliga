@@ -3,19 +3,27 @@
 import { DataTable } from '@/components/ui/data-table';
 
 import { euroColumns } from './euro-columns';
-import { EuroGroupProps, EuroProps, EuroWithIconProps } from '@/types';
+import { euroRoundColumns } from './euro-round-columns';
+import {
+  EuroGroupProps,
+  EuroProps,
+  EuroWithIconProps,
+  FixtureProps,
+} from '@/types';
 import { useEffect, useState } from 'react';
 import React from 'react';
-import ClientOnly from '@/lib/client-only';
-// import useLeague, { ITable } from '@/lib/league';
+
 import useLeague, { TeamStats } from '@/hooks/use-league';
 import { Skeleton } from '@/components/ui/skeleton';
-import { fixtureFiltered } from '@/lib/utils';
+import { cn, fixtureFiltered } from '@/lib/utils';
+
+import { fetchEuroByRound } from '@/lib/queries/euro';
 
 interface EuroClientProps {
-  eu?: any;
+  eu?: FixtureProps[] | any;
   data?: any;
   group?: any;
+  round?: string;
   items?: EuroWithIconProps[];
   footerClassName?: string;
   euroClassName?: string;
@@ -27,6 +35,7 @@ interface EuroClientProps {
 const EuroClient = ({
   eu,
   group,
+  round,
   data,
   footerClassName,
   euroClassName,
@@ -36,10 +45,21 @@ const EuroClient = ({
   items,
 }: EuroClientProps) => {
   const [dat, setDat] = useState<TeamStats[]>([]);
+  const [roundDat, setRoundDat] = useState<any[]>([]);
   // const [dat, setDat] = useState<TeamStats[]>([]);
+
+  useEffect(() => {
+    const round = '16';
+    const fetchData = async () => {
+      const res = await fetchEuroByRound(round);
+      if (res) setRoundDat(res);
+    };
+    fetchData();
+  }, []);
 
   // const table = useLeague(data);
   const table = useLeague(eu);
+
   // const res = getDataFromMatches(uefaMatches);
   useEffect(() => {
     // if (!data) throw new Error('error fetching data');
@@ -77,15 +97,23 @@ const EuroClient = ({
   let itemsFiltered = items.filter((item) => item.group === group);
 
   const groupArrays = fixtureFiltered(itemsFiltered);
+
+  const selectedColumns = group !== null ? euroColumns : euroRoundColumns;
+
   return (
-    <div className='pt-2 border-0'>
+    <div
+      className={cn(
+        'pt-2 border-0 md:w-full',
+        group ? 'col-span-1' : 'col-span-2 w-min-[1280px]'
+      )}
+    >
       <DataTable
         searchKey='teamHome'
-        columns={euroColumns}
-        eu={dat}
+        columns={selectedColumns}
+        eu={group !== null ? dat : roundDat}
         className={className}
         group={group}
-        // mergedData={dat}
+        round={round}
         groupArrays={groupArrays}
         footerClassName={footerClassName}
         euroClassName={euroClassName}

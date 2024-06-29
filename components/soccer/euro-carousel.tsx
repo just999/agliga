@@ -21,7 +21,7 @@ type EuroCarouselProps = {
 
 const EuroCarousel = ({ groupArrays }: EuroCarouselProps) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
-    // Autoplay({ delay: 8000 }),
+    Autoplay({ delay: 8000 }),
   ]);
 
   const scrollPrev = useCallback(() => {

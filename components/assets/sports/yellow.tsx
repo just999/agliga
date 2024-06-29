@@ -1,14 +1,20 @@
+import { cn } from '@/lib/utils';
+import { svg } from 'leaflet';
 import React from 'react';
 
-export function Yellow() {
+type YellowProps = {
+  className?: string;
+};
+
+export function Yellow({ className }: YellowProps) {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
       width='1024'
       height='1707'
       fill='none'
-      className='h-6 w-6'
       viewBox='0 0 1024 1707'
+      className={cn('h-6 w-6', className)}
     >
       <g clipPath='url(#clip0_73_2)'>
         <path

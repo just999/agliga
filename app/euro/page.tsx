@@ -9,7 +9,7 @@ import EuroCarousel from '@/components/soccer/euro-carousel';
 import { EuroWithIconProps } from '@/types';
 
 import { fetchEuro } from '@/lib/queries/euro';
-import { fixtureFiltered } from '@/lib/utils';
+import { cn, fixtureFiltered } from '@/lib/utils';
 import { euroGroup } from '@/lib/helper';
 
 type EuroPageProps = {};
@@ -35,6 +35,8 @@ const EuroPage = async () => {
   //   };
   // });
 
+  const round = '16';
+
   const groupArrays = fixtureFiltered(itemsFiltered);
   const euro = await fetchEuro();
 
@@ -44,15 +46,16 @@ const EuroPage = async () => {
   const groupD = euro?.filter((gr) => gr.group === 'D');
   const groupE = euro?.filter((gr) => gr.group === 'E');
   const groupF = euro?.filter((gr) => gr.group === 'F');
+  const round16 = euro?.filter((er) => er.round === round);
   let euroGroup = [];
 
-  euroGroup.push(groupA, groupB, groupC, groupD, groupE, groupF);
+  euroGroup.push(groupA, groupB, groupC, groupD, groupE, groupF, round16);
 
   return (
     <div className='w-full mx-auto'>
       <EuroCarousel groupArrays={groupArrays} />
 
-      <Container className='grid md:grid-cols-1 xl:grid-cols-2 gap-4 max-w-[1280px]'>
+      <Container className='grid sm:grid-cols-1  md:text-xs md:w-full lg:grid-cols-2 gap-4 max-w-[1280px]'>
         {/* {uefaMatches.map((e: any, i: number) => (
           <EuroTeamGroup key={i} eu={e} />
         ))} */}
@@ -63,10 +66,11 @@ const EuroPage = async () => {
             key={i}
             eu={gr}
             items={items}
+            round={round}
             group={gr?.map((g) => g.group).slice(1, 2)[0]}
             footerClassName='flex flex-row gap-2 justify-between items-center bg-sky-200/60'
             euroClassName='flex flex-wrap gap-2 justify-center group-card py-2'
-            className='hidden'
+            className={cn('hidden')}
             euCardClassName='pt-2 px-2 gap-0 justify-start items-center bg-emerald-50 odd:bg-zinc-100 even:bg-stone-50'
           />
         ))}

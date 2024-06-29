@@ -1,3 +1,5 @@
+import { set } from 'date-fns';
+import { type } from 'os';
 import { create } from 'zustand';
 
 // export const imageSlider = {
@@ -39,6 +41,18 @@ type ModalStore = {
     | 'new-fixture'
     | 'edit-fixture'
     | 'delete-fixture'
+    | 'new-epl2122'
+    | 'new-epl2223'
+    | 'new-epl2324'
+    | 'new-epl2425'
+    | 'edit-epl2122'
+    | 'edit-epl2223'
+    | 'edit-epl2324'
+    | 'edit-epl2425'
+    | 'delete-epl2122'
+    | 'delete-epl2223'
+    | 'delete-epl2324'
+    | 'delete-epl2425'
     | 'delete-euro'
     | 'deleteSchedule'
     | null;
@@ -49,6 +63,7 @@ type ModalStore = {
   img?: ImageSlider;
   group?: string;
   period?: string;
+  qRound?: string;
   onOpen: (
     type:
       | 'login'
@@ -75,13 +90,26 @@ type ModalStore = {
       | 'new-fixture'
       | 'edit-fixture'
       | 'delete-fixture'
+      | 'new-epl2122'
+      | 'new-epl2223'
+      | 'new-epl2324'
+      | 'new-epl2425'
+      | 'edit-epl2122'
+      | 'edit-epl2223'
+      | 'edit-epl2324'
+      | 'edit-epl2425'
+      | 'delete-epl2122'
+      | 'delete-epl2223'
+      | 'delete-epl2324'
+      | 'delete-epl2425'
       | 'delete-euro'
       | 'deleteSchedule',
     id?: string | null,
     title?: string | undefined,
     img?: ImageSlider | undefined,
     group?: string | undefined,
-    period?: string | undefined
+    period?: string | undefined,
+    qRound?: string | undefined
   ) => void;
   onClose: () => void;
   toggle: (isToggle: boolean, group?: string) => void;
@@ -93,12 +121,24 @@ type ModalStore = {
       | 'delete-euro'
       | 'new-fixture'
       | 'edit-fixture'
+      | 'new-epl2122'
+      | 'new-epl2223'
+      | 'new-epl2324'
+      | 'new-epl2425'
+      | 'edit-epl2122'
+      | 'edit-epl2223'
+      | 'edit-epl2324'
+      | 'edit-epl2425'
+      | 'delete-epl2122'
+      | 'delete-epl2223'
+      | 'delete-epl2324'
+      | 'delete-epl2425'
       | 'delete-fixture',
     isOpen?: boolean,
     group?: string,
     period?: string
   ) => void;
-  // authModal: () => void;
+  setQRound: (type: 'new-euro' | 'edit-euro', qRound?: string) => void;
 };
 
 const useModal = create<ModalStore>((set) => ({
@@ -110,6 +150,7 @@ const useModal = create<ModalStore>((set) => ({
   img: undefined,
   group: undefined,
   period: undefined,
+  qRound: undefined,
   onOpen: (
     type:
       | 'login'
@@ -136,6 +177,18 @@ const useModal = create<ModalStore>((set) => ({
       | 'new-fixture'
       | 'edit-fixture'
       | 'delete-fixture'
+      | 'new-epl2122'
+      | 'new-epl2223'
+      | 'new-epl2324'
+      | 'new-epl2425'
+      | 'edit-epl2122'
+      | 'edit-epl2223'
+      | 'edit-epl2324'
+      | 'edit-epl2425'
+      | 'delete-epl2122'
+      | 'delete-epl2223'
+      | 'delete-epl2324'
+      | 'delete-epl2425'
       | 'delete-euro'
       | 'editSoccer',
     id = null,
@@ -168,11 +221,27 @@ const useModal = create<ModalStore>((set) => ({
       | 'delete-euro'
       | 'new-fixture'
       | 'edit-fixture'
+      | 'new-epl2122'
+      | 'new-epl2223'
+      | 'new-epl2324'
+      | 'new-epl2425'
+      | 'edit-epl2122'
+      | 'edit-epl2223'
+      | 'edit-epl2324'
+      | 'edit-epl2425'
+      | 'delete-epl2122'
+      | 'delete-epl2223'
+      | 'delete-epl2324'
+      | 'delete-epl2425'
       | 'delete-fixture',
     isOpen?: boolean,
     group?: string,
     period?: string
   ) => set({ modalType: type, isOpen, group, period }),
+  setQRound: (
+    type: 'new-euro' | 'edit-euro' | 'delete-euro',
+    qRound?: string
+  ) => set({ modalType: type, qRound }),
 }));
 
 export default useModal;

@@ -25,6 +25,9 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
     const { name, week, date, teamAway, teamHome } = body;
+
+    const newPeriod = name?.slice(0, 2) + name.slice(3);
+    const newFixture = `ePL${newPeriod}`;
     let isoDate = date + ':00.000Z';
 
     const currentUser = await getCurrentUser();
@@ -35,18 +38,54 @@ export async function POST(req: Request) {
 
     if (!id) throw new Error('error');
 
-    const fixture = await db.fixture.create({
-      data: {
-        name,
-        week: week.value,
-        date: isoDate,
-        teamHome: teamHome.value,
-        teamAway: teamAway.value,
-        userId: currentUser.id,
-      },
-    });
-    return NextResponse.json(fixture);
-    // return NextResponse.json('successfully submit soccer');
+    let fixture;
+    if (newFixture === 'ePL2122') {
+      fixture = await db.ePL2122.create({
+        data: {
+          name,
+          week: week.value,
+          date: isoDate,
+          teamHome: teamHome.value,
+          teamAway: teamAway.value,
+          userId: currentUser.id,
+        },
+      });
+    } else if (newFixture === 'ePL2223') {
+      fixture = await db.ePL2223.create({
+        data: {
+          name,
+          week: week.value,
+          date: isoDate,
+          teamHome: teamHome.value,
+          teamAway: teamAway.value,
+          userId: currentUser.id,
+        },
+      });
+    } else if (newFixture === 'ePL2324') {
+      fixture = await db.ePL2324.create({
+        data: {
+          name,
+          week: week.value,
+          date: isoDate,
+          teamHome: teamHome.value,
+          teamAway: teamAway.value,
+          userId: currentUser.id,
+        },
+      });
+    } else if (newFixture === 'ePL2425') {
+      fixture = await db.ePL2425.create({
+        data: {
+          name,
+          week: week.value,
+          date: isoDate,
+          teamHome: teamHome.value,
+          teamAway: teamAway.value,
+          userId: currentUser.id,
+        },
+      });
+    }
+    // return NextResponse.json(fixture);
+    return NextResponse.json('successfully submit soccer');
   } catch (err) {
     console.log(err);
     return NextResponse.json(

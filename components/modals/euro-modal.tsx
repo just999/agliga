@@ -56,6 +56,7 @@ const EuroModal = () => {
       euroTeamAway: team,
       awayPenalty: [],
       group: euroGroup,
+      round: '',
     };
   } else if (modalType === 'edit-euro') {
     initialScheduleValues = {
@@ -67,6 +68,7 @@ const EuroModal = () => {
       homeHTScore: schedule.homeHTScore,
       awayHTScore: schedule.awayHTScore,
       group: schedule.group,
+      round: schedule.round,
       euroTeamAway: schedule.euroTeamAway,
       awayPenalty: schedule.awayPenalty,
     };
@@ -114,6 +116,7 @@ const EuroModal = () => {
         euroTeamAway: team,
         awayPenalty: [],
         group: euroGroup,
+        round: '',
       } as any;
       setSchedule(data);
 
@@ -127,6 +130,7 @@ const EuroModal = () => {
       setValue('homeHTScore', homeHTScore);
       setValue('awayHTScore', awayHTScore);
       setValue('group', euroGroup);
+      setValue('round', round);
     }
     if (modalType === 'edit-euro' && item && !error) {
       const data = {
@@ -140,6 +144,7 @@ const EuroModal = () => {
         homeHTScore: item.homeHTScore,
         awayHTScore: item.awayHTScore,
         group: item.group,
+        round: item.round,
       };
       setSchedule(data);
 
@@ -182,6 +187,7 @@ const EuroModal = () => {
       setValue('homeHTScore', item.homeHTScore);
       setValue('awayHTScore', item.awayHTScore);
       setValue('group', item.group);
+      setValue('round', item.round);
 
       // if (item.date instanceof Date) {
       //   const formattedDate = moment(item.date).format('MM/DD/YYYY hh:mm A');
@@ -204,6 +210,7 @@ const EuroModal = () => {
   const awayScore = watch('awayScore');
   const awayHTScore = watch('awayHTScore');
   const group = watch('group');
+  const round = watch('round');
 
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
@@ -228,6 +235,7 @@ const EuroModal = () => {
         euroTeamAway,
         awayPenalty,
         group,
+        round,
       };
       try {
         axios
@@ -259,6 +267,7 @@ const EuroModal = () => {
         euroTeamAway,
         awayPenalty,
         group,
+        round,
       };
       try {
         const res = axios
@@ -333,58 +342,62 @@ const EuroModal = () => {
         </span>
       )}
 
-      <SelectInput
-        label={homePenalty ? '' : 'homePenalty'}
-        isMulti={true}
-        id='homePenalty'
-        register={register}
-        value={watch('homePenalty')}
-        onChange={(value) => setCustomValue('homePenalty', value)}
-        placeholder='home penalty'
-        options={() => penaltyOptions}
-        errors={errors}
-        // optionIconClassName='text-yellow-400'
-        optionPenaltyClassName='flex flex-row-reverse justify-end gap-0'
-        optionClassName='text-sm px-0 font-semibold'
-      />
-      {errors.homePenalty && (
-        <span className='text-sm text-red-500 '>
-          <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
-            Kolom Wajib di isi...
-          </span>
-        </span>
-      )}
+      {modalType === 'edit-euro' && (
+        <>
+          <SelectInput
+            label={homePenalty ? '' : 'homePenalty'}
+            isMulti={true}
+            id='homePenalty'
+            register={register}
+            value={watch('homePenalty')}
+            onChange={(value) => setCustomValue('homePenalty', value)}
+            placeholder='home penalty'
+            options={() => penaltyOptions}
+            errors={errors}
+            // optionIconClassName='text-yellow-400'
+            optionPenaltyClassName='flex flex-row-reverse justify-end gap-0'
+            optionClassName='text-sm px-0 font-semibold'
+          />
+          {errors.homePenalty && (
+            <span className='text-sm text-red-500 '>
+              <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
+                Kolom Wajib di isi...
+              </span>
+            </span>
+          )}
 
-      <Input
-        id='homeScore'
-        type='text'
-        label={homeScore ? '' : 'homeScore'}
-        disabled={isLoading}
-        register={register}
-        errors={errors}
-      />
-      {errors.homeScore && (
-        <span className='text-sm text-red-500 '>
-          <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
-            Kolom Wajib di isi...
-          </span>
-        </span>
-      )}
+          <Input
+            id='homeScore'
+            type='text'
+            label={homeScore ? '' : 'homeScore'}
+            disabled={isLoading}
+            register={register}
+            errors={errors}
+          />
+          {errors.homeScore && (
+            <span className='text-sm text-red-500 '>
+              <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
+                Kolom Wajib di isi...
+              </span>
+            </span>
+          )}
 
-      <Input
-        id='homeHTScore'
-        type='text'
-        label={homeHTScore ? '' : 'homeHTScore'}
-        disabled={isLoading}
-        register={register}
-        errors={errors}
-      />
-      {errors.homeHTScore && (
-        <span className='text-sm text-red-500 '>
-          <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
-            Kolom Wajib di isi...
-          </span>
-        </span>
+          <Input
+            id='homeHTScore'
+            type='text'
+            label={homeHTScore ? '' : 'homeHTScore'}
+            disabled={isLoading}
+            register={register}
+            errors={errors}
+          />
+          {errors.homeHTScore && (
+            <span className='text-sm text-red-500 '>
+              <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
+                Kolom Wajib di isi...
+              </span>
+            </span>
+          )}
+        </>
       )}
 
       <SelectInput
@@ -446,6 +459,7 @@ const EuroModal = () => {
           </span>
         </span>
       )}
+
       <Input
         id='awayHTScore'
         type='text'
@@ -462,99 +476,49 @@ const EuroModal = () => {
         </span>
       )}
 
-      <Input
-        id='group'
-        type='text'
-        label={group ? '' : 'Group'}
-        disabled={isLoading}
-        defaultValue={watch('group')}
-        register={register}
-        errors={errors}
-        required
-      />
-      {errors.group && (
-        <span className='text-sm text-red-500 '>
-          <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
-            Kolom Wajib di isi...
-          </span>
-        </span>
-      )}
-      {/* <SelectInput
-        label={winner ? '' : 'winner'}
-        isMulti={false}
-        id='winner'
-        register={register}
-        value={watch('winner')}
-        onChange={(value) => setCustomValue('winner', value)}
-        placeholder='euroAway'
-        options={() => selectTeamHomeOptions}
-        errors={errors}
-        optionIconClassName={cn(noto.className)}
-        optionClassName='text-base px-2 '
-      />
-      {errors.winner && (
-        <span className='text-sm text-red-500 '>
-          <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
-            Kolom Wajib di isi...
-          </span>
-        </span>
-      )}
+      {group ? (
+        <>
+          <Input
+            id='group'
+            type='text'
+            label={group ? '' : 'Group'}
+            disabled={isLoading}
+            defaultValue={watch('group')}
+            register={register}
+            errors={errors}
+            required
+          />
 
-      <SelectInput
-        label={loser ? '' : 'loser'}
-        isMulti={false}
-        id='loser'
-        register={register}
-        value={watch('loser')}
-        onChange={(value) => setCustomValue('loser', value)}
-        placeholder='euroAway'
-        options={() => selectTeamHomeOptions}
-        errors={errors}
-        optionIconClassName={cn(noto.className)}
-        optionClassName='text-base px-2 '
-      />
-      {errors.loser && (
-        <span className='text-sm text-red-500 '>
-          <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
-            Kolom Wajib di isi...
-          </span>
-        </span>
-      )}
+          {errors.group && (
+            <span className='text-sm text-red-500 '>
+              <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
+                Kolom Wajib di isi...
+              </span>
+            </span>
+          )}
+        </>
+      ) : (
+        <>
+          <Input
+            id='round'
+            type='text'
+            label={round ? '' : 'Round'}
+            disabled={isLoading}
+            defaultValue={watch('round')}
+            register={register}
+            errors={errors}
+            required
+          />
 
-      <Input
-        id='homeGoalDiff'
-        type='text'
-        label={homeGoalDiff ? '' : 'homeGoalDiff'}
-        disabled={isLoading}
-        defaultValue={watch('homeGoalDiff')}
-        register={register}
-        errors={errors}
-      />
-      {errors.homeGoalDiff && (
-        <span className='text-sm text-red-500 '>
-          <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
-            Kolom Wajib di isi...
-          </span>
-        </span>
+          {errors.round && (
+            <span className='text-sm text-red-500 '>
+              <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
+                Kolom Wajib di isi...
+              </span>
+            </span>
+          )}
+        </>
       )}
-      <Input
-        id='awayGoalDiff'
-        type='text'
-        label={awayGoalDiff ? '' : 'awayGoalDiff'}
-        disabled={isLoading}
-        defaultValue={watch('awayGoalDiff')}
-        register={register}
-        errors={errors}
-      />
-      {errors.awayGoalDiff && (
-        <span className='text-sm text-red-500 '>
-          <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-100 px-4 '>
-            Kolom Wajib di isi...
-          </span>
-        </span>
-      )}
-
-       */}
     </div>
   );
 

@@ -105,9 +105,9 @@ const useLeague = (matches: Match[]): TeamStats[] => {
         match;
       const matchDate = new Date(date);
       // Skip matches that haven't been played yet
-      if (matchDate > now) {
-        return;
-      }
+      // if (matchDate > now) {
+      //   return;
+      // }
 
       // Initialize team stats if not already present
       if (!initialTable[euroTeamHome.value]) {

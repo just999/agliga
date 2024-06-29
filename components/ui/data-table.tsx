@@ -56,6 +56,8 @@ import { useSearchParams } from 'next/navigation';
 import { TbNewSection } from 'react-icons/tb';
 import { GrEdit } from 'react-icons/gr';
 import useFixturesStore from '@/store/use-fixture-store';
+import { Fixture } from '@prisma/client';
+import { columns } from '../table/columns';
 
 type GroupArrayProps = {
   date: string;
@@ -63,11 +65,12 @@ type GroupArrayProps = {
 };
 
 interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  eu?: FixtureProps[] | any[];
+  columns: ColumnDef<TData, TValue>[] | any;
+  eu?: Fixture[] | TData[];
   searchKey?: string;
   className?: string;
   group?: any;
+  round?: string;
   mergedData?: any;
   footerClassName?: string;
   euroClassName?: string;
@@ -84,6 +87,7 @@ export function DataTable<TData, TValue>({
   eu,
   className,
   group,
+  round,
   footerClassName,
   euroClassName,
   euroTableClassName,
@@ -118,48 +122,73 @@ DataTableProps<TData, TValue>) {
     //   columnFilters,
     // },
     state: {
+      // pagination: round
+      //   ? { pageSize: 16, pageIndex: 0 }
+      //   : { pageSize: 10, pageIndex: 0 },
       globalFilter: filtering,
       sorting,
     },
     onGlobalFilterChange: setFiltering,
   });
 
-  const {
-    items,
-    item,
-    isLoading,
-    error,
-    setItem,
-    setItems,
-    setError,
-    setIsLoading,
-  } = useFixturesStore();
+  let newPeriod;
+  if (period) {
+    newPeriod = period?.slice(0, 2) + period.slice(3);
+  }
+  const newDeleteModalType = `delete-epl${newPeriod}`;
+  const newEditModalType = `edit-epl${newPeriod}`;
+  const newFixtureModalType = `new-epl${newPeriod}`;
   const { toggle, setIsOpen } = useRunToggleStore();
-  const { modalType, onOpen, setGroup, isOpen } = useModal();
-
+  const {
+    modalType,
+    onOpen,
+    setGroup,
+    isOpen,
+    id,
+    group: gr,
+    period: pr,
+  } = useModal();
   const handleOpenGroup = (group?: string) => {
     if (group) {
       onOpen('new-euro');
       setGroup('new-euro', isOpen === false, group);
+    } else if (round) {
+      const title = 'New Round-16';
+      onOpen('new-euro', title);
+      setGroup('new-euro', isOpen === false, group, round);
     }
   };
 
   // if (!items || items.length === 0) return <Skeleton />;
 
-  const handleNewFixture = () => {
-    onOpen('new-fixture');
-    setGroup('new-fixture', isOpen === false, period);
+  const handleNewFixture = (week: any) => {
+    if (
+      week &&
+      (newFixtureModalType === 'new-epl2122' ||
+        newFixtureModalType === 'new-epl2223' ||
+        newFixtureModalType === 'new-epl2324' ||
+        newFixtureModalType === 'new-epl2425' ||
+        newFixtureModalType === 'new-fixture')
+    ) {
+      onOpen(newFixtureModalType);
+      setGroup(newFixtureModalType, isOpen === false, week, period);
+    }
   };
 
-  // const handleEditFixture = () => {
+  // const handleNewFixture = (week: any) => {
+  //   onOpen('new-fixture');
+  //   setGroup('new-fixture', isOpen === false, week, period);
+  // };
+
+  // const handleEditFixture = (week: any) => {
   //   onOpen('edit-fixture');
-  //   setGroup('edit-euro', isOpen === false, period, period);
+  //   setGroup('edit-fixture', isOpen, week, period);
   // };
 
   const year1 = period?.slice(0, 2);
   const year2 = period?.slice(3, 5);
   return (
-    <div className='rounded-xl mx-auto w-3/4'>
+    <div className='rounded-xl mx-auto w-full md:w-full md:mx-auto'>
       <div
         className={cn(
           'flex flex-row items-center py-2 bg-orange-50/60 border border-solid border-orange-100 rounded-lg',
@@ -174,40 +203,42 @@ DataTableProps<TData, TValue>) {
           className='max-w-sm text-stone-700 mx-2 bg-zinc-50'
         />
         {period && (
-          <div className='w-full flex flex-row justify-around'>
+          <div className='w-full flex flex-row items-center justify-center'>
             <Heading
               title={`English Premier League ${period}`}
-              className=' text-zinc-500  text-lg nowrap 2xs:text-[8px] xs:text-xs sm:text-sm 2xl:text-xl '
+              className=' text-zinc-500  w-full  text-lg text-nowrap 2xs:text-[8px] xs:text-xs sm:text-sm 2xl:text-xl '
             />
-            <div className='flex flex-row justify-end gap-4 w-1/2 '>
+            <div className='flex flex-row justify-start gap-4 w-full '>
               <div className='break-keep'>
                 <Button
-                  className='w-6 h-6'
-                  variant='outline'
+                  className='w-full h-6 p-4 flex flex-row hover:shadow-lg hover:text-cyan-500 hover:bg-amber-100'
+                  variant='ghost'
                   size='sm'
                   type='button'
-                  onClick={() => handleNewFixture()}
+                  onClick={() => {
+                    const week = table.options.data.map(
+                      (we: any) => we?.week
+                    )[0];
+
+                    handleNewFixture(week);
+                  }}
                 >
-                  <TbNewSection />
+                  <TbNewSection size={30} />
+                  {/* <pre>
+                    {JSON.stringify(table.options.data[0]?.week, null, 2)}
+                  </pre> */}
                 </Button>
               </div>
-              {/* <div>
-                  <Button
-                    className='w-6 h-6'
-                    variant='outline'
-                    size='sm'
-                    type='button'
-                    onClick={() => handleEditFixture()}
-                  >
-                    <GrEdit />
-                  </Button>
-                </div> */}
             </div>
           </div>
         )}
       </div>
 
-      <div className='flex flex-row gap-8'>
+      <div
+        className={cn(
+          'flex flex-row w-full gap-8 md:gap-2 md:w-full lg:gap-4 justify-center'
+        )}
+      >
         <div>
           <RunTable
             toggle={() => toggle}
@@ -224,13 +255,19 @@ DataTableProps<TData, TValue>) {
                       euroTableClassName
                     )}
                   >
-                    <TableHead className='flex flex-row font-semibold justify-center ml-2 bg-emerald-300 rounded-l-lg  h-8 hover:bg-green-300 hover:font-semibold hover:text-gray-800 shadow-xl text-md text-gray-400 cursor-pointer'>
+                    <TableHead
+                      className={cn(
+                        'flex flex-row font-semibold justify-center ml-2 bg-emerald-300 rounded-l-lg  h-8 hover:bg-green-300 hover:font-semibold hover:text-gray-800 shadow-xl text-md text-gray-400 cursor-pointer',
+                        group ? 'w-full' : 'w-full'
+                      )}
+                    >
                       <Euro24 />
                       <Button
                         variant='ghost'
                         size='sm'
                         className={cn(
-                          'p-0 h-7',
+                          'p-0 h-7 text-sm',
+                          round && 'text-base',
                           role !== 'admin'
                             ? 'text-black font-semibold bg-emerald-300'
                             : 'hover:font-semibold hover:text-gray-800 hover:bg-green-300'
@@ -238,15 +275,20 @@ DataTableProps<TData, TValue>) {
                         onClick={() => handleOpenGroup(group)}
                         disabled={role === 'admin' ? false : true}
                       >
-                        Group {group}
+                        {group ? `Group ${group}` : `Round ${round}`}
                       </Button>
                     </TableHead>
 
-                    <TableHead className='bg-amber-100 rounded-r-lg px-4 font-semibold h-8 hover:bg-orange-100/70 hover:text-gray-800 hover:font-bold shadow-xl cursor-pointer text-md text-gray-400 '>
+                    <TableHead
+                      className={cn(
+                        'bg-amber-200  mx-4 font-semibold h-8 hover:bg-cyan-100 hover:backdrop-blur-sm  hover:text-gray-800 hover:font-bold shadow-xl cursor-pointer text-md text-gray-400',
+                        group ? 'rounded-none' : 'rounded-r-full'
+                      )}
+                    >
                       <Button
                         variant='ghost'
                         size='sm'
-                        className='px-0 h-7'
+                        className='px-0 h-7 mx-auto'
                         onClick={() => {
                           if (group) {
                             setGroup('new-euro', isOpen === true, group);
@@ -259,23 +301,37 @@ DataTableProps<TData, TValue>) {
                         <BsArrowDownSquare size={18} className='mx-auto ' />
                       </Button>
                     </TableHead>
-                    <TableHead className='bg-amber-100 rounded-r-lg px-4 font-semibold h-8 hover:bg-orange-100/70 hover:text-gray-800 hover:font-bold shadow-xl cursor-pointer text-md text-gray-400 '>
-                      <Button
-                        variant='ghost'
-                        size='sm'
-                        className='px-0 h-7'
-                        onClick={() => {
-                          if (group) {
-                            setGroup('new-euro', isOpen === true, group);
-                          }
 
-                          setIsToggleFixture((prev) => !prev);
-                        }}
+                    {group !== null && (
+                      <TableHead
+                        className={cn(
+                          'bg-amber-100 rounded-r-lg px-4 font-semibold h-8 hover:bg-orange-100/70 hover:text-gray-800 hover:font-bold shadow-xl cursor-pointer text-md text-gray-400',
+                          group && 'rounded-r-full'
+                        )}
                       >
-                        {/* <pre>{JSON.stringify(euroGroup, null, 2)}</pre> */}
-                        <FcParallelTasks size={18} className='mx-auto ' />
-                      </Button>
-                    </TableHead>
+                        <Button
+                          variant='ghost'
+                          size='sm'
+                          className='px-0 h-7'
+                          onClick={() => {
+                            const round = '16';
+                            const newGroup = undefined;
+                            onOpen('new-euro');
+                            setGroup(
+                              'new-euro',
+                              isOpen === false,
+                              newGroup,
+                              round
+                            );
+
+                            setIsToggleFixture((prev) => !prev);
+                          }}
+                        >
+                          {/* <pre>{JSON.stringify(euroGroup, null, 2)}</pre> */}
+                          <FcParallelTasks size={18} className='mx-auto ' />
+                        </Button>
+                      </TableHead>
+                    )}
                   </TableRow>
 
                   {table.getHeaderGroups().map((headerGroup) => (
@@ -284,7 +340,10 @@ DataTableProps<TData, TValue>) {
                         return (
                           <TableHead
                             key={header.id}
-                            className=' text-xs text-stone-500 h-8 p-0  text-center px-2 bg-stone-100'
+                            className={cn(
+                              ' text-xs text-stone-500 h-8 p-0  text-center px-2 bg-stone-100',
+                              round && 'w-12'
+                            )}
                           >
                             {header.isPlaceholder
                               ? null
@@ -310,7 +369,7 @@ DataTableProps<TData, TValue>) {
                           <TableCell
                             key={cell.id}
                             className={cn(
-                              'p-0 text-center lg:text-sm even:bg-indigo-50/40',
+                              'p-0 text-center lg:text-sm even:bg-indigo-50',
                               tableCellClassName
                             )}
                             style={{ height: '18px' }}
@@ -359,8 +418,6 @@ DataTableProps<TData, TValue>) {
               {isToggleFixture && (
                 <div className='flex flex-col mx-auto gap-0 py-2 rounded-lg justify-center'>
                   <FixtureTable />
-
-                  {/* <pre>{JSON.stringify(items, null, 2)}</pre> */}
                 </div>
               )}
             </div>
@@ -380,7 +437,8 @@ DataTableProps<TData, TValue>) {
                   !table.getCanNextPage() && 'text-zinc-600'
                 )}
               >
-                <BsChevronDoubleLeft /> Prev
+                <BsChevronDoubleLeft className='mr-4  grayscale hover:grayscale-0 transition ease-in-out delay-50  hover:-translate-y-1 hover:scale-150 mx-1 hover:bg-amber-200 hover:drop-shadow-lg duration-300' />{' '}
+                Prev
               </Button>
               <Button
                 variant='ghost'
@@ -393,7 +451,7 @@ DataTableProps<TData, TValue>) {
                 )}
               >
                 Next
-                <BsChevronDoubleRight />
+                <BsChevronDoubleRight className='ml-4  grayscale hover:grayscale-0 transition ease-in-out delay-50  hover:-translate-y-1 hover:scale-150 mx-1 hover:bg-amber-200 hover:drop-shadow-lg duration-300' />
               </Button>
             </div>
           </div>

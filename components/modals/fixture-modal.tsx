@@ -18,7 +18,7 @@ import { useWeeks, useTeams } from '@/hooks/use-teams';
 
 import { FixtureProps } from '@/types';
 
-import { euroGroup, initialFixtureFormValues, team } from '@/lib/helper';
+import { initialFixtureFormValues } from '@/lib/helper';
 import { usePenalty } from '@/hooks/use-euro';
 import { findMatchingObjects } from '@/lib/utils';
 import { useGetFixtures } from '@/hooks/use-get-schedule';
@@ -27,19 +27,38 @@ const FixtureModal = () => {
   const [fixture, setFixture] = useState<FixtureProps>(
     initialFixtureFormValues
   );
+  const [newEditModalType, setNewEditModalType] = useState('');
+  const [newFixtureModalType, setNewFixtureModalType] = useState('');
 
   const { modalType, isOpen, onClose, id, group, period } = useModal();
+  console.log('🚀 ~ FixtureModal ~ id, group, period :', id, group, period);
   const router = useRouter();
   const { getTeams, getByValue } = useTeams();
   const { getPenalty } = usePenalty();
   const { getWeeks, getWeeksByValue } = useWeeks();
+
   const { isLoading, error, item, items, setItems, setIsLoading } =
     useGetFixtures(id ? id : undefined, period);
+
+  useEffect(() => {
+    if (period) {
+      const newPeriod = period?.slice(0, 2) + period.slice(3);
+      const newEditModalType = `edit-epl${newPeriod}`;
+      const newFixtureModalType = `new-epl${newPeriod}`;
+
+      if (newFixtureModalType) setNewFixtureModalType(newFixtureModalType);
+      if (newEditModalType) setNewEditModalType(newEditModalType);
+    }
+  }, [period]);
+  console.log('🚀 ~ FixtureModal ~ newEditModalType:', newEditModalType);
+
+  console.log('🚀 ~ FixtureModal ~ newFixtureModalType:', newFixtureModalType);
+
   let initialFixtureValues;
-  if (modalType === 'new-fixture') {
+  if (modalType === newFixtureModalType) {
     initialFixtureValues = {
       name: period,
-      week: null,
+      week: group,
       date: new Date(),
       teamHome: '',
       homePenalty: [],
@@ -50,7 +69,7 @@ const FixtureModal = () => {
       awayPenalty: [],
       teamAway: '',
     };
-  } else if (modalType === 'edit-fixture') {
+  } else if (modalType === newEditModalType) {
     initialFixtureValues = {
       name: fixture.name,
       week: fixture.week,
@@ -101,10 +120,10 @@ const FixtureModal = () => {
   }));
 
   useEffect(() => {
-    if (modalType === 'new-fixture' && !error) {
+    if (modalType === newFixtureModalType && !error) {
       const data = {
-        name: period,
-        week: null,
+        name: group,
+        week: week,
         date: new Date(),
         teamHome: '',
         homePenalty: [],
@@ -118,11 +137,12 @@ const FixtureModal = () => {
       setFixture(data);
 
       const periodWeek: any = weeks.filter(
-        (period) => period.value === item.week
+        (period) => period.value === Number(group)
       ) || {
         icon: '',
         value: '',
       };
+
       const home: any = teamsOption.filter(
         (team) => team.value === item.teamHome
       ) || {
@@ -135,8 +155,8 @@ const FixtureModal = () => {
         value: '',
         icon: '',
       };
-      setValue('name', group);
-      setValue('week', week);
+      setValue('name', period);
+      setValue('week', periodWeek[0]);
       setValue('teamHome', home[0]);
       setValue('homePenalty', homePenalty);
       setValue('homeScore', homeScore);
@@ -147,8 +167,9 @@ const FixtureModal = () => {
       setValue('homeHTScore', homeHTScore);
       setValue('awayHTScore', awayHTScore);
     }
+    console.log('🚀 ~ useEffect ~ group:', group, item);
 
-    if (modalType === 'edit-fixture' && item && !error) {
+    if (modalType === newEditModalType && item && !error) {
       const data = {
         id: item.id,
         name: item.name,
@@ -170,6 +191,7 @@ const FixtureModal = () => {
         icon: '',
         value: '',
       };
+      console.log('🚀 ~ useEffect ~ data.item:', item);
       const home: any = teamsOption.filter(
         (team) => team.value === item.teamHome
       ) || {
@@ -212,7 +234,6 @@ const FixtureModal = () => {
       // }
     }
   }, [error, item, modalType, setValue, teamsOption]);
-
   if (!item.date) return;
   const newDate = new Date(fixture.date).toISOString().substring(0, 16);
   const name = watch('name');
@@ -238,7 +259,7 @@ const FixtureModal = () => {
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
     // const gameValues: GameProps = data.game.map((val: any) => val.value);
-    if (modalType === 'new-fixture') {
+    if (modalType === newFixtureModalType) {
       try {
         data = {
           name,
@@ -268,7 +289,7 @@ const FixtureModal = () => {
       } catch (err) {
         console.error(err);
       }
-    } else if (modalType === 'edit-fixture') {
+    } else if (modalType === newEditModalType) {
       data = {
         name,
         week,
@@ -302,6 +323,17 @@ const FixtureModal = () => {
   };
 
   const handleCloseClearForm = () => {
+    setValue('name', '');
+    setValue('week', '');
+    setValue('teamHome', '');
+    setValue('date', new Date());
+    setValue('teamAway', '');
+    setValue('homeScore', '');
+    setValue('homeHTScore', '');
+    setValue('homePenalty', []);
+    setValue('awayScore', '');
+    setValue('awayHTScore', '');
+    setValue('awayPenalty', []);
     setFixture({
       id: '',
       name: '',
@@ -309,11 +341,11 @@ const FixtureModal = () => {
       teamHome: '',
       homePenalty: [],
       homeScore: '',
+      homeHTScore: '',
       week: null,
       teamAway: '',
       awayPenalty: [],
       awayScore: '',
-      homeHTScore: '',
       awayHTScore: '',
     });
     reset();
@@ -324,12 +356,14 @@ const FixtureModal = () => {
     <div className='flex flex-col gap-1'>
       <Heading
         title={
-          modalType === 'new-fixture'
+          modalType === newFixtureModalType
             ? `New Week period ${group}`
             : `Edit week  ${group}`
         }
         subtitle={
-          modalType === 'new-fixture' ? 'Weeks period?' : 'Editing Matches'
+          modalType === newFixtureModalType
+            ? 'Weeks period?'
+            : 'Editing Matches'
         }
       />
 
@@ -411,7 +445,7 @@ const FixtureModal = () => {
         </span>
       )}
 
-      {modalType === 'edit-fixture' && (
+      {modalType === newEditModalType && (
         <>
           <Input
             id='homeScore'
@@ -488,7 +522,7 @@ const FixtureModal = () => {
           </span>
         </span>
       )}
-      {modalType === 'edit-fixture' && (
+      {modalType === newEditModalType && (
         <>
           <Input
             id='awayScore'
@@ -567,11 +601,12 @@ const FixtureModal = () => {
   return (
     <Modal
       isOpen={
-        isOpen && (modalType === 'new-fixture' || modalType === 'edit-fixture')
+        isOpen &&
+        (modalType === newFixtureModalType || modalType === newEditModalType)
       }
       onClose={handleCloseClearForm}
       onSubmit={handleSubmit(onSubmit)}
-      title={modalType === 'new-fixture' ? 'New fixture' : 'Edit Fixture'}
+      title={modalType === newFixtureModalType ? 'New fixture' : 'Edit Fixture'}
       actionLabel='Submit'
       disabled={isLoading}
       body={bodyContent}
@@ -719,8 +754,7 @@ export default FixtureModal;
 //       ) || { icon: '', value: '' };
 //       const home = teamsOption.find(
 //         (team) =>
-//           team.value ===
-//           (modalType === 'new-fixture' ? '' : item.teamHome.value)
+//           team.value === (modalType === 'new-fixture' ? '' : item.teamHome)
 //       ) || {
 //         value: '',
 //         icon: '',
@@ -729,8 +763,7 @@ export default FixtureModal;
 //       };
 //       const away = teamsOption.find(
 //         (team) =>
-//           team.value ===
-//           (modalType === 'new-fixture' ? '' : item.teamAway.value)
+//           team.value === (modalType === 'new-fixture' ? '' : item.teamAway)
 //       ) || {
 //         value: '',
 //         icon: '',

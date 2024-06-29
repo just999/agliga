@@ -231,6 +231,8 @@ model Euro {
   awayScore    String?
   awayHTScore  String?
   group        Group?
+  round        String?
+  qRound       String?
   userId       String   @db.ObjectId
 
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)

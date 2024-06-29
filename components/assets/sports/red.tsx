@@ -1,6 +1,11 @@
+import { cn } from '@/lib/utils';
 import React from 'react';
 
-export function Red() {
+type RedProps = {
+  className?: string;
+};
+
+export function Red({ className }: RedProps) {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -8,7 +13,7 @@ export function Red() {
       height='1707'
       fill='none'
       viewBox='0 0 1024 1707'
-      className='h-6 w-6'
+      className={cn('h-6 w-6', className)}
     >
       <g clipPath='url(#clip0_73_2)'>
         <path

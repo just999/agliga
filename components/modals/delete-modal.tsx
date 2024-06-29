@@ -7,17 +7,26 @@ import { useRouter } from 'next/navigation';
 
 import toast from 'react-hot-toast';
 import useModal from '@/hooks/use-modal';
+import { useEffect, useState } from 'react';
 
 // type DeleteModalProps = {
 //   title?: string | undefined;
 // };
 
 const DeleteModal = () => {
+  const [newDelete, setNewDelete] = useState('');
   const router = useRouter();
   // const params = useParams();
   // const id = params.id;
-  const { modalType, onOpen, isOpen, onClose, id, title } = useModal();
-
+  const { modalType, onOpen, isOpen, onClose, id, title, group, period } =
+    useModal();
+  useEffect(() => {
+    if (period) {
+      const newPeriod = period?.slice(0, 2) + period?.slice(3);
+      const newDeleteModalType = `delete-epl${newPeriod}`;
+      if (newDeleteModalType) setNewDelete(newDeleteModalType);
+    }
+  }, [period]);
   const onDelete = async () => {
     if (modalType === 'delete-post') {
       try {
@@ -93,7 +102,99 @@ const DeleteModal = () => {
       } catch (err) {
         console.error('Error Deleting euro schedule', err);
       }
+    } else if (modalType === newDelete) {
+      const data = {
+        id,
+        period,
+        title,
+      };
+      try {
+        await fetch(`/api/fixtures/${id}`, {
+          method: 'DELETE',
+          body: JSON.stringify(data),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }).then((res) => {
+          if (res.status === 200) {
+            toast.success('images successfully deleted');
+            onClose();
+            router.refresh();
+          }
+        });
+      } catch (err) {
+        console.error('Error deleting fixture', err);
+      }
     }
+    // else if (modalType === 'delete-epl2122') {
+    //   try {
+    //     const res = await fetch(`/api/fixtures/epl2122/${id}`, {
+    //       method: 'DELETE',
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //       },
+    //     }).then((res) => {
+    //       if (res.status === 200) {
+    //         toast.success('images successfully deleted');
+    //         onClose();
+    //         router.refresh();
+    //       }
+    //     });
+    //   } catch (err) {
+    //     console.error('Error deleting fixture', err);
+    //   }
+    // } else if (modalType === 'delete-epl2223') {
+    //   try {
+    //     const res = await fetch(`/api/fixtures/epl2223/${id}`, {
+    //       method: 'DELETE',
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //       },
+    //     }).then((res) => {
+    //       if (res.status === 200) {
+    //         toast.success('images successfully deleted');
+    //         onClose();
+    //         router.refresh();
+    //       }
+    //     });
+    //   } catch (err) {
+    //     console.error('Error deleting fixture', err);
+    //   }
+    // } else if (modalType === 'delete-epl2324') {
+    //   try {
+    //     const res = await fetch(`/api/fixtures/epl2324/${id}`, {
+    //       method: 'DELETE',
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //       },
+    //     }).then((res) => {
+    //       if (res.status === 200) {
+    //         toast.success('images successfully deleted');
+    //         onClose();
+    //         router.refresh();
+    //       }
+    //     });
+    //   } catch (err) {
+    //     console.error('Error deleting fixture', err);
+    //   }
+    // } else if (modalType === 'delete-epl2425') {
+    //   try {
+    //     const res = await fetch(`/api/fixtures/epl2425/${id}`, {
+    //       method: 'DELETE',
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //       },
+    //     }).then((res) => {
+    //       if (res.status === 200) {
+    //         toast.success('images successfully deleted');
+    //         onClose();
+    //         router.refresh();
+    //       }
+    //     });
+    //   } catch (err) {
+    //     console.error('Error deleting fixture', err);
+    //   }
+    // }
   };
 
   const bodyContent = (
@@ -114,7 +215,8 @@ const DeleteModal = () => {
         (modalType === 'delete-post' ||
           modalType === 'deleteSchedule' ||
           modalType === 'delete-slider' ||
-          modalType === 'delete-euro')
+          modalType === 'delete-euro' ||
+          modalType === newDelete)
       }
       onClose={onClose}
       onSubmit={onDelete}
