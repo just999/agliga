@@ -31,7 +31,7 @@ const FixtureModal = () => {
   const [newFixtureModalType, setNewFixtureModalType] = useState('');
 
   const { modalType, isOpen, onClose, id, group, period } = useModal();
-  console.log('🚀 ~ FixtureModal ~ id, group, period :', id, group, period);
+
   const router = useRouter();
   const { getTeams, getByValue } = useTeams();
   const { getPenalty } = usePenalty();
@@ -50,9 +50,6 @@ const FixtureModal = () => {
       if (newEditModalType) setNewEditModalType(newEditModalType);
     }
   }, [period]);
-  console.log('🚀 ~ FixtureModal ~ newEditModalType:', newEditModalType);
-
-  console.log('🚀 ~ FixtureModal ~ newFixtureModalType:', newFixtureModalType);
 
   let initialFixtureValues;
   if (modalType === newFixtureModalType) {
@@ -167,7 +164,6 @@ const FixtureModal = () => {
       setValue('homeHTScore', homeHTScore);
       setValue('awayHTScore', awayHTScore);
     }
-    console.log('🚀 ~ useEffect ~ group:', group, item);
 
     if (modalType === newEditModalType && item && !error) {
       const data = {
@@ -191,7 +187,7 @@ const FixtureModal = () => {
         icon: '',
         value: '',
       };
-      console.log('🚀 ~ useEffect ~ data.item:', item);
+
       const home: any = teamsOption.filter(
         (team) => team.value === item.teamHome
       ) || {

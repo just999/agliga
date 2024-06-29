@@ -28,9 +28,6 @@ export async function PUT(
 
   const newPeriod = name?.slice(0, 2) + name.slice(3);
   const newFixture = `ePL${newPeriod}`;
-
-  console.log('🚀 ~ POST ~ newFixture:', newFixture);
-
   if (!body) NextResponse.error();
   const isoDate = date + ':00.000Z';
 
@@ -161,12 +158,10 @@ export async function PUT(
         },
       });
     }
-    console.log('🚀 ~ POST ~ fixture:', fixture);
     return new Response(JSON.stringify({ message: 'Success' }), {
       status: 200,
     });
   } catch (err) {
-    console.log('🚀 ~ err:', err);
     return new Response(JSON.stringify({ message: 'Server Error' }), {
       status: 500,
     });
@@ -182,8 +177,6 @@ export async function DELETE(
 
   const { id } = params;
   const body = await req.json();
-  console.log('🚀 ~ body:', body, id);
-
   const { period, title } = body;
 
   const newPeriod = period?.slice(0, 2) + period.slice(3);
@@ -208,8 +201,6 @@ export async function DELETE(
         where: { id: id },
       });
     }
-    console.log('🚀 ~ POST ~ fixture:', fixture);
-
     // const formData = await req.formData();
     // const images = formData.get('images');
     // const updatedSliderImage = {
@@ -235,8 +226,6 @@ export async function DELETE(
     revalidatePath(`/soccer?period=${period}`);
     return new Response(JSON.stringify(fixture), { status: 200 });
   } catch (err) {
-    console.log('🚀 ~ err:', err);
-
     return new Response(JSON.stringify({ message: 'Server Error' }), {
       status: 500,
     });
