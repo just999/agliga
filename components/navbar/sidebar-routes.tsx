@@ -1,10 +1,6 @@
 'use client';
 
-import { useParams, usePathname, useRouter } from 'next/navigation';
-
-import useModal from '@/hooks/use-modal';
-import { signOut, useSession } from 'next-auth/react';
-import { BiHome } from 'react-icons/bi';
+import { useSession } from 'next-auth/react';
 
 import MenuItem from './menu-item';
 

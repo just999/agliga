@@ -204,9 +204,9 @@ const SelectInput = ({
               )}
             >
               {option &&
-              (id === 'euroTeamHome' ||
-                id === 'euroTeamAway' ||
-                id === 'teamHome' ||
+              // id === 'euroTeamHome' ||
+              // id === 'euroTeamAway' ||
+              (id === 'teamHome' ||
                 id === 'teamAway' ||
                 // id === 'bank' ||
                 id === 'bankPT' ||

@@ -156,7 +156,6 @@ const EuroModal = () => {
         group: '',
         played: '',
       };
-
       const away: any = teamsOption.filter(
         (team) => team.value === item.euroTeamAway.value
       ) || {

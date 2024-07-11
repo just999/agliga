@@ -108,6 +108,7 @@ model Depo {
   depoAmount    Int
   game          String   @default("SBOBET")
   gameUserId    String
+  status        String?
   bankPT        String
   userId        String?  @db.ObjectId
   user          User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -123,6 +124,7 @@ model Wd {
   game          String   @default("SBOBET")
   gameUserId    String
   wdAmount      Int
+  status        String?
   userId        String?  @db.ObjectId
   user          User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt     DateTime @default(now())

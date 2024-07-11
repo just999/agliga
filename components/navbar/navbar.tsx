@@ -4,13 +4,14 @@ import { signOut, useSession } from 'next-auth/react';
 import Container from '../container';
 import Categories from './categories';
 import Logo from './logo';
-import Search from './search';
+
 import UserMenu from './user-menu';
 import { SafeUser } from '@/types';
 import DepoWdMenu from './depo-wd-menu';
 // import GamesCategories from './games-categories';
 import MobileSidebar from './mobile-sidebar';
 import { AiOutlineLogout, AiOutlineLogin } from 'react-icons/ai';
+
 import { BiHome } from 'react-icons/bi';
 import { FaUserTie } from 'react-icons/fa';
 import {
@@ -20,20 +21,21 @@ import {
   FcDataSheet,
   FcCalendar,
   FcTemplate,
-  FcFlowChart,
+  FcPanorama,
 } from 'react-icons/fc';
 import { PiUserPlus } from 'react-icons/pi';
 import { usePathname } from 'next/navigation';
 import useModal from '@/hooks/use-modal';
-import { GrLanguage, GrUserAdmin } from 'react-icons/gr';
+
 import { capitalizeFirstCharacter, cn } from '@/lib/utils';
 import { TbScoreboard } from 'react-icons/tb';
-import usePostsStore, { postItems } from '@/store/use-posts-store';
+
 import ClientOnly from '@/lib/client-only';
-import { Button } from '../ui/button';
+
 import LanguageDropdown from '../language-dropdown';
 import { UeFa } from '../assets/sports/uefa';
 import { EPLPeriod } from '@/lib/helper';
+import { Admin } from '../assets/icons';
 
 type NavbarProps = {
   currentUser?: SafeUser | null;
@@ -167,11 +169,22 @@ const Navbar = ({ currentUser, className }: NavbarProps) => {
         'hidden whitespace-nowrap sm:block text-xs font-semibold px-6 py-2 border-x-[1px] flex-1 text-center  md:hidden lg:block cursor-pointer hover:shadow-md hover:bg-emerald-50',
     },
     {
-      icon: GrUserAdmin,
+      icon: FcPanorama,
       label: 'Slider',
       onClick: () => {},
       href: `/sliders`,
       active: modalType === null && pathname === '/sliders',
+      className:
+        userRole === 'admin'
+          ? 'hidden whitespace-nowrap sm:block text-xs font-semibold px-6 py-2 border-x-[1px] flex-1 text-center  md:hidden lg:block cursor-pointer hover:shadow-md hover:bg-emerald-50'
+          : 'hidden',
+    },
+    {
+      icon: Admin,
+      label: 'Admin',
+      onClick: () => {},
+      href: `/admin`,
+      active: modalType === null && pathname === '/admin',
       className:
         userRole === 'admin'
           ? 'hidden whitespace-nowrap sm:block text-xs font-semibold px-6 py-2 border-x-[1px] flex-1 text-center  md:hidden lg:block cursor-pointer hover:shadow-md hover:bg-emerald-50'

@@ -1,11 +1,8 @@
 'use client';
 
-import { AiOutlineLogin, AiOutlineLogout, AiOutlineMenu } from 'react-icons/ai';
+import { AiOutlineMenu } from 'react-icons/ai';
 import Avatar from '../avatar';
-import { MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
-import MenuItem from './menu-item';
 
-import { useSession } from 'next-auth/react';
 import { RoutesProps, SafeUser } from '@/types';
 import useModal from '@/hooks/use-modal';
 import { useClickOutside } from '@/hooks/use-click-outside';
