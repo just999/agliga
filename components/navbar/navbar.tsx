@@ -22,7 +22,9 @@ import {
   FcCalendar,
   FcTemplate,
   FcPanorama,
+  FcGallery,
 } from 'react-icons/fc';
+import { RiAdminLine } from 'react-icons/ri';
 import { PiUserPlus } from 'react-icons/pi';
 import { usePathname } from 'next/navigation';
 import useModal from '@/hooks/use-modal';
@@ -35,7 +37,6 @@ import ClientOnly from '@/lib/client-only';
 import LanguageDropdown from '../language-dropdown';
 import { UeFa } from '../assets/sports/uefa';
 import { EPLPeriod } from '@/lib/helper';
-import { Admin } from '../assets/icons';
 
 type NavbarProps = {
   currentUser?: SafeUser | null;
@@ -180,7 +181,7 @@ const Navbar = ({ currentUser, className }: NavbarProps) => {
           : 'hidden',
     },
     {
-      icon: Admin,
+      icon: RiAdminLine,
       label: 'Admin',
       onClick: () => {},
       href: `/admin`,
