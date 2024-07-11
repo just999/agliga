@@ -229,6 +229,7 @@ const FixtureModal = () => {
       //   console.warn('item.date is not a valid Date object');
       // }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [error, item, modalType, setValue, teamsOption]);
   if (!item.date) return;
   const newDate = new Date(fixture.date).toISOString().substring(0, 16);
