@@ -9,7 +9,6 @@ export async function GET() {
   try {
     const feed = await parser.parseURL(RSS_URL);
     const items = feed.items?.slice(0, 5); // Limit to first 5 items
-    // console.log('🚀 ~ GET ~ items:', items, feed);
     return NextResponse.json(items);
   } catch (error) {
     return NextResponse.json(
