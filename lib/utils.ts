@@ -1,7 +1,7 @@
 import useGames from '@/hooks/use-games';
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
-import { Noto_Color_Emoji, Orbitron } from 'next/font/google';
+import { Noto_Color_Emoji, Orbitron, Poppins } from 'next/font/google';
 import { date } from 'zod';
 import { EuroWithIconProps } from '@/types';
 import { format, parse } from 'date-fns';
@@ -136,6 +136,12 @@ export function findMatchingObjects(
 export const noto = Noto_Color_Emoji({
   subsets: ['emoji'],
   weight: ['400'],
+  preload: true,
+});
+
+export const poppins = Poppins({
+  subsets: ['latin'],
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
   preload: true,
 });
 

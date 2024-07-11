@@ -1,19 +1,11 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
-import useModal from '@/hooks/use-modal';
-import { convertDateMonthYear, convertDateTime } from '@/lib/convert-date-time';
-import { cn, noto } from '@/lib/utils';
-import { EuroProps, EuroWithIconProps } from '@/types';
 
-import { BsPencilFill, BsTrashFill } from 'react-icons/bs';
+import { convertDateMonthYear } from '@/lib/convert-date-time';
+import { cn } from '@/lib/utils';
+import { EuroWithIconProps } from '@/types';
+
 import EuroCardContent from './euro-card-content';
 
 type EuroCardProps = {

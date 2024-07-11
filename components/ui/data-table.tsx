@@ -179,6 +179,7 @@ DataTableProps<TData, TValue>) {
           className
         )}
       >
+        {/* {eu && <pre>{JSON.stringify(eu[0]?.category, null, 2)}</pre>} */}
         <InputCustom
           placeholder='Search...'
           value={filtering}
@@ -396,7 +397,7 @@ DataTableProps<TData, TValue>) {
                     />
                   ))}
 
-                  {/* <pre>{JSON.stringify(items, null, 2)}</pre> */}
+                  {/* <pre>{JSON.stringify(eu, null, 2)}</pre> */}
                 </div>
               )}
               {isToggleFixture && (

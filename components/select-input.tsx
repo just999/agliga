@@ -1,6 +1,6 @@
 'use client';
 
-import { cn, noto } from '@/lib/utils';
+import { cn, noto, poppins } from '@/lib/utils';
 
 import makeAnimated from 'react-select/animated';
 
@@ -8,6 +8,7 @@ import Select, { StylesConfig } from 'react-select';
 
 import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
 import { BiDollar } from 'react-icons/bi';
+import { categories } from '@/lib/helper';
 
 export type SelectInputValue = {
   icon: string;
@@ -161,10 +162,7 @@ const SelectInput = ({
                 // id === 'game' ||
                 // id === 'run' ||
                 // id === 'teamHome' ||
-                id === 'euroTeamHome' ||
-                id === 'euroTeamAway' ||
-                id === 'winner' ||
-                id === 'loser' ? (
+                id === 'euroTeamHome' || id === 'euroTeamAway' ? (
                   <span
                     className={cn(
                       'w-10 h-10 text-2xl rounded-lg flex flex-row items-center text-stone-900'
@@ -184,10 +182,16 @@ const SelectInput = ({
                     <span
                       className={cn(
                         option.style,
-                        'bg-emerald-200/20 px-0 py-1 '
+                        'bg-emerald-200/20 px-0 py-1'
                       )}
                     >
+                      {categories
+                        .filter((cat) => cat.label === option.value)
+                        .map((c, i) => (
+                          <c.icon key={i} className='w-7 h-7' />
+                        ))}
                       <option.icon />
+                      {/* <pre>{JSON.stringify(option, null, 2)}</pre> */}
                     </span>
                   </span>
                 )
@@ -204,14 +208,20 @@ const SelectInput = ({
                 id === 'euroTeamAway' ||
                 id === 'teamHome' ||
                 id === 'teamAway' ||
-                id === 'bank' ||
+                // id === 'bank' ||
                 id === 'bankPT' ||
-                id === 'week' ||
-                id === 'loser')
+                id === 'week')
                 ? option.value
                 : option.desc}
               {/* <pre>{JSON.stringify(option.value, null, 2)}</pre> */}
-              {/* <span className='text-neutral-500 ml-1 '></span> */}
+              <span
+                className={cn(
+                  'text-neutral-500 ml-1 text-sm',
+                  poppins.className
+                )}
+              >
+                {option.value}{' '}
+              </span>
             </div>
           </div>
         )}
