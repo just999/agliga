@@ -33,7 +33,6 @@ const DepoWdMenu = ({ routes }: UserMenuProps) => {
               key={label}
               href={href}
               onClick={onClick}
-              // onMouseEnter={() => onOpen('admin')}
               className={cn(
                 // `h-full w-full  p-0 m-0 bg-emerald-900  cursor-pointer py-2 hover:shadow-md`,
                 className,
@@ -48,7 +47,7 @@ const DepoWdMenu = ({ routes }: UserMenuProps) => {
                   'flex flex-row gap-1 text-stone-900 text-[14px] text-center text-nowrap'
                 )}
               >
-                <Icon size={12} />
+                {/* <Icon size={12} /> */}
                 {label}
               </div>
             </Link>

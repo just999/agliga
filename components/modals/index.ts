@@ -10,7 +10,6 @@ import PostModal from './post-modal';
 import SliderModal from './slider-modal';
 import SoccerModal from './soccer-modal';
 import TopicModal from './topic-modal';
-
 import UserProfileModal from './user-profile-modal';
 
 export {

@@ -102,7 +102,9 @@ const SidebarRoutes = ({
                 (r) =>
                   r.label !== 'Input-Jadwal' &&
                   r.label !== 'New-Post' &&
-                  r.label !== 'New-Topic'
+                  r.label !== 'New-Topic' &&
+                  r.label !== 'Admin' &&
+                  r.label !== 'Slider'
               )
               .map((route) => (
                 <MenuItem

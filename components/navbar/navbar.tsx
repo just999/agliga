@@ -143,7 +143,6 @@ const Navbar = ({ currentUser, className }: NavbarProps) => {
       icon: FcTemplate,
       label: 'New-Post',
       onClick: () => onOpen('post'),
-
       href: `${pathname}`,
       active: modalType === 'post',
       className:

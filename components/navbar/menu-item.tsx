@@ -38,6 +38,8 @@ const MenuItem = ({
           'hover:text-blue-800 hover:bg-sky-50',
         (label === 'Input-Jadwal' ||
           label === 'New-Post' ||
+          label === 'Admin' ||
+          label === 'Slider' ||
           label === 'New-Topic') &&
           'hover:text-emerald-800 hover:bg-emerald-50',
         active

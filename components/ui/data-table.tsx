@@ -195,28 +195,30 @@ DataTableProps<TData, TValue>) {
               title={`English Premier League ${period}`}
               className=' text-zinc-500  w-full  text-lg text-nowrap 2xs:text-[8px] xs:text-xs sm:text-sm 2xl:text-base '
             />
-            <div className='flex flex-row justify-start gap-4 w-full '>
-              <div className='hidden text-nowrap lg:block'>
-                <Button
-                  className='w-full h-6 p-4 flex flex-row hover:shadow-lg hover:text-cyan-500 hover:bg-amber-100'
-                  variant='ghost'
-                  size='sm'
-                  type='button'
-                  onClick={() => {
-                    const week = table.options.data.map(
-                      (we: any) => we?.week
-                    )[0];
+            {session?.user.curUser.role === 'admin' && (
+              <div className='flex flex-row justify-start gap-4 w-full '>
+                <div className='hidden text-nowrap lg:block'>
+                  <Button
+                    className='w-full h-6 p-4 flex flex-row hover:shadow-lg hover:text-cyan-500 hover:bg-amber-100'
+                    variant='ghost'
+                    size='sm'
+                    type='button'
+                    onClick={() => {
+                      const week = table.options.data.map(
+                        (we: any) => we?.week
+                      )[0];
 
-                    handleNewFixture(week);
-                  }}
-                >
-                  <TbNewSection size={30} />
-                  {/* <pre>
+                      handleNewFixture(week);
+                    }}
+                  >
+                    <TbNewSection size={30} />
+                    {/* <pre>
                     {JSON.stringify(table.options.data[0]?.week, null, 2)}
                   </pre> */}
-                </Button>
+                  </Button>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         )}
       </div>
