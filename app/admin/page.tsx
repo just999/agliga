@@ -24,7 +24,7 @@ const AdminPage = async () => {
         footerClassName='flex flex-row gap-2 justify-between items-center bg-sky-200/60'
         euroClassName='flex flex-wrap gap-2 justify-center group-card py-2'
         className={cn('hidden')}
-        depoWdClassName={cn('block')}
+        depoWdClassName={cn('flex flex-row items-center justify-end right-0')}
         // tableCellClassName='bg-orange-100/50'
         euCardClassName='pt-2 px-2 gap-0 justify-start items-center bg-emerald-50 odd:bg-zinc-100 even:bg-stone-50'
       />

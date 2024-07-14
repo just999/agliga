@@ -499,7 +499,7 @@ DataTableProps<TData, TValue>) {
             </div>
             <div
               className={cn(
-                'flex items-center justify-end space-x-2 py-4 pr-4',
+                'space-x-2 py-4 pr-4 w-full',
                 className,
                 depoWdClassName
               )}
