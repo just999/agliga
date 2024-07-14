@@ -36,8 +36,8 @@ model User {
   accounts       Account[]
   // listings       Listing[]
   // reservations   Reservation[]
-  depos          Depo[]
-  wds            Wd[]
+  depos          Depo[]    @relation("UserDepos")
+  wds            Wd[]      @relation("UserWds")
   posts          Post[]
   comments       Comment[]
   sliders        Slider[]
@@ -46,8 +46,10 @@ model User {
   EPL2324        EPL2324[]
   EPL2223        EPL2223[]
   EPL2122        EPL2122[]
+  EPL2425        EPL2425[]
 
-  EPL2425 EPL2425[]
+  adminDepos Depo[] @relation("AdminDepos")
+  adminWds   Wd[]   @relation("AdminWds")
 }
 
 model Account {
@@ -101,7 +103,7 @@ model Account {
 
 model Depo {
   id            String   @id @default(auto()) @map("_id") @db.ObjectId
-  email         String?  @unique
+  email         String?
   bank          String
   accountNumber String
   name          String
@@ -110,14 +112,16 @@ model Depo {
   gameUserId    String
   status        String?
   bankPT        String
+  adminId       String?  @db.ObjectId
+  admin         User?    @relation("AdminDepos", fields: [adminId], references: [id])
   userId        String?  @db.ObjectId
-  user          User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user          User?    @relation("UserDepos", fields: [userId], references: [id], onDelete: Cascade)
   createdAt     DateTime @default(now())
 }
 
 model Wd {
   id            String   @id @default(auto()) @map("_id") @db.ObjectId
-  email         String?  @unique
+  email         String?
   bank          String
   accountNumber String
   name          String
@@ -125,8 +129,10 @@ model Wd {
   gameUserId    String
   wdAmount      Int?
   status        String?
+  adminId       String?  @db.ObjectId
+  admin         User?    @relation("AdminWds", fields: [adminId], references: [id])
   userId        String?  @db.ObjectId
-  user          User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user          User?    @relation("UserWds", fields: [userId], references: [id], onDelete: Cascade)
   createdAt     DateTime @default(now())
 }
 

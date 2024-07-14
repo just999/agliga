@@ -62,7 +62,6 @@ const DepoWdClient = ({
   }, [depo]);
 
   const { modalType } = useModal();
-  console.log('🚀 ~ modalType:', modalType);
   // const table = useLeague(data);
   // const table = useLeague(depo);
 

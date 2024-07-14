@@ -322,7 +322,7 @@ DataTableProps<TData, TValue>) {
                         </TableHead>
                       </>
                     )}
-                    {eu ? (
+                    {eu && !group && !round ? (
                       <>
                         <TableHead
                           className={cn(
@@ -384,7 +384,7 @@ DataTableProps<TData, TValue>) {
                             group && 'rounded-r-full'
                           )}
                         >
-                          <Button
+                          {/* <Button
                             variant='ghost'
                             size='sm'
                             className='px-0 h-7'
@@ -402,9 +402,9 @@ DataTableProps<TData, TValue>) {
                               setIsToggleFixture((prev) => !prev);
                             }}
                           >
-                            {/* <pre>{JSON.stringify(euroGroup, null, 2)}</pre> */}
+                            <pre>{JSON.stringify(euroGroup, null, 2)}</pre>
                             <FcParallelTasks size={18} className='mx-auto ' />
-                          </Button>
+                          </Button> */}
                         </TableHead>
                       </>
                     )}

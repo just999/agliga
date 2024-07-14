@@ -20,8 +20,6 @@ const DepoWdMenu = ({ routes }: UserMenuProps) => {
   // const userRole = useUserRole();
 
   const { modalType, onOpen } = useModal();
-  console.log('🚀 ~ DepoWdMenu ~ modalType:', modalType);
-
   // const active =
   //   ' text-lime-700  bg-emerald-50 drop-shadow-sm border-b-[3px] border-solid px-3 border-stone-300 transition font-bold';
   // const inactive = 'text-stone-400  px-3';

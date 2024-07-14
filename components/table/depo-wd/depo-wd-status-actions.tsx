@@ -22,6 +22,7 @@ import { IconType } from 'react-icons';
 import { BsPlusCircleDotted } from 'react-icons/bs';
 
 import { cn } from '@/lib/utils';
+import { FcUndo } from 'react-icons/fc';
 
 type Status = {
   value: string;
@@ -38,9 +39,12 @@ export function DepoWdStatusActions({ statuses }: DepoWdStatusActions) {
     null
   );
 
+  const handleUnselect = () => {
+    setSelectedStatus(null);
+    setOpen(false);
+  };
   return (
     <div className='flex items-center space-x-4'>
-      {/* <p className='text-sm text-muted-foreground'>Status</p> */}
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
@@ -66,8 +70,6 @@ export function DepoWdStatusActions({ statuses }: DepoWdStatusActions) {
                       : 'text-orange-700 font-bold '
                   )}
                 >
-                  {' '}
-                  {/* <pre>{JSON.stringify(selectedStatus, null, 2)}</pre> */}
                   {selectedStatus.value}
                 </span>
               </span>
@@ -88,12 +90,19 @@ export function DepoWdStatusActions({ statuses }: DepoWdStatusActions) {
                   <CommandItem
                     key={value}
                     value={value}
-                    className={cn('flex flex-row gap-2 cursor-pointer')}
-                    onSelect={(val) => {
-                      setSelectedStatus(
-                        statuses.find((priority) => priority.value === val) ||
-                          null
+                    className='flex flex-row gap-2 cursor-pointer'
+                    onSelect={(clickedValue) => {
+                      const matchedStatus =
+                        statuses.find(
+                          (status) => status.value === clickedValue
+                        ) || null;
+
+                      setSelectedStatus((prevSelectedStatus) =>
+                        prevSelectedStatus?.value === clickedValue
+                          ? null
+                          : matchedStatus
                       );
+
                       setOpen(false);
                     }}
                   >
@@ -102,6 +111,17 @@ export function DepoWdStatusActions({ statuses }: DepoWdStatusActions) {
                   </CommandItem>
                 ))}
               </CommandGroup>
+              {selectedStatus && (
+                <CommandGroup>
+                  <CommandItem
+                    onSelect={handleUnselect}
+                    className='flex flex-row gap-2 cursor-pointer'
+                  >
+                    <FcUndo />
+                    <span>Unselect</span>
+                  </CommandItem>
+                </CommandGroup>
+              )}
             </CommandList>
           </Command>
         </PopoverContent>

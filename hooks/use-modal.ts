@@ -60,6 +60,11 @@ type ModalStore = {
     | 'delete-euro'
     | 'deleteSchedule'
     | 'admin'
+    | 'depo-wd-success'
+    | 'depo-wd-failed'
+    | 'depo-wd-progress'
+    | 'depo-wd-error'
+    | 'depo-wd-garbage'
     | null;
   isOpen: boolean;
   id?: string | null;
@@ -113,7 +118,12 @@ type ModalStore = {
       | 'delete-epl2425'
       | 'delete-euro'
       | 'deleteSchedule'
-      | 'admin',
+      | 'admin'
+      | 'depo-wd-success'
+      | 'depo-wd-failed'
+      | 'depo-wd-progress'
+      | 'depo-wd-error'
+      | 'depo-wd-garbage',
     id?: string | null,
     title?: string | undefined,
     img?: ImageSlider | undefined,
@@ -207,6 +217,11 @@ const useModal = create<ModalStore>((set) => ({
       | 'delete-epl2425'
       | 'delete-euro'
       | 'admin'
+      | 'depo-wd-success'
+      | 'depo-wd-failed'
+      | 'depo-wd-progress'
+      | 'depo-wd-error'
+      | 'depo-wd-garbage'
       | 'editSoccer',
     id = null,
     title,
