@@ -93,7 +93,14 @@ import {
   Sbo,
 } from '@/components/assets/user-games';
 import { BsCalendarWeek } from 'react-icons/bs';
-import { FaSwimmer, FaSkiing, FaChess } from 'react-icons/fa';
+
+import { FaPersonRunning } from 'react-icons/fa6';
+import {
+  FcDisapprove,
+  FcFullTrash,
+  FcHighPriority,
+  FcOk,
+} from 'react-icons/fc';
 import {
   GiSoccerKick,
   GiBasketballBasket,
@@ -105,6 +112,7 @@ import {
   GiCycling,
   GiShuttlecock,
   GiCricketBat,
+  GiTurd,
 } from 'react-icons/gi';
 import { MdKayaking, MdOutlineSurfing } from 'react-icons/md';
 
@@ -1434,6 +1442,30 @@ export const initialEuroFormWithIconValues = {
   qRound: '',
   euroTeamAway: team,
   awayPenalty: [],
+};
+
+export const initialDepoValues = {
+  id: '',
+  name: '',
+  email: null,
+  bank: '',
+  game: '',
+  gameUserId: '',
+  bankPT: '',
+  accountNumber: '',
+  depoAmount: null,
+  status: '',
+};
+export const initialWdValues = {
+  id: '',
+  name: '',
+  email: null,
+  bank: '',
+  game: '',
+  gameUserId: '',
+  accountNumber: '',
+  wdAmount: null,
+  status: '',
 };
 
 export const euros = [
@@ -2910,4 +2942,49 @@ export const weeks = [
   { value: 36, className: 'lsm2', icon: BsCalendarWeek },
   { value: 37, className: 'lsm2', icon: BsCalendarWeek },
   { value: 38, className: 'lsm2', icon: BsCalendarWeek },
+];
+
+export const status = [
+  {
+    value: 'success',
+    icon: FcOk,
+  },
+  {
+    value: 'failed',
+    icon: FcDisapprove,
+  },
+  {
+    value: 'in progress',
+    icon: FaPersonRunning,
+  },
+  {
+    value: 'error',
+    icon: FcHighPriority,
+  },
+  {
+    value: 'garbage',
+    icon: FcFullTrash,
+  },
+];
+export const statuses = [
+  {
+    value: 'success',
+    icon: FcOk,
+  },
+  {
+    value: 'gagal',
+    icon: FcDisapprove,
+  },
+  {
+    value: 'in progress',
+    icon: FaPersonRunning,
+  },
+  {
+    value: 'error',
+    icon: FcHighPriority,
+  },
+  {
+    value: 'sampah',
+    icon: GiTurd,
+  },
 ];

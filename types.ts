@@ -2,6 +2,7 @@
 // import { User } from 'next-auth';
 import { Post, Slider, User } from '@prisma/client';
 import { IconType } from 'react-icons';
+import { status } from './lib/helper';
 
 // export type SafeListing = Omit<Listing, 'createdAt'> & {
 //   createdAt: string;
@@ -76,8 +77,8 @@ export type PostProps = {
 };
 
 export const tabsData = [
-  { id: 1, name: 'Popular', active: true },
-  { id: 2, name: 'Trending', active: false },
+  { id: 1, name: 'Popular', label: 'Depo Table', active: true },
+  { id: 2, name: 'Trending', label: 'WD Table', active: false },
 ];
 
 export type initialPostStateProps = {
@@ -89,16 +90,53 @@ export type initialPostStateProps = {
   validate?: string;
 };
 
-export type DepoWdProps = {
+interface DepoWd {
+  id?: string;
+  email: string | null;
+  bank: string | null;
   name: string;
-  email: string;
+  accountNumber: string;
+  game: string | null;
+  gameUserId: string;
+  status?: string;
+  bankPT?: string | null;
+  createdAt?: Date | null;
+}
+
+export interface Depo {
+  depoAmount: number | null;
+}
+
+export interface Wd {
+  wdAmount: number | null;
+}
+
+export type DepoWdProps = DepoWd & (Depo | Wd);
+
+export type DepoProps = {
+  id?: string;
+  name: string;
+  email: string | null;
   bank: string | null;
   game: string | null;
   gameUserId: string;
-  bankPT?: string;
+  bankPT?: string | null;
   accountNumber: string;
-  depoAmount?: number;
-  wdAmount?: number;
+  depoAmount?: number | null;
+  status?: string;
+  createdAt?: Date | null;
+};
+export type WdProps = {
+  id?: string;
+  name: string;
+  email: string | null;
+  bank: string | null;
+  game: string | null;
+  gameUserId: string;
+  accountNumber: string;
+  wdAmount?: number | null;
+  status?: string;
+  createdAt?: Date | null;
 };
 
 export type SosMedProps = {

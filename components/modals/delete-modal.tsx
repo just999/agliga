@@ -15,6 +15,7 @@ import { useEffect, useState } from 'react';
 
 const DeleteModal = () => {
   const [newDelete, setNewDelete] = useState('');
+  const [depoWdDelete, setDepoWdDelete] = useState('');
   const router = useRouter();
   // const params = useParams();
   // const id = params.id;
@@ -26,7 +27,10 @@ const DeleteModal = () => {
       const newDeleteModalType = `delete-epl${newPeriod}`;
       if (newDeleteModalType) setNewDelete(newDeleteModalType);
     }
-  }, [period]);
+    if (modalType === 'delete-depo') setDepoWdDelete('delete-depo');
+    if (modalType === 'delete-wd') setDepoWdDelete('delete-wd');
+  }, [period, setDepoWdDelete, modalType]);
+
   const onDelete = async () => {
     if (modalType === 'delete-post') {
       try {
@@ -125,76 +129,12 @@ const DeleteModal = () => {
       } catch (err) {
         console.error('Error deleting fixture', err);
       }
+    } else if (modalType === depoWdDelete) {
+      const data = {
+        id,
+        title,
+      };
     }
-    // else if (modalType === 'delete-epl2122') {
-    //   try {
-    //     const res = await fetch(`/api/fixtures/epl2122/${id}`, {
-    //       method: 'DELETE',
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //       },
-    //     }).then((res) => {
-    //       if (res.status === 200) {
-    //         toast.success('images successfully deleted');
-    //         onClose();
-    //         router.refresh();
-    //       }
-    //     });
-    //   } catch (err) {
-    //     console.error('Error deleting fixture', err);
-    //   }
-    // } else if (modalType === 'delete-epl2223') {
-    //   try {
-    //     const res = await fetch(`/api/fixtures/epl2223/${id}`, {
-    //       method: 'DELETE',
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //       },
-    //     }).then((res) => {
-    //       if (res.status === 200) {
-    //         toast.success('images successfully deleted');
-    //         onClose();
-    //         router.refresh();
-    //       }
-    //     });
-    //   } catch (err) {
-    //     console.error('Error deleting fixture', err);
-    //   }
-    // } else if (modalType === 'delete-epl2324') {
-    //   try {
-    //     const res = await fetch(`/api/fixtures/epl2324/${id}`, {
-    //       method: 'DELETE',
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //       },
-    //     }).then((res) => {
-    //       if (res.status === 200) {
-    //         toast.success('images successfully deleted');
-    //         onClose();
-    //         router.refresh();
-    //       }
-    //     });
-    //   } catch (err) {
-    //     console.error('Error deleting fixture', err);
-    //   }
-    // } else if (modalType === 'delete-epl2425') {
-    //   try {
-    //     const res = await fetch(`/api/fixtures/epl2425/${id}`, {
-    //       method: 'DELETE',
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //       },
-    //     }).then((res) => {
-    //       if (res.status === 200) {
-    //         toast.success('images successfully deleted');
-    //         onClose();
-    //         router.refresh();
-    //       }
-    //     });
-    //   } catch (err) {
-    //     console.error('Error deleting fixture', err);
-    //   }
-    // }
   };
 
   const bodyContent = (
@@ -202,7 +142,7 @@ const DeleteModal = () => {
       {title && (
         <Heading
           title={`${title}?`}
-          subtitle={`Are you sure you want to ${title}?, this action is reversible!`}
+          subtitle={`Are you sure you want to ${title} with id: ${id} ?, this action is reversible!`}
         />
       )}
     </div>
@@ -216,6 +156,8 @@ const DeleteModal = () => {
           modalType === 'deleteSchedule' ||
           modalType === 'delete-slider' ||
           modalType === 'delete-euro' ||
+          modalType === 'delete-depo' ||
+          modalType === 'delete-wd' ||
           modalType === newDelete)
       }
       onClose={onClose}

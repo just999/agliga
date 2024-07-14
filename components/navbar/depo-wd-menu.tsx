@@ -19,7 +19,8 @@ const DepoWdMenu = ({ routes }: UserMenuProps) => {
   // const pathname = usePathname();
   // const userRole = useUserRole();
 
-  // const { modalType, onOpen } = useModal();
+  const { modalType, onOpen } = useModal();
+  console.log('🚀 ~ DepoWdMenu ~ modalType:', modalType);
 
   // const active =
   //   ' text-lime-700  bg-emerald-50 drop-shadow-sm border-b-[3px] border-solid px-3 border-stone-300 transition font-bold';
@@ -34,6 +35,7 @@ const DepoWdMenu = ({ routes }: UserMenuProps) => {
               key={label}
               href={href}
               onClick={onClick}
+              // onMouseEnter={() => onOpen('admin')}
               className={cn(
                 // `h-full w-full  p-0 m-0 bg-emerald-900  cursor-pointer py-2 hover:shadow-md`,
                 className,
@@ -42,10 +44,15 @@ const DepoWdMenu = ({ routes }: UserMenuProps) => {
                   : 'text-stone-400 bg-slate-100 px-3'
               )}
             >
-              {/* {Icon && <Icon size={18} />}
-              <div className={cn('text-stone-900 text-xs text-center')}> */}
-              {label}
-              {/* </div> */}
+              {/* {Icon && <Icon size={18} />} */}
+              <div
+                className={cn(
+                  'flex flex-row gap-1 text-stone-900 text-[14px] text-center text-nowrap'
+                )}
+              >
+                <Icon size={12} />
+                {label}
+              </div>
             </Link>
           )
         )}

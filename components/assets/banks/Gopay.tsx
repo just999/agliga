@@ -1,12 +1,17 @@
+import { cn } from '@/lib/utils';
 import React from 'react';
 
-function Gopay() {
+type IconProps = {
+  className?: string;
+};
+
+function Gopay({ className }: IconProps) {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
       width='308'
       height='63'
-      className='w-8 h-8'
+      className={cn('w-6 h-auto', className)}
       viewBox='0 0 308 63'
     >
       <g fill='none' fillRule='evenodd'>

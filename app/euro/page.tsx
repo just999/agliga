@@ -55,7 +55,7 @@ const EuroPage = async () => {
     <div className='w-full mx-auto'>
       <EuroCarousel groupArrays={groupArrays} />
 
-      <Container className='grid sm:grid-cols-1  md:text-xs md:w-full lg:grid-cols-2 gap-4 max-w-[1280px]'>
+      <Container className='grid sm:grid-cols-1  md:text-xs md:w-full lg:grid-cols-2 gap-4 max-w-[1600px]'>
         {/* {uefaMatches.map((e: any, i: number) => (
           <EuroTeamGroup key={i} eu={e} />
         ))} */}

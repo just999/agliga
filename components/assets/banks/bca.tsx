@@ -1,14 +1,19 @@
+import { cn } from '@/lib/utils';
 import React from 'react';
 
-function Bca() {
+type IconProps = {
+  className?: string;
+};
+
+function Bca({ className }: IconProps) {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
       xmlnsXlink='http://www.w3.org/1999/xlink'
       width='100'
       height='72'
-      className='w-8 h-8'
       viewBox='0 0 100 72'
+      className={cn('w-6 h-auto', className)}
     >
       <defs>
         <rect

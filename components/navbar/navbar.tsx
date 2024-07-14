@@ -123,10 +123,6 @@ const Navbar = ({ currentUser, className }: NavbarProps) => {
       icon: FcDataSheet,
       label: 'Jadwal',
       onClick: () => {},
-      // onClick: () => {
-      //   onClose();
-      //   router.push('/soccer');
-      // },
       href: `/soccer?period=${period}`,
       active: modalType === null && pathname === '/soccer',
       className:
@@ -146,13 +142,8 @@ const Navbar = ({ currentUser, className }: NavbarProps) => {
     {
       icon: FcTemplate,
       label: 'New-Post',
-      onClick: () => {
-        onOpen('post');
-        // setItem((prev: any) => ({
-        //   ...prev,
-        //   item: postItems,
-        // }));
-      },
+      onClick: () => onOpen('post'),
+
       href: `${pathname}`,
       active: modalType === 'post',
       className:

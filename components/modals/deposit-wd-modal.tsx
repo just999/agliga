@@ -17,28 +17,36 @@ import useGames from '@/hooks/use-games';
 
 import useModal from '@/hooks/use-modal';
 
-import { depoInitialValues, wdInitialValues } from '@/lib/helper';
+import {
+  depoInitialValues,
+  initialDepoValues,
+  initialWdValues,
+  wdInitialValues,
+} from '@/lib/helper';
 import { useSession } from 'next-auth/react';
 import useCaptchaStore from '@/store/use-captcha-store';
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import useDepoWdStore from '@/store/use-depo-wd-store';
+import useStatus from '@/hooks/use-depo-wd-status';
+import { fetchDepoById } from '@/lib/queries/depo-wd';
+import { DepoProps, DepoWdProps, ValueIconProps, WdProps } from '@/types';
+import { useGetDepo, useGetWd } from '@/hooks/use-get-depo-wd';
 
 const DepositWdModal = () => {
+  const [depo, setDepo] = useState<DepoProps>(initialDepoValues);
+  const [wd, setWd] = useState<WdProps>(initialWdValues);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { data: session, status } = useSession();
+  const { data: session, status: sessionStatus } = useSession();
   // const [isMounted, setIsMounted] = useState(false);
 
-  // useEffect(() => {
-  //   setIsMounted(true);
-  // }, []);
-
-  const { item, setItem } = useDepoWdStore();
+  // const { depo, setDepo } = useDepoWdStore();
 
   const router = useRouter();
 
-  const { getBanks, getByValue } = useBanks();
-  const { getGames, getGamesByValue } = useGames();
+  const { getBanks } = useBanks();
+  const { getStatus } = useStatus();
+  const { getGames } = useGames();
 
   const {
     isLoading: captchaLoading,
@@ -48,14 +56,33 @@ const DepositWdModal = () => {
   } = useCaptchaStore();
   const { executeRecaptcha } = useGoogleReCaptcha();
 
-  const { modalType, isOpen, onOpen, onClose } = useModal();
+  const { modalType, isOpen, onOpen, onClose, setGroup, id } = useModal();
+  const { depo: depoResult, depos } = useGetDepo(id ? id : undefined);
+
+  const { wd: wdResult, wds } = useGetWd(id ? id : undefined);
   let items;
   if (modalType === 'depo' && session) {
-    const email = session.user.curUser.email;
-    const bank = session.user.curUser.bank;
-    const accountNumber = session.user.curUser.accountNumber;
-    const name = session.user.curUser.name;
+    const email = session?.user.email;
+    const bank = session?.user.curUser.bank;
+    const accountNumber = session?.user.curUser.accountNumber;
+    const name = session?.user.name;
 
+    items = {
+      email,
+      bank,
+      accountNumber,
+      name,
+      game: '',
+      depoAmount: null,
+      gameUserId: '',
+      bankPT: '',
+      status: '',
+    };
+  } else if (modalType === 'wd' && session) {
+    const email = session?.user.email;
+    const bank = session?.user.curUser.bank;
+    const accountNumber = session?.user.curUser.accountNumber;
+    const name = session?.user.name;
     items = {
       email,
       bank,
@@ -64,13 +91,31 @@ const DepositWdModal = () => {
       game: '',
       wdAmount: null,
       gameUserId: '',
+      status: '',
     };
-  } else if (modalType === 'depo' && !session) {
-    items = depoInitialValues;
-  } else if (modalType === 'wd') {
-    items = wdInitialValues;
+  } else if (modalType === 'edit-depo') {
+    items = {
+      email: depoResult.email,
+      bank: depoResult.bank,
+      accountNumber: depoResult.accountNumber,
+      name: depoResult.name,
+      game: depoResult.game,
+      depoAmount: depoResult.depoAmount,
+      gameUserId: depoResult.gameUserId,
+      status: depoResult.status,
+    };
+  } else if (modalType === 'edit-wd') {
+    items = {
+      email: wdResult.email,
+      bank: wdResult.bank,
+      accountNumber: wdResult.accountNumber,
+      name: wdResult.name,
+      game: wdResult.game,
+      wdAmount: wdResult.wdAmount,
+      gameUserId: wdResult.gameUserId,
+      status: wdResult.status,
+    };
   }
-
   const {
     register,
     handleSubmit,
@@ -81,6 +126,72 @@ const DepositWdModal = () => {
   } = useForm<FieldValues>({
     defaultValues: items,
   });
+
+  const bankOpt = getBanks();
+  const bankOptions = bankOpt.map((bank) => ({
+    value: bank.value,
+    icon: bank.icon,
+  }));
+
+  const statusOpt = getStatus();
+  const statusOptions = statusOpt.map((stat) => ({
+    value: stat.value,
+    icon: stat.icon,
+  }));
+
+  useEffect(() => {
+    if (modalType === 'depo' && !error) {
+      const data = {
+        email: session?.user.email,
+        bank: session?.user.curUser.bank,
+        accountNumber: session?.user.curUser.accountNumber,
+        name: session?.user.name,
+        game: '',
+        wdAmount: null,
+        depoAmount: null,
+        bankPT: '',
+        gameUserId: '',
+        status: '',
+      } as DepoWdProps;
+      setDepo(data);
+
+      const bank = bankOpt.filter(
+        (ba) => ba.value === session?.user.curUser.bank
+      ) || {
+        icon: '',
+        value: '',
+      };
+      const bankPT = bankOpt.filter((ba) => ba.value === depo.bankPT) || {
+        icon: '',
+        value: '',
+      };
+
+      const gameUser = gameOption.filter((go) => go.value === game) || {
+        value: '',
+        icon: '',
+      };
+      setValue('email', session?.user.email);
+      setValue('name', session?.user.name);
+      setValue('bank', bank[0]);
+      setValue('depoAmount', depoAmount);
+      setValue('wdAmount', wdAmount);
+      setValue('accountNumber', session?.user.curUser.accountNumber);
+      setValue('bankPT', bankPT[0]);
+    }
+    // if (depo) setDepoWd(depo);
+
+    if (session && modalType === 'edit-depo') {
+      setValue('email', email);
+      setValue('name', name);
+      setValue('bank', bank[0]);
+      setValue('depoAmount', depoAmount);
+      setValue('wdAmount', wdAmount);
+      setValue('accountNumber', accountNumber);
+      setValue('bankPT', bankPT[0]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [error, bankOpt, session, setValue]);
+
   const name = watch('name');
   const email = watch('email');
   const bank = watch('bank');
@@ -90,6 +201,8 @@ const DepositWdModal = () => {
   const wdAmount = watch('wdAmount');
   const accountNumber = watch('accountNumber');
   const bankPT = watch('bankPT');
+  const status = watch('status');
+
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
       shouldDirty: true,
@@ -97,28 +210,6 @@ const DepositWdModal = () => {
       shouldValidate: true,
     });
   };
-
-  const bankOpt = getBanks();
-  const bankOptions = bankOpt.map((bank) => ({
-    value: bank.value,
-    icon: bank.icon,
-  }));
-
-  useEffect(() => {
-    const bank = bankOpt.filter(
-      (ba) => ba.value === session?.user.curUser.bank
-    ) || {
-      icon: '',
-      value: '',
-    };
-    if (session) {
-      setValue('email', session?.user.curUser.email);
-      setValue('bank', bank[0]);
-      setValue('name', session?.user.curUser.name);
-      setValue('accountNumber', session?.user.curUser.accountNumber);
-    }
-  }, [bankOpt, session, setValue]);
-
   // if (!isMounted) return null;
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);
@@ -161,20 +252,48 @@ const DepositWdModal = () => {
         gameUserId,
         game: game.value,
       };
-      axios
-        .post('/api/depo', data)
-        .then((res) => {
-          toast.success('Deposit form success di kirim!');
+
+      try {
+        axios
+          .post('/api/depo', data)
+          .then((res) => {
+            toast.success('Deposit form success di kirim!');
+            router.refresh();
+            reset();
+            onClose();
+          })
+          .catch((error) => {
+            toast.error('Something Went Wrong', error);
+          })
+          .finally(() => {
+            setIsLoading(false);
+          });
+      } catch (err) {
+        console.error(err);
+      }
+    } else if (modalType === 'edit-depo') {
+      data = {
+        email,
+        accountNumber,
+        name,
+        depoAmount: +depoAmount,
+        bank: bank.value,
+        bankPT: bankPT.value,
+        gameUserId,
+        game: game.value,
+        status,
+      };
+
+      try {
+        axios.put(`/api/depo/${id}`, data).then(() => {
+          toast.success('depo status berhasil di update');
           router.refresh();
           reset();
           onClose();
-        })
-        .catch((error) => {
-          toast.error('Something Went Wrong', error);
-        })
-        .finally(() => {
-          setIsLoading(false);
         });
+      } catch (err) {
+        console.error(err);
+      }
     }
 
     if (modalType === 'wd') {
@@ -186,24 +305,51 @@ const DepositWdModal = () => {
         game: game.value,
         wdAmount: +wdAmount,
         gameUserId,
+        status,
       };
-      axios
-        .post('/api/wd', data)
-        .then(() => {
-          toast.success('WD Form Success di kirim!');
+
+      try {
+        axios
+          .post('/api/wd', data)
+          .then(() => {
+            toast.success('WD Form Success di kirim!');
+            router.refresh();
+            reset();
+            onClose();
+          })
+          .catch((error) => {
+            toast.error('Something Went Wrong, Error');
+          })
+          .finally(() => {
+            setIsLoading(false);
+          });
+      } catch (err) {
+        console.error(err);
+      }
+    } else if (modalType === 'edit-wd') {
+      data = {
+        email,
+        bank: bank.value,
+        accountNumber,
+        name,
+        game: game.value,
+        wdAmount: +wdAmount,
+        gameUserId,
+        status,
+      };
+
+      try {
+        axios.put(`/api/wd/${id}`, data).then(() => {
+          toast.success('WD status berhasil di update');
           router.refresh();
           reset();
           onClose();
-        })
-        .catch((error) => {
-          toast.error('Something Went Wrong, Error');
-        })
-        .finally(() => {
-          setIsLoading(false);
         });
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
-
   const handleModalTypeChange = (newType: 'depo' | 'wd') => {
     // Reset form values based on the new modal type
     if (newType === 'depo')
@@ -236,7 +382,7 @@ const DepositWdModal = () => {
 
   const handleCloseClearForm = () => {
     onClose();
-    const item = {
+    const data = {
       name,
       email,
       bank,
@@ -247,21 +393,33 @@ const DepositWdModal = () => {
       depoAmount: 0,
       wdAmount: 0,
     };
-    setItem(item);
-    setValue('email', session?.user.curUser.email);
-    setValue('bank', bank);
-    setValue('name', session?.user.curUser.name);
-    setValue('accountNumber', session?.user.curUser.accountNumber);
-    setValue('game', '');
-    setValue('gameUserId', '');
-    setValue('depoAmount', '');
-    setValue('wdAmount', '');
-    setValue('bankPT', '');
+    reset();
+    setWd(data);
+    setDepo(data);
   };
 
   const bodyContent = (
     <div className='flex flex-col gap-2'>
-      <Heading title={modalType === 'depo' ? 'Deposit' : 'Wd'} subtitle={''} />
+      <Heading
+        title={
+          modalType === 'depo'
+            ? 'Deposit'
+            : modalType === 'wd'
+            ? 'WD'
+            : modalType === 'edit-depo'
+            ? 'Edit Depo'
+            : 'Edit WD'
+        }
+        subtitle={
+          modalType === 'depo'
+            ? 'Deposit'
+            : modalType === 'wd'
+            ? 'WD'
+            : modalType === 'edit-depo'
+            ? 'Edit Depo status'
+            : 'Edit WD status'
+        }
+      />
       <Input
         id='email'
         type='email'
@@ -282,13 +440,14 @@ const DepositWdModal = () => {
         label={bank ? '' : 'bank'}
         isMulti={false}
         id='bank'
-        value={watch('bank')}
+        defaultValue={watch('bank')}
         register={register}
         required
         onChange={(value) => setCustomValue('bank', value)}
         placeholder='Banks'
         options={() => bankOptions}
         errors={errors}
+        optionIconClassName='w-5 h-5'
         optionClassName='text-sm ml-4 text-gray-600 font-bold'
       />
       {errors.bank && (
@@ -298,6 +457,7 @@ const DepositWdModal = () => {
           </span>
         </span>
       )}
+      {bank}
       <Input
         id='accountNumber'
         type='tel'
@@ -314,7 +474,6 @@ const DepositWdModal = () => {
           </span>
         </span>
       )}
-
       <Input
         id='name'
         type='text'
@@ -339,13 +498,18 @@ const DepositWdModal = () => {
             ? ''
             : modalType === 'depo'
             ? 'jumlah depo'
-            : 'jumlah wd'
+            : modalType === 'wd'
+            ? 'Jumlah WD'
+            : modalType === 'edit-depo'
+            ? 'edit depo'
+            : 'edit-wd'
         }
         disabled={isLoading}
         register={register}
         errors={errors}
         required
       />
+      {modalType} - {session?.user.name}
       {(errors.depoAmount || errors.wdAmount) && (
         <span className='text-sm text-red-500 '>
           <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-50 px-4 '>
@@ -353,7 +517,6 @@ const DepositWdModal = () => {
           </span>
         </span>
       )}
-
       <SelectInput
         label={game ? '' : 'game'}
         isMulti={false}
@@ -375,7 +538,6 @@ const DepositWdModal = () => {
           </span>
         </span>
       )}
-
       <Input
         id='gameUserId'
         type='text'
@@ -392,8 +554,7 @@ const DepositWdModal = () => {
           </span>
         </span>
       )}
-
-      {modalType === 'depo' && (
+      {(modalType === 'depo' || modalType === 'edit-depo') && (
         <>
           <SelectInput
             label={bankPT ? '' : 'bankPT'}
@@ -406,9 +567,34 @@ const DepositWdModal = () => {
             placeholder='Rekening Tujuan Deposit'
             options={() => bankPTOptions}
             errors={errors}
+            optionIconClassName='w-5 h-5'
             optionClassName='text-sm ml-4 text-gray-600 font-bold'
           />
           {errors.bankPT && (
+            <span className='text-sm text-red-500 '>
+              <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-50 px-4 '>
+                Kolom Wajib di isi...
+              </span>
+            </span>
+          )}
+        </>
+      )}
+      {modalType === 'edit-depo' && (
+        <>
+          <SelectInput
+            label='depo status'
+            isMulti={false}
+            id='status'
+            value={watch('status')}
+            register={register}
+            required
+            onChange={(value) => setCustomValue('status', value)}
+            placeholder='status'
+            options={() => statusOptions}
+            errors={errors}
+            optionClassName='text-sm ml-4 text-gray-600 font-bold'
+          />
+          {errors.status && (
             <span className='text-sm text-red-500 '>
               <span className=' text-xs underline decoration-rose-300 rounded-lg bg-pink-50 px-4 '>
                 Kolom Wajib di isi...
@@ -444,7 +630,13 @@ const DepositWdModal = () => {
   );
   return (
     <Modal
-      isOpen={isOpen && (modalType === 'depo' || modalType === 'wd')}
+      isOpen={
+        isOpen &&
+        (modalType === 'depo' ||
+          modalType === 'wd' ||
+          modalType === 'edit-depo' ||
+          modalType === 'edit-wd')
+      }
       onClose={handleCloseClearForm}
       onSubmit={handleSubmit(onSubmit)}
       title={modalType === 'depo' ? 'Deposit' : 'Withdrawal'}

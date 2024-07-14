@@ -1,11 +1,17 @@
+import { cn } from '@/lib/utils';
 import * as React from 'react';
-export const Dan = (props: any) => (
+
+type IconProps = {
+  className?: string;
+};
+
+export const Dan = ({ className }: IconProps, props: any) => (
   <svg
     xmlns='http://www.w3.org/2000/svg'
     id='Layer_1'
     data-name='Layer 1'
     viewBox='0 0 382 109.22'
-    className='w-8 h-8'
+    className={cn('w-6 h-auto', className)}
     {...props}
   >
     <defs>

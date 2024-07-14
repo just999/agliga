@@ -416,3 +416,7 @@ export const parseAndFormatDate = (dateStr: string) => {
   const formattedDate = format(date, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
   return formattedDate;
 };
+
+export function numberWithCommas(x: any) {
+  return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, '.');
+}

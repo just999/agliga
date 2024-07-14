@@ -20,7 +20,11 @@ type ModalStore = {
     | 'login'
     | 'register'
     | 'depo'
+    | 'edit-depo'
+    | 'delete-depo'
     | 'wd'
+    | 'edit-wd'
+    | 'delete-wd'
     | 'post'
     | 'edit'
     | 'delete-post'
@@ -55,6 +59,7 @@ type ModalStore = {
     | 'delete-epl2425'
     | 'delete-euro'
     | 'deleteSchedule'
+    | 'admin'
     | null;
   isOpen: boolean;
   id?: string | null;
@@ -69,7 +74,11 @@ type ModalStore = {
       | 'login'
       | 'register'
       | 'depo'
+      | 'edit-depo'
+      | 'delete-depo'
       | 'wd'
+      | 'edit-wd'
+      | 'delete-wd'
       | 'post'
       | 'edit'
       | 'delete-post'
@@ -103,7 +112,8 @@ type ModalStore = {
       | 'delete-epl2324'
       | 'delete-epl2425'
       | 'delete-euro'
-      | 'deleteSchedule',
+      | 'deleteSchedule'
+      | 'admin',
     id?: string | null,
     title?: string | undefined,
     img?: ImageSlider | undefined,
@@ -119,6 +129,8 @@ type ModalStore = {
       | 'new-euro'
       | 'edit-euro'
       | 'delete-euro'
+      | 'edit-depo'
+      | 'delete-depo'
       | 'new-fixture'
       | 'edit-fixture'
       | 'new-epl2122'
@@ -156,7 +168,11 @@ const useModal = create<ModalStore>((set) => ({
       | 'login'
       | 'register'
       | 'depo'
+      | 'edit-depo'
+      | 'delete-depo'
       | 'wd'
+      | 'edit-wd'
+      | 'delete-wd'
       | 'post'
       | 'edit'
       | 'delete-post'
@@ -190,6 +206,7 @@ const useModal = create<ModalStore>((set) => ({
       | 'delete-epl2324'
       | 'delete-epl2425'
       | 'delete-euro'
+      | 'admin'
       | 'editSoccer',
     id = null,
     title,
@@ -219,6 +236,8 @@ const useModal = create<ModalStore>((set) => ({
       | 'new-euro'
       | 'edit-euro'
       | 'delete-euro'
+      | 'edit-depo'
+      | 'delete-depo'
       | 'new-fixture'
       | 'edit-fixture'
       | 'new-epl2122'

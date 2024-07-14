@@ -1,19 +1,26 @@
-import { DepoWdProps } from '@/types';
+import { DepoProps, WdProps } from '@/types';
 import { create } from 'zustand';
 
 type DepoWdState = {
-  item: DepoWdProps;
+  depo: DepoProps;
+  depos: DepoProps[];
+  wd: WdProps;
+  wds: WdProps[];
   isLoading: boolean;
   error: any;
   setIsLoading: (isLoading: boolean) => void;
   setError: (error: any) => void;
-  setItem: (item: DepoWdProps) => void;
+  setDepo: (depo: DepoProps) => void;
+  setDepos: (depos: DepoProps[]) => void;
+  setWd: (wd: WdProps) => void;
+  setWds: (wds: WdProps[]) => void;
 };
 
 const initialState = {
   isLoading: false,
   error: null,
-  item: {
+  depos: [],
+  depo: {
     name: '',
     email: '',
     bank: '',
@@ -21,19 +28,33 @@ const initialState = {
     gameUserId: '',
     bankPT: '',
     accountNumber: '',
-    depoAmount: 0,
-    wdAmount: 0,
+    depoAmount: null,
+    status: '',
+  },
+  wds: [],
+  wd: {
+    name: '',
+    email: '',
+    bank: '',
+    game: '',
+    gameUserId: '',
+    accountNumber: '',
+    wdAmount: null,
+    status: '',
   },
 
-  // setItems: (items: PostProps[]) => {},
-  // setItem: (item: PostProps) => {},
+  // setDepos: (depos: PostProps[]) => {},
+  // setDepo: (depo: PostProps) => {},
 };
 
 const useDepoWdStore = create<DepoWdState>((set) => ({
   ...initialState,
   setIsLoading: (isLoading) => set(() => ({ isLoading })),
   setError: (error) => set(() => ({ error })),
-  setItem: (item: DepoWdProps) => set(() => ({ item })),
+  setDepo: (depo: DepoProps) => set(() => ({ depo })),
+  setDepos: (depos: DepoProps[]) => set(() => ({ depos })),
+  setWd: (wd: WdProps) => set(() => ({ wd })),
+  setWds: (wds: WdProps[]) => set(() => ({ wds })),
 }));
 
 export default useDepoWdStore;

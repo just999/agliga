@@ -353,8 +353,13 @@
 
 // export default Danamon;
 
+import { cn } from '@/lib/utils';
 import * as React from 'react';
-export const Danamon = (props: any) => (
+
+type IconProps = {
+  className?: string;
+};
+export const Danamon = ({ className }: IconProps, props: any) => (
   <svg
     xmlns='http://www.w3.org/2000/svg'
     xmlSpace='preserve'
@@ -364,7 +369,7 @@ export const Danamon = (props: any) => (
     style={{
       enableBackground: 'new -153-46 652 652',
     }}
-    className='w-8 h-8'
+    className={cn('w-6 h-auto', className)}
     viewBox='-153 -46 652 652'
     {...props}
   >

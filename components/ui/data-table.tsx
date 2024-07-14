@@ -44,7 +44,7 @@ import { useSession } from 'next-auth/react';
 import { FcParallelTasks } from 'react-icons/fc';
 import FixtureTable from '../table/euro/fixture/fixture-table';
 import Heading from './heading';
-import { EuroWithIconProps } from '@/types';
+import { DepoWdProps, EuroWithIconProps } from '@/types';
 import { EPL } from '../assets/sports';
 
 import Periods from '../soccer/periods';
@@ -60,9 +60,10 @@ type GroupArrayProps = {
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[] | any;
-  eu?: Fixture[] | TData[];
+  eu?: Fixture[] | DepoWdProps[] | TData[];
   searchKey?: string;
   className?: string;
+  depoWdClassName?: string;
   group?: any;
   round?: string;
   mergedData?: any;
@@ -88,6 +89,7 @@ export function DataTable<TData, TValue>({
   euCardClassName,
   tableCellClassName,
   trashClassName,
+  depoWdClassName,
   groupArrays,
   period,
 }: // mergedData,
@@ -240,82 +242,171 @@ DataTableProps<TData, TValue>) {
                       euroTableClassName
                     )}
                   >
-                    <TableHead
-                      className={cn(
-                        'flex flex-row font-semibold justify-center ml-2 bg-emerald-300 rounded-l-lg  h-8 hover:bg-green-300 hover:font-semibold hover:text-gray-800 shadow-xl text-md text-gray-400 cursor-pointer',
-                        group ? 'w-full' : 'w-full'
-                      )}
-                    >
-                      <Euro24 />
-                      <Button
-                        variant='ghost'
-                        size='sm'
-                        className={cn(
-                          'p-0 h-7 text-sm',
-                          round && 'text-base',
-                          role !== 'admin'
-                            ? 'text-black font-semibold bg-emerald-300'
-                            : 'hover:font-semibold hover:text-gray-800 hover:bg-green-300'
-                        )}
-                        onClick={() => handleOpenGroup(group)}
-                        disabled={role === 'admin' ? false : true}
-                      >
-                        {group ? `Group ${group}` : `Round ${round}`}
-                      </Button>
-                    </TableHead>
-
-                    <TableHead
-                      className={cn(
-                        'bg-amber-200  mx-4 font-semibold h-8 hover:bg-cyan-100 hover:backdrop-blur-sm  hover:text-gray-800 hover:font-bold shadow-xl cursor-pointer text-md text-gray-400',
-                        group ? 'rounded-none' : 'rounded-r-full'
-                      )}
-                    >
-                      <Button
-                        variant='ghost'
-                        size='sm'
-                        className='px-0 h-7 mx-auto'
-                        onClick={() => {
-                          if (group) {
-                            setGroup('new-euro', isOpen === true, group);
-                          }
-
-                          setIsToggle((prev) => !prev);
-                        }}
-                      >
-                        {/* <pre>{JSON.stringify(euroGroup, null, 2)}</pre> */}
-                        <BsArrowDownSquare size={18} className='mx-auto ' />
-                      </Button>
-                    </TableHead>
-
-                    {group !== null && (
+                    {round && (
                       <TableHead
                         className={cn(
-                          'bg-amber-100 rounded-r-lg px-4 font-semibold h-8 hover:bg-orange-100/70 hover:text-gray-800 hover:font-bold shadow-xl cursor-pointer text-md text-gray-400',
-                          group && 'rounded-r-full'
+                          'flex flex-row font-semibold justify-center ml-2 bg-emerald-300 rounded-l-lg  h-8 hover:bg-green-300 hover:font-semibold hover:text-gray-800 shadow-xl text-md text-gray-400 cursor-pointer',
+                          group ? 'w-full' : 'w-full'
                         )}
                       >
+                        <Euro24 />
                         <Button
                           variant='ghost'
                           size='sm'
-                          className='px-0 h-7'
-                          onClick={() => {
-                            const round = '16';
-                            const newGroup = undefined;
-                            onOpen('new-euro');
-                            setGroup(
-                              'new-euro',
-                              isOpen === false,
-                              newGroup,
-                              round
-                            );
-
-                            setIsToggleFixture((prev) => !prev);
-                          }}
+                          className={cn(
+                            'p-0 h-7 text-sm',
+                            round && 'text-base',
+                            role !== 'admin'
+                              ? 'text-black font-semibold bg-emerald-300'
+                              : 'hover:font-semibold hover:text-gray-800 hover:bg-green-300'
+                          )}
+                          onClick={() => handleOpenGroup(group)}
+                          disabled={role === 'admin' ? false : true}
                         >
-                          {/* <pre>{JSON.stringify(euroGroup, null, 2)}</pre> */}
-                          <FcParallelTasks size={18} className='mx-auto ' />
+                          {group ? `Group ${group}` : `Round ${round}`}
                         </Button>
                       </TableHead>
+                    )}
+                    {group && (
+                      <>
+                        <TableHead
+                          className={cn(
+                            'bg-amber-200  mx-4 font-semibold h-8 hover:bg-cyan-100 hover:backdrop-blur-sm  hover:text-gray-800 hover:font-bold shadow-xl cursor-pointer text-md text-gray-400',
+                            group ? 'rounded-none' : 'rounded-r-full'
+                          )}
+                        >
+                          <Button
+                            variant='ghost'
+                            size='sm'
+                            className='px-0 h-7 mx-auto'
+                            onClick={() => {
+                              if (group) {
+                                setGroup('new-euro', isOpen === true, group);
+                              }
+
+                              setIsToggle((prev) => !prev);
+                            }}
+                          >
+                            {/* <pre>{JSON.stringify(euroGroup, null, 2)}</pre> */}
+                            <BsArrowDownSquare size={18} className='mx-auto ' />
+                          </Button>
+                        </TableHead>
+
+                        <TableHead
+                          className={cn(
+                            'bg-amber-100 rounded-r-lg px-4 font-semibold h-8 hover:bg-orange-100/70 hover:text-gray-800 hover:font-bold shadow-xl cursor-pointer text-md text-gray-400',
+                            group && 'rounded-r-full'
+                          )}
+                        >
+                          <Button
+                            variant='ghost'
+                            size='sm'
+                            className='px-0 h-7'
+                            onClick={() => {
+                              const round = '16';
+                              const newGroup = undefined;
+                              onOpen('new-euro');
+                              setGroup(
+                                'new-euro',
+                                isOpen === false,
+                                newGroup,
+                                round
+                              );
+
+                              setIsToggleFixture((prev) => !prev);
+                            }}
+                          >
+                            {/* <pre>{JSON.stringify(euroGroup, null, 2)}</pre> */}
+                            <FcParallelTasks size={18} className='mx-auto ' />
+                          </Button>
+                        </TableHead>
+                      </>
+                    )}
+                    {eu ? (
+                      <>
+                        <TableHead
+                          className={cn(
+                            'bg-amber-100 rounded-r-lg px-4 font-semibold h-8 hover:bg-orange-100/70 hover:text-gray-800 hover:font-bold shadow-xl cursor-pointer text-md text-gray-400',
+                            group && 'rounded-r-full'
+                          )}
+                        ></TableHead>
+                        <TableHead
+                          className={cn(
+                            'bg-amber-100 rounded-r-lg px-4 font-semibold h-8 hover:bg-orange-100/70 hover:text-gray-800 hover:font-bold shadow-xl cursor-pointer text-md text-gray-400',
+                            group && 'rounded-r-full'
+                          )}
+                        ></TableHead>
+                        <TableHead
+                          className={cn(
+                            'bg-amber-100 rounded-r-lg px-4 font-semibold h-8 hover:bg-orange-100/70 hover:text-gray-800 hover:font-bold shadow-xl cursor-pointer text-md text-gray-400',
+                            group && 'rounded-r-full'
+                          )}
+                        >
+                          <Button
+                            variant='ghost'
+                            size='sm'
+                            className='px-0 h-7 text-xs'
+                            onClick={() => {
+                              const round = '16';
+                              const newGroup = undefined;
+                              onOpen('new-euro');
+                              setGroup(
+                                'new-euro',
+                                isOpen === false,
+                                newGroup,
+                                round
+                              );
+
+                              setIsToggleFixture((prev) => !prev);
+                            }}
+                          >
+                            Depo Table
+                          </Button>
+                        </TableHead>
+                      </>
+                    ) : (
+                      <>
+                        <TableHead
+                          className={cn(
+                            'bg-amber-100 rounded-r-lg px-4 font-semibold h-8 hover:bg-orange-100/70 hover:text-gray-800 hover:font-bold shadow-xl cursor-pointer text-md text-gray-400',
+                            group && 'rounded-r-full'
+                          )}
+                        ></TableHead>
+                        <TableHead
+                          className={cn(
+                            'bg-amber-100 rounded-r-lg px-4 font-semibold h-8 hover:bg-orange-100/70 hover:text-gray-800 hover:font-bold shadow-xl cursor-pointer text-md text-gray-400',
+                            group && 'rounded-r-full'
+                          )}
+                        ></TableHead>
+                        <TableHead
+                          className={cn(
+                            'bg-amber-100 rounded-r-lg px-4 font-semibold h-8 hover:bg-orange-100/70 hover:text-gray-800 hover:font-bold shadow-xl cursor-pointer text-md text-gray-400',
+                            group && 'rounded-r-full'
+                          )}
+                        >
+                          <Button
+                            variant='ghost'
+                            size='sm'
+                            className='px-0 h-7'
+                            onClick={() => {
+                              const round = '16';
+                              const newGroup = undefined;
+                              onOpen('new-euro');
+                              setGroup(
+                                'new-euro',
+                                isOpen === false,
+                                newGroup,
+                                round
+                              );
+
+                              setIsToggleFixture((prev) => !prev);
+                            }}
+                          >
+                            {/* <pre>{JSON.stringify(euroGroup, null, 2)}</pre> */}
+                            <FcParallelTasks size={18} className='mx-auto ' />
+                          </Button>
+                        </TableHead>
+                      </>
                     )}
                   </TableRow>
 
@@ -409,7 +500,8 @@ DataTableProps<TData, TValue>) {
             <div
               className={cn(
                 'flex items-center justify-end space-x-2 py-4 pr-4',
-                className
+                className,
+                depoWdClassName
               )}
             >
               <Button

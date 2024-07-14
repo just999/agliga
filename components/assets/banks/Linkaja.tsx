@@ -1,13 +1,18 @@
+import { cn } from '@/lib/utils';
 import React from 'react';
 
-function Linkaja() {
+type IconProps = {
+  className?: string;
+};
+
+function Linkaja({ className }: IconProps) {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
       xmlnsXlink='http://www.w3.org/1999/xlink'
       width='92'
       height='92'
-      className='w-8 h-8'
+      className={cn('w-6 h-auto', className)}
       viewBox='0 0 92 92'
     >
       <defs>
