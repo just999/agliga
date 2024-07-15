@@ -1444,8 +1444,12 @@ export const initialEuroFormWithIconValues = {
   awayPenalty: [],
 };
 
+export const valueWithIcon = {
+  value: '',
+  icon: '',
+};
+
 export const initialDepoValues = {
-  id: '',
   name: '',
   email: null,
   bank: '',
@@ -1457,7 +1461,6 @@ export const initialDepoValues = {
   status: '',
 };
 export const initialWdValues = {
-  id: '',
   name: '',
   email: null,
   bank: '',

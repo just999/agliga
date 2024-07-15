@@ -1,5 +1,6 @@
 import Container from '@/components/container';
 import DepoWdClient from '@/components/table/depo-wd/depo-wd-client';
+import DepoWdTabsActive from '@/components/table/depo-wd/depo-wd-tabs-active';
 import { DataTable } from '@/components/ui/data-table';
 // import DepoWdTable from '@/components/ui/depo-wd-table';
 import { Table } from '@/components/ui/table';
@@ -18,7 +19,7 @@ const AdminPage = async () => {
   Array.prototype.push.apply(depos, wds);
   return (
     <Container className='grid text-xs w-full pt-4 max-w-[1440px]'>
-      <DepoWdClient
+      {/* <DepoWdClient
         // key={i}
         depo={depos}
         footerClassName='flex flex-row gap-2 justify-between items-center bg-sky-200/60'
@@ -27,7 +28,8 @@ const AdminPage = async () => {
         depoWdClassName={cn('flex flex-row items-center justify-end right-0')}
         // tableCellClassName='bg-orange-100/50'
         euCardClassName='pt-2 px-2 gap-0 justify-start items-center bg-emerald-50 odd:bg-zinc-100 even:bg-stone-50'
-      />
+      /> */}
+      <DepoWdTabsActive depo={depos} />
     </Container>
   );
 };

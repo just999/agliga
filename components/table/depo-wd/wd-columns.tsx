@@ -6,13 +6,13 @@ import { cn, noto, numberWithCommas } from '@/lib/utils';
 
 import { Button } from '@/components/ui/button';
 import { ArrowUpDown } from 'lucide-react';
-import { Depo, DepoWdProps } from '@/types';
+import { Depo, DepoWdProps, WdProps } from '@/types';
 import { banks, statuses } from '@/lib/helper';
 
 import CellDepoWdActions from './cell-depo-wd-actions';
 import { DepoWdStatusActions } from './depo-wd-status-actions';
 
-export const depoWdColumns: ColumnDef<DepoWdProps & Depo>[] = [
+export const wdColumns: ColumnDef<DepoWdProps & WdProps>[] = [
   {
     accessorKey: 'index',
     header: 'No.',
@@ -50,6 +50,7 @@ export const depoWdColumns: ColumnDef<DepoWdProps & Depo>[] = [
     cell: ({ row }) => (
       <div className='flex flex-row px-4 gap-2'>
         <span className='font-bold text-slate-400 text-xs'>
+          {/* <pre>{JSON.stringify(row, null, 3)}</pre> */}
           {row.original.name}
         </span>
       </div>
@@ -83,14 +84,14 @@ export const depoWdColumns: ColumnDef<DepoWdProps & Depo>[] = [
     ),
   },
   {
-    accessorKey: 'depoAmount',
-    header: 'depo Rp.',
+    accessorKey: 'wdAmount',
+    header: 'wd Rp.',
     cell: ({ row }) => (
       <div className='flex flex-row justify-between px-4 text-xs gap-2'>
-        <span className='italic text-stone-400 '>Rp.</span>
+        <span className='italic text-stone-300 text-xs'>Rp.</span>
         {
           <span className='text-emerald-700 font-bold '>
-            {numberWithCommas(row.original.depoAmount)}
+            {numberWithCommas(row.original.wdAmount)}
           </span>
         }
       </div>
@@ -118,24 +119,7 @@ export const depoWdColumns: ColumnDef<DepoWdProps & Depo>[] = [
       </div>
     ),
   },
-  {
-    accessorKey: 'bankPT',
-    header: 'Ke Bank PT',
-    cell: ({ row }) => (
-      <div className='flex flex-row px-4 gap-2'>
-        <span className='flex flex-row gap-2 items-center font-bold text-slate-400 text-xs'>
-          {banks
-            .filter((bank) => bank.value === row.original.bankPT)
-            .map((b) => (
-              <div key={b.value}>
-                <b.icon className='w-5 h-5' />
-              </div>
-            ))}
-          <span className='text-[10px]'>{row.original.bankPT}</span>
-        </span>
-      </div>
-    ),
-  },
+
   {
     accessorKey: 'status',
     header: ({ column }) => (

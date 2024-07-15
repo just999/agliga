@@ -31,9 +31,10 @@ type Status = {
 
 type DepoWdStatusActions = {
   statuses: Status[];
+  name?: string;
 };
 
-export function DepoWdStatusActions({ statuses }: DepoWdStatusActions) {
+export function DepoWdStatusActions({ statuses, name }: DepoWdStatusActions) {
   const [open, setOpen] = React.useState(false);
   const [selectedStatus, setSelectedStatus] = React.useState<Status | null>(
     null
@@ -50,7 +51,7 @@ export function DepoWdStatusActions({ statuses }: DepoWdStatusActions) {
           <Button
             variant='ghost'
             className={cn(
-              'w-[150px] justify-start hover:shadow-lg hover:bg-indigo-50',
+              'w-[150px] m-0 p-0 mx-2 h-8 justify-start hover:shadow-lg hover:bg-indigo-50',
               selectedStatus && 'bg-slate-200 border-b-2 border-gray-400'
             )}
           >
@@ -74,8 +75,14 @@ export function DepoWdStatusActions({ statuses }: DepoWdStatusActions) {
                 </span>
               </span>
             ) : (
-              <span className='flex flex-row gap-2 items-center text-xs'>
-                <BsPlusCircleDotted /> Process
+              <span className='flex flex-row m-0 p-0  gap-2 items-center text-xs'>
+                <Button
+                  variant='ghost'
+                  className='flex gap-2 m-0 p-0 text-xs font-bold text-stone-400  hover:text-black'
+                >
+                  <BsPlusCircleDotted /> process{' '}
+                  {name === 'depo' ? 'depo?' : 'wd?'}
+                </Button>
               </span>
             )}
           </Button>

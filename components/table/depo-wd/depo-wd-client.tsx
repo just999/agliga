@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { DataTable } from '@/components/ui/data-table';
 
 import {
@@ -11,7 +12,6 @@ import {
   DepoProps,
   WdProps,
 } from '@/types';
-import { useEffect, useState } from 'react';
 import React from 'react';
 
 import useLeague, { TeamStats } from '@/hooks/use-league';
@@ -21,8 +21,9 @@ import { cn, fixtureFiltered } from '@/lib/utils';
 import { fetchEuroByRound } from '@/lib/queries/euro';
 // import DepoWdTable from '@/components/ui/depo-wd-table';
 import { fetchDepo } from '@/lib/queries/depo-wd';
-import { depoWdColumns } from './depo-wd-columns';
+import { depoColumns } from './depo-columns';
 import useModal from '@/hooks/use-modal';
+import { wdColumns } from './wd-columns';
 
 interface DepoWdClientProps {
   depo?: DepoWdProps[] | any[];
@@ -37,6 +38,7 @@ interface DepoWdClientProps {
   tableCellClassName?: string;
   euCardClassName?: string;
   trashClassName?: string;
+  tab: string;
 }
 
 const DepoWdClient = ({
@@ -50,7 +52,9 @@ const DepoWdClient = ({
   depoWdClassName,
   euCardClassName,
   trashClassName,
+  tableCellClassName,
   items,
+  tab,
 }: DepoWdClientProps) => {
   const [dep, setDep] = useState<DepoWdProps[]>([]);
   // const [roundDat, setRoundDat] = useState<any[]>([]);
@@ -60,7 +64,6 @@ const DepoWdClient = ({
     if (!depo) return;
     setDep(depo);
   }, [depo]);
-
   const { modalType } = useModal();
   // const table = useLeague(data);
   // const table = useLeague(depo);
@@ -105,14 +108,17 @@ const DepoWdClient = ({
 
   // const selectedColumns = group !== null ? euroColumns : euroRoundColumns;
 
-  const filteredDepo = dep.filter((de: DepoProps) => de.depoAmount);
+  const filteredDepo = dep.filter(
+    (de: DepoProps) => de.depoAmount !== undefined
+  );
+
   const filteredWd = dep.filter((we: WdProps) => we.wdAmount);
   return (
     <div className={cn('flex flex-col pt-2 border-0 md:w-full')}>
       <DataTable
         searchKey='email'
-        columns={depoWdColumns}
-        eu={filteredDepo}
+        columns={tab === 'depo' ? depoColumns : wdColumns}
+        eu={tab === 'depo' ? filteredDepo : filteredWd}
         className={className}
         depoWdClassName={depoWdClassName}
         // group={group}
@@ -122,6 +128,7 @@ const DepoWdClient = ({
         euroClassName={euroClassName}
         euCardClassName={euCardClassName}
         trashClassName={trashClassName}
+        tableCellClassName={tableCellClassName}
       />
     </div>
   );

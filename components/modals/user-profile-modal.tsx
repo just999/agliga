@@ -100,7 +100,6 @@ const UserProfileModal = () => {
       return () => clearInterval(timer);
     }
   }, [modalType, onOpen, remainingTime]);
-
   const banks = getBanks();
   const bankOptions = banks.map((bank) => ({
     value: bank.value,
@@ -112,6 +111,7 @@ const UserProfileModal = () => {
     value: game.value,
     icon: game.icon,
   }));
+
   useEffect(() => {
     if (session?.user.curUser) {
       setProfile(session.user.curUser);
@@ -122,7 +122,6 @@ const UserProfileModal = () => {
         icon: '',
         value: '',
       };
-
       const game = games.filter(
         (g) => g.value === session.user.curUser.game
       ) || {
@@ -322,7 +321,7 @@ const UserProfileModal = () => {
               <Input
                 id='email'
                 type='email'
-                label='Email'
+                label={email ? '' : 'Email'}
                 disabled={isLoading}
                 register={register}
                 errors={errors}
@@ -392,7 +391,7 @@ const UserProfileModal = () => {
               <Input
                 id='name'
                 type='text'
-                label='Nama sesuai dengan rek bank'
+                label={name ? '' : 'Nama sesuai dengan rek bank'}
                 disabled={isLoading}
                 defaultValue={profile.name}
                 register={register}
@@ -408,7 +407,7 @@ const UserProfileModal = () => {
               )}
 
               <SelectInput
-                label='bank'
+                label={bank ? '' : 'bank'}
                 isMulti={false}
                 id='bank'
                 register={register}
@@ -430,7 +429,7 @@ const UserProfileModal = () => {
               <Input
                 id='accountNumber'
                 type='tel'
-                label='Nomor Rekening'
+                label={accountNumber ? '' : 'Nomor Rekening'}
                 defaultValue={profile.accountNumber}
                 disabled={isLoading}
                 register={register}
@@ -465,7 +464,7 @@ const UserProfileModal = () => {
               )} */}
 
               <SelectInput
-                label='game'
+                label={game ? '' : 'game'}
                 id='game'
                 register={register}
                 isMulti={true}
@@ -488,7 +487,7 @@ const UserProfileModal = () => {
               <Input
                 id='phone'
                 type='tel'
-                label='Tel'
+                label={phone ? '' : 'Tel'}
                 defaultValue={profile.phone}
                 disabled={isLoading}
                 register={register}

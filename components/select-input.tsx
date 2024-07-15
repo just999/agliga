@@ -91,7 +91,7 @@ const SelectInput = ({
   const animatedComponents = makeAnimated();
 
   let multi;
-  if (id === 'bankPt' || 'category' || 'bank') {
+  if (id === 'bankPT' || 'category' || 'bank') {
     multi = false;
   } else {
     multi = true;
@@ -209,7 +209,7 @@ const SelectInput = ({
               (id === 'teamHome' ||
                 id === 'teamAway' ||
                 // id === 'bank' ||
-                id === 'bankPT' ||
+                // id === 'bankPT' ||
                 id === 'week')
                 ? option.value
                 : option.desc}

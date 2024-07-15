@@ -39,9 +39,11 @@ import {
 import { useGetDepo, useGetWd } from '@/hooks/use-get-depo-wd';
 
 const DepositWdModal = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [depo, setDepo] = useState<DepoProps>();
   const [wd, setWd] = useState<WdProps>();
-  const [isLoading, setIsLoading] = useState(false);
+
+  const { modalType, isOpen, onOpen, onClose, setGroup, id } = useModal();
 
   const { data: session, status: sessionStatus } = useSession();
   // const [isMounted, setIsMounted] = useState(false);
@@ -62,10 +64,8 @@ const DepositWdModal = () => {
   } = useCaptchaStore();
   const { executeRecaptcha } = useGoogleReCaptcha();
 
-  const { modalType, isOpen, onOpen, onClose, setGroup, id } = useModal();
   const { depo: depoResult, depos } = useGetDepo(id ? id : undefined);
   const { wd: wdResult, wds } = useGetWd(id ? id : undefined);
-  console.log('🚀 ~ DepositWdModal ~ modalType:', modalType);
   let items;
   if (modalType === 'depo' && session) {
     items = {
@@ -158,8 +158,6 @@ const DepositWdModal = () => {
       icon: '',
       value: '',
     };
-
-    console.log('🚀 ~ useEffect ~ bank:', bank);
     if (modalType === 'depo' && !error) {
       const data = {
         email: session?.user.email,
@@ -184,13 +182,13 @@ const DepositWdModal = () => {
         value: '',
         icon: '',
       };
-      setValue('email', session?.user.email);
-      setValue('name', session?.user.name);
-      setValue('bank', bank[0]);
-      setValue('depoAmount', depoAmount);
-      setValue('wdAmount', wdAmount);
-      setValue('accountNumber', session?.user.curUser.accountNumber);
-      setValue('bankPT', bankPT);
+      // setValue('email', session?.user.email);
+      // setValue('name', session?.user.name);
+      // setValue('bank', bank[0].value);
+      // setValue('depoAmount', depoAmount);
+      // setValue('wdAmount', wdAmount);
+      // setValue('accountNumber', session?.user.curUser.accountNumber);
+      // setValue('bankPT', bankPT);
     }
     // if (depo) setDepoWd(depo);
 
@@ -224,7 +222,6 @@ const DepositWdModal = () => {
       shouldValidate: true,
     });
   };
-  console.log('🚀 ~ DepositWdModal ~ depo:', depo);
   // if (!isMounted) return null;
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);
@@ -267,11 +264,6 @@ const DepositWdModal = () => {
         gameUserId,
         game: game.value,
       };
-
-      console.log(
-        '🚀 ~ const on Submit:SubmitHandler<FieldValues>= ~ data:',
-        data
-      );
       try {
         axios
           .post('/api/depo', data)
@@ -464,7 +456,7 @@ const DepositWdModal = () => {
           </span>
         </span>
       )}
-      {/* {bank} */}
+      {bank}
       <Input
         id='accountNumber'
         type='tel'

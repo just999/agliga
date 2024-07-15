@@ -44,7 +44,7 @@ import { useSession } from 'next-auth/react';
 import { FcParallelTasks } from 'react-icons/fc';
 import FixtureTable from '../table/euro/fixture/fixture-table';
 import Heading from './heading';
-import { DepoWdProps, EuroWithIconProps } from '@/types';
+import { DepoProps, DepoWdProps, EuroWithIconProps, WdProps } from '@/types';
 import { EPL } from '../assets/sports';
 
 import Periods from '../soccer/periods';
@@ -60,7 +60,7 @@ type GroupArrayProps = {
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[] | any;
-  eu?: Fixture[] | DepoWdProps[] | TData[];
+  eu?: Fixture[] | TData[] | (DepoProps[] & WdProps[]) | any;
   searchKey?: string;
   className?: string;
   depoWdClassName?: string;
@@ -236,7 +236,7 @@ DataTableProps<TData, TValue>) {
           />
           <div>
             <div className='rounded-md shadow-xl'>
-              <Table className='bg-amber-50 border-none '>
+              <Table className='bg-amber-50 border-none overflow-hidden'>
                 <TableHeader className='bg-amber-50 '>
                   <TableRow
                     className={cn(
@@ -244,7 +244,7 @@ DataTableProps<TData, TValue>) {
                       euroTableClassName
                     )}
                   >
-                    {round && (
+                    {round && (!eu[0].depoAmount || !eu[0].wdAmount) && (
                       <TableHead
                         className={cn(
                           'flex flex-row font-semibold justify-center ml-2 bg-emerald-300 rounded-l-lg  h-8 hover:bg-green-300 hover:font-semibold hover:text-gray-800 shadow-xl text-md text-gray-400 cursor-pointer',
@@ -321,92 +321,6 @@ DataTableProps<TData, TValue>) {
                             {/* <pre>{JSON.stringify(euroGroup, null, 2)}</pre> */}
                             <FcParallelTasks size={18} className='mx-auto ' />
                           </Button>
-                        </TableHead>
-                      </>
-                    )}
-                    {eu && !group && !round ? (
-                      <>
-                        <TableHead
-                          className={cn(
-                            'bg-amber-100 rounded-r-lg px-4 font-semibold h-8 hover:bg-orange-100/70 hover:text-gray-800 hover:font-bold shadow-xl cursor-pointer text-md text-gray-400',
-                            group && 'rounded-r-full'
-                          )}
-                        ></TableHead>
-                        <TableHead
-                          className={cn(
-                            'bg-amber-100 rounded-r-lg px-4 font-semibold h-8 hover:bg-orange-100/70 hover:text-gray-800 hover:font-bold shadow-xl cursor-pointer text-md text-gray-400',
-                            group && 'rounded-r-full'
-                          )}
-                        ></TableHead>
-                        <TableHead
-                          className={cn(
-                            'bg-amber-100 rounded-r-lg px-4 font-semibold h-8 hover:bg-orange-100/70 hover:text-gray-800 hover:font-bold shadow-xl cursor-pointer text-md text-gray-400',
-                            group && 'rounded-r-full'
-                          )}
-                        >
-                          <Button
-                            variant='ghost'
-                            size='sm'
-                            className='px-0 h-7 text-xs'
-                            onClick={() => {
-                              const round = '16';
-                              const newGroup = undefined;
-                              onOpen('new-euro');
-                              setGroup(
-                                'new-euro',
-                                isOpen === false,
-                                newGroup,
-                                round
-                              );
-
-                              setIsToggleFixture((prev) => !prev);
-                            }}
-                          >
-                            Depo Table
-                          </Button>
-                        </TableHead>
-                      </>
-                    ) : (
-                      <>
-                        <TableHead
-                          className={cn(
-                            'bg-amber-100 rounded-r-lg px-4 font-semibold h-8 hover:bg-orange-100/70 hover:text-gray-800 hover:font-bold shadow-xl cursor-pointer text-md text-gray-400',
-                            group && 'rounded-r-full'
-                          )}
-                        ></TableHead>
-                        <TableHead
-                          className={cn(
-                            'bg-amber-100 rounded-r-lg px-4 font-semibold h-8 hover:bg-orange-100/70 hover:text-gray-800 hover:font-bold shadow-xl cursor-pointer text-md text-gray-400',
-                            group && 'rounded-r-full'
-                          )}
-                        ></TableHead>
-                        <TableHead
-                          className={cn(
-                            'bg-amber-100 rounded-r-lg px-4 font-semibold h-8 hover:bg-orange-100/70 hover:text-gray-800 hover:font-bold shadow-xl cursor-pointer text-md text-gray-400',
-                            group && 'rounded-r-full'
-                          )}
-                        >
-                          {/* <Button
-                            variant='ghost'
-                            size='sm'
-                            className='px-0 h-7'
-                            onClick={() => {
-                              const round = '16';
-                              const newGroup = undefined;
-                              onOpen('new-euro');
-                              setGroup(
-                                'new-euro',
-                                isOpen === false,
-                                newGroup,
-                                round
-                              );
-
-                              setIsToggleFixture((prev) => !prev);
-                            }}
-                          >
-                            <pre>{JSON.stringify(euroGroup, null, 2)}</pre>
-                            <FcParallelTasks size={18} className='mx-auto ' />
-                          </Button> */}
                         </TableHead>
                       </>
                     )}

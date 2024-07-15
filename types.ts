@@ -77,8 +77,8 @@ export type PostProps = {
 };
 
 export const tabsData = [
-  { id: 1, name: 'Popular', label: 'Depo Table', active: true },
-  { id: 2, name: 'Trending', label: 'WD Table', active: false },
+  { id: 1, name: 'Popular', value: 'depo', label: 'Depo Table', active: true },
+  { id: 2, name: 'Trending', value: 'wd', label: 'WD Table', active: false },
 ];
 
 export type initialPostStateProps = {
@@ -123,9 +123,24 @@ export type DepoProps = {
   bankPT?: string | null;
   accountNumber: string;
   depoAmount?: number | null;
-  status?: string;
+  status?: string | null;
   createdAt?: Date | null;
 };
+
+export type DepoIconProps = {
+  id?: string;
+  name: string;
+  email: string | null;
+  bank: string | null;
+  game: string | null;
+  gameUserId: string;
+  bankPT?: string | null;
+  accountNumber: string;
+  depoAmount?: number | null;
+  status?: string | null;
+  createdAt?: Date | null;
+};
+
 export type WdProps = {
   id?: string;
   name: string;
@@ -135,7 +150,7 @@ export type WdProps = {
   gameUserId: string;
   accountNumber: string;
   wdAmount?: number | null;
-  status?: string;
+  status?: string | null;
   createdAt?: Date | null;
 };
 
