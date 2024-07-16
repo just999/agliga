@@ -149,7 +149,6 @@ const DepoWdClient = ({
         euCardClassName={euCardClassName}
         trashClassName={trashClassName}
         tableCellClassName={tableCellClassName}
-        tab={tab}
       />
     </div>
   );
