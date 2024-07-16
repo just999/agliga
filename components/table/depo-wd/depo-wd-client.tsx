@@ -24,6 +24,8 @@ import { fetchDepo } from '@/lib/queries/depo-wd';
 import { depoColumns } from './depo-columns';
 import useModal from '@/hooks/use-modal';
 import { wdColumns } from './wd-columns';
+import { User } from '@prisma/client';
+import { usersColumns } from './users-columns';
 
 interface DepoWdClientProps {
   depo?: DepoWdProps[] | any[];
@@ -39,6 +41,7 @@ interface DepoWdClientProps {
   euCardClassName?: string;
   trashClassName?: string;
   tab: string;
+  users?: User[];
 }
 
 const DepoWdClient = ({
@@ -55,8 +58,10 @@ const DepoWdClient = ({
   tableCellClassName,
   items,
   tab,
+  users,
 }: DepoWdClientProps) => {
   const [dep, setDep] = useState<DepoWdProps[]>([]);
+  const [members, setMembers] = useState<User[]>([]);
   // const [roundDat, setRoundDat] = useState<any[]>([]);
   // const [dat, setDat] = useState<TeamStats[]>([]);
 
@@ -64,6 +69,11 @@ const DepoWdClient = ({
     if (!depo) return;
     setDep(depo);
   }, [depo]);
+
+  useEffect(() => {
+    if (!users) return;
+    setMembers(users);
+  }, [users]);
   const { modalType } = useModal();
   // const table = useLeague(data);
   // const table = useLeague(depo);
@@ -113,12 +123,22 @@ const DepoWdClient = ({
   );
 
   const filteredWd = dep.filter((we: WdProps) => we.wdAmount);
+
+  const filteredUsers = members.filter((member) => member.role);
   return (
     <div className={cn('flex flex-col pt-2 border-0 md:w-full')}>
       <DataTable
         searchKey='email'
-        columns={tab === 'depo' ? depoColumns : wdColumns}
-        eu={tab === 'depo' ? filteredDepo : filteredWd}
+        columns={
+          tab === 'depo' ? depoColumns : tab === 'wd' ? wdColumns : usersColumns
+        }
+        eu={
+          tab === 'depo'
+            ? filteredDepo
+            : tab === 'wd'
+            ? filteredWd
+            : filteredUsers
+        }
         className={className}
         depoWdClassName={depoWdClassName}
         // group={group}
@@ -129,6 +149,7 @@ const DepoWdClient = ({
         euCardClassName={euCardClassName}
         trashClassName={trashClassName}
         tableCellClassName={tableCellClassName}
+        tab={tab}
       />
     </div>
   );

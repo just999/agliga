@@ -1,11 +1,17 @@
+import { cn } from '@/lib/utils';
 import * as React from 'react';
-export const Cahaya4d = (props: any) => (
+
+type IconProps = {
+  className?: string;
+  props?: any;
+};
+export const Cahaya4d = ({ className, props }: IconProps) => (
   <svg
     xmlns='http://www.w3.org/2000/svg'
     width={512}
     height={512}
     viewBox='0 0 64 64'
-    className='h-6 w-auto '
+    className={cn('w-6 h-auto', className)}
     {...props}
   >
     <g data-name='Layer 39'>

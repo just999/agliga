@@ -23,6 +23,8 @@ import { BsPlusCircleDotted } from 'react-icons/bs';
 
 import { cn } from '@/lib/utils';
 import { FcUndo } from 'react-icons/fc';
+import useModal from '@/hooks/use-modal';
+import { DepoProps } from '@/types';
 
 type Status = {
   value: string;
@@ -32,18 +34,27 @@ type Status = {
 type DepoWdStatusActions = {
   statuses: Status[];
   name?: string;
+  data: DepoProps;
 };
 
-export function DepoWdStatusActions({ statuses, name }: DepoWdStatusActions) {
+export function DepoWdStatusActions({
+  statuses,
+  name,
+  data,
+}: DepoWdStatusActions) {
   const [open, setOpen] = React.useState(false);
   const [selectedStatus, setSelectedStatus] = React.useState<Status | null>(
     null
   );
 
+  const { modalType, onOpen } = useModal();
+
   const handleUnselect = () => {
     setSelectedStatus(null);
     setOpen(false);
   };
+  const depoWdProcess = name === 'depo' ? 'depo-process' : 'wd-process';
+
   return (
     <div className='flex items-center space-x-4'>
       <Popover open={open} onOpenChange={setOpen}>
@@ -76,13 +87,14 @@ export function DepoWdStatusActions({ statuses, name }: DepoWdStatusActions) {
               </span>
             ) : (
               <span className='flex flex-row m-0 p-0  gap-2 items-center text-xs'>
-                <Button
-                  variant='ghost'
-                  className='flex gap-2 m-0 p-0 text-xs font-bold text-stone-400  hover:text-black'
-                >
-                  <BsPlusCircleDotted /> process{' '}
-                  {name === 'depo' ? 'depo?' : 'wd?'}
-                </Button>
+                {data.status === null ? (
+                  <span className='flex gap-2 m-0 p-0 text-xs font-bold text-stone-400  hover:text-black'>
+                    <BsPlusCircleDotted /> process{' '}
+                    {name === 'depo' ? 'depo?' : 'wd?'}
+                  </span>
+                ) : (
+                  <span>sudah di process</span>
+                )}
               </span>
             )}
           </Button>
@@ -103,14 +115,22 @@ export function DepoWdStatusActions({ statuses, name }: DepoWdStatusActions) {
                         statuses.find(
                           (status) => status.value === clickedValue
                         ) || null;
-
                       setSelectedStatus((prevSelectedStatus) =>
                         prevSelectedStatus?.value === clickedValue
                           ? null
                           : matchedStatus
                       );
-
+                      const title =
+                        name === 'depo' ? 'Process Depo' : 'Process WD';
+                      onOpen(
+                        depoWdProcess,
+                        data.id,
+                        title,
+                        undefined,
+                        clickedValue
+                      );
                       setOpen(false);
+                      handleUnselect();
                     }}
                   >
                     <Icon />

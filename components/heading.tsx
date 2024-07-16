@@ -2,10 +2,11 @@
 
 import { cn } from '@/lib/utils';
 import Logo from './navbar/logo';
+import { ReactNode } from 'react';
 
 type HeadingProps = {
   title: string;
-  subtitle?: string;
+  subtitle?: ReactNode;
   center?: boolean;
 };
 
@@ -20,7 +21,7 @@ const Heading = ({ title, subtitle, center }: HeadingProps) => {
         />{' '}
         {title}
       </div>
-      <div className='font-light text-neutral-500 mt-2 '>{subtitle}</div>
+      <div className='font-light text-neutral-500 mt-2'>{subtitle}</div>
     </div>
   );
 };

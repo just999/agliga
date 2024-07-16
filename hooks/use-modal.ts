@@ -64,6 +64,8 @@ type ModalStore = {
     | 'depo-wd-failed'
     | 'depo-wd-progress'
     | 'depo-wd-error'
+    | 'depo-process'
+    | 'wd-process'
     | 'depo-wd-garbage'
     | null;
   isOpen: boolean;
@@ -123,6 +125,8 @@ type ModalStore = {
       | 'depo-wd-failed'
       | 'depo-wd-progress'
       | 'depo-wd-error'
+      | 'depo-process'
+      | 'wd-process'
       | 'depo-wd-garbage',
     id?: string | null,
     title?: string | undefined,
@@ -221,6 +225,8 @@ const useModal = create<ModalStore>((set) => ({
       | 'depo-wd-failed'
       | 'depo-wd-progress'
       | 'depo-wd-error'
+      | 'depo-process'
+      | 'wd-process'
       | 'depo-wd-garbage'
       | 'editSoccer',
     id = null,

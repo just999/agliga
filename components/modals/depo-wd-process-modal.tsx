@@ -8,12 +8,13 @@ import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import useModal from '@/hooks/use-modal';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 
-// type DeleteModalProps = {
+// type DepoWdProcessModalProps = {
 //   title?: string | undefined;
 // };
 
-const DeleteModal = () => {
+const DepoWdProcessModal = () => {
   const [newDelete, setNewDelete] = useState('');
   const [depoWdDelete, setDepoWdDelete] = useState('');
   const router = useRouter();
@@ -21,48 +22,40 @@ const DeleteModal = () => {
   // const id = params.id;
   const { modalType, onOpen, isOpen, onClose, id, title, group, period } =
     useModal();
-  useEffect(() => {
-    if (period) {
-      const newPeriod = period?.slice(0, 2) + period?.slice(3);
-      const newDeleteModalType = `delete-epl${newPeriod}`;
-      if (newDeleteModalType) setNewDelete(newDeleteModalType);
-    }
-    if (modalType === 'delete-depo') setDepoWdDelete('delete-depo');
-    if (modalType === 'delete-wd') setDepoWdDelete('delete-wd');
-  }, [period, setDepoWdDelete, modalType]);
+  // useEffect(() => {
+  //   if (period) {
+  //     const newPeriod = period?.slice(0, 2) + period?.slice(3);
+  //     const newDepoWdProcessModalType = `delete-epl${newPeriod}`;
+  //     if (newDepoWdProcessModalType) setNewDelete(newDepoWdProcessModalType);
+  //   }
+  //   if (modalType === 'delete-depo') setDepoWdDelete('delete-depo');
+  //   if (modalType === 'delete-wd') setDepoWdDelete('delete-wd');
+  // }, [period, setDepoWdDelete, modalType]);
 
-  const onDelete = async () => {
-    if (modalType === 'delete-post') {
+  const onProcess = async () => {
+    if (modalType === 'depo-process') {
+      const data = {
+        status: group,
+      };
       try {
-        const res = await fetch(`/api/posts/${id}`, {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-        if (res.status === 200) {
-          toast.success('Post successfully deleted');
-          onClose();
+        const res = axios.put(`/api/depo/${id}`, data).then(() => {
+          toast.success('depo berhasil di process');
           router.refresh();
-          router.push('/posts');
-        }
+          onClose();
+        });
       } catch (err) {
         console.error('Error fetching posts', err);
       }
-    } else if (modalType === 'deleteSchedule') {
+    } else if (modalType === 'wd-process') {
+      const data = {
+        status: group,
+      };
       try {
-        const res = await fetch(`/api/soccer/${id}`, {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-        if (res.status === 200) {
-          toast.success('Post successfully deleted');
-          onClose();
+        const res = axios.put(`/api/wd/${id}`, data).then(() => {
+          toast.success('wd berhasil di process');
           router.refresh();
-          router.push('/soccer');
-        }
+          onClose();
+        });
       } catch (err) {
         console.error('Error fetching soccer', err);
       }
@@ -134,24 +127,6 @@ const DeleteModal = () => {
         id,
         title,
       };
-
-      try {
-        await fetch(`/api/depo/${id}`, {
-          method: 'DELETE',
-          body: JSON.stringify(data),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }).then((res) => {
-          if (res.status === 200) {
-            toast.success('data deposit berhasil di hapus');
-            onClose();
-            router.refresh();
-          }
-        });
-      } catch (err) {
-        console.error(`Error ${depoWdDelete}`);
-      }
     }
   };
 
@@ -160,7 +135,15 @@ const DeleteModal = () => {
       {title && (
         <Heading
           title={`${title}?`}
-          subtitle={`Are you sure you want to ${title} with id: ${id} ?, this action is reversible!`}
+          subtitle={
+            <span>
+              {title} dengan status{' '}
+              <span className='group-highlight font-bold underline text-sky-700'>
+                {group}
+              </span>{' '}
+              ?
+            </span>
+          }
         />
       )}
     </div>
@@ -169,17 +152,11 @@ const DeleteModal = () => {
   return (
     <Modal
       isOpen={
-        isOpen &&
-        (modalType === 'delete-post' ||
-          modalType === 'deleteSchedule' ||
-          modalType === 'delete-slider' ||
-          modalType === 'delete-euro' ||
-          modalType === depoWdDelete ||
-          modalType === newDelete)
+        isOpen && (modalType === 'depo-process' || modalType === 'wd-process')
       }
       onClose={onClose}
-      onSubmit={onDelete}
-      actionLabel='Delete'
+      onSubmit={onProcess}
+      actionLabel='Process ?'
       disabled={false}
       body={bodyContent}
       secondaryAction={onClose}
@@ -189,4 +166,4 @@ const DeleteModal = () => {
   );
 };
 
-export default DeleteModal;
+export default DepoWdProcessModal;

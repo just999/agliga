@@ -1,13 +1,18 @@
+import { cn } from '@/lib/utils';
 import React from 'react';
 
-export function Sbo() {
+type IconProps = {
+  className?: string;
+};
+
+export function Sbo({ className }: IconProps) {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
       width='512'
       height='512'
       viewBox='0 0 512 512'
-      className='h-6 w-auto '
+      className={cn('w-6 h-auto', className)}
     >
       <g>
         <g>

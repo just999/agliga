@@ -1,6 +1,11 @@
+import { cn } from '@/lib/utils';
 import React from 'react';
 
-export function LiveCasino338a() {
+type IconProps = {
+  className?: string;
+};
+
+export function LiveCasino338a({ className }: IconProps) {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -8,7 +13,7 @@ export function LiveCasino338a() {
       width='512'
       height='512'
       viewBox='0 0 512 512'
-      className='h-6 w-auto '
+      className={cn('w-6 h-auto', className)}
     >
       <linearGradient id='lg1'>
         <stop offset='0' stopColor='#43386b'></stop>

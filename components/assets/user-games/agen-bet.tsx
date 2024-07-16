@@ -1,12 +1,18 @@
+import { cn } from '@/lib/utils';
 import * as React from 'react';
-export const AgenBet = (props: any) => (
+
+type IconProps = {
+  className?: string;
+  props?: any;
+};
+export const AgenBet = ({ className, props }: IconProps) => (
   <svg
     xmlns='http://www.w3.org/2000/svg'
     xmlnsXlink='http://www.w3.org/1999/xlink'
     width={512}
     height={512}
     viewBox='0 0 510 510'
-    className='h-6 w-auto '
+    className={cn('w-6 h-auto', className)}
     {...props}
   >
     <linearGradient

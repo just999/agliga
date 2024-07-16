@@ -16,67 +16,32 @@ export async function PUT(
     bank,
     accountNumber,
     name,
-    depoAmount,
+    wdAmount,
     game,
     gameUserId,
-    bankPT,
     status,
   } = body;
   if (!body) NextResponse.error();
   // const isoDate = date + ':00.000Z';
 
   const id = params.id;
-  // let ap: string[] = [];
-  // awayPenalty.forEach((va: any) => {
-  //   const item = va.value;
-  //   ap.push(item);
-  // });
-
-  // let hp: string[] = [];
-  // homePenalty.forEach((va: any) => {
-  //   const item = va.value;
-  //   hp.push(item);
-  // });
-  // let score;
-  // if (homeScore || awayScore === '') {
-  //   score === null;
-  // }
-
-  // let win: any = '';
-  // let los: any = '';
-  // if (+homeScore > +awayScore) {
-  //   win === euroTeamHome;
-  // } else {
-  //   los === euroTeamAway;
-  // }
-
-  // let hg;
-  // if (homeScore & awayScore) {
-  //   hg = +homeScore - +awayScore;
-  // }
-
-  // let ag;
-  // if (homeScore & awayScore) {
-  //   ag = +awayScore - +homeScore;
-  // }
 
   try {
-    const depo = await db.depo.update({
+    const wd = await db.wd.update({
       where: { id: id },
       data: {
         email,
         bank,
         accountNumber,
         name,
-        depoAmount,
+        wdAmount,
         game,
         gameUserId,
-        bankPT,
         status,
       },
     });
 
-    if (!depo)
+    if (!wd)
       return new Response(
         JSON.stringify({ message: 'No Item Found for this id' }),
         {
@@ -85,7 +50,7 @@ export async function PUT(
       );
 
     // return NextResponse.json(scheduleItem);
-    return new Response(JSON.stringify(depo), {
+    return new Response(JSON.stringify(wd), {
       headers: {
         'Content-Type': 'application/json',
       },

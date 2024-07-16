@@ -114,7 +114,11 @@ import {
   GiCricketBat,
   GiTurd,
 } from 'react-icons/gi';
-import { MdKayaking, MdOutlineSurfing } from 'react-icons/md';
+import {
+  MdKayaking,
+  MdOutlineFiberNew,
+  MdOutlineSurfing,
+} from 'react-icons/md';
 
 import {
   TbKarate,
@@ -2971,23 +2975,33 @@ export const status = [
 ];
 export const statuses = [
   {
+    value: 'new',
+    icon: MdOutlineFiberNew,
+    styles: 'text-sky-700',
+  },
+  {
     value: 'success',
     icon: FcOk,
+    styles: 'text-emerald-700',
   },
   {
     value: 'gagal',
     icon: FcDisapprove,
+    styles: 'text-pink-700',
   },
   {
     value: 'in progress',
     icon: FaPersonRunning,
+    styles: 'text-blue-700',
   },
   {
     value: 'error',
     icon: FcHighPriority,
+    styles: 'text-red-700',
   },
   {
     value: 'sampah',
     icon: GiTurd,
+    styles: 'text-amber-700',
   },
 ];

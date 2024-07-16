@@ -5,6 +5,7 @@ import { DataTable } from '@/components/ui/data-table';
 // import DepoWdTable from '@/components/ui/depo-wd-table';
 import { Table } from '@/components/ui/table';
 import { fetchDepo, fetchWd } from '@/lib/queries/depo-wd';
+import { fetchUsers } from '@/lib/queries/users';
 import { cn } from '@/lib/utils';
 
 type AdminPageProps = {};
@@ -16,7 +17,11 @@ const AdminPage = async () => {
   const wds = await fetchWd();
   if (!wds || wds.length === 0) return [];
 
+  const users = await fetchUsers();
+  if (!users || users.length === 0) return [];
+
   Array.prototype.push.apply(depos, wds);
+
   return (
     <Container className='grid text-xs w-full pt-4 max-w-[1440px]'>
       {/* <DepoWdClient
@@ -29,7 +34,7 @@ const AdminPage = async () => {
         // tableCellClassName='bg-orange-100/50'
         euCardClassName='pt-2 px-2 gap-0 justify-start items-center bg-emerald-50 odd:bg-zinc-100 even:bg-stone-50'
       /> */}
-      <DepoWdTabsActive depo={depos} />
+      <DepoWdTabsActive depo={depos} users={users} />
     </Container>
   );
 };

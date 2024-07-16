@@ -75,6 +75,7 @@ interface DataTableProps<TData, TValue> {
   trashClassName?: string;
   groupArrays?: GroupArrayProps[];
   period?: string;
+  tab?: string;
 }
 
 export function DataTable<TData, TValue>({
@@ -92,6 +93,7 @@ export function DataTable<TData, TValue>({
   depoWdClassName,
   groupArrays,
   period,
+  tab,
 }: // mergedData,
 DataTableProps<TData, TValue>) {
   // const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -105,6 +107,7 @@ DataTableProps<TData, TValue>) {
   const { data: session } = useSession();
 
   const role = session?.user.curUser.role;
+
   const table = useReactTable({
     data: eu as TData[],
     columns,
@@ -244,6 +247,29 @@ DataTableProps<TData, TValue>) {
                       euroTableClassName
                     )}
                   >
+                    <TableHead
+                      className={cn(
+                        'flex flex-row font-semibold justify-center ml-2 bg-emerald-300 rounded-l-lg  h-8 hover:bg-green-300 hover:font-semibold hover:text-gray-800 shadow-xl text-md text-gray-400 cursor-pointer',
+                        group ? 'w-full' : 'w-full'
+                      )}
+                    >
+                      <Button
+                        variant='ghost'
+                        size='sm'
+                        className={cn(
+                          'p-0 h-7 text-sm',
+                          round && 'text-base',
+                          role !== 'admin'
+                            ? 'text-black font-semibold bg-emerald-300'
+                            : 'hover:font-semibold hover:text-gray-800 hover:bg-green-300'
+                        )}
+                        onClick={() => handleOpenGroup(group)}
+                        disabled={role === 'admin' ? false : true}
+                      >
+                        {/* {group ? `Group ${group}` : `Round ${round}`} */}
+                      </Button>
+                    </TableHead>
+
                     {round && (!eu[0].depoAmount || !eu[0].wdAmount) && (
                       <TableHead
                         className={cn(
@@ -423,19 +449,6 @@ DataTableProps<TData, TValue>) {
               <Button
                 variant='ghost'
                 size='sm'
-                onClick={() => table.nextPage()}
-                disabled={!table.getCanNextPage()}
-                className={cn(
-                  'w-1/6 bg-amber-100 mx-6 text-stone-900 hover:bg-amber-200 hover:text-black hover:font-semibold hover:drop-shadow-xl shadow-lg text-xs',
-                  !table.getCanNextPage() && 'text-zinc-600'
-                )}
-              >
-                <BsChevronDoubleLeft className='mr-4  grayscale hover:grayscale-0 transition ease-in-out delay-50  hover:-translate-y-1 hover:scale-150 mx-1 hover:bg-amber-200 hover:drop-shadow-lg duration-300' />{' '}
-                Prev
-              </Button>
-              <Button
-                variant='ghost'
-                size='sm'
                 onClick={() => table.previousPage()}
                 disabled={!table.getCanPreviousPage()}
                 className={cn(
@@ -443,6 +456,20 @@ DataTableProps<TData, TValue>) {
                   !table.getCanPreviousPage() && 'text-zinc-600'
                 )}
               >
+                <BsChevronDoubleLeft className='mr-4  grayscale hover:grayscale-0 transition ease-in-out delay-50  hover:-translate-y-1 hover:scale-150 mx-1 hover:bg-amber-200 hover:drop-shadow-lg duration-300' />
+                Prev
+              </Button>
+              <Button
+                variant='ghost'
+                size='sm'
+                onClick={() => table.nextPage()}
+                disabled={!table.getCanNextPage()}
+                className={cn(
+                  'w-1/6 bg-amber-100 mx-6 text-stone-900 hover:bg-amber-200 hover:text-black hover:font-semibold hover:drop-shadow-xl shadow-lg text-xs',
+                  !table.getCanNextPage() && 'text-zinc-600'
+                )}
+              >
+                {' '}
                 Next
                 <BsChevronDoubleRight className='ml-4  grayscale hover:grayscale-0 transition ease-in-out delay-50  hover:-translate-y-1 hover:scale-150 mx-1 hover:bg-amber-200 hover:drop-shadow-lg duration-300' />
               </Button>

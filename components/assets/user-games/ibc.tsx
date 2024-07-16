@@ -1,13 +1,17 @@
+import { cn } from '@/lib/utils';
 import React from 'react';
 
-export function Ibc() {
+type IconProps = {
+  className?: string;
+};
+export function Ibc({ className }: IconProps) {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
       width='512'
       height='512'
       viewBox='0 0 512 512'
-      className='h-6 w-auto '
+      className={cn('w-6 h-auto', className)}
     >
       <circle cx='452.457' cy='449.983' r='59.543' fill='#e5e1e5'></circle>
       <path

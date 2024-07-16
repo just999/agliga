@@ -17,8 +17,10 @@ export const wdColumns: ColumnDef<DepoWdProps & WdProps>[] = [
     accessorKey: 'index',
     header: 'No.',
     cell: ({ row }) => (
-      <div className='flex flex-row justify-start gap-2 px-4'>
-        <span className={cn(noto.className)}>{row.index + 1}</span>
+      <div className='flex flex-row justify-start px-4'>
+        <span className={cn('tracking-tighter', noto.className)}>
+          {row.index + 1}
+        </span>
       </div>
     ),
   },
@@ -133,13 +135,37 @@ export const wdColumns: ColumnDef<DepoWdProps & WdProps>[] = [
       </Button>
     ),
     cell: ({ row }) => (
-      <div className='flex flex-row justify-center px-4 gap-2'>
-        <span className='font-bold  text-xs text-nowrap'>
-          {row.original.status ? (
-            row.original.status
-          ) : (
-            <span className='text-orange-700/50 italic'>belum process</span>
-          )}
+      <div className='flex flex-row justify-start px-4 gap-2'>
+        <span className='flex flex-row gap-2 items-center font-bold text-xs'>
+          {statuses
+            .filter((stat) => stat.value === row.original.status)
+            .map((b) => (
+              <div
+                key={b.value}
+                className='flex items-center gap-1 text-nowrap '
+              >
+                <span>
+                  <b.icon className={cn('w-3 h-3')} />
+                </span>
+                <span
+                  className={cn(
+                    'text-xs',
+                    b.styles,
+                    b.value === 'gagal' && 'text-pink-600',
+                    b.value === 'in progress' && 'text-blue-700'
+                  )}
+                >
+                  {b.value}
+                </span>
+              </div>
+            ))}
+          <span className='font-bold text-gray-700 text-xs text-nowrap'>
+            {row.original.status ? (
+              ''
+            ) : (
+              <span className='text-orange-700/50 italic'>belum process</span>
+            )}
+          </span>
         </span>
       </div>
     ),
@@ -147,7 +173,19 @@ export const wdColumns: ColumnDef<DepoWdProps & WdProps>[] = [
   {
     id: 'actions',
     header: 'Actions',
-    cell: ({ row }) => <DepoWdStatusActions statuses={statuses} />,
+    cell: ({ row }) => (
+      <div>
+        {row.original.status === null ? (
+          <DepoWdStatusActions
+            statuses={statuses}
+            data={row.original}
+            name='wd'
+          />
+        ) : (
+          <span>ok!</span>
+        )}
+      </div>
+    ),
     // cell: ({ row }) => <CellDepoWdActions data={row.original} />,
   },
 ];

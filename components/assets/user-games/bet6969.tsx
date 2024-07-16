@@ -1,12 +1,19 @@
+import { cn } from '@/lib/utils';
 import * as React from 'react';
 
-export const Bet6969 = (props: any) => (
+type IconProps = {
+  className?: string;
+  props?: any;
+};
+
+export const Bet6969 = ({ className, props }: IconProps) => (
   <svg
     xmlns='http://www.w3.org/2000/svg'
     xmlnsXlink='http://www.w3.org/1999/xlink'
     width={373}
     height={100}
     fill='none'
+    className={cn('w-6 h-auto', className)}
     {...props}
   >
     <path fill='url(#a)' d='M0 0h373v100H0z' />

@@ -25,7 +25,7 @@ model User {
   emailVerified  DateTime?
   phone          String?
   bank           String?   @default("NONEBANK")
-  game           String[]  @default(["SBOBET"])
+  game           String[]  @default(["Sbobet"])
   accountNumber  String?   @default("0000000000")
   image          String?   @default("/images/cavatar.svg")
   hashedPassword String?
@@ -102,38 +102,40 @@ model Account {
 // }
 
 model Depo {
-  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
   email         String?
   bank          String
   accountNumber String
   name          String
   depoAmount    Int?
-  game          String   @default("SBOBET")
+  game          String    @default("SBOBET")
   gameUserId    String
   status        String?
   bankPT        String
-  adminId       String?  @db.ObjectId
-  admin         User?    @relation("AdminDepos", fields: [adminId], references: [id])
-  userId        String?  @db.ObjectId
-  user          User?    @relation("UserDepos", fields: [userId], references: [id], onDelete: Cascade)
-  createdAt     DateTime @default(now())
+  adminId       String?   @db.ObjectId
+  admin         User?     @relation("AdminDepos", fields: [adminId], references: [id])
+  userId        String?   @db.ObjectId
+  user          User?     @relation("UserDepos", fields: [userId], references: [id], onDelete: Cascade)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime? @updatedAt
 }
 
 model Wd {
-  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
   email         String?
   bank          String
   accountNumber String
   name          String
-  game          String   @default("SBOBET")
+  game          String    @default("SBOBET")
   gameUserId    String
   wdAmount      Int?
   status        String?
-  adminId       String?  @db.ObjectId
-  admin         User?    @relation("AdminWds", fields: [adminId], references: [id])
-  userId        String?  @db.ObjectId
-  user          User?    @relation("UserWds", fields: [userId], references: [id], onDelete: Cascade)
-  createdAt     DateTime @default(now())
+  adminId       String?   @db.ObjectId
+  admin         User?     @relation("AdminWds", fields: [adminId], references: [id])
+  userId        String?   @db.ObjectId
+  user          User?     @relation("UserWds", fields: [userId], references: [id], onDelete: Cascade)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime? @updatedAt
 }
 
 model Post {
@@ -151,6 +153,7 @@ model Post {
   trending Boolean? @default(false)
 
   createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
   comments  Comment[]
   topic     Topic     @relation(fields: [topicId], references: [id])
   topicId   String    @db.ObjectId

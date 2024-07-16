@@ -1,13 +1,13 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import { PuffLoader } from 'react-spinners';
+import { ClockLoader } from 'react-spinners';
 
-type LoaderProps = {
+type ClockSpinnerProps = {
   className?: string;
 };
 
-const Loader = ({ className }: LoaderProps) => {
+const ClockSpinner = ({ className }: ClockSpinnerProps) => {
   return (
     <div
       className={cn(
@@ -15,9 +15,9 @@ const Loader = ({ className }: LoaderProps) => {
         className
       )}
     >
-      <PuffLoader
+      <ClockLoader
         size={100}
-        color='red'
+        color='cyan'
         aria-label='Loading Spinner'
         data-testid='loader'
       />
@@ -25,4 +25,4 @@ const Loader = ({ className }: LoaderProps) => {
   );
 };
 
-export default Loader;
+export default ClockSpinner;

@@ -31,6 +31,7 @@ import {
   EuroModal,
 } from '@/components/modals';
 import FixtureModal from '@/components/modals/fixture-modal';
+import DepoWdProcessModal from '@/components/modals/depo-wd-process-modal';
 
 // import EuroModal from '@/components/modals/euro-modal';
 
@@ -66,6 +67,7 @@ export default async function RootLayout({
         >
           <GoogleCaptchaWrapper>
             <ToasterProvider />
+            <DepoWdProcessModal />
             <FixtureModal />
             <EuroModal />
             <UserProfileModal />

@@ -65,7 +65,6 @@ const DepositWdModal = () => {
   const { modalType, isOpen, onOpen, onClose, setGroup, id } = useModal();
   const { depo: depoResult, depos } = useGetDepo(id ? id : undefined);
   const { wd: wdResult, wds } = useGetWd(id ? id : undefined);
-  console.log('🚀 ~ DepositWdModal ~ modalType:', modalType);
   let items;
   if (modalType === 'depo' && session) {
     items = {
@@ -158,8 +157,6 @@ const DepositWdModal = () => {
       icon: '',
       value: '',
     };
-
-    console.log('🚀 ~ useEffect ~ bank:', bank);
     if (modalType === 'depo' && !error) {
       const data = {
         email: session?.user.email,
@@ -224,7 +221,6 @@ const DepositWdModal = () => {
       shouldValidate: true,
     });
   };
-  console.log('🚀 ~ DepositWdModal ~ depo:', depo);
   // if (!isMounted) return null;
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);
@@ -267,11 +263,6 @@ const DepositWdModal = () => {
         gameUserId,
         game: game.value,
       };
-
-      console.log(
-        '🚀 ~ const on Submit:SubmitHandler<FieldValues>= ~ data:',
-        data
-      );
       try {
         axios
           .post('/api/depo', data)

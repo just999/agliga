@@ -80,6 +80,18 @@ export const tabsData = [
   { id: 1, name: 'Popular', value: 'depo', label: 'Depo Table', active: true },
   { id: 2, name: 'Trending', value: 'wd', label: 'WD Table', active: false },
 ];
+export const tabsAdmin = [
+  { id: 1, name: 'Deposit', value: 'depo', label: 'Depo Table', active: true },
+  { id: 2, name: 'Withdraw', value: 'wd', label: 'WD Table', active: false },
+  {
+    id: 3,
+    name: 'Member',
+    value: 'member',
+    label: 'member Table',
+    active: false,
+  },
+  // { id: 4, name: 'Admin', value: 'admin', label: 'admin Table', active: false },
+];
 
 export type initialPostStateProps = {
   title: string;
