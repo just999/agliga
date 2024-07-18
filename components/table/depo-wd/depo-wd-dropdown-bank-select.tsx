@@ -31,6 +31,7 @@ type DepoWdDropdownBankSelectProps = {
   value?: string;
   onChange: (clickedValue: string) => void;
   column?: string;
+  className?: string;
 };
 
 const DepoWdDropdownBankSelect = ({
@@ -40,6 +41,7 @@ const DepoWdDropdownBankSelect = ({
   value,
   onChange,
   column,
+  className,
 }: DepoWdDropdownBankSelectProps) => {
   const [open, setOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState<ValueIconProps | null>(
@@ -65,7 +67,7 @@ const DepoWdDropdownBankSelect = ({
     (bank) => bank.value === selectedValue?.value
   );
   return (
-    <div className='flex items-center space-x-2 h-6'>
+    <div className={cn('flex items-center space-x-2 h-6', className)}>
       {/* <p className='text-sm text-muted-foreground'>Bank</p> */}
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
@@ -82,9 +84,12 @@ const DepoWdDropdownBankSelect = ({
             )}
           >
             {selectedValue && column ? (
-              <span className='flex flex-row items-center gap-2'>
+              <span>
                 {selectedData?.map((v, i) => (
-                  <>
+                  <div
+                    key={i}
+                    className='flex flex-row items-center gap-2 px-2'
+                  >
                     <v.icon
                       size={18}
                       className={cn(
@@ -102,31 +107,24 @@ const DepoWdDropdownBankSelect = ({
                     >
                       {value}
                     </span>
-                  </>
+                  </div>
                 ))}
               </span>
             ) : (
               <span className='flex flex-row px-2 gap-2 items-center cursor-pointer '>
                 <BsArrowDown />
                 <span>pilih {column} </span>
-                {/* <span>
-                  {name === 'banks'
-                    ? 'Bank'
-                    : name === 'status'
-                    ? 'Status'
-                    : 'Actions'}
-                </span> */}
               </span>
             )}
           </Button>
         </PopoverTrigger>
-        <PopoverContent className='p-0' align='start'>
+        <PopoverContent className='p-0' align='start' style={{ zIndex: 9999 }}>
           <Command>
             <CommandInput
               placeholder={`pilih ${column}...`}
               className='text-xs h-8'
             />
-            <CommandList className='overflow-y-auto max-h-[400px] backdrop-blur-md bg-sky-200/30'>
+            <CommandList className='overflow-y-auto max-h-[400px] bg-emerald-200'>
               <CommandEmpty>No results found.</CommandEmpty>
               <CommandGroup>
                 {banks?.map(({ value, icon: Icon }) => (

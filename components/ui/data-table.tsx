@@ -503,6 +503,7 @@ DataTableProps<TData, TValue>) {
                                 ) : header.column.id === 'status' ? (
                                   <>
                                     <DepoWdDropdownBankSelect
+                                      className='overflow-visible'
                                       banks={statuses}
                                       value={
                                         (table
@@ -629,7 +630,7 @@ DataTableProps<TData, TValue>) {
                 onClick={() => table.previousPage()}
                 disabled={!table.getCanPreviousPage()}
                 className={cn(
-                  'w-1/6 bg-amber-100 mx-6 text-stone-900 hover:bg-amber-200 hover:text-black hover:font-semibold hover:drop-shadow-xl shadow-lg text-xs',
+                  'w-1/6 bg-amber-400 mx-6 text-stone-900 hover:bg-amber-200 hover:text-black hover:font-semibold hover:drop-shadow-xl shadow-lg text-xs',
                   !table.getCanPreviousPage() && 'text-zinc-600'
                 )}
               >
@@ -642,7 +643,7 @@ DataTableProps<TData, TValue>) {
                 onClick={() => table.nextPage()}
                 disabled={!table.getCanNextPage()}
                 className={cn(
-                  'w-1/6 bg-amber-100 mx-6 text-stone-900 hover:bg-amber-200 hover:text-black hover:font-semibold hover:drop-shadow-xl shadow-lg text-xs',
+                  'w-1/6 bg-amber-400 mx-6 text-stone-900 hover:bg-amber-200 hover:text-black hover:font-semibold hover:drop-shadow-xl shadow-lg text-xs',
                   !table.getCanNextPage() && 'text-zinc-600'
                 )}
               >

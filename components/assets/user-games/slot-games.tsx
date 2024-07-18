@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import { Icon } from 'leaflet';
+
 import React from 'react';
 
 type IconProps = {
@@ -28,5 +28,3 @@ export function SlotGames({ className }: IconProps) {
     </svg>
   );
 }
-
-export default Icon;

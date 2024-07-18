@@ -171,24 +171,14 @@ const DepositWdModal = () => {
         status: '',
       } as DepoIconProps;
       setDepo(data);
-
-      // const bankPT = banks.filter((ba) => ba.value === depo?.bankPT) || {
-      //   icon: '',
-      //   value: '',
-      // };
-
-      const gameUser = gameOption.filter((go) => go.value === game) || {
-        value: '',
-        icon: '',
-      };
-      setValue('email', session?.user.email);
-      setValue('name', session?.user.name);
-      setValue('bank', bank[0]);
-      setValue('depoAmount', depoAmount);
-      setValue('wdAmount', wdAmount);
-      setValue('accountNumber', session?.user.curUser.accountNumber);
-      setValue('bankPT', bankPT);
     }
+    setValue('email', session?.user.email);
+    setValue('name', session?.user.name);
+    setValue('bank', bank[0]);
+    setValue('depoAmount', depoAmount);
+    setValue('wdAmount', wdAmount);
+    setValue('accountNumber', session?.user.curUser.accountNumber);
+    setValue('bankPT', bankPT);
     // if (depo) setDepoWd(depo);
 
     if (session && modalType === 'edit-depo') {
@@ -446,7 +436,7 @@ const DepositWdModal = () => {
         options={() => bankOptions}
         errors={errors}
         optionIconClassName='w-5 h-5'
-        optionClassName='text-sm ml-4 text-gray-600 font-bold'
+        optionClassName='text-sm text-gray-600 font-bold'
       />
       {errors.bank && (
         <span className='text-sm text-red-500 '>
@@ -566,7 +556,7 @@ const DepositWdModal = () => {
             options={() => bankPTOptions}
             errors={errors}
             optionIconClassName='w-5 h-5'
-            optionClassName='text-sm ml-4 text-gray-600 font-bold'
+            optionClassName='text-sm text-gray-600 font-bold'
           />
           {errors.bankPT && (
             <span className='text-sm text-red-500 '>
@@ -590,7 +580,7 @@ const DepositWdModal = () => {
             placeholder='status'
             options={() => statusOptions}
             errors={errors}
-            optionClassName='text-sm ml-4 text-gray-600 font-bold'
+            optionClassName='text-sm text-gray-600 font-bold'
           />
           {errors.status && (
             <span className='text-sm text-red-500 '>

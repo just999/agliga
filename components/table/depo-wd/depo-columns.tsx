@@ -216,7 +216,7 @@ export const depoColumns: ColumnDef<DepoWdProps & DepoProps>[] = [
             .map((b) => (
               <div
                 key={b.value}
-                className='flex items-center gap-1 text-nowrap '
+                className='flex items-center px-2 gap-2 text-nowrap '
               >
                 <span>
                   <b.icon
