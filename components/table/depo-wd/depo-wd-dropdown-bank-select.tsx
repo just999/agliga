@@ -41,11 +41,13 @@ const DepoWdDropdownBankSelect = ({
   onChange,
   column,
 }: DepoWdDropdownBankSelectProps) => {
+  console.log('🚀 ~ column:', column);
   const [open, setOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState<ValueIconProps | null>(
     null
   );
 
+  console.log('🚀 ~ selectedValue:', selectedValue?.value);
   const handleUnselect = () => {
     setSelectedValue(null);
     setOpen(false);
@@ -58,7 +60,7 @@ const DepoWdDropdownBankSelect = ({
     selectedData = statuses?.filter(
       (status) => status.value === selectedValue?.value
     );
-  } else if (column === 'games') {
+  } else if (column === 'game') {
     selectedData = games.filter((game) => game.value === selectedValue?.value);
   }
   return (
@@ -119,7 +121,10 @@ const DepoWdDropdownBankSelect = ({
         </PopoverTrigger>
         <PopoverContent className='p-0' align='start'>
           <Command>
-            <CommandInput placeholder='Change status...' />
+            <CommandInput
+              placeholder={`pilih ${column}...`}
+              className='text-xs h-8'
+            />
             <CommandList className='overflow-y-auto max-h-[400px] backdrop-blur-md bg-sky-200/30'>
               <CommandEmpty>No results found.</CommandEmpty>
               <CommandGroup>

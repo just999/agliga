@@ -534,7 +534,7 @@ DataTableProps<TData, TValue>) {
                                       onChange={(value: string) =>
                                         handleSelectChange('game', value)
                                       }
-                                      column='games'
+                                      column='game'
                                     />
                                     {/* <pre>
                                       {JSON.stringify(

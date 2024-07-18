@@ -152,12 +152,12 @@ export const depoColumns: ColumnDef<DepoWdProps & DepoProps>[] = [
     filterFn: 'includesString',
     cell: ({ row }) => (
       <div className='flex flex-row px-2 gap-2'>
-        <span className='flex flex-row font-bold gap-2 px-2 text-slate-400 text-xs'>
+        <span className='flex flex-row items-center font-bold gap-2 px-2 text-slate-400 text-xs'>
           {games
             .filter((game) => game.value === row.original.game)
             .map((b) => (
               <div key={b.value}>
-                <b.icon className='w-6 h-6' />
+                <b.icon className='w-4 h-4' />
               </div>
             ))}
           {row.original.game}

@@ -1,16 +1,39 @@
 'use client';
 
-import { ColumnDef } from '@tanstack/react-table';
+import { ColumnDef, SortingFn, sortingFns } from '@tanstack/react-table';
 
 import { cn, noto, numberWithCommas } from '@/lib/utils';
 
 import { Button } from '@/components/ui/button';
 import { ArrowUpDown } from 'lucide-react';
 import { Depo, DepoWdProps, WdProps } from '@/types';
-import { banks, statuses } from '@/lib/helper';
+import { banks, games, statuses } from '@/lib/helper';
 
 import CellDepoWdActions from './cell-depo-wd-actions';
 import { DepoWdStatusActions } from './depo-wd-status-actions';
+
+// A TanStack fork of Kent C. Dodds' match-sorter library that provides ranking information
+import {
+  RankingInfo,
+  rankItem,
+  compareItems,
+} from '@tanstack/match-sorter-utils';
+
+// Define a custom fuzzy sort function that will sort by rank if the row has ranking information
+const fuzzySort: SortingFn<any> = (rowA, rowB, columnId) => {
+  let dir = 0;
+
+  // Only sort by rank if the column has ranking information
+  if (rowA.columnFiltersMeta[columnId]) {
+    dir = compareItems(
+      rowA.columnFiltersMeta[columnId]?.itemRank!,
+      rowB.columnFiltersMeta[columnId]?.itemRank!
+    );
+  }
+
+  // Provide an alphanumeric fallback for when the item ranks are equal
+  return dir === 0 ? sortingFns.alphanumeric(rowA, rowB, columnId) : dir;
+};
 
 export const wdColumns: ColumnDef<DepoWdProps & WdProps>[] = [
   {
@@ -28,6 +51,7 @@ export const wdColumns: ColumnDef<DepoWdProps & WdProps>[] = [
   {
     accessorKey: 'createdAt',
     header: 'Tanggal',
+    filterFn: 'includesString',
     cell: ({ row }) => (
       <div className='flex flex-row justify-start px-4 gap-2'>
         <span className='font-bold text-slate-400 text-[10px] text-nowrap'>
@@ -39,6 +63,7 @@ export const wdColumns: ColumnDef<DepoWdProps & WdProps>[] = [
   {
     accessorKey: 'email',
     header: 'Email',
+    filterFn: 'includesString',
     cell: ({ row }) => (
       <div className='flex flex-row px-4 gap-2'>
         <span className='font-bold text-slate-400 text-xs'>
@@ -50,6 +75,7 @@ export const wdColumns: ColumnDef<DepoWdProps & WdProps>[] = [
   {
     accessorKey: 'name',
     header: 'Name',
+    filterFn: 'includesString',
     cell: ({ row }) => (
       <div className='flex flex-row px-4 gap-2'>
         <span className='font-bold text-slate-400 text-xs'>
@@ -62,6 +88,7 @@ export const wdColumns: ColumnDef<DepoWdProps & WdProps>[] = [
   {
     accessorKey: 'bank',
     header: 'Bank',
+    filterFn: 'includesString',
     cell: ({ row }) => (
       <div className='px-4'>
         <span className='flex flex-row items-center gap-2 font-bold text-slate-400 text-xs'>
@@ -80,6 +107,7 @@ export const wdColumns: ColumnDef<DepoWdProps & WdProps>[] = [
   {
     accessorKey: 'accountNumber',
     header: 'No. rekening',
+    filterFn: 'includesString',
     cell: ({ row }) => (
       <div className='flex flex-row text-nowrap px-4 gap-2 text-xs'>
         {row.original.accountNumber}
@@ -89,6 +117,7 @@ export const wdColumns: ColumnDef<DepoWdProps & WdProps>[] = [
   {
     accessorKey: 'wdAmount',
     header: 'wd Rp.',
+    filterFn: 'includesString',
     cell: ({ row }) => (
       <div className='flex flex-row justify-between px-4 text-xs gap-2'>
         <span className='italic text-stone-300 text-xs'>Rp.</span>
@@ -103,10 +132,19 @@ export const wdColumns: ColumnDef<DepoWdProps & WdProps>[] = [
   {
     accessorKey: 'game',
     header: 'Game',
+    filterFn: 'includesString',
     cell: ({ row }) => (
-      <div className='flex flex-row px-4 gap-2'>
-        <span className='font-bold text-slate-400 text-xs'>
+      <div className='flex flex-row px-2 gap-2'>
+        <span className='flex flex-row items-center font-bold gap-2 px-2 text-slate-400 text-xs'>
+          {games
+            .filter((game) => game.value === row.original.game)
+            .map(({ value, icon: Icon }) => (
+              <div key={value}>
+                <Icon className='w-4 h-4' />
+              </div>
+            ))}
           {row.original.game}
+          {/* <pre>{JSON.stringify(row, null, 3)}</pre> */}
         </span>
       </div>
     ),

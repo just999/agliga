@@ -174,95 +174,38 @@ export const games = [
   {
     value: 'Sbobet',
     icon: Sbo,
+    styles: 'text-xs',
   },
   {
     value: 'Ibcbet',
     icon: Ibc,
+    styles: 'text-xs',
   },
-  // {
-  //   value: 'SBC168',
-  //   icon: Ibc,
-  // },
-  // {
-  //   value: 'SBC168Casino',
-  //   icon: '/games/sbc168casino.svg',
-  // },
-  // {
-  //   value: 'CMDBET',
-  //   icon: '/games/cmdbet.svg',
-  // },
-  // {
-  //   value: 'M8BET',
-  //   icon: '/games/m8bet.svg',
-  // },
-  // {
-  //   value: 'SGD777',
-  //   icon: '/games/sgd777.svg',
-  // },
-  // {
-  //   value: 'ARB333Casino',
-  //   icon: '/games/arb333casino.svg',
-  // },
   {
     value: '338ALiveCasino',
     icon: LiveCasino338a,
+    styles: 'text-xs',
   },
   {
     value: 'Cahaya4d',
     icon: Cahaya4d,
+    styles: 'text-xs',
   },
   {
     value: 'AgenBet',
     icon: AgenBet,
+    styles: 'text-xs',
   },
   {
     value: 'AgenLiga77',
     icon: AgenLiga77,
+    styles: 'text-xs',
   },
   {
     value: 'Cahaya138',
     icon: Cahaya138,
+    styles: 'text-xs',
   },
-  // {
-  //   value: '338ACasinoGames',
-  //   icon: '/games/338alivecasinogames.svg',
-  // },
-  // {
-  //   value: 'HolidayPalace',
-  //   icon: '/games/holidaypalace.svg',
-  // },
-  // {
-  //   value: 'GD88',
-  //   icon: '/games/gd88.svg',
-  // },
-  // {
-  //   value: '6969Bet',
-  //   icon: '/games/6969bet.svg',
-  // },
-  // {
-  //   value: 'BolaTangkas2',
-  //   icon: '/games/bolatangkas2.svg',
-  // },
-  // {
-  //   value: 'Tangkas777',
-  //   icon: '/games/tangkas777.svg',
-  // },
-  // {
-  //   value: 'BankerKing',
-  //   icon: '/games/bankerking.svg',
-  // },
-  // {
-  //   value: 'TogelToto',
-  //   icon: '/games/togeltoto.svg',
-  // },
-  // {
-  //   value: 'Barocco303',
-  //   icon: '/games/barocco303.svg',
-  // },
-  // {
-  //   value: 'LiveTogel',
-  //   icon: '/games/livetogel.svg',
-  // },
 ];
 
 export const categories = [
