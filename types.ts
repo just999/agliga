@@ -35,6 +35,7 @@ export type SafeSliderImage = Omit<Slider, 'createdAt' | 'updatedAt'> & {
 export type ValueIconProps = {
   value: string;
   icon: string;
+  styles: string;
 };
 export type RunIconProps = {
   value: number;

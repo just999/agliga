@@ -9,7 +9,7 @@ import {
   CommandItem,
   CommandList,
 } from '@/components/ui/command';
-import { games, statuses } from '@/lib/helper';
+
 import { cn } from '@/lib/utils';
 
 import { DepoProps, ValueIconProps } from '@/types';
@@ -41,28 +41,29 @@ const DepoWdDropdownBankSelect = ({
   onChange,
   column,
 }: DepoWdDropdownBankSelectProps) => {
-  console.log('🚀 ~ column:', column);
   const [open, setOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState<ValueIconProps | null>(
     null
   );
-
-  console.log('🚀 ~ selectedValue:', selectedValue?.value);
   const handleUnselect = () => {
     setSelectedValue(null);
     setOpen(false);
     onChange(null || '');
   };
-  let selectedData;
-  if (column === 'bank') {
-    selectedData = banks?.filter((bank) => bank.value === selectedValue?.value);
-  } else if (column === 'status') {
-    selectedData = statuses?.filter(
-      (status) => status.value === selectedValue?.value
-    );
-  } else if (column === 'game') {
-    selectedData = games.filter((game) => game.value === selectedValue?.value);
-  }
+  // let selectedData;
+  // if (column === 'bank') {
+  //   selectedData = banks?.filter((bank) => bank.value === selectedValue?.value);
+  // } else if (column === 'status') {
+  //   selectedData = statuses?.filter(
+  //     (status) => status.value === selectedValue?.value
+  //   );
+  // } else if (column === 'game') {
+  //   selectedData = games.filter((game) => game.value === selectedValue?.value);
+  // }
+
+  const selectedData = banks?.filter(
+    (bank) => bank.value === selectedValue?.value
+  );
   return (
     <div className='flex items-center space-x-2 h-6'>
       {/* <p className='text-sm text-muted-foreground'>Bank</p> */}
@@ -74,29 +75,29 @@ const DepoWdDropdownBankSelect = ({
             className={cn(
               'w-full h-6 justify-start text-xs p-0 m-0',
               column && selectedValue
-                ? 'bg-rose-100 px-4 gap-2 shadow-xl border-b-2 border-solid border-sky-600'
-                : column && selectedValue
-                ? 'bg-purple-100  gap-2 shadow-xl'
-                : 'bg-sky-100 px-2 gap-2 '
+                ? 'bg-rose-100 px-2 gap-2 shadow-xl border-b-2 border-solid border-sky-600'
+                : 'bg-sky-100 px-2 gap-2'
+              // ? 'bg-purple-100 gap-2 shadow-xl'
+              // : 'bg-sky-100 px-2 gap-2 '
             )}
           >
             {selectedValue && column ? (
               <span className='flex flex-row items-center gap-2'>
-                {selectedData?.map(({ value, icon: Icon, styles }) => (
+                {selectedData?.map((v, i) => (
                   <>
-                    <Icon
+                    <v.icon
                       size={18}
                       className={cn(
-                        styles,
-                        value === 'gagal' && 'text-pink-600',
-                        value === 'in progress' && 'text-blue-700'
+                        v.styles,
+                        v.value === 'gagal' && 'text-pink-600',
+                        v.value === 'in progress' && 'text-blue-700'
                       )}
                     />
                     <span
                       className={cn(
-                        styles,
-                        value === 'gagal' && 'text-pink-600',
-                        value === 'in progress' && 'text-blue-700'
+                        v.styles,
+                        v.value === 'gagal' && 'text-pink-600',
+                        v.value === 'in progress' && 'text-blue-700'
                       )}
                     >
                       {value}

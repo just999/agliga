@@ -86,11 +86,11 @@ import {
 import {
   AgenBet,
   AgenLiga77,
-  Cahaya138,
   Cahaya4d,
   Ibc,
   LiveCasino338a,
   Sbo,
+  SlotGames,
 } from '@/components/assets/user-games';
 import { BsCalendarWeek } from 'react-icons/bs';
 import { FaExclamationTriangle } from 'react-icons/fa';
@@ -117,6 +117,7 @@ import {
   GiCrossMark,
 } from 'react-icons/gi';
 import {
+  MdCasino,
   MdKayaking,
   MdOutlineFiberNew,
   MdOutlineSurfing,
@@ -132,79 +133,89 @@ export const banks = [
   {
     value: 'BCA',
     icon: Bca,
+    // styles: 'text-xs',
   },
   {
     value: 'MANDIRI',
     icon: Mandiri,
+    // styles: 'text-xs',
   },
   {
     value: 'BRI',
     icon: Bri,
+    // styles: 'text-xs',
   },
   {
     value: 'BNI',
     icon: Bni,
+    // styles: 'text-xs',
   },
   {
     value: 'CIMB',
     icon: Cimb,
+    // styles: 'text-xs',
   },
   {
     value: 'DANAMON',
     icon: Danamon,
+    // styles: 'text-xs',
   },
   {
     value: 'DANA',
     icon: Dan,
+    // styles: 'text-xs',
   },
   {
     value: 'OVO',
     icon: Ovo,
+    // styles: 'text-xs',
   },
   {
     value: 'LINKAJA',
     icon: Linkaja,
+    // styles: 'text-xs',
   },
   {
     value: 'GOPAY',
     icon: Gopay,
+    // styles: 'text-xs',
   },
 ];
 export const games = [
   {
     value: 'Sbobet',
     icon: Sbo,
-    styles: 'text-xs',
+    // styles: 'text-xs',
   },
   {
     value: 'Ibcbet',
     icon: Ibc,
-    styles: 'text-xs',
+    // styles: 'text-xs',
   },
   {
     value: '338ALiveCasino',
     icon: LiveCasino338a,
-    styles: 'text-xs',
+    // styles: 'text-xs',
   },
   {
     value: 'Cahaya4d',
     icon: Cahaya4d,
-    styles: 'text-xs',
+    // styles: 'text-xs',
   },
   {
     value: 'AgenBet',
     icon: AgenBet,
-    styles: 'text-xs',
+    // styles: 'text-xs',
   },
   {
     value: 'AgenLiga77',
     icon: AgenLiga77,
-    styles: 'text-xs',
+    // styles: 'text-xs',
   },
   {
     value: 'Cahaya138',
-    icon: Cahaya138,
-    styles: 'text-xs',
+    icon: SlotGames,
+    // styles: 'text-xs',
   },
 ];
 

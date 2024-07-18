@@ -25,7 +25,6 @@ import { banks, games, statuses } from '@/lib/helper';
 
 import CellDepoWdActions from './cell-depo-wd-actions';
 import { DepoWdStatusActions } from './depo-wd-status-actions';
-import DepoWdDropdownBankSelect from './depo-wd-dropdown-bank-select';
 
 // A TanStack fork of Kent C. Dodds' match-sorter library that provides ranking information
 import {
