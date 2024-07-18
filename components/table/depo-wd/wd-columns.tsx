@@ -16,6 +16,7 @@ export const wdColumns: ColumnDef<DepoWdProps & WdProps>[] = [
   {
     accessorKey: 'index',
     header: 'No.',
+    filterFn: 'includesString',
     cell: ({ row }) => (
       <div className='flex flex-row justify-start px-4'>
         <span className={cn('tracking-tighter', noto.className)}>
@@ -127,7 +128,7 @@ export const wdColumns: ColumnDef<DepoWdProps & WdProps>[] = [
     header: ({ column }) => (
       <Button
         variant='ghost'
-        className='p-0'
+        className='p-0 m-0 h-4 text-xs'
         onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
       >
         Status
@@ -135,17 +136,24 @@ export const wdColumns: ColumnDef<DepoWdProps & WdProps>[] = [
       </Button>
     ),
     cell: ({ row }) => (
-      <div className='flex flex-row justify-start px-4 gap-2'>
+      <div className='flex flex-row justify-start px-2 gap-2'>
         <span className='flex flex-row gap-2 items-center font-bold text-xs'>
           {statuses
             .filter((stat) => stat.value === row.original.status)
             .map((b) => (
               <div
                 key={b.value}
-                className='flex items-center gap-1 text-nowrap '
+                className='flex items-center gap-2 text-nowrap '
               >
                 <span>
-                  <b.icon className={cn('w-3 h-3')} />
+                  <b.icon
+                    className={cn(
+                      'w-5 h-5',
+                      b.styles,
+                      b.value === 'gagal' && 'text-pink-600',
+                      b.value === 'in progress' && 'text-blue-700'
+                    )}
+                  />
                 </span>
                 <span
                   className={cn(
@@ -175,7 +183,7 @@ export const wdColumns: ColumnDef<DepoWdProps & WdProps>[] = [
     header: 'Actions',
     cell: ({ row }) => (
       <div>
-        {row.original.status === null ? (
+        {row.original.status === 'new' ? (
           <DepoWdStatusActions
             statuses={statuses}
             data={row.original}

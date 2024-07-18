@@ -52,7 +52,7 @@ export const columns: ColumnDef<FixtureProps>[] = [
     ),
   },
   {
-    accessorKey: 'Home',
+    accessorKey: 'teamHome',
     cell: ({ row }) => (
       <div className='flex flex-row gap-2 items-center justify-start pl-4 cursor-pointer'>
         {/* <pre>{JSON.stringify(row.original.homePenalty[0], null, 2)}</pre> */}
@@ -98,7 +98,7 @@ export const columns: ColumnDef<FixtureProps>[] = [
     ),
   },
   {
-    accessorKey: 'away',
+    accessorKey: 'teamAway',
     cell: ({ row }) => (
       <div className='flex w-full gap-2 items-center justify-start pl-4 cursor-pointer '>
         {penalty

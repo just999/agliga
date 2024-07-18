@@ -93,6 +93,7 @@ import {
   Sbo,
 } from '@/components/assets/user-games';
 import { BsCalendarWeek } from 'react-icons/bs';
+import { FaExclamationTriangle } from 'react-icons/fa';
 
 import { FaPersonRunning } from 'react-icons/fa6';
 import {
@@ -113,6 +114,7 @@ import {
   GiShuttlecock,
   GiCricketBat,
   GiTurd,
+  GiCrossMark,
 } from 'react-icons/gi';
 import {
   MdKayaking,
@@ -2977,31 +2979,43 @@ export const statuses = [
   {
     value: 'new',
     icon: MdOutlineFiberNew,
-    styles: 'text-sky-700',
+    styles: 'font-extrabold text-sky-700',
   },
   {
     value: 'success',
     icon: FcOk,
-    styles: 'text-emerald-700',
+    styles: 'font-extrabold text-emerald-700',
   },
   {
     value: 'gagal',
-    icon: FcDisapprove,
-    styles: 'text-pink-700',
+    icon: FaExclamationTriangle,
+    styles: 'font-extrabold text-pink-700',
   },
   {
     value: 'in progress',
     icon: FaPersonRunning,
-    styles: 'text-blue-700',
+    styles: 'font-extrabold text-blue-700',
   },
   {
     value: 'error',
     icon: FcHighPriority,
-    styles: 'text-red-700',
+    styles: 'font-extrabold text-red-700',
   },
   {
     value: 'sampah',
     icon: GiTurd,
-    styles: 'text-amber-700',
+    styles: 'font-extrabold text-amber-700',
+  },
+];
+export const processDepoWd = [
+  {
+    value: 'ok',
+    icon: FcOk,
+    styles: 'text-sky-700',
+  },
+  {
+    value: 'no',
+    icon: GiCrossMark,
+    styles: 'text-gray-500',
   },
 ];

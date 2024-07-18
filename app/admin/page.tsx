@@ -23,7 +23,7 @@ const AdminPage = async () => {
   Array.prototype.push.apply(depos, wds);
 
   return (
-    <Container className='grid text-xs w-full pt-4 max-w-[1440px]'>
+    <Container className='grid text-xs w-full max-w-[1440px]'>
       {/* <DepoWdClient
         // key={i}
         depo={depos}

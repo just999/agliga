@@ -54,7 +54,6 @@ export function DepoWdStatusActions({
     setOpen(false);
   };
   const depoWdProcess = name === 'depo' ? 'depo-process' : 'wd-process';
-
   return (
     <div className='flex items-center space-x-4'>
       <Popover open={open} onOpenChange={setOpen}>
@@ -87,10 +86,10 @@ export function DepoWdStatusActions({
               </span>
             ) : (
               <span className='flex flex-row m-0 p-0  gap-2 items-center text-xs'>
-                {data.status === null ? (
+                {data.status === 'new' ? (
                   <span className='flex gap-2 m-0 p-0 text-xs font-bold text-stone-400  hover:text-black'>
                     <BsPlusCircleDotted /> process{' '}
-                    {name === 'depo' ? 'depo?' : 'wd?'}
+                    {name === 'depo' ? 'depo?' : name === 'wd' ? 'wd?' : ''}
                   </span>
                 ) : (
                   <span>sudah di process</span>

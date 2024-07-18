@@ -110,7 +110,7 @@ model Depo {
   depoAmount    Int?
   game          String    @default("SBOBET")
   gameUserId    String
-  status        String?
+  status        String?   @default("new")
   bankPT        String
   adminId       String?   @db.ObjectId
   admin         User?     @relation("AdminDepos", fields: [adminId], references: [id])
@@ -129,7 +129,7 @@ model Wd {
   game          String    @default("SBOBET")
   gameUserId    String
   wdAmount      Int?
-  status        String?
+  status        String?   @default("new")
   adminId       String?   @db.ObjectId
   admin         User?     @relation("AdminWds", fields: [adminId], references: [id])
   userId        String?   @db.ObjectId

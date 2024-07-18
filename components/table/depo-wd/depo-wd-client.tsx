@@ -38,8 +38,10 @@ interface DepoWdClientProps {
   className?: string;
   depoWdClassName?: string;
   tableCellClassName?: string;
+  euroTableClassName?: string;
   euCardClassName?: string;
   trashClassName?: string;
+  thClassName?: string;
   tab: string;
   users?: User[];
 }
@@ -56,6 +58,8 @@ const DepoWdClient = ({
   euCardClassName,
   trashClassName,
   tableCellClassName,
+  euroTableClassName,
+  thClassName,
   items,
   tab,
   users,
@@ -126,9 +130,9 @@ const DepoWdClient = ({
 
   const filteredUsers = members.filter((member) => member.role);
   return (
-    <div className={cn('flex flex-col pt-2 border-0 md:w-full')}>
+    <div className={cn('flex flex-col border-0 md:w-full')}>
       <DataTable
-        searchKey='email'
+        searchKey='bank'
         columns={
           tab === 'depo' ? depoColumns : tab === 'wd' ? wdColumns : usersColumns
         }
@@ -149,6 +153,8 @@ const DepoWdClient = ({
         euCardClassName={euCardClassName}
         trashClassName={trashClassName}
         tableCellClassName={tableCellClassName}
+        thClassName={thClassName}
+        euroTableClassName={euroTableClassName}
       />
     </div>
   );

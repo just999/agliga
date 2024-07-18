@@ -1,15 +1,26 @@
 'use client';
 
 import {
+  Column,
   ColumnDef,
+  ColumnFiltersState,
+  FilterFn,
+  SortingFn,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
   useReactTable,
   SortingState,
+  sortingFns,
   getSortedRowModel,
 } from '@tanstack/react-table';
+
+import {
+  RankingInfo,
+  rankItem,
+  compareItems,
+} from '@tanstack/match-sorter-utils';
 
 import {
   Table,
@@ -22,7 +33,7 @@ import {
 
 import { InputCustom } from './inputCustom';
 import { Button } from './button';
-import { useState } from 'react';
+import React, { useCallback, useEffect, useReducer, useState } from 'react';
 
 import useRunToggleStore from '@/store/use-table-store';
 import RunTable from './run-table';
@@ -44,7 +55,13 @@ import { useSession } from 'next-auth/react';
 import { FcParallelTasks } from 'react-icons/fc';
 import FixtureTable from '../table/euro/fixture/fixture-table';
 import Heading from './heading';
-import { DepoProps, DepoWdProps, EuroWithIconProps, WdProps } from '@/types';
+import {
+  DepoProps,
+  DepoWdProps,
+  EuroWithIconProps,
+  tabsAdmin,
+  WdProps,
+} from '@/types';
 import { EPL } from '../assets/sports';
 
 import Periods from '../soccer/periods';
@@ -52,6 +69,54 @@ import Periods from '../soccer/periods';
 import { TbNewSection } from 'react-icons/tb';
 
 import { Fixture } from '@prisma/client';
+import { useTabsStore } from '@/store/use-tabs-store';
+import { DropdownMenu } from '@radix-ui/react-dropdown-menu';
+
+import { banks, games, processDepoWd, statuses } from '@/lib/helper';
+import DepoWdDropdownBankSelect from '../table/depo-wd/depo-wd-dropdown-bank-select';
+import { DebouncedInput } from './debounce-input';
+import Filter from '../table/filter';
+import FilterSelect from '../table/filter-select';
+
+declare module '@tanstack/react-table' {
+  //add fuzzy filter to the filterFns
+  interface FilterFns {
+    fuzzy: FilterFn<unknown>;
+  }
+  interface FilterMeta {
+    itemRank: RankingInfo;
+  }
+}
+
+// Define a custom fuzzy filter function that will apply ranking info to rows (using match-sorter utils)
+const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
+  // Rank the item
+  const itemRank = rankItem(row.getValue(columnId), value);
+
+  // Store the itemRank info
+  addMeta({
+    itemRank,
+  });
+
+  // Return if the item should be filtered in/out
+  return itemRank.passed;
+};
+
+// Define a custom fuzzy sort function that will sort by rank if the row has ranking information
+const fuzzySort: SortingFn<any> = (rowA, rowB, columnId) => {
+  let dir = 0;
+
+  // Only sort by rank if the column has ranking information
+  if (rowA.columnFiltersMeta[columnId]) {
+    dir = compareItems(
+      rowA.columnFiltersMeta[columnId]?.itemRank!,
+      rowB.columnFiltersMeta[columnId]?.itemRank!
+    );
+  }
+
+  // Provide an alphanumeric fallback for when the item ranks are equal
+  return dir === 0 ? sortingFns.alphanumeric(rowA, rowB, columnId) : dir;
+};
 
 type GroupArrayProps = {
   date: string;
@@ -61,7 +126,7 @@ type GroupArrayProps = {
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[] | any;
   eu?: Fixture[] | TData[] | (DepoProps[] & WdProps[]) | any;
-  searchKey?: string;
+  searchKey: string;
   className?: string;
   depoWdClassName?: string;
   group?: any;
@@ -73,6 +138,7 @@ interface DataTableProps<TData, TValue> {
   euCardClassName?: string;
   tableCellClassName?: string;
   trashClassName?: string;
+  thClassName?: string;
   groupArrays?: GroupArrayProps[];
   period?: string;
 }
@@ -80,6 +146,7 @@ interface DataTableProps<TData, TValue> {
 export function DataTable<TData, TValue>({
   columns,
   eu,
+  searchKey,
   className,
   group,
   round,
@@ -90,16 +157,41 @@ export function DataTable<TData, TValue>({
   tableCellClassName,
   trashClassName,
   depoWdClassName,
+  thClassName,
   groupArrays,
   period,
 }: // mergedData,
 DataTableProps<TData, TValue>) {
-  // const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [filtering, setFiltering] = useState('');
+
   const [isToggle, setIsToggle] = useState(false);
   const [isToggleFixture, setIsToggleFixture] = useState(false);
 
+  const { tabs, tabVal, setTabs, setTabVal } = useTabsStore();
+  const [loading, setLoading] = useState(true);
+
+  const rerender = useReducer(() => ({}), {})[1];
+
+  const [globalFilter, setGlobalFilter] = useState('');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const cachedTabVal = localStorage.getItem('tabVal') || tabsAdmin[0].value;
+      setTabs(
+        tabsAdmin.map((tab) => ({ ...tab, active: tab.value === cachedTabVal }))
+      );
+      setTabVal(cachedTabVal);
+      setLoading(false);
+    }
+  }, [setTabs, setTabVal]);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && tabVal) {
+      localStorage.setItem('tabVal', tabVal);
+    }
+  }, [tabVal]);
   // const { items } = useGetEuros();
 
   const { data: session } = useSession();
@@ -108,24 +200,38 @@ DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data: eu as TData[],
     columns,
+    filterFns: {
+      fuzzy: fuzzyFilter, //define as a filter function that can be used in column definitions
+    },
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    // onColumnFiltersChange: setColumnFilters,
+    onColumnFiltersChange: setColumnFilters,
+    globalFilterFn: 'fuzzy',
+    onGlobalFilterChange: setGlobalFilter,
     getFilteredRowModel: getFilteredRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
-    // state: {
-    //   columnFilters,
-    // },
+    debugTable: false,
+    debugHeaders: false,
+    debugColumns: false,
     state: {
       // pagination: round
       //   ? { pageSize: 16, pageIndex: 0 }
       //   : { pageSize: 10, pageIndex: 0 },
-      globalFilter: filtering,
+      globalFilter,
       sorting,
+      columnFilters,
     },
-    onGlobalFilterChange: setFiltering,
   });
+
+  //apply the fuzzy sort if the fullName column is being filtered
+  useEffect(() => {
+    if (table.getState().columnFilters[0]?.id === 'fullName') {
+      if (table.getState().sorting[0]?.id !== 'fullName') {
+        table.setSorting([{ id: 'fullName', desc: false }]);
+      }
+    }
+  }, [table]);
 
   let newPeriod;
   if (period) {
@@ -173,6 +279,16 @@ DataTableProps<TData, TValue>) {
 
   const year1 = period?.slice(0, 2);
   const year2 = period?.slice(3, 5);
+
+  const handleSelectChange = (searchKey: string, value: string) => {
+    console.log('Selected-Value', searchKey, value);
+
+    table.getColumn(searchKey)?.setFilterValue(value);
+  };
+
+  const handleFilterChange = useCallback((value: string) => {
+    setGlobalFilter(value);
+  }, []);
   return (
     <div className='rounded-xl mx-auto w-full md:w-full md:mx-auto'>
       <div
@@ -184,11 +300,24 @@ DataTableProps<TData, TValue>) {
         {/* {eu && <pre>{JSON.stringify(eu[0]?.category, null, 2)}</pre>} */}
         <InputCustom
           placeholder='Search...'
-          value={filtering}
-          // value={(table.getColumn(searchKey)?.getFilterValue() as string) ?? ''}
-          onChange={(event) => setFiltering(event.target.value)}
+          // value={filtering}
+          value={(table.getColumn(searchKey)?.getFilterValue() as string) ?? ''}
+          // onChange={(event) => setFiltering(event.target.value)}
+          onChange={(e) =>
+            table.getColumn(searchKey)?.setFilterValue(e.target.value)
+          }
           className='max-w-sm text-stone-700 mx-2 bg-zinc-50'
         />
+
+        {(tabVal === 'depo' || tabVal === 'wd') && (
+          <DebouncedInput
+            value={globalFilter ?? ''}
+            // onChange={() => handleFilterChange}
+            onChange={(value) => setGlobalFilter(String(value))}
+            className='p-2 font-2xl text-black shadow border border-block'
+            placeholder='Search all columns...'
+          />
+        )}
         {period && (
           <div className='w-full flex flex-row items-center justify-center '>
             <Heading
@@ -240,7 +369,7 @@ DataTableProps<TData, TValue>) {
                 <TableHeader className='bg-amber-50 '>
                   <TableRow
                     className={cn(
-                      'rounded-full h-8 border-none',
+                      'rounded-full h-8 p-0 m-0 border-none',
                       euroTableClassName
                     )}
                   >
@@ -248,7 +377,7 @@ DataTableProps<TData, TValue>) {
                       <TableHead
                         className={cn(
                           'flex flex-row font-semibold justify-center ml-2 bg-emerald-300 rounded-l-lg  h-8 hover:bg-green-300 hover:font-semibold hover:text-gray-800 shadow-xl text-md text-gray-400 cursor-pointer',
-                          group ? 'w-full' : 'w-full'
+                          group && 'w-full'
                         )}
                       >
                         <Euro24 />
@@ -328,21 +457,95 @@ DataTableProps<TData, TValue>) {
 
                   {table.getHeaderGroups().map((headerGroup) => (
                     <TableRow key={headerGroup.id}>
-                      {headerGroup.headers.map((header) => {
+                      {headerGroup.headers.map((header, i) => {
                         return (
                           <TableHead
                             key={header.id}
                             className={cn(
-                              ' text-xs text-stone-500 h-8 p-0  text-center px-2 bg-stone-100',
+                              ' text-xs text-stone-500 h-8  text-center px-2 bg-stone-100 border border-solid border-zinc-200',
+                              thClassName,
                               round && 'w-12'
                             )}
+                            colSpan={header.colSpan}
                           >
-                            {header.isPlaceholder
-                              ? null
-                              : flexRender(
-                                  header.column.columnDef.header,
-                                  header.getContext()
-                                )}
+                            {header.isPlaceholder ? null : (
+                              <>
+                                <div className='flex flex-row items-center text-nowrap h-6 px-2 align-middle'>
+                                  {flexRender(
+                                    header.column.columnDef.header,
+                                    header.getContext()
+                                  )}
+                                  {/* <pre>
+                                    {JSON.stringify(header.column, null, 2)}
+                                  </pre> */}
+                                  {{
+                                    asc: '🔼',
+                                    desc: '🔽',
+                                  }[header.column.getIsSorted() as string] ??
+                                    null}
+                                </div>
+                                {header.column.id === 'bank' ? (
+                                  <DepoWdDropdownBankSelect
+                                    banks={banks}
+                                    value={
+                                      (table
+                                        .getColumn('bank')
+                                        ?.getFilterValue() as string) ?? ''
+                                    }
+                                    onChange={(value: string) =>
+                                      handleSelectChange('bank', value)
+                                    }
+                                    column='bank'
+                                  />
+                                ) : header.column.id === 'status' ? (
+                                  <>
+                                    <DepoWdDropdownBankSelect
+                                      banks={statuses}
+                                      value={
+                                        (table
+                                          .getColumn('status')
+                                          ?.getFilterValue() as string) ?? ''
+                                      }
+                                      onChange={(value: string) =>
+                                        handleSelectChange('status', value)
+                                      }
+                                      column='status'
+                                    />
+                                    {/* <pre>
+                                      {JSON.stringify(
+                                        table.getColumn('status'),
+                                        null,
+                                        3
+                                      )}
+                                    </pre> */}
+                                  </>
+                                ) : header.column.id === 'game' ? (
+                                  <>
+                                    <DepoWdDropdownBankSelect
+                                      banks={games}
+                                      value={
+                                        (table
+                                          .getColumn('game')
+                                          ?.getFilterValue() as string) ?? ''
+                                      }
+                                      onChange={(value: string) =>
+                                        handleSelectChange('game', value)
+                                      }
+                                      column='games'
+                                    />
+                                    {/* <pre>
+                                      {JSON.stringify(
+                                        table.getColumn('actions'),
+                                        null,
+                                        2
+                                      )}
+                                    </pre> */}
+                                  </>
+                                ) : header.column.getCanFilter() ? (
+                                  <Filter column={header.column} />
+                                ) : null}
+                              </>
+                            )}
                           </TableHead>
                         );
                       })}
@@ -370,9 +573,6 @@ DataTableProps<TData, TValue>) {
                               cell.column.columnDef.cell,
                               cell.getContext()
                             )}
-                            {/* <pre className='flex flex-col '>
-                        {JSON.stringify(cell, null, 2)}
-                      </pre> */}
                           </TableCell>
                         ))}
                       </TableRow>
@@ -389,6 +589,7 @@ DataTableProps<TData, TValue>) {
                   )}
                 </TableBody>
               </Table>
+
               {isToggle && (
                 <div className='flex flex-col mx-auto gap-0 py-2 rounded-lg justify-center'>
                   {groupArrays?.map((item: any) => (
@@ -403,8 +604,6 @@ DataTableProps<TData, TValue>) {
                       trashClassName={trashClassName}
                     />
                   ))}
-
-                  {/* <pre>{JSON.stringify(eu, null, 2)}</pre> */}
                 </div>
               )}
               {isToggleFixture && (
@@ -413,6 +612,7 @@ DataTableProps<TData, TValue>) {
                 </div>
               )}
             </div>
+
             <div
               className={cn(
                 'space-x-2 py-4 pr-4 w-full',
@@ -453,15 +653,7 @@ DataTableProps<TData, TValue>) {
         <div className={cn('rounded-lg mt-2', className)}>
           <div className='w-full border rounded-lg mx-auto py-2'>
             <EPL className='mx-auto xs:h-30 sm:h-40 lg:h-50 xl:h-60' />
-            {/* {EPLPeriod.map((per) => (
-              <Badge
-                variant='outline'
-                className='cursor-pointer py-1 px-4 hover:bg-stone-100 hover:shadow-xl '
-              >
-                <per.icon className='w-4 h-4' />{' '}
-                <span className='pl-2 '> {per.value}</span>
-              </Badge>
-            ))} */}
+
             <div
               className={cn(
                 'px-4 text-center w-full text-base text-nowrap font-bold py-2 text-[#340239] bg-purple-50 drop-shadow-md sm:text-xs',
