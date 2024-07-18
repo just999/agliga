@@ -76,7 +76,6 @@ import { banks, games, processDepoWd, statuses } from '@/lib/helper';
 import DepoWdDropdownBankSelect from '../table/depo-wd/depo-wd-dropdown-bank-select';
 import { DebouncedInput } from './debounce-input';
 import Filter from '../table/filter';
-import FilterSelect from '../table/filter-select';
 
 declare module '@tanstack/react-table' {
   //add fuzzy filter to the filterFns
@@ -286,9 +285,13 @@ DataTableProps<TData, TValue>) {
     table.getColumn(searchKey)?.setFilterValue(value);
   };
 
-  const handleFilterChange = useCallback((value: string) => {
-    setGlobalFilter(value);
-  }, []);
+  const handleFilterChange = useCallback(
+    (value: string | number) => {
+      if (typeof value === 'string') setGlobalFilter(value);
+    },
+    [setGlobalFilter]
+  );
+
   return (
     <div className='rounded-xl mx-auto w-full md:w-full md:mx-auto'>
       <div
@@ -312,8 +315,8 @@ DataTableProps<TData, TValue>) {
         {(tabVal === 'depo' || tabVal === 'wd') && (
           <DebouncedInput
             value={globalFilter ?? ''}
-            // onChange={() => handleFilterChange}
-            onChange={(value) => setGlobalFilter(String(value))}
+            onChange={handleFilterChange}
+            // onChange={(value) => setGlobalFilter(String(value))}
             className='p-2 font-2xl text-black shadow border border-block'
             placeholder='Search all columns...'
           />

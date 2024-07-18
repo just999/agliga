@@ -1,49 +1,49 @@
-'use client';
+// 'use client';
 
-import { useState, useEffect } from 'react';
-import SelectInput from '../select-input';
-import DepoWdDropdownBankSelect from '../table/depo-wd/depo-wd-dropdown-bank-select';
-import { ValueIconProps } from '@/types';
+// import { useState, useEffect } from 'react';
 
-type DebounceSelectProps = {};
+// import DepoWdDropdownBankSelect from '../table/depo-wd/depo-wd-dropdown-bank-select';
+// import { ValueIconProps } from '@/types';
 
-const DebounceSelect = ({
-  banks,
-  value: initialValue,
-  onChange,
-  // name,
-  debounce = 500,
-  ...props
-}: {
-  banks?: ValueIconProps[];
-  // name: string;
-  value: string | number;
-  onChange: (value: string | number) => void;
-  debounce?: number;
-} & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'>) => {
-  const [value, setValue] = useState(initialValue);
+// type DebounceSelectProps = {};
 
-  useEffect(() => {
-    setValue(initialValue);
-  }, [initialValue]);
+// const DebounceSelect = ({
+//   banks,
+//   value: initialValue,
+//   onChange,
+//   // name,
+//   debounce = 500,
+//   ...props
+// }: {
+//   banks?: ValueIconProps[];
+//   // name: string;
+//   value: string | number;
+//   onChange: (value: string | number) => void;
+//   debounce?: number;
+// } & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'>) => {
+//   const [value, setValue] = useState(initialValue);
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      onChange(value);
-    }, debounce);
+//   useEffect(() => {
+//     setValue(initialValue);
+//   }, [initialValue]);
 
-    return () => clearTimeout(timeout);
-  }, [value]);
+//   useEffect(() => {
+//     const timeout = setTimeout(() => {
+//       onChange(value);
+//     }, debounce);
 
-  return (
-    <DepoWdDropdownBankSelect
-      {...props}
-      // name={name}
-      banks={banks}
-      // value={value}
-      onChange={(e) => setValue(value)}
-    />
-  );
-};
+//     return () => clearTimeout(timeout);
+//   }, [value]);
 
-export default DebounceSelect;
+//   return (
+//     <DepoWdDropdownBankSelect
+//       {...props}
+//       // name={name}
+//       banks={banks}
+//       // value={value}
+//       onChange={(e) => setValue(value)}
+//     />
+//   );
+// };
+
+// export default DebounceSelect;
