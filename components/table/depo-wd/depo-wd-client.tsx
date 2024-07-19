@@ -44,7 +44,6 @@ interface DepoWdClientProps {
   thClassName?: string;
   tab: string;
   users?: User[];
-  role?: string;
 }
 
 const DepoWdClient = ({
@@ -64,7 +63,6 @@ const DepoWdClient = ({
   items,
   tab,
   users,
-  role,
 }: DepoWdClientProps) => {
   const [dep, setDep] = useState<DepoWdProps[]>([]);
   const [members, setMembers] = useState<User[]>([]);
@@ -76,10 +74,6 @@ const DepoWdClient = ({
     setDep(depo);
   }, [depo]);
 
-  useEffect(() => {
-    if (!users || role === 'user') setMembers([]);
-    if (users && role === 'admin') setMembers(users);
-  }, [users, role]);
   const { modalType } = useModal();
   // const table = useLeague(data);
   // const table = useLeague(depo);

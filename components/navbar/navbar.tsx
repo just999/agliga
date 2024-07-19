@@ -26,7 +26,7 @@ import {
 } from 'react-icons/fc';
 import { RiAdminLine } from 'react-icons/ri';
 import { PiUserPlus } from 'react-icons/pi';
-import { usePathname } from 'next/navigation';
+import { redirect, usePathname, useRouter } from 'next/navigation';
 import useModal from '@/hooks/use-modal';
 
 import { capitalizeFirstCharacter, cn } from '@/lib/utils';
@@ -46,6 +46,7 @@ type NavbarProps = {
 const Navbar = ({ currentUser, className }: NavbarProps) => {
   const { data: session, status } = useSession();
   const pathname = usePathname();
+  const router = useRouter();
   const { modalType, onOpen, onClose } = useModal();
   const userRole = session?.user.curUser.role;
 
@@ -68,7 +69,10 @@ const Navbar = ({ currentUser, className }: NavbarProps) => {
         )} is ${capitalizeFirstCharacter(session.user.curUser.role)}`
       : 'Guest';
 
-  const handleLogout = () => signOut();
+  const handleLogout = () => {
+    signOut();
+    router.push('/');
+  };
   const handleLogin = () => onOpen('login');
   const handleSignUp = () => onOpen('register');
   const authentic = () => {
@@ -188,7 +192,7 @@ const Navbar = ({ currentUser, className }: NavbarProps) => {
       href: `/users`,
       active: modalType === null && pathname === '/users',
       className:
-        userRole === 'user'
+        userRole === 'admin' || userRole === 'user'
           ? 'hidden whitespace-nowrap sm:block text-xs font-semibold px-6 py-2 border-x-[1px] flex-1 text-center  md:hidden lg:block cursor-pointer hover:shadow-md hover:bg-emerald-50'
           : 'hidden',
     },

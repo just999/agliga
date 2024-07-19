@@ -304,7 +304,7 @@ import { useTabsStore } from '@/store/use-tabs-store';
 
 type DepoWdTabsActiveProps = {
   depo: (DepoProps & WdProps)[];
-  users: User[];
+  users?: User[];
   role?: string;
 };
 
@@ -313,7 +313,7 @@ const DepoWdTabsActive = ({ depo, users, role }: DepoWdTabsActiveProps) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined' && role === 'admin') {
       const cachedTabVal = localStorage.getItem('tabVal') || tabsAdmin[0].value;
       setTabs(
         tabsAdmin.map((tab) => ({ ...tab, active: tab.value === cachedTabVal }))
@@ -321,7 +321,16 @@ const DepoWdTabsActive = ({ depo, users, role }: DepoWdTabsActiveProps) => {
       setTabVal(cachedTabVal);
       setLoading(false);
     }
-  }, [setTabs, setTabVal]);
+    if (typeof window !== 'undefined' && role === 'user') {
+      const tabsUser = tabsAdmin.filter((tab) => tab.value !== 'member');
+      const cachedTabVal = localStorage.getItem('tabVal') || tabsUser[0].value;
+      setTabs(
+        tabsUser.map((tab) => ({ ...tab, active: tab.value === cachedTabVal }))
+      );
+      setTabVal(cachedTabVal);
+      setLoading(false);
+    }
+  }, [setTabs, setTabVal, role]);
 
   useEffect(() => {
     if (typeof window !== 'undefined' && tabVal) {
@@ -351,7 +360,13 @@ const DepoWdTabsActive = ({ depo, users, role }: DepoWdTabsActiveProps) => {
     );
   }
 
-  const renderedTabsActive = tabs.map((tab) => (
+  let newTabs;
+  if (role === 'user') {
+    newTabs = tabs.filter((t) => t.value !== 'member');
+  } else if (role === 'admin') {
+    newTabs = tabs;
+  }
+  const renderedTabsActive = newTabs?.map((tab) => (
     <li
       key={tab.id}
       className={cn(
@@ -424,7 +439,6 @@ const DepoWdTabsActive = ({ depo, users, role }: DepoWdTabsActiveProps) => {
             <DepoWdClient
               tab={t.value}
               depo={t.value === 'depo' ? filteredDepo : filteredWd}
-              role={role}
               users={users}
               footerClassName='flex flex-row gap-2 justify-between items-center bg-sky-200/60'
               euroClassName='flex flex-wrap gap-2 justify-center group-card py-2'

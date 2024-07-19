@@ -1,3 +1,4 @@
+import { auth } from '@/auth';
 import Container from '@/components/container';
 import DepoWdClient from '@/components/table/depo-wd/depo-wd-client';
 import DepoWdTabsActive from '@/components/table/depo-wd/depo-wd-tabs-active';
@@ -16,10 +17,10 @@ const AdminPage = async () => {
   const depos = await fetchDepo();
   if (!depos || depos.length === 0) return [];
 
-  const role = await currentRole();
-  if (role !== 'admin') {
-    redirect('/');
-  }
+  const session = await auth();
+  const role = session?.user.curUser.role;
+  if (role !== 'admin') redirect('/');
+
   const wds = await fetchWd();
   if (!wds || wds.length === 0) return [];
 
