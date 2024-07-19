@@ -63,9 +63,10 @@ export async function POST(req: Request) {
     //   },
     // });
     // return NextResponse.json(depo);
-    return new Response(JSON.stringify({ message: 'Success' }), {
-      status: 200,
-    });
+    // return new Response(JSON.stringify({ message: 'Success' }), {
+    //   status: 200,
+    // });
+    return NextResponse.json({ message: 'Success' });
   } catch (err) {
     console.log(err);
     return NextResponse.json(
