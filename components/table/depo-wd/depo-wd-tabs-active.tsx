@@ -294,43 +294,41 @@
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { cn, noto, poppins } from '@/lib/utils';
-import { DepoProps, tabsAdmin, WdProps } from '@/types';
+import { DepoProps, tabsData, tabsProps, WdProps } from '@/types';
 import { IoNotifications } from 'react-icons/io5';
 import ClockSpinner from '@/components/ui/clock-spinner';
 import { User } from '@prisma/client';
 
 import DepoWdClient from './depo-wd-client';
 import { useTabsStore } from '@/store/use-tabs-store';
+import { usePathname } from 'next/navigation';
 
 type DepoWdTabsActiveProps = {
   depo: (DepoProps & WdProps)[];
   users?: User[];
   role?: string;
+  tabsData: tabsProps[];
 };
 
-const DepoWdTabsActive = ({ depo, users, role }: DepoWdTabsActiveProps) => {
+const DepoWdTabsActive = ({
+  depo,
+  users,
+  role,
+  tabsData,
+}: DepoWdTabsActiveProps) => {
   const { tabs, tabVal, setTabs, setTabVal } = useTabsStore();
   const [loading, setLoading] = useState(true);
-
+  const pathname = usePathname();
   useEffect(() => {
-    if (typeof window !== 'undefined' && role === 'admin') {
-      const cachedTabVal = localStorage.getItem('tabVal') || tabsAdmin[0].value;
+    if (typeof window !== 'undefined') {
+      const cachedTabVal = localStorage.getItem('tabVal') || tabsData[0].value;
       setTabs(
-        tabsAdmin.map((tab) => ({ ...tab, active: tab.value === cachedTabVal }))
+        tabsData.map((tab) => ({ ...tab, active: tab.value === cachedTabVal }))
       );
       setTabVal(cachedTabVal);
       setLoading(false);
     }
-    if (typeof window !== 'undefined' && role === 'user') {
-      const tabsUser = tabsAdmin.filter((tab) => tab.value !== 'member');
-      const cachedTabVal = localStorage.getItem('tabVal') || tabsUser[0].value;
-      setTabs(
-        tabsUser.map((tab) => ({ ...tab, active: tab.value === cachedTabVal }))
-      );
-      setTabVal(cachedTabVal);
-      setLoading(false);
-    }
-  }, [setTabs, setTabVal, role]);
+  }, [setTabs, setTabVal, role, tabsData]);
 
   useEffect(() => {
     if (typeof window !== 'undefined' && tabVal) {
@@ -361,10 +359,10 @@ const DepoWdTabsActive = ({ depo, users, role }: DepoWdTabsActiveProps) => {
   }
 
   let newTabs;
-  if (role === 'user') {
+  if (pathname === '/users') {
     newTabs = tabs.filter((t) => t.value !== 'member');
-  } else if (role === 'admin') {
-    newTabs = tabs;
+  } else if (pathname === '/admin') {
+    newTabs = tabs.filter((t) => t.value);
   }
   const renderedTabsActive = newTabs?.map((tab) => (
     <li
@@ -437,6 +435,7 @@ const DepoWdTabsActive = ({ depo, users, role }: DepoWdTabsActiveProps) => {
             className={cn('tab-pane fade', t.active ? 'show active' : 'hidden')}
           >
             <DepoWdClient
+              role={role}
               tab={t.value}
               depo={t.value === 'depo' ? filteredDepo : filteredWd}
               users={users}

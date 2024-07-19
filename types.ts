@@ -77,6 +77,14 @@ export type PostProps = {
   trending?: boolean | null;
 };
 
+export type tabsProps = {
+  id: number;
+  name: string;
+  value: string;
+  label: string;
+  active: boolean;
+};
+
 export const tabsData = [
   { id: 1, name: 'Popular', value: 'depo', label: 'Depo Table', active: true },
   { id: 2, name: 'Trending', value: 'wd', label: 'WD Table', active: false },

@@ -9,6 +9,7 @@ import { currentRole } from '@/lib/auth';
 import { fetchDepo, fetchWd } from '@/lib/queries/depo-wd';
 import { fetchUsers } from '@/lib/queries/users';
 import { cn } from '@/lib/utils';
+import { tabsAdmin } from '@/types';
 import { redirect } from 'next/navigation';
 
 type AdminPageProps = {};
@@ -41,7 +42,12 @@ const AdminPage = async () => {
         // tableCellClassName='bg-orange-100/50'
         euCardClassName='pt-2 px-2 gap-0 justify-start items-center bg-emerald-50 odd:bg-zinc-100 even:bg-stone-50'
       /> */}
-      <DepoWdTabsActive depo={depos} users={users} role={role} />
+      <DepoWdTabsActive
+        depo={depos}
+        users={users}
+        role={role}
+        tabsData={tabsAdmin}
+      />
     </Container>
   );
 };
