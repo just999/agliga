@@ -321,14 +321,20 @@ const DepoWdTabsActive = ({
   const pathname = usePathname();
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const cachedTabVal = localStorage.getItem('tabVal') || tabsData[0].value;
+      let cachedTabVal = localStorage.getItem('tabVal') || tabsData[0].value;
+      if (
+        pathname === '/users' &&
+        localStorage.getItem('tabVal') === 'member'
+      ) {
+        cachedTabVal = tabsData[0].value;
+      }
       setTabs(
         tabsData.map((tab) => ({ ...tab, active: tab.value === cachedTabVal }))
       );
       setTabVal(cachedTabVal);
       setLoading(false);
     }
-  }, [setTabs, setTabVal, role, tabsData]);
+  }, [setTabs, setTabVal, role, tabsData, pathname]);
 
   useEffect(() => {
     if (typeof window !== 'undefined' && tabVal) {
