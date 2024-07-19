@@ -4,6 +4,7 @@ import { NextResponse } from 'next/server';
 import { ObjectId } from 'mongodb';
 import { IconType } from 'react-icons';
 import getCurrentUser from '@/actions/get-user';
+import { fetchDepoById, fetchDepoByUserId } from '@/lib/queries/depo-wd';
 
 interface GameProps {
   value: string;
@@ -31,21 +32,38 @@ export async function POST(req: Request) {
     if (!id) throw new Error('error');
     const randomId = id.toString();
 
-    const depo = await db.depo.create({
-      data: {
-        email,
-        bank,
-        accountNumber,
-        name,
-        depoAmount,
-        gameUserId,
-        game,
-        userId: currentUser?.id ? currentUser.id : randomId,
-        bankPT,
-        status,
-      },
+    const userId = currentUser?.id;
+    if (!userId) return null;
+    const checkUnProcessDepoWd = await fetchDepoByUserId(userId);
+
+    if (checkUnProcessDepoWd?.status === 'new') {
+      return new Response(
+        JSON.stringify({
+          message:
+            'Anda masih ada Depo yg belum di Process, harap hubungi customer service kami',
+        }),
+        { status: 403 }
+      );
+    }
+
+    // const depo = await db.depo.create({
+    //   data: {
+    //     email,
+    //     bank,
+    //     accountNumber,
+    //     name,
+    //     depoAmount,
+    //     gameUserId,
+    //     game,
+    //     userId: currentUser?.id ? currentUser.id : randomId,
+    //     bankPT,
+    //     status,
+    //   },
+    // });
+    // return NextResponse.json(depo);
+    return new Response(JSON.stringify({ message: 'Success' }), {
+      status: 200,
     });
-    return NextResponse.json(depo);
   } catch (err) {
     console.log(err);
     return NextResponse.json(

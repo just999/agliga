@@ -73,6 +73,7 @@ export async function PUT(
         gameUserId,
         bankPT,
         status,
+        adminId: currentUser.id,
       },
     });
 

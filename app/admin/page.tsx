@@ -4,6 +4,7 @@ import DepoWdTabsActive from '@/components/table/depo-wd/depo-wd-tabs-active';
 import { DataTable } from '@/components/ui/data-table';
 // import DepoWdTable from '@/components/ui/depo-wd-table';
 import { Table } from '@/components/ui/table';
+import { currentRole } from '@/lib/auth';
 import { fetchDepo, fetchWd } from '@/lib/queries/depo-wd';
 import { fetchUsers } from '@/lib/queries/users';
 import { cn } from '@/lib/utils';
@@ -14,6 +15,7 @@ const AdminPage = async () => {
   const depos = await fetchDepo();
   if (!depos || depos.length === 0) return [];
 
+  const role = await currentRole();
   const wds = await fetchWd();
   if (!wds || wds.length === 0) return [];
 

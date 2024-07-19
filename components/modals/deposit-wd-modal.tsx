@@ -263,7 +263,22 @@ const DepositWdModal = () => {
             onClose();
           })
           .catch((error) => {
-            toast.error('Something Went Wrong', error);
+            if (error.response) {
+              // The request was made and the server responded with a status code that falls out of the range of 2xx
+              console.log('Error status:', error.response.status);
+              console.log('Error data:', error.response.data);
+              toast.error(error.response.data.message);
+              // Display error message to the user
+              const errorMessage =
+                error.response.data.error || 'An error occurred.';
+              console.error(errorMessage);
+            } else if (error.request) {
+              // The request was made but no response was received
+              console.error('No response received:', error.request);
+            } else {
+              // Something happened in setting up the request and triggered an Error
+              console.error('Request error:', error.message);
+            }
           })
           .finally(() => {
             setIsLoading(false);

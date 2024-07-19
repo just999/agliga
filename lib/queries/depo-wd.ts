@@ -32,6 +32,20 @@ export const fetchDepoById = cache(async (id: string) => {
     return null;
   }
 });
+export const fetchDepoByUserId = cache(async (id: string) => {
+  try {
+    if (!id) throw new Error('No depo id');
+    const depo = await db.depo.findFirst({
+      where: {
+        userId: id,
+      },
+    });
+    return depo;
+  } catch (err) {
+    console.error('Error fetching euro', err);
+    return null;
+  }
+});
 
 export const fetchDepoByEmail = cache(async (email: string) => {
   try {

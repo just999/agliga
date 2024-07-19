@@ -65,7 +65,9 @@ export const depoColumns: ColumnDef<DepoWdProps & DepoProps>[] = [
   },
   {
     accessorKey: 'createdAt',
-    header: 'Tanggal',
+    header: ({ column }) => (
+      <span className='p-0 m-0 h-4 text-xs mr-2'>Tanggal</span>
+    ),
     filterFn: 'includesStringSensitive',
     cell: ({ row }) => (
       <div className='flex flex-row justify-start px-4 gap-2'>
@@ -77,7 +79,9 @@ export const depoColumns: ColumnDef<DepoWdProps & DepoProps>[] = [
   },
   {
     accessorKey: 'email',
-    header: 'Email',
+    header: ({ column }) => (
+      <span className='p-0 m-0 h-4 text-xs mr-2'>Email</span>
+    ),
     filterFn: 'includesString',
     cell: ({ row }) => (
       <div className='flex flex-row px-4 gap-2'>
@@ -89,7 +93,9 @@ export const depoColumns: ColumnDef<DepoWdProps & DepoProps>[] = [
   },
   {
     accessorKey: 'name',
-    header: 'Name',
+    header: ({ column }) => (
+      <span className='p-0 m-0 h-4 text-xs mr-2'>Name</span>
+    ),
     filterFn: 'fuzzy',
     cell: ({ row }) => (
       <div className='flex flex-row px-4 gap-2'>
@@ -102,7 +108,9 @@ export const depoColumns: ColumnDef<DepoWdProps & DepoProps>[] = [
   },
   {
     accessorKey: 'bank',
-    header: 'Bank',
+    header: ({ column }) => (
+      <span className='p-0 m-0 h-4 text-xs mr-2'>Bank</span>
+    ),
     // filterFn: 'includesStringSensitive', // case sensitive
     filterFn: 'includesString', // case insensitive
     cell: ({ row }) => (
@@ -131,7 +139,16 @@ export const depoColumns: ColumnDef<DepoWdProps & DepoProps>[] = [
   },
   {
     accessorKey: 'depoAmount',
-    header: 'depo Rp.',
+    header: ({ column }) => (
+      <Button
+        variant='ghost'
+        className='p-0 m-0 h-4 text-xs mr-2'
+        // onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+      >
+        Depo Rp.
+        {/* <ArrowUpDown className='ml-0 h-3 w-3' /> */}
+      </Button>
+    ),
     sortingFn: fuzzySort,
     cell: ({ row }) => (
       <div className='flex flex-row justify-between px-4 text-xs gap-2'>
@@ -143,11 +160,13 @@ export const depoColumns: ColumnDef<DepoWdProps & DepoProps>[] = [
         }
       </div>
     ),
-    filterFn: 'includesString',
+    filterFn: 'fuzzy',
   },
   {
     accessorKey: 'game',
-    header: 'Game',
+    header: ({ column }) => (
+      <span className='p-0 m-0 h-4 text-xs mr-2'>Game</span>
+    ),
     filterFn: 'includesString',
     cell: ({ row }) => (
       <div className='flex flex-row px-2 gap-2'>
@@ -166,7 +185,9 @@ export const depoColumns: ColumnDef<DepoWdProps & DepoProps>[] = [
   },
   {
     accessorKey: 'gameUserId',
-    header: 'Game userId',
+    header: ({ column }) => (
+      <span className='p-0 m-0 h-4 text-xs mr-2'>Game userId</span>
+    ),
     filterFn: 'includesString',
     cell: ({ row }) => (
       <div className='flex flex-row px-4 gap-2'>
@@ -178,7 +199,9 @@ export const depoColumns: ColumnDef<DepoWdProps & DepoProps>[] = [
   },
   {
     accessorKey: 'bankPT',
-    header: 'Ke Bank PT',
+    header: ({ column }) => (
+      <span className='p-0 m-0 h-4 text-xs mr-2'>Ke BankPt</span>
+    ),
     filterFn: 'includesString',
     cell: ({ row }) => (
       <div className='flex flex-row px-4 gap-2'>
@@ -199,14 +222,7 @@ export const depoColumns: ColumnDef<DepoWdProps & DepoProps>[] = [
     accessorKey: 'status',
     // header: 'status',
     header: ({ column }) => (
-      <Button
-        variant='ghost'
-        className='p-0'
-        onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-      >
-        Status
-        <ArrowUpDown className='ml-0 h-3 w-3' />
-      </Button>
+      <span className='p-0 m-0 h-4 text-xs mr-2'>Status</span>
     ),
     cell: ({ row }) => (
       <div className='flex flex-row justify-start px-2 gap-2'>

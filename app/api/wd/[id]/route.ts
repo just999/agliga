@@ -38,6 +38,7 @@ export async function PUT(
         game,
         gameUserId,
         status,
+        adminId: currentUser.id,
       },
     });
 

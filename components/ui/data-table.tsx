@@ -45,6 +45,8 @@ import {
   BsArrowDownSquare,
   BsChevronDoubleLeft,
   BsChevronDoubleRight,
+  BsChevronLeft,
+  BsChevronRight,
 } from 'react-icons/bs';
 import EuroCard from '../table/euro/euro-card';
 
@@ -225,9 +227,9 @@ DataTableProps<TData, TValue>) {
 
   //apply the fuzzy sort if the fullName column is being filtered
   useEffect(() => {
-    if (table.getState().columnFilters[0]?.id === 'fullName') {
-      if (table.getState().sorting[0]?.id !== 'fullName') {
-        table.setSorting([{ id: 'fullName', desc: false }]);
+    if (table.getState().columnFilters[0]?.id === 'depoAmount') {
+      if (table.getState().sorting[0]?.id !== 'depoAmount') {
+        table.setSorting([{ id: 'depoAmount', desc: false }]);
       }
     }
   }, [table]);
@@ -312,15 +314,6 @@ DataTableProps<TData, TValue>) {
           className='max-w-sm text-stone-700 mx-2 bg-zinc-50'
         />
 
-        {(tabVal === 'depo' || tabVal === 'wd') && (
-          <DebouncedInput
-            value={globalFilter ?? ''}
-            onChange={handleFilterChange}
-            // onChange={(value) => setGlobalFilter(String(value))}
-            className='p-2 font-2xl text-black shadow border border-block'
-            placeholder='Search all columns...'
-          />
-        )}
         {period && (
           <div className='w-full flex flex-row items-center justify-center '>
             <Heading
@@ -457,6 +450,24 @@ DataTableProps<TData, TValue>) {
                       </>
                     )}
                   </TableRow>
+                  <TableRow className='h-8'>
+                    <TableHead className='h-8'></TableHead>
+                    <TableHead className='h-8'></TableHead>
+                    <TableHead className='h-8 w-full px-2'>
+                      <div>
+                        {(tabVal === 'depo' || tabVal === 'wd') && (
+                          <DebouncedInput
+                            value={globalFilter ?? ''}
+                            onChange={handleFilterChange}
+                            // onChange={(value) => setGlobalFilter(String(value))}
+                            className='px-2 h-8 font-2xl text-black border shadow-inner border-block bg-cyan-200'
+                            placeholder='Search all columns...'
+                          />
+                        )}
+                      </div>
+                    </TableHead>
+                    <TableHead className='h-8'></TableHead>
+                  </TableRow>
 
                   {table.getHeaderGroups().map((headerGroup) => (
                     <TableRow key={headerGroup.id}>
@@ -473,7 +484,16 @@ DataTableProps<TData, TValue>) {
                           >
                             {header.isPlaceholder ? null : (
                               <>
-                                <div className='flex flex-row items-center text-nowrap h-6 px-2 align-middle'>
+                                <div
+                                  {...{
+                                    className: header.column.getCanSort()
+                                      ? 'cursor-pointer select-none'
+                                      : '',
+                                    onClick:
+                                      header.column.getToggleSortingHandler(),
+                                  }}
+                                  className='flex flex-row gap-2 items-center text-nowrap h-6 px-2 align-middle cursor-pointer'
+                                >
                                   {flexRender(
                                     header.column.columnDef.header,
                                     header.getContext()
@@ -624,13 +644,13 @@ DataTableProps<TData, TValue>) {
                 depoWdClassName
               )}
             >
-              <Button
+              {/* <Button
                 variant='ghost'
                 size='sm'
                 onClick={() => table.previousPage()}
                 disabled={!table.getCanPreviousPage()}
                 className={cn(
-                  'w-1/6 bg-amber-400 mx-6 text-stone-900 hover:bg-amber-200 hover:text-black hover:font-semibold hover:drop-shadow-xl shadow-lg text-xs',
+                  'w-1/6 bg-stone-200 mx-6 text-stone-900 hover:bg-amber-200 hover:text-black hover:font-semibold hover:drop-shadow-xl shadow-lg text-xs',
                   !table.getCanPreviousPage() && 'text-zinc-600'
                 )}
               >
@@ -643,14 +663,114 @@ DataTableProps<TData, TValue>) {
                 onClick={() => table.nextPage()}
                 disabled={!table.getCanNextPage()}
                 className={cn(
-                  'w-1/6 bg-amber-400 mx-6 text-stone-900 hover:bg-amber-200 hover:text-black hover:font-semibold hover:drop-shadow-xl shadow-lg text-xs',
+                  'w-1/6 bg-stone-200 mx-6 text-stone-900 hover:bg-amber-200 hover:text-black hover:font-semibold hover:drop-shadow-xl shadow-lg text-xs',
                   !table.getCanNextPage() && 'text-zinc-600'
                 )}
               >
                 {' '}
                 Next
                 <BsChevronDoubleRight className='ml-4  grayscale hover:grayscale-0 transition ease-in-out delay-50  hover:-translate-y-1 hover:scale-150 mx-1 hover:bg-amber-200 hover:drop-shadow-lg duration-300' />
-              </Button>
+              </Button> */}
+
+              <div className='h-2' />
+              <div className='flex items-center gap-2'>
+                <Button
+                  variant='ghost'
+                  size='sm'
+                  className='border rounded p-1'
+                  onClick={() => table.setPageIndex(0)}
+                  disabled={!table.getCanPreviousPage()}
+                >
+                  <BsChevronDoubleLeft className='mr-4  grayscale hover:grayscale-0 transition ease-in-out delay-50  hover:-translate-y-1 hover:scale-150 mx-1 hover:bg-amber-200 hover:drop-shadow-lg duration-300' />
+                  1st page
+                </Button>
+                <Button
+                  variant='ghost'
+                  size='sm'
+                  className={cn(
+                    'w-1/6 bg-stone-200  flex flex-row justify-center px-2 items-center text-stone-900 hover:bg-amber-200 hover:text-black hover:font-semibold hover:drop-shadow-xl shadow-lg text-xs',
+                    !table.getCanPreviousPage() && 'text-zinc-600'
+                  )}
+                  onClick={() => table.previousPage()}
+                  disabled={!table.getCanPreviousPage()}
+                >
+                  <BsChevronLeft className='mr-4  grayscale hover:grayscale-0 transition ease-in-out delay-50  hover:-translate-y-1 hover:scale-150 mx-1 hover:bg-amber-200 hover:drop-shadow-lg duration-300' />
+                  Prev
+                </Button>
+                <Button
+                  variant='ghost'
+                  size='sm'
+                  onClick={() => table.nextPage()}
+                  disabled={!table.getCanNextPage()}
+                  className={cn(
+                    'w-1/6 bg-stone-200 flex flex-row justify-center px-2 items-center text-stone-900 hover:bg-amber-200 hover:text-black hover:font-semibold hover:drop-shadow-xl shadow-lg text-xs',
+                    !table.getCanNextPage() && 'text-zinc-600'
+                  )}
+                >
+                  Next
+                  <BsChevronRight className='ml-4  grayscale hover:grayscale-0 transition ease-in-out delay-50  hover:-translate-y-1 hover:scale-150 mx-1 hover:bg-amber-200 hover:drop-shadow-lg duration-300' />
+                </Button>
+                <Button
+                  variant='ghost'
+                  size='sm'
+                  className='border rounded p-1'
+                  onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+                  disabled={!table.getCanNextPage()}
+                >
+                  Last page
+                  <BsChevronDoubleRight className='ml-4  grayscale hover:grayscale-0 transition ease-in-out delay-50  hover:-translate-y-1 hover:scale-150 mx-1 hover:bg-amber-200 hover:drop-shadow-lg duration-300' />
+                </Button>
+                <span className='flex items-center gap-1'>
+                  <div>Page</div>
+                  <strong className='text-nowrap '>
+                    {table.getState().pagination.pageIndex + 1} of{' '}
+                    {table.getPageCount()}
+                  </strong>
+                </span>
+                <span className='flex items-center gap-1 text-nowrap'>
+                  | Go to page:
+                  <input
+                    type='number'
+                    defaultValue={table.getState().pagination.pageIndex + 1}
+                    onChange={(e) => {
+                      const page = e.target.value
+                        ? Number(e.target.value) - 1
+                        : 0;
+                      table.setPageIndex(page);
+                    }}
+                    className='border p-1 rounded w-16'
+                  />
+                </span>
+                <select
+                  value={table.getState().pagination.pageSize}
+                  onChange={(e) => {
+                    table.setPageSize(Number(e.target.value));
+                  }}
+                >
+                  {[10, 20, 30, 40, 50].map((pageSize) => (
+                    <option key={pageSize} value={pageSize}>
+                      Show {pageSize}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>{table.getPrePaginationRowModel().rows.length} Rows</div>
+              {/* <div>
+                <button onClick={() => rerender()}>Force Rerender</button>
+              </div> */}
+              {/* <div>
+                <button onClick={() => refreshData()}>Refresh Data</button>
+              </div> */}
+              {/* <pre>
+                {JSON.stringify(
+                  {
+                    columnFilters: table.getState().columnFilters,
+                    globalFilter: table.getState().globalFilter,
+                  },
+                  null,
+                  2
+                )}
+              </pre> */}
             </div>
           </div>
         </div>

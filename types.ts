@@ -88,7 +88,7 @@ export const tabsAdmin = [
     id: 3,
     name: 'Member',
     value: 'member',
-    label: 'member Table',
+    label: 'Member Table',
     active: false,
   },
   // { id: 4, name: 'Admin', value: 'admin', label: 'admin Table', active: false },

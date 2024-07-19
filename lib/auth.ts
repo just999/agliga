@@ -6,9 +6,9 @@ export const currentUser = async () => {
   return session?.user;
 };
 
-export const session = async () => {
+export const currentRole = async () => {
   const session = await auth();
   if (!session) throw new Error('No session');
 
-  return session;
+  return session?.user?.curUser.role;
 };
