@@ -675,28 +675,28 @@ DataTableProps<TData, TValue>) {
               </Button> */}
 
               <div className='h-2' />
-              <div className='flex items-center gap-2'>
+              <div className='flex items-center gap-2 h-6'>
                 <Button
                   variant='ghost'
                   size='sm'
-                  className='border rounded p-1'
+                  className='border rounded p-1 h-6'
                   onClick={() => table.setPageIndex(0)}
                   disabled={!table.getCanPreviousPage()}
                 >
-                  <BsChevronDoubleLeft className='mr-4  grayscale hover:grayscale-0 transition ease-in-out delay-50  hover:-translate-y-1 hover:scale-150 mx-1 hover:bg-amber-50 hover:drop-shadow-lg duration-300' />
+                  <BsChevronDoubleLeft className='mr-4  grayscale hover:grayscale-0 transition ease-in-out delay-50  hover:-translate-y-1 hover:scale-150 mx-1 hover:bg-amber-50 hover:drop-shadow-lg duration-300 h-4' />
                   1st
                 </Button>
                 <Button
                   variant='ghost'
                   size='sm'
                   className={cn(
-                    'w-1/6 bg-stone-50  flex flex-row justify-center px-2 items-center text-stone-900 hover:bg-amber-50 hover:text-black hover:font-semibold hover:drop-shadow-xl shadow-lg text-xs',
+                    'w-1/6 bg-stone-50  flex flex-row justify-center px-2 items-center text-stone-900 hover:bg-amber-50 hover:text-black hover:font-semibold hover:drop-shadow-xl shadow-lg text-xs h-6',
                     !table.getCanPreviousPage() && 'text-zinc-600'
                   )}
                   onClick={() => table.previousPage()}
                   disabled={!table.getCanPreviousPage()}
                 >
-                  <BsChevronLeft className='mr-4  grayscale hover:grayscale-0 transition ease-in-out delay-50  hover:-translate-y-1 hover:scale-150 mx-1 hover:bg-amber-50 hover:drop-shadow-lg duration-300' />
+                  <BsChevronLeft className='mr-4  grayscale hover:grayscale-0 transition ease-in-out delay-50  hover:-translate-y-1 hover:scale-150 mx-1 hover:bg-amber-50 hover:drop-shadow-lg duration-300 h-4' />
                   Prev
                 </Button>
                 <Button
@@ -705,31 +705,31 @@ DataTableProps<TData, TValue>) {
                   onClick={() => table.nextPage()}
                   disabled={!table.getCanNextPage()}
                   className={cn(
-                    ' bg-stone-50 flex flex-row justify-center px-2 items-center text-stone-900 hover:bg-amber-50 hover:text-black hover:font-semibold hover:drop-shadow-xl shadow-lg text-xs',
+                    ' bg-stone-50 flex flex-row justify-center px-2 items-center text-stone-900 hover:bg-amber-50 hover:text-black hover:font-semibold hover:drop-shadow-xl shadow-lg text-xs h-6',
                     !table.getCanNextPage() && 'text-zinc-600'
                   )}
                 >
                   Next
-                  <BsChevronRight className='ml-4  grayscale hover:grayscale-0 transition ease-in-out delay-50  hover:-translate-y-1 hover:scale-150 mx-1 hover:bg-amber-200 hover:drop-shadow-lg duration-300' />
+                  <BsChevronRight className='ml-4  grayscale hover:grayscale-0 transition ease-in-out delay-50  hover:-translate-y-1 hover:scale-150 mx-1 hover:bg-amber-200 hover:drop-shadow-lg duration-300 h-4' />
                 </Button>
                 <Button
                   variant='ghost'
                   size='sm'
-                  className='border-none text-xs shadow-md rounded p-1'
+                  className='border-none text-xs shadow-md rounded p-1 h-6'
                   onClick={() => table.setPageIndex(table.getPageCount() - 1)}
                   disabled={!table.getCanNextPage()}
                 >
                   Last
-                  <BsChevronDoubleRight className='ml-4  grayscale hover:grayscale-0 transition ease-in-out delay-50  hover:-translate-y-1 hover:scale-150 mx-1 hover:bg-amber-200 hover:drop-shadow-lg duration-300' />
+                  <BsChevronDoubleRight className='ml-4  grayscale hover:grayscale-0 transition ease-in-out delay-50  hover:-translate-y-1 hover:scale-150 mx-1 hover:bg-amber-200 hover:drop-shadow-lg duration-300 h-4' />
                 </Button>
-                <span className='flex items-center text-xs gap-1'>
+                <span className='flex items-center text-xs gap-1 h-6'>
                   <div>Page</div>
                   <strong className='text-nowrap '>
                     {table.getState().pagination.pageIndex + 1} of{' '}
                     {table.getPageCount()}
                   </strong>
                 </span>
-                <span className='flex items-center text-xs gap-1 text-nowrap'>
+                <span className='flex items-center text-xs gap-1 text-nowrap h-6'>
                   | Go to page:
                   <input
                     type='number'
@@ -740,7 +740,7 @@ DataTableProps<TData, TValue>) {
                         : 0;
                       table.setPageIndex(page);
                     }}
-                    className='border p-1  rounded w-8'
+                    className='border p-1  rounded w-8 h-6'
                   />
                 </span>
                 <select
@@ -748,7 +748,7 @@ DataTableProps<TData, TValue>) {
                   onChange={(e) => {
                     table.setPageSize(Number(e.target.value));
                   }}
-                  className='text-xs'
+                  className='text-xs h-6'
                 >
                   {[10, 20, 30, 40, 50].map((pageSize) => (
                     <option key={pageSize} value={pageSize}>

@@ -11,7 +11,6 @@ const UsersPage = async () => {
   const id = session?.user.id;
   if (!id) return;
   const role = session.user.curUser.role;
-  console.log('🚀 ~ UsersPage ~ role:', role);
   const userDepos = await fetchDepoByUserId(id);
 
   if (!userDepos || userDepos.length === 0) return [];
@@ -20,12 +19,9 @@ const UsersPage = async () => {
   if (!userWds || userWds.length === 0) return [];
 
   const users = await fetchUsers();
-  console.log('🚀 ~ UsersPage ~ users:', users);
   if (!users || users.length === 0) return [];
 
   Array.prototype.push.apply(userDepos, userWds);
-  console.log('🚀 ~ UsersPage ~ userDepos:', userDepos);
-
   return (
     <Container className='w-full flex flex-row justify-center mx-auto text-2xl text-blue-600 bg-sky-100'>
       {/* <h1 className='w-full'>User depo Page {userDepos.length} </h1>

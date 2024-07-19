@@ -40,7 +40,7 @@ const AdminPage = async () => {
         // tableCellClassName='bg-orange-100/50'
         euCardClassName='pt-2 px-2 gap-0 justify-start items-center bg-emerald-50 odd:bg-zinc-100 even:bg-stone-50'
       /> */}
-      <DepoWdTabsActive depo={depos} users={users} />
+      <DepoWdTabsActive depo={depos} users={users} role={role} />
     </Container>
   );
 };

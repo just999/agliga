@@ -66,7 +66,6 @@ const DepoWdClient = ({
   users,
   role,
 }: DepoWdClientProps) => {
-  // console.log('🚀 ~ users:', users);
   const [dep, setDep] = useState<DepoWdProps[]>([]);
   const [members, setMembers] = useState<User[]>([]);
   // const [roundDat, setRoundDat] = useState<any[]>([]);
@@ -80,7 +79,7 @@ const DepoWdClient = ({
   useEffect(() => {
     if (!users || role === 'user') setMembers([]);
     if (users && role === 'admin') setMembers(users);
-  }, [users]);
+  }, [users, role]);
   const { modalType } = useModal();
   // const table = useLeague(data);
   // const table = useLeague(depo);
@@ -130,7 +129,6 @@ const DepoWdClient = ({
   const filteredWd = dep.filter((we: WdProps) => we.wdAmount);
 
   const filteredUsers = members.filter((member) => member.role);
-  console.log('🚀 ~ filteredUsers:', filteredUsers);
   return (
     <div className={cn('flex flex-col border-0 md:w-full')}>
       <DataTable
