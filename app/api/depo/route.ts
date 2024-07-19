@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server';
 import { ObjectId } from 'mongodb';
 import { IconType } from 'react-icons';
 import getCurrentUser from '@/actions/get-user';
-import { fetchDepoById, fetchDepoByUserId } from '@/lib/queries/depo-wd';
+import { fetchDepoByUserId } from '@/lib/queries/depo-wd';
 
 interface GameProps {
   value: string;
@@ -33,7 +33,7 @@ export async function POST(req: Request) {
     const randomId = id.toString();
 
     const userId = currentUser?.id;
-    if (!userId) return null;
+    if (!userId) throw new Error('User id not found');
     const checkUnProcessDepoWd = await fetchDepoByUserId(userId);
     const unProcessDepoWd = checkUnProcessDepoWd?.find(
       (depo) => depo.status === 'new'
@@ -48,30 +48,34 @@ export async function POST(req: Request) {
       );
     }
 
-    // const depo = await db.depo.create({
-    //   data: {
-    //     email,
-    //     bank,
-    //     accountNumber,
-    //     name,
-    //     depoAmount,
-    //     gameUserId,
-    //     game,
-    //     userId: currentUser?.id ? currentUser.id : randomId,
-    //     bankPT,
-    //     status,
-    //   },
-    // });
+    const depo = await db.depo.create({
+      data: {
+        email,
+        bank,
+        accountNumber,
+        name,
+        depoAmount,
+        gameUserId,
+        game,
+        userId: currentUser?.id ? currentUser.id : randomId,
+        bankPT,
+        status,
+      },
+    });
     // return NextResponse.json(depo);
-    // return new Response(JSON.stringify({ message: 'Success' }), {
-    //   status: 200,
-    // });
-    return NextResponse.json({ message: 'Success' });
+    return new Response(JSON.stringify(depo), {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      status: 200,
+    });
   } catch (err) {
-    console.log(err);
-    return NextResponse.json(
-      { message: 'Internal Server Error' },
-      { status: 500 }
-    );
+    return new Response(JSON.stringify({ message: 'Server Error' }), {
+      status: 500,
+    });
+    // return NextResponse.json(
+    //   { message: 'Internal Server Error' },
+    //   { status: 500 }
+    // );
   }
 }
