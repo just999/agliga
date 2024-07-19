@@ -37,11 +37,13 @@ import {
   WdProps,
 } from '@/types';
 import { useGetDepo, useGetWd } from '@/hooks/use-get-depo-wd';
+import { cn, poppins } from '@/lib/utils';
 
 const DepositWdModal = () => {
   const [depo, setDepo] = useState<DepoProps>();
   const [wd, setWd] = useState<WdProps>();
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const { data: session, status: sessionStatus } = useSession();
   // const [isMounted, setIsMounted] = useState(false);
@@ -254,7 +256,7 @@ const DepositWdModal = () => {
         game: game.value,
       };
       try {
-        axios
+        const res = axios
           .post('/api/depo', data)
           .then((res) => {
             toast.success('Deposit form success di kirim!');
@@ -267,6 +269,7 @@ const DepositWdModal = () => {
               // The request was made and the server responded with a status code that falls out of the range of 2xx
               console.log('Error status:', error.response.status);
               console.log('Error data:', error.response.data);
+              setErrorMessage(error.response.data.message);
               toast.error(error.response.data.message);
               // Display error message to the user
               const errorMessage =
@@ -612,7 +615,14 @@ const DepositWdModal = () => {
   const footerContent = (
     <div className='flex flex-col  m-0 '>
       <hr />
-
+      <span
+        className={cn(
+          'text-rose-600 font-semibold  text-base border border-solid border-red-400 px-2 text-center',
+          poppins.className
+        )}
+      >
+        {errorMessage}!
+      </span>
       <div className='text-neutral-500 text-center mt-2 font-light '>
         <div className='justify-center flex flex-row items-center gap-2 '>
           <div>{modalType === 'depo' ? 'Apakah mau Wd?' : 'Mau deposit?'}</div>

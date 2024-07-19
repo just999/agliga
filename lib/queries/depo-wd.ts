@@ -35,7 +35,7 @@ export const fetchDepoById = cache(async (id: string) => {
 export const fetchDepoByUserId = cache(async (id: string) => {
   try {
     if (!id) throw new Error('No depo id');
-    const depo = await db.depo.findFirst({
+    const depo = await db.depo.findMany({
       where: {
         userId: id,
       },
@@ -62,6 +62,21 @@ export const fetchDepoByEmail = cache(async (email: string) => {
 });
 
 export const fetchWd = cache(async () => {
+  try {
+    const wd = await db.wd.findMany({
+      orderBy: [
+        {
+          createdAt: 'asc',
+        },
+      ],
+    });
+    return wd;
+  } catch (err) {
+    console.error('Error fetching euro', err);
+    return null;
+  }
+});
+export const fetchWdByUserId = cache(async () => {
   try {
     const wd = await db.wd.findMany({
       orderBy: [

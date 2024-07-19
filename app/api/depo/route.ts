@@ -35,12 +35,14 @@ export async function POST(req: Request) {
     const userId = currentUser?.id;
     if (!userId) return null;
     const checkUnProcessDepoWd = await fetchDepoByUserId(userId);
-
-    if (checkUnProcessDepoWd?.status === 'new') {
+    const unProcessDepoWd = checkUnProcessDepoWd?.find(
+      (depo) => depo.status === 'new'
+    );
+    if (unProcessDepoWd?.status === 'new') {
       return new Response(
         JSON.stringify({
           message:
-            'Anda masih ada Depo yg belum di Process, harap hubungi customer service kami',
+            'Maaf, sepertinya Anda masih ada Depo yg belum di Process, harap hubungi customer service kami',
         }),
         { status: 403 }
       );
