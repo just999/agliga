@@ -13,7 +13,7 @@ import MobileSidebar from './mobile-sidebar';
 import { AiOutlineLogout, AiOutlineLogin } from 'react-icons/ai';
 
 import { BiHome } from 'react-icons/bi';
-import { FaUserTie } from 'react-icons/fa';
+import { FaUser, FaUserTie } from 'react-icons/fa';
 import {
   FcCurrencyExchange,
   FcMoneyTransfer,
@@ -178,6 +178,17 @@ const Navbar = ({ currentUser, className }: NavbarProps) => {
       active: modalType === null && pathname === '/admin',
       className:
         userRole === 'admin'
+          ? 'hidden whitespace-nowrap sm:block text-xs font-semibold px-6 py-2 border-x-[1px] flex-1 text-center  md:hidden lg:block cursor-pointer hover:shadow-md hover:bg-emerald-50'
+          : 'hidden',
+    },
+    {
+      icon: FaUser,
+      label: 'User',
+      onClick: () => {},
+      href: `/users`,
+      active: modalType === null && pathname === '/users',
+      className:
+        userRole === 'user'
           ? 'hidden whitespace-nowrap sm:block text-xs font-semibold px-6 py-2 border-x-[1px] flex-1 text-center  md:hidden lg:block cursor-pointer hover:shadow-md hover:bg-emerald-50'
           : 'hidden',
     },

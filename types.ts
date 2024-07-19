@@ -91,7 +91,10 @@ export const tabsAdmin = [
     label: 'Member Table',
     active: false,
   },
-  // { id: 4, name: 'Admin', value: 'admin', label: 'admin Table', active: false },
+];
+export const tabsMember = [
+  { id: 1, name: 'Deposit', value: 'depo', label: 'Depo Table', active: true },
+  { id: 2, name: 'Withdraw', value: 'wd', label: 'WD Table', active: false },
 ];
 
 export type initialPostStateProps = {

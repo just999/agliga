@@ -294,28 +294,45 @@
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { cn, noto, poppins } from '@/lib/utils';
-import { DepoProps, tabsAdmin, WdProps } from '@/types';
+import { DepoProps, tabsAdmin, tabsMember, WdProps } from '@/types';
 import { IoNotifications } from 'react-icons/io5';
 import ClockSpinner from '@/components/ui/clock-spinner';
 import { User } from '@prisma/client';
 
 import DepoWdClient from './depo-wd-client';
 import { useTabsStore } from '@/store/use-tabs-store';
+import { useSession } from 'next-auth/react';
 
 type DepoWdTabsActiveProps = {
   depo: (DepoProps & WdProps)[];
   users: User[];
+  role?: string;
 };
 
-const DepoWdTabsActive = ({ depo, users }: DepoWdTabsActiveProps) => {
+const DepoWdTabsActive = ({ depo, users, role }: DepoWdTabsActiveProps) => {
   const { tabs, tabVal, setTabs, setTabVal } = useTabsStore();
+
   const [loading, setLoading] = useState(true);
 
+  const { data: session } = useSession();
+  console.log('🚀 ~ DepoWdTabsActive ~ session:', session?.user.curUser.role);
+
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined' && role === 'admin') {
       const cachedTabVal = localStorage.getItem('tabVal') || tabsAdmin[0].value;
       setTabs(
         tabsAdmin.map((tab) => ({ ...tab, active: tab.value === cachedTabVal }))
+      );
+      setTabVal(cachedTabVal);
+      setLoading(false);
+    } else if (typeof window !== 'undefined' && role === 'user') {
+      const cachedTabVal =
+        localStorage.getItem('tabVal') || tabsMember[0].value;
+      setTabs(
+        tabsMember.map((tab) => ({
+          ...tab,
+          active: tab.value === cachedTabVal,
+        }))
       );
       setTabVal(cachedTabVal);
       setLoading(false);
@@ -384,7 +401,7 @@ const DepoWdTabsActive = ({ depo, users }: DepoWdTabsActiveProps) => {
             >
               <span className='text-xs '>{newDepoCount}</span>
             </span>
-          ) : tab.value === 'wd' ? (
+          ) : (
             <span
               className={cn(
                 'absolute top-0 right-0  text-amber-200 font-base text-[10px] rounded-full bg-red-600 px-1.5 shadow-lg',
@@ -393,8 +410,6 @@ const DepoWdTabsActive = ({ depo, users }: DepoWdTabsActiveProps) => {
             >
               <span className='text-xs'>{newWdCount}</span>
             </span>
-          ) : (
-            ''
           )}
         </div>
       </Button>
@@ -423,6 +438,7 @@ const DepoWdTabsActive = ({ depo, users }: DepoWdTabsActiveProps) => {
             <DepoWdClient
               tab={t.value}
               depo={t.value === 'depo' ? filteredDepo : filteredWd}
+              role={role}
               users={users}
               footerClassName='flex flex-row gap-2 justify-between items-center bg-sky-200/60'
               euroClassName='flex flex-wrap gap-2 justify-center group-card py-2'
