@@ -8,6 +8,7 @@ import { currentRole } from '@/lib/auth';
 import { fetchDepo, fetchWd } from '@/lib/queries/depo-wd';
 import { fetchUsers } from '@/lib/queries/users';
 import { cn } from '@/lib/utils';
+import { redirect } from 'next/navigation';
 
 type AdminPageProps = {};
 
@@ -16,6 +17,9 @@ const AdminPage = async () => {
   if (!depos || depos.length === 0) return [];
 
   const role = await currentRole();
+  if (role !== 'admin') {
+    redirect('/');
+  }
   const wds = await fetchWd();
   if (!wds || wds.length === 0) return [];
 

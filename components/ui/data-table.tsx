@@ -450,24 +450,26 @@ DataTableProps<TData, TValue>) {
                       </>
                     )}
                   </TableRow>
-                  <TableRow className='h-8'>
-                    <TableHead className='h-8'></TableHead>
-                    <TableHead className='h-8'></TableHead>
-                    <TableHead className='h-8 w-full px-2'>
-                      <div>
-                        {(tabVal === 'depo' || tabVal === 'wd') && (
-                          <DebouncedInput
-                            value={globalFilter ?? ''}
-                            onChange={handleFilterChange}
-                            // onChange={(value) => setGlobalFilter(String(value))}
-                            className='px-2 h-8 font-2xl text-black border shadow-inner border-block bg-cyan-200'
-                            placeholder='Search all columns...'
-                          />
-                        )}
-                      </div>
-                    </TableHead>
-                    <TableHead className='h-8'></TableHead>
-                  </TableRow>
+                  {!round && !period && !group && (
+                    <TableRow className='h-8'>
+                      <TableHead className='h-8'></TableHead>
+                      <TableHead className='h-8'></TableHead>
+                      <TableHead className='h-8 w-full px-2'>
+                        <div>
+                          {(tabVal === 'depo' || tabVal === 'wd') && (
+                            <DebouncedInput
+                              value={globalFilter ?? ''}
+                              onChange={handleFilterChange}
+                              // onChange={(value) => setGlobalFilter(String(value))}
+                              className='px-2 h-8 font-2xl text-black border shadow-inner border-block bg-cyan-200'
+                              placeholder='Search all columns...'
+                            />
+                          )}
+                        </div>
+                      </TableHead>
+                      <TableHead className='h-8'></TableHead>
+                    </TableRow>
+                  )}
 
                   {table.getHeaderGroups().map((headerGroup) => (
                     <TableRow key={headerGroup.id}>
@@ -639,7 +641,7 @@ DataTableProps<TData, TValue>) {
 
             <div
               className={cn(
-                'space-x-2 py-4 pr-4 w-full',
+                'space-x-2 py-4 pr-4 w-full text-nowrap',
                 className,
                 depoWdClassName
               )}
@@ -681,20 +683,20 @@ DataTableProps<TData, TValue>) {
                   onClick={() => table.setPageIndex(0)}
                   disabled={!table.getCanPreviousPage()}
                 >
-                  <BsChevronDoubleLeft className='mr-4  grayscale hover:grayscale-0 transition ease-in-out delay-50  hover:-translate-y-1 hover:scale-150 mx-1 hover:bg-amber-200 hover:drop-shadow-lg duration-300' />
-                  1st page
+                  <BsChevronDoubleLeft className='mr-4  grayscale hover:grayscale-0 transition ease-in-out delay-50  hover:-translate-y-1 hover:scale-150 mx-1 hover:bg-amber-50 hover:drop-shadow-lg duration-300' />
+                  1st
                 </Button>
                 <Button
                   variant='ghost'
                   size='sm'
                   className={cn(
-                    'w-1/6 bg-stone-200  flex flex-row justify-center px-2 items-center text-stone-900 hover:bg-amber-200 hover:text-black hover:font-semibold hover:drop-shadow-xl shadow-lg text-xs',
+                    'w-1/6 bg-stone-50  flex flex-row justify-center px-2 items-center text-stone-900 hover:bg-amber-50 hover:text-black hover:font-semibold hover:drop-shadow-xl shadow-lg text-xs',
                     !table.getCanPreviousPage() && 'text-zinc-600'
                   )}
                   onClick={() => table.previousPage()}
                   disabled={!table.getCanPreviousPage()}
                 >
-                  <BsChevronLeft className='mr-4  grayscale hover:grayscale-0 transition ease-in-out delay-50  hover:-translate-y-1 hover:scale-150 mx-1 hover:bg-amber-200 hover:drop-shadow-lg duration-300' />
+                  <BsChevronLeft className='mr-4  grayscale hover:grayscale-0 transition ease-in-out delay-50  hover:-translate-y-1 hover:scale-150 mx-1 hover:bg-amber-50 hover:drop-shadow-lg duration-300' />
                   Prev
                 </Button>
                 <Button
@@ -703,7 +705,7 @@ DataTableProps<TData, TValue>) {
                   onClick={() => table.nextPage()}
                   disabled={!table.getCanNextPage()}
                   className={cn(
-                    'w-1/6 bg-stone-200 flex flex-row justify-center px-2 items-center text-stone-900 hover:bg-amber-200 hover:text-black hover:font-semibold hover:drop-shadow-xl shadow-lg text-xs',
+                    ' bg-stone-50 flex flex-row justify-center px-2 items-center text-stone-900 hover:bg-amber-50 hover:text-black hover:font-semibold hover:drop-shadow-xl shadow-lg text-xs',
                     !table.getCanNextPage() && 'text-zinc-600'
                   )}
                 >
@@ -713,21 +715,21 @@ DataTableProps<TData, TValue>) {
                 <Button
                   variant='ghost'
                   size='sm'
-                  className='border rounded p-1'
+                  className='border-none text-xs shadow-md rounded p-1'
                   onClick={() => table.setPageIndex(table.getPageCount() - 1)}
                   disabled={!table.getCanNextPage()}
                 >
-                  Last page
+                  Last
                   <BsChevronDoubleRight className='ml-4  grayscale hover:grayscale-0 transition ease-in-out delay-50  hover:-translate-y-1 hover:scale-150 mx-1 hover:bg-amber-200 hover:drop-shadow-lg duration-300' />
                 </Button>
-                <span className='flex items-center gap-1'>
+                <span className='flex items-center text-xs gap-1'>
                   <div>Page</div>
                   <strong className='text-nowrap '>
                     {table.getState().pagination.pageIndex + 1} of{' '}
                     {table.getPageCount()}
                   </strong>
                 </span>
-                <span className='flex items-center gap-1 text-nowrap'>
+                <span className='flex items-center text-xs gap-1 text-nowrap'>
                   | Go to page:
                   <input
                     type='number'
@@ -738,7 +740,7 @@ DataTableProps<TData, TValue>) {
                         : 0;
                       table.setPageIndex(page);
                     }}
-                    className='border p-1 rounded w-16'
+                    className='border p-1  rounded w-8'
                   />
                 </span>
                 <select
@@ -746,6 +748,7 @@ DataTableProps<TData, TValue>) {
                   onChange={(e) => {
                     table.setPageSize(Number(e.target.value));
                   }}
+                  className='text-xs'
                 >
                   {[10, 20, 30, 40, 50].map((pageSize) => (
                     <option key={pageSize} value={pageSize}>
@@ -753,8 +756,10 @@ DataTableProps<TData, TValue>) {
                     </option>
                   ))}
                 </select>
+                <div className='text-xs text-nowrap'>
+                  {table.getPrePaginationRowModel().rows.length} Rows
+                </div>
               </div>
-              <div>{table.getPrePaginationRowModel().rows.length} Rows</div>
               {/* <div>
                 <button onClick={() => rerender()}>Force Rerender</button>
               </div> */}

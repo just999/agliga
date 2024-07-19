@@ -14,11 +14,13 @@ import CellAction from './cell-action';
 export const euroRoundColumns: ColumnDef<EuroWithIconProps>[] = [
   {
     accessorKey: 'round',
+    enableColumnFilter: false,
     header: ({ column }) => <span className='w-full text-xs px-2'>Round</span>,
     cell: ({ row }) => <span className='text-xs'>{row.original.round}</span>,
   },
   {
     accessorKey: 'date',
+    enableColumnFilter: false,
     header: ({ column }) => {
       return (
         <Button
@@ -43,6 +45,7 @@ export const euroRoundColumns: ColumnDef<EuroWithIconProps>[] = [
   },
   {
     accessorKey: 'home',
+    enableColumnFilter: false,
     header: ({ column }) => <span className='w-full text-xs px-2'>Home</span>,
     cell: ({ row }) => (
       <div className='flex gap-2 items-center justify-start pl-4 px-4 cursor-pointer'>
@@ -55,6 +58,7 @@ export const euroRoundColumns: ColumnDef<EuroWithIconProps>[] = [
   },
   {
     accessorKey: 'homeScore',
+    enableColumnFilter: false,
     header: ({ column }) => (
       <span className='text-xs text-nowrap px-2'>Home-goal</span>
     ),
@@ -68,6 +72,7 @@ export const euroRoundColumns: ColumnDef<EuroWithIconProps>[] = [
   },
   {
     accessorKey: 'awayScore',
+    enableColumnFilter: false,
     header: ({ column }) => (
       <span className='text-xs text-nowrap px-2'>Away-goal</span>
     ),
@@ -81,6 +86,7 @@ export const euroRoundColumns: ColumnDef<EuroWithIconProps>[] = [
   },
   {
     accessorKey: 'away',
+    enableColumnFilter: false,
     header: ({ column }) => (
       <span className='text-xs text-nowrap px-2'>away</span>
     ),
@@ -95,6 +101,7 @@ export const euroRoundColumns: ColumnDef<EuroWithIconProps>[] = [
   },
   {
     id: 'actions',
+    enableColumnFilter: false,
     header: 'Actions',
     cell: ({ row }) => <CellAction data={row.original} />,
   },

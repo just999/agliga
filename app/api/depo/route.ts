@@ -38,11 +38,11 @@ export async function POST(req: Request) {
     const unProcessDepoWd = checkUnProcessDepoWd?.find(
       (depo) => depo.status === 'new'
     );
+
     if (unProcessDepoWd?.status === 'new') {
       return new Response(
         JSON.stringify({
-          message:
-            'Maaf, sepertinya Anda masih ada Depo yg belum di Process, harap hubungi customer service kami',
+          message: `Maaf, Anda masih ada form Depo senilai Rp.${unProcessDepoWd.depoAmount} yg belum di Process, harap hubungi customer service kami`,
         }),
         { status: 403 }
       );

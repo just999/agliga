@@ -39,6 +39,11 @@ export const fetchDepoByUserId = cache(async (id: string) => {
       where: {
         userId: id,
       },
+      orderBy: [
+        {
+          createdAt: 'asc',
+        },
+      ],
     });
     return depo;
   } catch (err) {
@@ -76,9 +81,12 @@ export const fetchWd = cache(async () => {
     return null;
   }
 });
-export const fetchWdByUserId = cache(async () => {
+export const fetchWdByUserId = cache(async (id: string) => {
   try {
     const wd = await db.wd.findMany({
+      where: {
+        userId: id,
+      },
       orderBy: [
         {
           createdAt: 'asc',

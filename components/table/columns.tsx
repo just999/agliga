@@ -17,6 +17,7 @@ import { ArrowUpDown } from 'lucide-react';
 export const columns: ColumnDef<FixtureProps>[] = [
   {
     accessorKey: 'week',
+    enableColumnFilter: false,
     header: ({ column }) => {
       return (
         <Button
@@ -33,6 +34,8 @@ export const columns: ColumnDef<FixtureProps>[] = [
   },
   {
     accessorKey: 'date',
+
+    enableColumnFilter: false,
     header: ({ column }) => {
       return (
         <Button
@@ -53,6 +56,7 @@ export const columns: ColumnDef<FixtureProps>[] = [
   },
   {
     accessorKey: 'teamHome',
+    enableColumnFilter: false,
     cell: ({ row }) => (
       <div className='flex flex-row gap-2 items-center justify-start pl-4 cursor-pointer'>
         {/* <pre>{JSON.stringify(row.original.homePenalty[0], null, 2)}</pre> */}
@@ -81,6 +85,7 @@ export const columns: ColumnDef<FixtureProps>[] = [
   },
   {
     accessorKey: 'homeScore',
+    enableColumnFilter: false,
     header: 'H-goal',
     cell: ({ row }) => (
       <div className={cn(' text-gray-700 text-sm font-bold ', orbit.className)}>
@@ -90,6 +95,7 @@ export const columns: ColumnDef<FixtureProps>[] = [
   },
   {
     accessorKey: 'awayScore',
+    enableColumnFilter: false,
     header: 'A-goal',
     cell: ({ row }) => (
       <div className={cn(' text-gray-700 text-sm font-bold ', orbit.className)}>
@@ -99,6 +105,7 @@ export const columns: ColumnDef<FixtureProps>[] = [
   },
   {
     accessorKey: 'teamAway',
+    enableColumnFilter: false,
     cell: ({ row }) => (
       <div className='flex w-full gap-2 items-center justify-start pl-4 cursor-pointer '>
         {penalty
@@ -138,6 +145,7 @@ export const columns: ColumnDef<FixtureProps>[] = [
   // },
   {
     id: 'actions',
+    enableColumnFilter: false,
     header: 'Actions',
     // cell: ({ row }) => <pre>{JSON.stringify(row, null, 2)}</pre>,
     cell: ({ row }) => <CellAction data={row.original} />,

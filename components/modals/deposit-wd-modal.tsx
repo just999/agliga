@@ -336,7 +336,19 @@ const DepositWdModal = () => {
             onClose();
           })
           .catch((error) => {
-            toast.error('Something Went Wrong, Error');
+            if (error.response) {
+              console.log('Error status:', error.response.status);
+              console.log('Error data:', error.response.data);
+              setErrorMessage(error.response.data.message);
+              toast.error(error.response.data.message);
+              const errorMessage =
+                error.response.data.error || 'An error occurred.';
+              console.error(errorMessage);
+            } else if (error.request) {
+              console.log('No response received', error.request);
+            } else {
+              console.error('Request error:', error.message);
+            }
           })
           .finally(() => {
             setIsLoading(false);
@@ -615,14 +627,16 @@ const DepositWdModal = () => {
   const footerContent = (
     <div className='flex flex-col  m-0 '>
       <hr />
-      <span
-        className={cn(
-          'text-rose-600 font-semibold  text-base border border-solid border-red-400 px-2 text-center',
-          poppins.className
-        )}
-      >
-        {errorMessage}!
-      </span>
+      {errorMessage && (
+        <span
+          className={cn(
+            'text-rose-600 font-semibold  text-base border border-solid border-red-400 px-2 text-center',
+            poppins.className
+          )}
+        >
+          {errorMessage}!
+        </span>
+      )}
       <div className='text-neutral-500 text-center mt-2 font-light '>
         <div className='justify-center flex flex-row items-center gap-2 '>
           <div>{modalType === 'depo' ? 'Apakah mau Wd?' : 'Mau deposit?'}</div>

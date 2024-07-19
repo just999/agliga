@@ -12,6 +12,7 @@ export const euroColumns: ColumnDef<TeamStats>[] = [
   {
     accessorKey: 'country',
     header: '',
+    enableColumnFilter: false,
     cell: ({ row }) => (
       <div className='flex flex-row justify-start gap-2 px-4'>
         <span className={cn(noto.className)}>{row.original.team.icon}</span>
@@ -23,6 +24,7 @@ export const euroColumns: ColumnDef<TeamStats>[] = [
   {
     accessorKey: 'played',
     header: 'Played',
+    enableColumnFilter: false,
     cell: ({ cell, row }) => (
       <div className='flex flex-row justify-center px-4 gap-2 '>
         <span className='font-bold text-slate-400 text-xs'>
@@ -57,6 +59,7 @@ export const euroColumns: ColumnDef<TeamStats>[] = [
   {
     accessorKey: 'won',
     header: 'Won',
+    enableColumnFilter: false,
     cell: ({ row }) => (
       <div className='flex flex-row  justify-center px-4 gap-2'>
         <span className='font-bold text-slate-400 text-xs'>
@@ -69,6 +72,7 @@ export const euroColumns: ColumnDef<TeamStats>[] = [
   {
     accessorKey: 'draw',
     header: 'Draw',
+    enableColumnFilter: false,
     cell: ({ row }) => (
       <div className='flex flex-row  justify-center px-4 gap-2 text-xs'>
         {/* <pre>
@@ -87,6 +91,7 @@ export const euroColumns: ColumnDef<TeamStats>[] = [
   {
     accessorKey: 'lost',
     header: 'Lost',
+    enableColumnFilter: false,
     cell: ({ row }) => (
       <div className='flex flex-row  justify-center px-4 text-xs gap-2'>
         {/* <pre>
@@ -103,6 +108,7 @@ export const euroColumns: ColumnDef<TeamStats>[] = [
   {
     accessorKey: 'for',
     header: 'For',
+    enableColumnFilter: false,
     cell: ({ row }) => (
       <div className='flex flex-row  justify-center px-4 gap-2'>
         <span className='font-bold text-slate-400 text-xs'>
@@ -115,6 +121,7 @@ export const euroColumns: ColumnDef<TeamStats>[] = [
   {
     accessorKey: 'against',
     header: 'Against',
+    enableColumnFilter: false,
     cell: ({ row }) => (
       <div className='flex flex-row  justify-center px-4 gap-2'>
         <span className='font-bold text-slate-400 text-xs'>
@@ -135,6 +142,7 @@ export const euroColumns: ColumnDef<TeamStats>[] = [
   {
     accessorKey: 'goalDiff',
     header: 'GoalDiff',
+    enableColumnFilter: false,
     cell: ({ row }) => (
       <div className='flex flex-row  justify-center px-4 gap-2'>
         <span className='font-bold text-slate-400 text-xs'>
@@ -169,6 +177,7 @@ export const euroColumns: ColumnDef<TeamStats>[] = [
         </Button>
       );
     },
+    enableColumnFilter: false,
     cell: ({ row }) => (
       <div className='flex flex-row  justify-center px-4 gap-2'>
         <span className='font-bold text-slate-400 text-xs'>
