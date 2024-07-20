@@ -16,7 +16,7 @@ import {
   getSortedRowModel,
 } from '@tanstack/react-table';
 
-import { cn, noto, numberWithCommas } from '@/lib/utils';
+import { cn, noto, numberWithCommas, poppins } from '@/lib/utils';
 
 import { Button } from '@/components/ui/button';
 import { ArrowUpDown } from 'lucide-react';
@@ -32,6 +32,7 @@ import {
   rankItem,
   compareItems,
 } from '@tanstack/match-sorter-utils';
+import footer from '@/components/footer';
 
 // Define a custom fuzzy sort function that will sort by rank if the row has ranking information
 const fuzzySort: SortingFn<any> = (rowA, rowB, columnId) => {
@@ -49,6 +50,11 @@ const fuzzySort: SortingFn<any> = (rowA, rowB, columnId) => {
   return dir === 0 ? sortingFns.alphanumeric(rowA, rowB, columnId) : dir;
 };
 
+// Function to calculate the total DepoAmount
+const calculateDepoAmountSum = (rows: any[]) => {
+  return rows.reduce((sum, row) => sum + (row.original.depoAmount || 0), 0);
+};
+
 export const depoColumns: ColumnDef<DepoWdProps & DepoProps>[] = [
   {
     accessorKey: 'index',
@@ -57,7 +63,7 @@ export const depoColumns: ColumnDef<DepoWdProps & DepoProps>[] = [
     // filterFn: 'equalsString', //note: normal non-fuzzy filter column - exact match required
     cell: ({ row }) => (
       <div className='flex flex-row justify-start  px-4'>
-        <span className={cn('tracking-tighter', noto.className)}>
+        <span className={cn('tracking-tighter', poppins.className)}>
           {row.index + 1}
         </span>
       </div>
@@ -90,6 +96,7 @@ export const depoColumns: ColumnDef<DepoWdProps & DepoProps>[] = [
         </span>
       </div>
     ),
+    // footer: 'email',
   },
   {
     accessorKey: 'name',
@@ -105,6 +112,7 @@ export const depoColumns: ColumnDef<DepoWdProps & DepoProps>[] = [
         </span>
       </div>
     ),
+    // footer: 'name',
   },
   {
     accessorKey: 'bank',
@@ -127,6 +135,7 @@ export const depoColumns: ColumnDef<DepoWdProps & DepoProps>[] = [
         </span>
       </div>
     ),
+    // footer: (info) => <div>{info.column.id}</div>,
   },
   {
     accessorKey: 'accountNumber',
@@ -135,6 +144,9 @@ export const depoColumns: ColumnDef<DepoWdProps & DepoProps>[] = [
       <div className='flex flex-row text-nowrap px-4 gap-2 text-xs'>
         {row.original.accountNumber}
       </div>
+    ),
+    footer: (info) => (
+      <span className='flex flex-row justify-end w-full '>Total</span>
     ),
   },
   {
@@ -161,6 +173,19 @@ export const depoColumns: ColumnDef<DepoWdProps & DepoProps>[] = [
       </div>
     ),
     filterFn: 'fuzzy',
+    footer: (info) => {
+      const totalDepoAmount = calculateDepoAmountSum(
+        info.table.getRowModel().rows
+      );
+      return (
+        <div className='flex flex-row w-full m-0 p-0 justify-between  text-xs gap-2'>
+          <span className='italic text-stone-400 '>Rp.</span>
+          <span className='text-emerald-700 font-bold '>
+            {numberWithCommas(totalDepoAmount)}
+          </span>
+        </div>
+      );
+    },
   },
   {
     accessorKey: 'game',

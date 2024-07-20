@@ -72,7 +72,7 @@ const DepoWdDropdownBankSelect = ({
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
-            onClick={() => console.log(selectedValue?.value)}
+            // onClick={() => console.log(selectedValue?.value)}
             variant='ghost'
             className={cn(
               'w-full h-6 justify-start text-xs p-0 m-0',

@@ -29,6 +29,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
+  TableFooter,
 } from '@/components/ui/table';
 
 import { InputCustom } from './inputCustom';
@@ -282,8 +283,6 @@ DataTableProps<TData, TValue>) {
   const year2 = period?.slice(3, 5);
 
   const handleSelectChange = (searchKey: string, value: string) => {
-    console.log('Selected-Value', searchKey, value);
-
     table.getColumn(searchKey)?.setFilterValue(value);
   };
 
@@ -614,6 +613,23 @@ DataTableProps<TData, TValue>) {
                     </TableRow>
                   )}
                 </TableBody>
+
+                <TableFooter>
+                  {table.getFooterGroups().map((footerGroup) => (
+                    <TableRow key={footerGroup.id}>
+                      {footerGroup.headers.map((header) => (
+                        <TableCell key={header.id}>
+                          {header.isPlaceholder
+                            ? null
+                            : flexRender(
+                                header.column.columnDef.footer,
+                                header.getContext()
+                              )}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  ))}
+                </TableFooter>
               </Table>
 
               {isToggle && (
