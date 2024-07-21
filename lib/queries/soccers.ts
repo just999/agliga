@@ -5,7 +5,7 @@ export const getSoccers = cache(async () => {
   try {
     const schedule = await db.schedule.findMany({
       orderBy: {
-        run: 'desc',
+        run: 'asc',
       },
     });
 

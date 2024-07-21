@@ -38,6 +38,10 @@ body,
 :root {
   height: 100%;
 }
+.input::placeholder {
+  opacity: 0.2;
+  color: gray;
+}
 
 .rdrMonth {
   width: 100% !important;

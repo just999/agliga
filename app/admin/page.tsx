@@ -20,7 +20,7 @@ const AdminPage = async () => {
 
   const session = await auth();
   const role = session?.user.curUser.role;
-  if (role !== 'admin') redirect('/');
+  // if (role !== 'admin') redirect('/');
 
   const wds = await fetchWd();
   if (!wds || wds.length === 0) return [];

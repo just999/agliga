@@ -55,7 +55,7 @@ const EuroClient = ({
       if (res) setRoundDat(res);
     };
     fetchData();
-  }, []);
+  }, [setRoundDat]);
 
   // const table = useLeague(data);
   const table = useLeague(eu);
@@ -108,7 +108,7 @@ const EuroClient = ({
       )}
     >
       <DataTable
-        searchKey='teamHome'
+        // searchKey='undefined'
         columns={selectedColumns}
         eu={group !== null ? dat : roundDat}
         className={className}

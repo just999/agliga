@@ -32,6 +32,7 @@ export function DebouncedInput({
       {...props}
       value={value}
       onChange={(e) => setValue(e.target.value)}
+      className='border-none h-6 w-full px-3 align-middle'
     />
   );
 }

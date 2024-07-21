@@ -12,8 +12,8 @@ const Filter = ({ column }: { column: Column<any, unknown> }) => {
       type='text'
       value={(columnFilterValue ?? '') as string}
       onChange={(value) => column.setFilterValue(value)}
-      placeholder={`Search...`}
-      className='w-full h-6 border shadow rounded px-2'
+      placeholder={`Search ${column.id}`}
+      className='input w-full h-6 border shadow px-2'
     />
   );
 };

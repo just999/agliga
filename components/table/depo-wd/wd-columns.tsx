@@ -44,7 +44,7 @@ export const wdColumns: ColumnDef<DepoWdProps & WdProps>[] = [
   {
     accessorKey: 'index',
     header: 'No.',
-    filterFn: 'includesString',
+    enableColumnFilter: false,
     cell: ({ row }) => (
       <div className='flex flex-row justify-start px-4'>
         <span className={cn('tracking-tighter', noto.className)}>

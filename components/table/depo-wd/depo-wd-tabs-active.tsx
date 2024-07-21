@@ -302,6 +302,7 @@ import { User } from '@prisma/client';
 import DepoWdClient from './depo-wd-client';
 import { useTabsStore } from '@/store/use-tabs-store';
 import { usePathname } from 'next/navigation';
+import BeatSpinner from '@/components/ui/beat-spinner';
 
 type DepoWdTabsActiveProps = {
   depo: (DepoProps & WdProps)[];
@@ -359,9 +360,7 @@ const DepoWdTabsActive = ({
   };
 
   if (loading) {
-    return (
-      <ClockSpinner className='h-full pt-32 justify-center items-center' />
-    );
+    return <BeatSpinner className='h-full pt-32 justify-center items-center' />;
   }
 
   let newTabs;
@@ -374,9 +373,9 @@ const DepoWdTabsActive = ({
     <li
       key={tab.id}
       className={cn(
-        'nav-item rounded-sm mx-auto border-x border-orange-200',
+        'nav-item rounded-sm mx-auto ',
         tab.active
-          ? 'bg-orange-300/50 w-full border-b-2 border-orange-400 drop-shadow-xl'
+          ? 'bg-orange-300/50 w-full border-b-4 border-orange-400 shadow-xl'
           : 'bg-amber-100 w-full'
       )}
     >
@@ -386,32 +385,34 @@ const DepoWdTabsActive = ({
         size='sm'
         type='button'
         className={cn(
-          'flex gap-4 text-center w-full shadow-xl text-gray-400 nav-link',
-          tab.active ? 'active text-black ring-orange-400' : undefined
+          'flex gap-4 text-center w-full border-x border-amber-200 shadow-xl text-gray-400 nav-link hover:bg-orange-200/60',
+          tab.active
+            ? 'active text-black ring-orange-400 text-shadow shadow-orange-700'
+            : undefined
         )}
       >
-        <div className='relative px-2 border-1 border-solid border-yellow-400 flex flex-row rounded-md  items-center '>
+        <div className='relative px-2 border text-xl border-none border-yellow-400 flex flex-row rounded-md items-center '>
           <span>{tab.label}</span>
-          <span className='flex items-center rounded-full  p-2.5 drop-shadow-xl'>
+          <span className='flex items-center rounded-full p-2.5 drop-shadow-xl'>
             <IoNotifications size={15} className='text-gray-500 ' />
           </span>
           {tab.value === 'depo' ? (
             <span
               className={cn(
-                'absolute top-0 right-0  text-amber-200 font-base  rounded-full bg-red-600 px-1.5 shadow-lg',
+                'absolute top-0 right-0  text-amber-200 text-base  rounded-full bg-red-600 shadow-xl',
                 poppins.className
               )}
             >
-              <span className='text-xs '>{newDepoCount}</span>
+              <span className='text-xs px-2 text-shadow'>{newDepoCount}</span>
             </span>
           ) : tab.value === 'wd' ? (
             <span
               className={cn(
-                'absolute top-0 right-0  text-amber-200 font-base text-[10px] rounded-full bg-red-600 px-1.5 shadow-lg',
+                'absolute top-0 right-0  text-amber-200 text-base  rounded-full bg-red-600 shadow-xl',
                 poppins.className
               )}
             >
-              <span className='text-xs'>{newWdCount}</span>
+              <span className='text-xs px-2 text-shadow'>{newWdCount}</span>
             </span>
           ) : (
             ''

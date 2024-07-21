@@ -37,7 +37,7 @@ const DepoWdMenu = ({ routes }: UserMenuProps) => {
                 // `h-full w-full  p-0 m-0 bg-emerald-900  cursor-pointer py-2 hover:shadow-md`,
                 className,
                 active
-                  ? ' text-lime-700  bg-emerald-50 drop-shadow-sm border-b-[2px] border-solid px-3 border-b-emerald-600 transition font-bold'
+                  ? ' text-lime-700  bg-emerald-50 drop-shadow-sm border-b-2 border-solid px-3 border-b-emerald-600 transition font-bold'
                   : 'text-stone-400 bg-slate-100 px-3'
               )}
             >

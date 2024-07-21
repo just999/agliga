@@ -46,7 +46,7 @@ type NavbarProps = {
 const Navbar = ({ currentUser, className }: NavbarProps) => {
   const { data: session, status } = useSession();
   const pathname = usePathname();
-  const router = useRouter();
+
   const { modalType, onOpen, onClose } = useModal();
   const userRole = session?.user.curUser.role;
 
@@ -69,10 +69,8 @@ const Navbar = ({ currentUser, className }: NavbarProps) => {
         )} is ${capitalizeFirstCharacter(session.user.curUser.role)}`
       : 'Guest';
 
-  const handleLogout = () => {
-    signOut();
-    router.push('/');
-  };
+  const handleLogout = () => signOut({ callbackUrl: '/' });
+
   const handleLogin = () => onOpen('login');
   const handleSignUp = () => onOpen('register');
   const authentic = () => {
@@ -104,7 +102,9 @@ const Navbar = ({ currentUser, className }: NavbarProps) => {
     {
       icon: FcMoneyTransfer,
       label: 'WD',
-      onClick: () => onOpen('wd'),
+      onClick: () => {
+        onOpen('wd');
+      },
       href: `${pathname} `,
       active: modalType === 'wd',
       className:
@@ -187,7 +187,7 @@ const Navbar = ({ currentUser, className }: NavbarProps) => {
     },
     {
       icon: FaUser,
-      label: 'User',
+      label: 'User Data',
       onClick: () => {},
       href: `/users`,
       active: modalType === null && pathname === '/users',

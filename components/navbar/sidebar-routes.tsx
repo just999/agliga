@@ -97,7 +97,8 @@ const SidebarRoutes = ({
                 active={route.active}
               />
             ))
-          : routes
+          : session?.user.curUser.role === 'user'
+          ? routes
               .filter(
                 (r) =>
                   r.label !== 'Input-Jadwal' &&
@@ -105,6 +106,27 @@ const SidebarRoutes = ({
                   r.label !== 'New-Topic' &&
                   r.label !== 'Admin' &&
                   r.label !== 'Slider'
+              )
+              .map((route) => (
+                <MenuItem
+                  key={route.label}
+                  icon={route.icon}
+                  label={route.label}
+                  href={route.href}
+                  onClick={route.onClick}
+                  className={className}
+                  active={route.active}
+                />
+              ))
+          : routes
+              .filter(
+                (r) =>
+                  r.label !== 'Input-Jadwal' &&
+                  r.label !== 'New-Post' &&
+                  r.label !== 'New-Topic' &&
+                  r.label !== 'Admin' &&
+                  r.label !== 'Slider' &&
+                  r.label !== 'User Data'
               )
               .map((route) => (
                 <MenuItem

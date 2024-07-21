@@ -128,7 +128,7 @@ type GroupArrayProps = {
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[] | any;
   eu?: Fixture[] | TData[] | (DepoProps[] & WdProps[]) | any;
-  searchKey: string;
+  searchKey?: string;
   className?: string;
   depoWdClassName?: string;
   group?: any;
@@ -302,17 +302,20 @@ DataTableProps<TData, TValue>) {
         )}
       >
         {/* {eu && <pre>{JSON.stringify(eu[0]?.category, null, 2)}</pre>} */}
-        <InputCustom
-          placeholder='Search...'
-          // value={filtering}
-          value={(table.getColumn(searchKey)?.getFilterValue() as string) ?? ''}
-          // onChange={(event) => setFiltering(event.target.value)}
-          onChange={(e) =>
-            table.getColumn(searchKey)?.setFilterValue(e.target.value)
-          }
-          className='max-w-sm text-stone-700 mx-2 bg-zinc-50'
-        />
-
+        {searchKey && (
+          <InputCustom
+            placeholder='Search...'
+            // value={filtering}
+            value={
+              (table.getColumn(searchKey)?.getFilterValue() as string) ?? ''
+            }
+            // onChange={(event) => setFiltering(event.target.value)}
+            onChange={(e) =>
+              table.getColumn(searchKey)?.setFilterValue(e.target.value)
+            }
+            className='max-w-sm text-stone-700 mx-2 bg-zinc-50'
+          />
+        )}
         {period && (
           <div className='w-full flex flex-row items-center justify-center '>
             <Heading
@@ -452,7 +455,9 @@ DataTableProps<TData, TValue>) {
                   {!round && !period && !group && (
                     <TableRow className='h-8'>
                       <TableHead className='h-8'></TableHead>
-                      <TableHead className='h-8'></TableHead>
+                      <TableHead className='h-8 p-0 text-right'>
+                        Search:
+                      </TableHead>
                       <TableHead className='h-8 w-full px-2'>
                         <div>
                           {(tabVal === 'depo' || tabVal === 'wd') && (
@@ -460,7 +465,7 @@ DataTableProps<TData, TValue>) {
                               value={globalFilter ?? ''}
                               onChange={handleFilterChange}
                               // onChange={(value) => setGlobalFilter(String(value))}
-                              className='px-2 h-8 font-2xl text-black border shadow-inner border-block bg-cyan-200'
+                              className='input px-2 h-8 font-2xl text-black border shadow-inner border-block bg-zinc-50'
                               placeholder='Search all columns...'
                             />
                           )}
@@ -477,7 +482,7 @@ DataTableProps<TData, TValue>) {
                           <TableHead
                             key={header.id}
                             className={cn(
-                              ' text-xs text-stone-500 h-8  text-center px-2 bg-stone-100 border border-solid border-zinc-200',
+                              ' text-xs text-stone-500 h-8  text-center px-2 bg-stone-50 border border-solid border-zinc-200',
                               thClassName,
                               round && 'w-12'
                             )}
@@ -493,7 +498,7 @@ DataTableProps<TData, TValue>) {
                                     onClick:
                                       header.column.getToggleSortingHandler(),
                                   }}
-                                  className='flex flex-row gap-2 items-center text-nowrap h-6 px-2 align-middle cursor-pointer'
+                                  className='flex flex-row bg-rose-50/30  items-center text-nowrap justify-start h-6 px-2 align-middle cursor-pointer text-shadow-sm'
                                 >
                                   {flexRender(
                                     header.column.columnDef.header,
@@ -502,6 +507,11 @@ DataTableProps<TData, TValue>) {
                                   {/* <pre>
                                     {JSON.stringify(header.column, null, 2)}
                                   </pre> */}
+                                  {[header.column.getIsSorted() as string] ? (
+                                    <div className='w-[15px] opacity-0'></div>
+                                  ) : (
+                                    ''
+                                  )}
                                   {{
                                     asc: '🔼',
                                     desc: '🔽',

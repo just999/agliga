@@ -18,6 +18,7 @@ export type ImageSlider = {
 type ModalStore = {
   modalType:
     | 'login'
+    | 'two-factor'
     | 'register'
     | 'depo'
     | 'edit-depo'
@@ -79,6 +80,7 @@ type ModalStore = {
   onOpen: (
     type:
       | 'login'
+      | 'two-factor'
       | 'register'
       | 'depo'
       | 'edit-depo'
@@ -180,6 +182,7 @@ const useModal = create<ModalStore>((set) => ({
   onOpen: (
     type:
       | 'login'
+      | 'two-factor'
       | 'register'
       | 'depo'
       | 'edit-depo'

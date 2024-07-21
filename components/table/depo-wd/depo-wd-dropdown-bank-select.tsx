@@ -77,7 +77,7 @@ const DepoWdDropdownBankSelect = ({
             className={cn(
               'w-full h-6 justify-start text-xs p-0 m-0',
               column && selectedValue
-                ? 'bg-rose-100 px-2 gap-2 shadow-xl border-b-2 border-solid border-sky-600'
+                ? 'bg-rose-100 px-2 gap-2 shadow-xl border-y-2 border-solid border-sky-600 rounded-none'
                 : 'bg-sky-100 px-2 gap-2'
               // ? 'bg-purple-100 gap-2 shadow-xl'
               // : 'bg-sky-100 px-2 gap-2 '

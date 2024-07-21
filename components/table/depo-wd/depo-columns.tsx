@@ -59,7 +59,7 @@ export const depoColumns: ColumnDef<DepoWdProps & DepoProps>[] = [
   {
     accessorKey: 'index',
     header: 'No.',
-    filterFn: 'includesString',
+    enableColumnFilter: false,
     // filterFn: 'equalsString', //note: normal non-fuzzy filter column - exact match required
     cell: ({ row }) => (
       <div className='flex flex-row justify-start  px-4'>
@@ -306,7 +306,7 @@ export const depoColumns: ColumnDef<DepoWdProps & DepoProps>[] = [
           />
         ) : (
           <>
-            <span>ok!</span>
+            <span className='text-shadow  shadow-gray-100'>ok!</span>
             {/* <pre>{JSON.stringify(row.original, null, 2)}</pre> */}
           </>
         )}

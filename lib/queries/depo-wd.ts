@@ -14,7 +14,7 @@ export const fetchDepo = cache(async () => {
     });
     return depos;
   } catch (err) {
-    console.error('Error fetching euro', err);
+    console.error('Error fetching depo', err);
     return null;
   }
 });
@@ -28,13 +28,13 @@ export const fetchDepoById = cache(async (id: string) => {
     });
     return depo;
   } catch (err) {
-    console.error('Error fetching euro', err);
+    console.error('Error fetching depo by id', err);
     return null;
   }
 });
 export const fetchDepoByUserId = cache(async (id: string) => {
   try {
-    if (!id) throw new Error('No depo id');
+    if (!id) throw new Error('No user id');
     const depo = await db.depo.findMany({
       where: {
         userId: id,
@@ -47,7 +47,7 @@ export const fetchDepoByUserId = cache(async (id: string) => {
     });
     return depo;
   } catch (err) {
-    console.error('Error fetching euro', err);
+    console.error('Error fetching depo by user id', err);
     return null;
   }
 });
@@ -77,7 +77,7 @@ export const fetchWd = cache(async () => {
     });
     return wd;
   } catch (err) {
-    console.error('Error fetching euro', err);
+    console.error('Error fetching wd', err);
     return null;
   }
 });
@@ -95,7 +95,7 @@ export const fetchWdByUserId = cache(async (id: string) => {
     });
     return wd;
   } catch (err) {
-    console.error('Error fetching euro', err);
+    console.error('Error fetching wd user id', err);
     return null;
   }
 });
@@ -109,7 +109,7 @@ export const fetchWdById = cache(async (id: string) => {
     });
     return wd;
   } catch (err) {
-    console.error('Error fetching euro', err);
+    console.error('Error fetching wd by id', err);
     return null;
   }
 });
@@ -123,7 +123,7 @@ export const fetchWdByEmail = cache(async (email: string) => {
     });
     return wd;
   } catch (err) {
-    console.error('Error fetching euro', err);
+    console.error('Error fetching wd by email', err);
     return null;
   }
 });

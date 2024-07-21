@@ -99,20 +99,6 @@ const Modal = ({
               className
             )}
           >
-            {/* HEADER */}
-            {/* <div className='flex items-center p-4 rounded-t justify-center relative border-b-[1px] '>
-                <Button
-                  size='icon'
-                  variant='ghost'
-                  onClick={handleCLose}
-                  type='button'
-                  className='p-1 border-0 h-7 w-7 hover:opacity-80 hover:bg-rose-600/20 hover:border-solid hover:border-red-600 rounded-full transition absolute left-9 '
-                >
-                  <IoMdClose size={18} className='w-6 h-6 ' />
-                </Button>
-                <div className='text-lg font-semibold '>{title}</div>
-              </div> */}
-            {/* Body */}
             <div className='relative p-4 flex-auto'>
               <Button
                 size='icon'

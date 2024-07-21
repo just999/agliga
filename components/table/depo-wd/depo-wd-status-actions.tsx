@@ -64,7 +64,7 @@ export function DepoWdStatusActions({
             <Button
               variant='ghost'
               className={cn(
-                'w-[150px] m-0 p-0 mx-2 h-8 justify-start hover:shadow-lg hover:bg-indigo-50',
+                'm-0 p-0 mx-2 h-8 justify-start hover:shadow-lg hover:bg-indigo-50',
                 selectedStatus && 'bg-slate-200 border-b-2 border-gray-400'
               )}
             >

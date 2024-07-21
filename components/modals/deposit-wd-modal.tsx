@@ -38,6 +38,7 @@ import {
 } from '@/types';
 import { useGetDepo, useGetWd } from '@/hooks/use-get-depo-wd';
 import { cn, poppins } from '@/lib/utils';
+import { FormError } from '../ui/success-error-form';
 
 const DepositWdModal = () => {
   const [depo, setDepo] = useState<DepoProps>();
@@ -414,6 +415,7 @@ const DepositWdModal = () => {
     reset();
     setWd(data);
     setDepo(data);
+    setErrorMessage('');
   };
 
   const bodyContent = (
@@ -630,11 +632,11 @@ const DepositWdModal = () => {
       {errorMessage && (
         <span
           className={cn(
-            'text-rose-600 font-semibold  text-base border border-solid border-red-400 px-2 text-center',
+            'text-rose-600 font-semibold  text-base border border-solid border-red-400 mx-2 text-center',
             poppins.className
           )}
         >
-          {errorMessage}!
+          <FormError message={errorMessage} />
         </span>
       )}
       <div className='text-neutral-500 text-center mt-2 font-light '>

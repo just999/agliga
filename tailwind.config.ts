@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss';
+import type { PluginAPI } from 'tailwindcss/types/config';
 
 let plugin = require('tailwindcss/plugin');
 
@@ -20,6 +21,11 @@ const config = {
       },
     },
     extend: {
+      textShadow: {
+        sm: '0 1px 2px var(--tw-shadow-color)',
+        DEFAULT: '0 2px 4px var(--tw-shadow-color)',
+        lg: '0 8px 16px var(--tw-shadow-color)',
+      },
       screens: {
         '2xs': '180px',
         xs: '320px',
@@ -89,7 +95,19 @@ const config = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [
+    plugin(function ({ matchUtilities, theme }: PluginAPI) {
+      matchUtilities(
+        {
+          'text-shadow': (value) => ({
+            textShadow: value,
+          }),
+        },
+        { values: theme('textShadow') }
+      );
+    }),
+    require('tailwindcss-animate'),
+  ],
 } satisfies Config;
 
 export default config;
