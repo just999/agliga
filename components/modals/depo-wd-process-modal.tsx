@@ -9,19 +9,50 @@ import toast from 'react-hot-toast';
 import useModal from '@/hooks/use-modal';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { fetchUserById } from '@/lib/queries/users';
+import useUserStore from '@/store/use-active-user-store';
+import { useForm, FieldValues } from 'react-hook-form';
+import { useGetUsers } from '@/hooks/use-get-users';
+import Loader from '../loader';
 
 // type DepoWdProcessModalProps = {
 //   title?: string | undefined;
 // };
 
+interface DataProps {
+  id: string;
+  title?: string;
+  isActive?: boolean;
+}
+
 const DepoWdProcessModal = () => {
+  const [isActive, setIsActive] = useState<boolean>();
   const [newDelete, setNewDelete] = useState('');
   const [depoWdDelete, setDepoWdDelete] = useState('');
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const router = useRouter();
   // const params = useParams();
   // const id = params.id;
   const { modalType, onOpen, isOpen, onClose, id, title, group, period } =
     useModal();
+
+  const { user, users, loading, setLoading } = useGetUsers(id ? id : undefined);
+  // let items;
+  // if (modalType === 'edit-users') {
+  //   items = {
+  //     active: user.active,
+  //   };
+  // }
+  // const {
+  //   register,
+  //   handleSubmit,
+  //   setValue,
+  //   watch,
+  //   formState: { errors },
+  //   reset,
+  // } = useForm<FieldValues>({
+  //   defaultValues: items,
+  // });
   // useEffect(() => {
   //   if (period) {
   //     const newPeriod = period?.slice(0, 2) + period?.slice(3);
@@ -32,7 +63,16 @@ const DepoWdProcessModal = () => {
   //   if (modalType === 'delete-wd') setDepoWdDelete('delete-wd');
   // }, [period, setDepoWdDelete, modalType]);
 
-  const onProcess = async () => {
+  // const { userActive, toggleUserStatus, setError } = useUserStore();
+  useEffect(() => {
+    setLoading(true);
+    if (user?.active !== null && typeof user.active === 'boolean')
+      setIsActive(user.active);
+    setLoading(false);
+  }, [user.active, setIsActive, setLoading]);
+
+  if (!user) return null;
+  const onSubmit = async () => {
     if (modalType === 'depo-process') {
       const data = {
         status: group,
@@ -122,11 +162,44 @@ const DepoWdProcessModal = () => {
       } catch (err) {
         console.error('Error deleting fixture', err);
       }
-    } else if (modalType === depoWdDelete) {
+    } else if (modalType === 'edit-users') {
       const data = {
         id,
         title,
-      };
+        active: typeof isActive === 'boolean' ? isActive : undefined,
+      } as DataProps;
+      if (!data.id) throw new Error('No id found');
+      // const user = await fetchUserById(data.id);
+      // if (!user) throw new Error('No user found');
+
+      // const active = user.active;
+      if (isActive === null) setLoading(true);
+      if (isActive !== null) {
+        setLoading(false);
+        // setIsActive((prev) => !prev);
+      }
+      try {
+        // await fetch(`/api/users/${user?.id}`, {
+        //   method: 'POST',
+        //   body: JSON.stringify(data),
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //   },
+        // }).then((res) => {
+        //   if (res.status === 200) {
+        //     toast.success('users is updated');
+        //     onClose();
+        //     router.refresh();
+        //   }
+        // });
+        const res = axios.post(`/api/users/${id}`, data).then(() => {
+          toast.success('successfully update user');
+          router.refresh();
+          onClose();
+        });
+      } catch (err) {
+        console.error('Error updating user', err);
+      }
     }
   };
 
@@ -146,18 +219,26 @@ const DepoWdProcessModal = () => {
           }
         />
       )}
+      {loading ? (
+        <Loader size={20} className='h-8 w-full' />
+      ) : (
+        <span>{isActive ? 'true' : 'false'}</span>
+      )}
     </div>
   );
 
   return (
     <Modal
       isOpen={
-        isOpen && (modalType === 'depo-process' || modalType === 'wd-process')
+        isOpen &&
+        (modalType === 'depo-process' ||
+          modalType === 'wd-process' ||
+          modalType === 'edit-users')
       }
       onClose={onClose}
-      onSubmit={onProcess}
+      onSubmit={onSubmit}
       actionLabel='Process ?'
-      disabled={false}
+      disabled={loading}
       body={bodyContent}
       secondaryAction={onClose}
       secondaryActionLabel='cancel'

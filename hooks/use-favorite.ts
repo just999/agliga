@@ -1,3 +1,5 @@
+'use client';
+
 import { SafeUser } from '@/types';
 
 import useModal from './use-modal';
@@ -5,13 +7,14 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import useFavoriteStore from '@/store/use-favorite-store';
+import { useSession } from 'next-auth/react';
 
 type UseFavoriteProps = {
   postId: string;
   currentUser?: SafeUser;
 };
 
-const useFavorite = ({ postId, currentUser }: UseFavoriteProps) => {
+export const useFavorite = ({ postId, currentUser }: UseFavoriteProps) => {
   const {
     favoritePosts,
     toggleFavorite: storeToggleFavorite,
@@ -125,4 +128,61 @@ const useFavorite = ({ postId, currentUser }: UseFavoriteProps) => {
     setIsFavorited,
   };
 };
-export default useFavorite;
+
+type UseActiveProps = {
+  userId: string;
+  currentUser?: SafeUser;
+};
+
+export const useActive = ({ userId, currentUser }: UseActiveProps) => {
+  const { activeUsers, toggleActive: storeToggleActive } = useFavoriteStore();
+  const { onOpen } = useModal();
+
+  const [isActivated, setIsActivated] = useState(false);
+
+  const { data: session } = useSession();
+  const curUser = session?.user.curUser;
+  const hasActivated = useMemo(() => {
+    // if (!currentUser?.favoriteIds.length) throw new Error('no favorite');
+    const list = curUser?.favoriteIds || [];
+
+    // list.forEach((id) => addFavoritePost(id));
+    return list.includes(userId);
+  }, [curUser, userId]);
+  useEffect(() => {
+    setIsActivated(hasActivated);
+    storeToggleActive(userId);
+  }, [hasActivated, userId, storeToggleActive]);
+
+  const toggleActive = useCallback(
+    async (e: React.MouseEvent<HTMLDivElement>) => {
+      e.stopPropagation();
+
+      if (!curUser) return onOpen('no-user');
+
+      try {
+        storeToggleActive(userId);
+
+        const res = await (isActivated
+          ? axios.delete(`/api/profiles/${userId}`)
+          : axios.post(`/api/profiles/${userId}`));
+
+        setIsActivated((prev) => !prev);
+        // router.refresh();
+        toast.success('Success');
+      } catch (err) {
+        toast.error('Something went wrong');
+      }
+    },
+    [curUser, userId, onOpen, isActivated, storeToggleActive]
+  );
+
+  return {
+    hasActivated,
+    toggleActive,
+    // toggleLike,
+    // toggleDislike,
+    isActivated,
+    setIsActivated,
+  };
+};

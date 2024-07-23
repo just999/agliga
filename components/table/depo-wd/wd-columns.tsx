@@ -249,7 +249,7 @@ export const wdColumns: ColumnDef<DepoWdProps & WdProps>[] = [
             name='wd'
           />
         ) : (
-          <span>ok!</span>
+          <span className='text-shadow  shadow-gray-100'>ok!</span>
         )}
       </div>
     ),

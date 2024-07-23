@@ -385,9 +385,9 @@ const DepoWdTabsActive = ({
         size='sm'
         type='button'
         className={cn(
-          'flex gap-4 text-center w-full border-x border-amber-200 shadow-xl text-gray-400 nav-link hover:bg-orange-200/60',
+          'flex gap-4 text-center w-full border-x border-amber-200 shadow-xl text-gray-400 nav-link hover:bg-orange-400/70',
           tab.active
-            ? 'active text-black ring-orange-400 text-shadow shadow-orange-700'
+            ? 'bg-orange-300 text-black ring-orange-400 text-shadow shadow-orange-700'
             : undefined
         )}
       >
@@ -431,7 +431,7 @@ const DepoWdTabsActive = ({
 
   return (
     <div className='aside-block'>
-      <ul className='nav nav-pills custom-tab-nav mb-0 flex flex-row justify-center items-center'>
+      <ul className='nav nav-pills custom-tab-nav mb-0 flex flex-row justify-center items-center [&>*:nth-child(odd)]:bg-orange-100 [&>*:nth-child(even)]:bg-amber-200/40'>
         {renderedTabsActive}
       </ul>
 

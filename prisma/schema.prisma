@@ -30,28 +30,34 @@ model User {
   image          String?   @default("/images/cavatar.svg")
   password       String?
   hashedPassword String?
+  active         Boolean   @default(true)
   role           UserRole  @default(user)
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
-  favoriteIds    String[]  @db.ObjectId
-  accounts       Account[]
+  editorId       String?   @db.ObjectId
+  editor         User?     @relation("UserEditor", fields: [editorId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  supervisees    User[]    @relation("UserEditor")
+
+  favoriteIds String[]  @db.ObjectId
+  accounts    Account[]
   // listings       Listing[]
   // reservations   Reservation[]
-  depos          Depo[]    @relation("UserDepos")
-  wds            Wd[]      @relation("UserWds")
-  posts          Post[]
-  comments       Comment[]
-  sliders        Slider[]
-  Euro           Euro[]
-  Fixture        Fixture[]
-  EPL2324        EPL2324[]
-  EPL2223        EPL2223[]
-  EPL2122        EPL2122[]
-  EPL2425        EPL2425[]
+  depos       Depo[]    @relation("UserDepos")
+  wds         Wd[]      @relation("UserWds")
+  posts       Post[]
+  comments    Comment[]
+  sliders     Slider[]
+  Euro        Euro[]
+  Fixture     Fixture[]
+  EPL2324     EPL2324[]
+  EPL2223     EPL2223[]
+  EPL2122     EPL2122[]
+  EPL2425     EPL2425[]
 
-  adminDepos            Depo[]                 @relation("AdminDepos")
-  adminWds              Wd[]                   @relation("AdminWds")
-  isTwoFactorEnabled    Boolean?
+  adminDepos         Depo[]   @relation("AdminDepos")
+  adminWds           Wd[]     @relation("AdminWds")
+  isTwoFactorEnabled Boolean?
+
   twoFactorConfirmation TwoFactorConfirmation?
 }
 

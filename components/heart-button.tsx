@@ -1,6 +1,6 @@
 'use client';
 
-import useFavorite from '@/hooks/use-favorite';
+import { useFavorite } from '@/hooks/use-favorite';
 import { cn } from '@/lib/utils';
 import { SafeUser } from '@/types';
 
@@ -28,7 +28,7 @@ const HeartButton = ({
     <div
       onClick={toggleFavorite}
       className={cn(
-        'relative hover:opacity-80 transition cursor-pointer',
+        'relative hover:opacity-80 transition cursor-pointer px-2',
         className
       )}
     >

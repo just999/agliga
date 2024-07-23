@@ -414,6 +414,9 @@ const AuthModal = () => {
       onSubmit={handleSubmit(onSubmit)}
       body={bodyContent}
       footer={footerContent}
+      secondaryActionLabel={
+        modalType === 'login' ? 'forgot password?' : undefined
+      }
     />
   );
 };

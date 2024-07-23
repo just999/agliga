@@ -80,6 +80,9 @@ import DepoWdDropdownBankSelect from '../table/depo-wd/depo-wd-dropdown-bank-sel
 import { DebouncedInput } from './debounce-input';
 import Filter from '../table/filter';
 
+const hasActiveProperty = (data: any): data is { active: boolean } =>
+  'active' in data;
+
 declare module '@tanstack/react-table' {
   //add fuzzy filter to the filterFns
   interface FilterFns {
@@ -557,6 +560,9 @@ DataTableProps<TData, TValue>) {
                                 ) : header.column.id === 'game' ? (
                                   <>
                                     <DepoWdDropdownBankSelect
+                                      className={cn(
+                                        tabVal === 'member' ? 'invisible' : ''
+                                      )}
                                       banks={games}
                                       value={
                                         (table
@@ -595,21 +601,39 @@ DataTableProps<TData, TValue>) {
                         data-state={row.getIsSelected() && 'selected'}
                         className='h-8 bg-amber-50 even:bg-orange-50 odd:bg-amber-200/30'
                       >
-                        {row.getVisibleCells().map((cell) => (
-                          <TableCell
-                            key={cell.id}
-                            className={cn(
-                              'p-0 text-center lg:text-sm even:bg-indigo-50',
-                              tableCellClassName
-                            )}
-                            style={{ height: '18px' }}
-                          >
-                            {flexRender(
-                              cell.column.columnDef.cell,
-                              cell.getContext()
-                            )}
-                          </TableCell>
-                        ))}
+                        {row.getVisibleCells().map((cell: any) => {
+                          let activeCell;
+                          if (
+                            cell.column.id === 'active' &&
+                            cell.row.original.active === true
+                          ) {
+                            activeCell = '!bg-emerald-200 rounded-sm px-2';
+                          } else if (
+                            cell.column.id === 'active' &&
+                            cell.row.original.active === false
+                          ) {
+                            activeCell = '!bg-rose-200 rounded-sm px-2';
+                          }
+                          return (
+                            <TableCell
+                              key={cell.id}
+                              className={cn(
+                                'p-0 text-center lg:text-sm even:bg-indigo-50 w-auto',
+                                tableCellClassName,
+                                activeCell
+                              )}
+                              style={{ height: '18px' }}
+                            >
+                              {flexRender(
+                                cell.column.columnDef.cell,
+                                cell.getContext()
+                              )}
+                              {/* <pre>
+                              {JSON.stringify(cell.row.original, null, 2)}
+                            </pre> */}
+                            </TableCell>
+                          );
+                        })}
                       </TableRow>
                     ))
                   ) : (
@@ -786,22 +810,6 @@ DataTableProps<TData, TValue>) {
                   {table.getPrePaginationRowModel().rows.length} Rows
                 </div>
               </div>
-              {/* <div>
-                <button onClick={() => rerender()}>Force Rerender</button>
-              </div> */}
-              {/* <div>
-                <button onClick={() => refreshData()}>Refresh Data</button>
-              </div> */}
-              {/* <pre>
-                {JSON.stringify(
-                  {
-                    columnFilters: table.getState().columnFilters,
-                    globalFilter: table.getState().globalFilter,
-                  },
-                  null,
-                  2
-                )}
-              </pre> */}
             </div>
           </div>
         </div>

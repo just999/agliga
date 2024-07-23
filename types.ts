@@ -219,20 +219,33 @@ export type anything = {
   topicId: string;
 };
 
+// export type UserProps = {
+//   id: string;
+//   name: string | null;
+//   email: string | null;
+//   active: boolean | null;
+//   phone: string | null;
+//   bank: string;
+//   game: string;
+//   accountNumber: string;
+//   image: string | null;
+//   password: string | null;
+//   role: 'admin' | 'user';
+//   favoriteIds: string[];
+// };
+
 export type UserProps = {
   id: string;
   name: string | null;
   email: string | null;
-  // emailVerified: Date | null;
+  active: boolean | null;
   phone: string | null;
-  bank: string;
-  game: string;
+  bank: string | null;
+  game: string[];
   accountNumber: string;
   image: string | null;
-  hashedPassword: string | null;
+  password: string | null;
   role: 'admin' | 'user';
-  // createdAt: Date;
-  // updatedAt: Date;
   favoriteIds: string[];
 };
 

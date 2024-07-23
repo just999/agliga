@@ -1,5 +1,3 @@
-import { set } from 'date-fns';
-import { type } from 'os';
 import { create } from 'zustand';
 
 // export const imageSlider = {
@@ -36,6 +34,7 @@ type ModalStore = {
     | 'editSoccer'
     | 'profile'
     | 'editProfile'
+    | 'edit-users'
     | 'validateUser'
     | 'add-slider'
     | 'edit-slider'
@@ -77,6 +76,7 @@ type ModalStore = {
   group?: string;
   period?: string;
   qRound?: string;
+  isActive?: boolean;
   onOpen: (
     type:
       | 'login'
@@ -98,6 +98,7 @@ type ModalStore = {
       | 'editSoccer'
       | 'profile'
       | 'editProfile'
+      | 'edit-users'
       | 'validateUser'
       | 'add-slider'
       | 'edit-slider'
@@ -135,7 +136,8 @@ type ModalStore = {
     img?: ImageSlider | undefined,
     group?: string | undefined,
     period?: string | undefined,
-    qRound?: string | undefined
+    qRound?: string | undefined,
+    isActive?: boolean | undefined
   ) => void;
   onClose: () => void;
   toggle: (isToggle: boolean, group?: string) => void;
@@ -179,6 +181,7 @@ const useModal = create<ModalStore>((set) => ({
   group: undefined,
   period: undefined,
   qRound: undefined,
+  isActive: undefined,
   onOpen: (
     type:
       | 'login'
@@ -200,6 +203,7 @@ const useModal = create<ModalStore>((set) => ({
       | 'deleteSchedule'
       | 'profile'
       | 'editProfile'
+      | 'edit-users'
       | 'validateUser'
       | 'add-slider'
       | 'edit-slider'
@@ -236,8 +240,19 @@ const useModal = create<ModalStore>((set) => ({
     title,
     img,
     group,
-    period
-  ) => set({ modalType: type, isOpen: true, id, title, img, group, period }),
+    period,
+    isActive
+  ) =>
+    set({
+      modalType: type,
+      isOpen: true,
+      id,
+      title,
+      img,
+      group,
+      period,
+      isActive: typeof isActive === 'boolean' ? isActive : undefined,
+    }),
   onClose: () =>
     set({
       modalType: null,
@@ -247,6 +262,7 @@ const useModal = create<ModalStore>((set) => ({
       img: undefined,
       group: undefined,
       period: undefined,
+      isActive: undefined,
     }),
   toggle: (isToggle, group) =>
     set((state) => ({

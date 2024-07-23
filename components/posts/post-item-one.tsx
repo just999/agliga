@@ -16,7 +16,6 @@ import PostAuthor from './post-author';
 import VerticalDropdown from './vertical-dropdown';
 import HeartButton from '../heart-button';
 
-import { Suspense } from 'react';
 import { Button } from '../ui/button';
 
 interface PostItemOneProps {
@@ -114,12 +113,6 @@ const PostItemOne = ({
             />
           )}
 
-          {/* <ToggleButton
-            className='flex'
-            size={18}
-            postId={item.id}
-            currentUser={currentUser}
-          /> */}
           {currentUser && (
             <VerticalDropdown item={item} currentUser={currentUser} />
           )}

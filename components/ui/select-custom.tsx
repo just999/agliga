@@ -7,8 +7,8 @@ interface BankOptionsProps {
 }
 
 interface Option {
-  label: string;
-  placeholder: string;
+  label?: string;
+  placeholder?: string;
   onChange: (value: string) => void;
   options: BankOptionsProps[];
 }

@@ -1,29 +1,14 @@
 'use client';
 
-import useModal from '@/hooks/use-modal';
-import { useUserRole } from '@/hooks/use-user-role';
-// import useModal from '@/hooks/use-modal';
-// import { useUserRole } from '@/hooks/use-user-role';
 import { cn } from '@/lib/utils';
 import { RoutesProps } from '@/types';
 import Link from 'next/link';
-
-// import { usePathname, useRouter } from 'next/navigation';
 
 type UserMenuProps = {
   routes: RoutesProps[];
 };
 
 const DepoWdMenu = ({ routes }: UserMenuProps) => {
-  // const router = useRouter();
-  // const pathname = usePathname();
-  // const userRole = useUserRole();
-
-  const { modalType, onOpen } = useModal();
-  // const active =
-  //   ' text-lime-700  bg-emerald-50 drop-shadow-sm border-b-[3px] border-solid px-3 border-stone-300 transition font-bold';
-  // const inactive = 'text-stone-400  px-3';
-
   return (
     <div className='border w-full md:w-auto rounded-full shadow-sm  transition'>
       <div className=' flex flex-row items-center justify-between h-full'>

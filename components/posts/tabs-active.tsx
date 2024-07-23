@@ -74,7 +74,7 @@ const TabsActive = ({ items }: TabsActiveProps) => {
   ));
   return (
     <div className='aside-block '>
-      <ul className='nav nav-pills custom-tab-nav  mb-4 flex flex-row justify-center items-center '>
+      <ul className='nav nav-pills custom-tab-nav  mb-4 flex flex-row justify-center items-center'>
         {renderedTabsActive}
       </ul>
       <div className='tab-content '>

@@ -5,9 +5,11 @@ import { PuffLoader } from 'react-spinners';
 
 type LoaderProps = {
   className?: string;
+  size?: number;
+  color?: string;
 };
 
-const Loader = ({ className }: LoaderProps) => {
+const Loader = ({ className, size, color }: LoaderProps) => {
   return (
     <div
       className={cn(
@@ -16,8 +18,8 @@ const Loader = ({ className }: LoaderProps) => {
       )}
     >
       <PuffLoader
-        size={100}
-        color='red'
+        size={size ? size : 100}
+        color={color ? color : 'red'}
         aria-label='Loading Spinner'
         data-testid='loader'
       />

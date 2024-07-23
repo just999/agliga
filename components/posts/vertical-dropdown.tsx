@@ -12,7 +12,7 @@ import { Button } from '../ui/button';
 
 import { PostProps, SafeUser } from '@/types';
 import { BiCommentDots, BiPencil } from 'react-icons/bi';
-import useFavorite from '@/hooks/use-favorite';
+import { useFavorite } from '@/hooks/use-favorite';
 
 type VerticalDropdownProps = {
   item: PostProps;

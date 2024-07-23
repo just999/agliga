@@ -49,8 +49,7 @@ const UserProfileModal = () => {
   const [isPasswordVerified, setIsPasswordVerified] = useState(false);
   const [remainingTime, setRemainingTime] = useState(0);
 
-  const { modalType, isOpen, onOpen, onClose } = useModal();
-
+  const { modalType, isOpen, onOpen, onClose, id, title } = useModal();
   const { data: session, status } = useSession();
 
   const router = useRouter();
@@ -159,7 +158,6 @@ const UserProfileModal = () => {
 
   const handleCloseClearForm = () => {
     onClose();
-
     setValue('name', '');
     setValue('email', '');
     setValue('bank', '');
