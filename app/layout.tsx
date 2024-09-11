@@ -31,7 +31,7 @@ import {
   EuroModal,
 } from '@/components/modals';
 import FixtureModal from '@/components/modals/fixture-modal';
-import DepoWdProcessModal from '@/components/modals/depo-wd-process-modal';
+// import DepoWdProcessModal from '@/components/modals/depo-wd-process-modal';
 import UserActiveModal from '@/components/modals/user-active-modal';
 import TopNav from '@/components/navbar/top-nav';
 import NewWidget from '@/components/chat/new-widget';
@@ -75,7 +75,7 @@ export default async function RootLayout({
             <GoogleCaptchaWrapper>
               <ToasterProvider />
               <UserActiveModal />
-              <DepoWdProcessModal />
+              {/* <DepoWdProcessModal /> */}
               <FixtureModal />
               <EuroModal />
               {/* <UserProfileModal /> */}
