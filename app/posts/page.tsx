@@ -13,8 +13,9 @@ import {
   // getPosts,
   IPostsParams,
 } from '@/lib/queries/posts';
+import { PostProps } from '@/types/types';
 
-import { PostProps } from '@/types';
+// import { PostProps } from '@/types';
 import { Suspense } from 'react';
 
 type PostItemsPageProps = {
@@ -39,8 +40,7 @@ const PostItemsPage = async ({ searchParams }: PostItemsPageProps) => {
               posts.map((item: PostProps) => (
                 <div className='col-lg-3 col-md-6 ' key={item.id}>
                   <Suspense
-                    fallback={<Loader className='align-middle h-full' />}
-                  >
+                    fallback={<Loader className='align-middle h-full' />}>
                     <PostItemOne
                       pageOne={false}
                       large={false}

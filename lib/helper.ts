@@ -76,6 +76,7 @@ import {
   Spain,
   Tth,
   Turkish,
+  UeFa,
   Ukraine,
   USA,
   Watford,
@@ -92,15 +93,47 @@ import {
   Sbo,
   SlotGames,
 } from '@/components/assets/user-games';
+import { ContainerProps } from '@/components/dashboard/dashboard-sidebar';
+import {
+  Newspaper,
+  Folder,
+  User,
+  MessageCircle,
+  LayoutDashboard,
+  DollarSign,
+  BadgeDollarSign,
+  HandCoins,
+  CreditCard,
+  UserCog2,
+  Settings,
+  CalendarDays,
+  CircleDollarSign,
+  Banknote,
+  ListChecks,
+  Image,
+  MessageSquareMore,
+  Users2,
+  MessageCircleMore,
+} from 'lucide-react';
+import user from 'pusher-js/types/src/core/user';
+import { AiOutlineLogout, AiOutlineLogin } from 'react-icons/ai';
+import { BiHome, BiMessageRoundedDots } from 'react-icons/bi';
 import { BsCalendarWeek } from 'react-icons/bs';
-import { FaExclamationTriangle } from 'react-icons/fa';
+import { FaExclamationTriangle, FaUser, FaUserTie } from 'react-icons/fa';
 
 import { FaPersonRunning } from 'react-icons/fa6';
 import {
+  FcCalendar,
+  FcCurrencyExchange,
+  FcDataSheet,
   FcDisapprove,
   FcFullTrash,
   FcHighPriority,
+  FcMoneyTransfer,
+  FcNews,
   FcOk,
+  FcPanorama,
+  FcTemplate,
 } from 'react-icons/fc';
 import {
   GiSoccerKick,
@@ -122,11 +155,14 @@ import {
   MdOutlineFiberNew,
   MdOutlineSurfing,
 } from 'react-icons/md';
+import { PiUserPlus } from 'react-icons/pi';
+import { RiAdminLine } from 'react-icons/ri';
 
 import {
   TbKarate,
   TbPlayVolleyball,
   TbRectangleVerticalFilled,
+  TbScoreboard,
 } from 'react-icons/tb';
 
 export const banks = [
@@ -532,8 +568,8 @@ export const initialFormState = {
   title: '',
   img: '',
   category: '',
-  author: null || '',
-  brief: null || '',
+  author: null,
+  brief: null,
   validate: '',
 };
 
@@ -2909,17 +2945,17 @@ export const weeks = [
 
 export const status = [
   {
-    value: 'success',
+    value: 'ok',
     icon: FcOk,
   },
   {
     value: 'failed',
     icon: FcDisapprove,
   },
-  {
-    value: 'in progress',
-    icon: FaPersonRunning,
-  },
+  // {
+  //   value: 'in progress',
+  //   icon: FaPersonRunning,
+  // },
   {
     value: 'error',
     icon: FcHighPriority,
@@ -2945,11 +2981,11 @@ export const statuses = [
     icon: FaExclamationTriangle,
     styles: 'font-extrabold text-pink-700',
   },
-  {
-    value: 'in progress',
-    icon: FaPersonRunning,
-    styles: 'font-extrabold text-blue-700',
-  },
+  // {
+  //   value: 'in progress',
+  //   icon: FaPersonRunning,
+  //   styles: 'font-extrabold text-blue-700',
+  // },
   {
     value: 'error',
     icon: FcHighPriority,
@@ -2971,5 +3007,358 @@ export const processDepoWd = [
     value: 'no',
     icon: GiCrossMark,
     styles: 'text-gray-500',
+  },
+];
+
+export const adminLinks = [
+  {
+    // icon: BiHome,
+    label: 'Home',
+    href: `/`,
+    className: ' p-0 m-0 hidden',
+  },
+  {
+    // icon: FcCurrencyExchange,
+    label: 'Deposit',
+    href: `/dashboard/admin/deposits`,
+    modal: 'depo',
+    className:
+      'text-xs font-semibold  rounded-l-full px-6 py-2 cursor-pointer hover:shadow-md hover:bg-emerald-50',
+  },
+  {
+    // icon: FcMoneyTransfer,
+    label: 'WD',
+    href: `/dashboard/admin/wds`,
+    modal: 'wd',
+    className:
+      'hidden sm:block text-xs py-2 font-semibold px-6 border-x-[1px] flex-1 text-center cursor-pointer hover:shadow-md hover:bg-emerald-50',
+  },
+  {
+    // icon: FcNews,
+    label: 'Berita',
+    href: `/posts`,
+    modal: '',
+    className:
+      'hidden whitespace-nowrap sm:block text-xs font-semibold px-6 py-2 border-x-[1px] flex-1 text-center  md:hidden lg:block cursor-pointer hover:shadow-md hover:bg-emerald-50',
+  },
+  {
+    // icon: FcDataSheet,
+    label: 'Jadwal',
+    href: `/soccer`,
+    modal: '',
+    className:
+      'hidden whitespace-nowrap sm:block text-xs font-semibold px-6 py-2 border-x-[1px] flex-1 text-center  md:hidden lg:block cursor-pointer hover:shadow-md hover:bg-emerald-50',
+  },
+  {
+    // icon: FcCalendar,
+    label: 'Input-Jadwal',
+    href: `/dashboard/admin/schedules`,
+    modal: 'add-schedule',
+    className:
+      'hidden whitespace-nowrap sm:block text-xs font-semibold px-6 py-2 border-x-[1px] flex-1 text-center  md:hidden lg:block cursor-pointer hover:shadow-md hover:bg-emerald-50',
+  },
+  {
+    // icon: FcTemplate,
+    label: 'New-Post',
+    href: '/dashboard/admin/posts',
+    modal: 'post',
+    className:
+      'hidden whitespace-nowrap sm:block text-xs font-semibold px-6 py-2 border-x-[1px] flex-1 text-center  md:hidden lg:block cursor-pointer hover:shadow-md hover:bg-emerald-50',
+  },
+  {
+    // icon: FcTemplate,
+    label: 'New-Topic',
+    href: `/dashboard/admin/topics`,
+    modal: 'topic',
+    className:
+      'hidden whitespace-nowrap sm:block text-xs font-semibold px-6 py-2 border-x-[1px] flex-1 text-center  md:hidden lg:block cursor-pointer hover:shadow-md hover:bg-emerald-50',
+  },
+  {
+    // icon: UeFa,
+    label: 'Euro 2024',
+    href: `/euro`,
+    modal: '',
+    className:
+      'hidden whitespace-nowrap sm:block text-xs font-semibold px-6 py-2 border-x-[1px] flex-1 text-center  md:hidden lg:block cursor-pointer hover:shadow-md hover:bg-emerald-50',
+  },
+  {
+    // icon: FcPanorama,
+    label: 'Slider',
+    href: `/dashboard/admin/sliders`,
+    modal: 'add-slider',
+    className:
+      'hidden whitespace-nowrap sm:block text-xs font-semibold px-6 py-2 border-x-[1px] flex-1 text-center  md:hidden lg:block cursor-pointer hover:shadow-md hover:bg-emerald-50',
+  },
+  {
+    // icon: RiAdminLine,
+    label: 'Admin',
+    href: `/admin`,
+    modal: '',
+    className:
+      'hidden whitespace-nowrap sm:block text-xs font-semibold px-6 py-2 border-x-[1px] flex-1 text-center  md:hidden lg:block cursor-pointer hover:shadow-md hover:bg-emerald-50',
+  },
+  {
+    // icon: FaUser,
+    label: 'User Data',
+    href: `/dashboard/admin/users`,
+    modal: '',
+    className:
+      'hidden whitespace-nowrap sm:block text-xs font-semibold px-6 py-2 border-x-[1px] flex-1 text-center  md:hidden lg:block cursor-pointer hover:shadow-md hover:bg-emerald-50',
+  },
+  {
+    // icon: FaUser,
+    label: 'Member',
+    href: `/members`,
+    modal: '',
+    className:
+      'hidden whitespace-nowrap sm:block text-xs font-semibold px-6 py-2 border-x-[1px] flex-1 text-center  md:hidden lg:block cursor-pointer hover:shadow-md hover:bg-emerald-50',
+  },
+  {
+    // icon: BiMessageRoundedDots,
+    label: 'Messages',
+    // href: `/dashboard/admin/messages`,
+    href: (container: string) =>
+      `/dashboard/admin/messages?container=${container}`,
+    // href: `/dashboard/admin/messages?container=inbox`,
+    modal: '',
+    className:
+      'hidden whitespace-nowrap sm:block text-xs font-semibold px-6 py-2 border-x-[1px] flex-1 text-center  md:hidden lg:block cursor-pointer hover:shadow-md hover:bg-emerald-50',
+  },
+  {
+    // icon: BiMessageRoundedDots,
+    label: 'Dashboard',
+    href: `/dashboard`,
+    modal: '',
+    className:
+      'hidden whitespace-nowrap sm:block text-xs font-semibold px-6 py-2 border-x-[1px] flex-1 text-center  md:hidden lg:block cursor-pointer hover:shadow-md hover:bg-emerald-50',
+  },
+  {
+    // icon: TbScoreboard,
+    label: 'Livescore',
+    href: '/dashboard/livescore',
+    modal: '',
+    className:
+      'hidden sm:block text-xs bg-slate-50 rounded-r-full py-2  font-semibold px-6 border-x-[1px] flex-1 text-center cursor-pointer h-full hover:shadow-md hover:bg-emerald-50',
+  },
+];
+export const userLinks = [
+  {
+    // icon: BiHome,
+    label: 'Home',
+    href: `/`,
+    className: ' p-0 m-0 hidden',
+  },
+  {
+    // icon: FcCurrencyExchange,
+    label: 'Deposit',
+    href: `/dashboard/deposit`,
+    modal: 'depo',
+    className:
+      'text-xs font-semibold  rounded-l-full px-6 py-2 cursor-pointer hover:shadow-md hover:bg-emerald-50',
+  },
+  {
+    // icon: FcMoneyTransfer,
+    label: 'WD',
+    href: `/dashboard/wds`,
+    modal: 'wd',
+    className:
+      'hidden sm:block text-xs py-2 font-semibold px-6 border-x-[1px] flex-1 text-center cursor-pointer hover:shadow-md hover:bg-emerald-50',
+  },
+  {
+    // icon: FcNews,
+    label: 'Berita',
+    href: `/posts`,
+    className:
+      'hidden whitespace-nowrap sm:block text-xs font-semibold px-6 py-2 border-x-[1px] flex-1 text-center  md:hidden lg:block cursor-pointer hover:shadow-md hover:bg-emerald-50',
+  },
+  {
+    // icon: FcDataSheet,
+    label: 'Jadwal',
+    href: `/soccer`,
+    className:
+      'hidden whitespace-nowrap sm:block text-xs font-semibold px-6 py-2 border-x-[1px] flex-1 text-center  md:hidden lg:block cursor-pointer hover:shadow-md hover:bg-emerald-50',
+  },
+
+  {
+    // icon: UeFa,
+    label: 'Euro 2024',
+    href: `/euro`,
+    className:
+      'hidden whitespace-nowrap sm:block text-xs font-semibold px-6 py-2 border-x-[1px] flex-1 text-center  md:hidden lg:block cursor-pointer hover:shadow-md hover:bg-emerald-50',
+  },
+  {
+    // icon: FaUser,
+    label: 'User Data',
+    href: `/users`,
+    className:
+      'hidden whitespace-nowrap sm:block text-xs font-semibold px-6 py-2 border-x-[1px] flex-1 text-center  md:hidden lg:block cursor-pointer hover:shadow-md hover:bg-emerald-50',
+  },
+  {
+    // icon: BiMessageRoundedDots,
+    label: 'Messages',
+    // href: `/dashboard/messages`,
+    href: (container: string) => `/dashboard/messages?container=${container}`,
+    className:
+      'hidden whitespace-nowrap sm:block text-xs font-semibold px-6 py-2 border-x-[1px] flex-1 text-center  md:hidden lg:block cursor-pointer hover:shadow-md hover:bg-emerald-50',
+  },
+  {
+    // icon: FaUser,
+    label: 'Member',
+    href: `/members`,
+    className:
+      'hidden whitespace-nowrap sm:block text-xs font-semibold px-6 py-2 border-x-[1px] flex-1 text-center  md:hidden lg:block cursor-pointer hover:shadow-md hover:bg-emerald-50',
+  },
+  {
+    // icon: BiMessageRoundedDots,
+    label: 'Dashboard',
+    href: `/dashboard`,
+    modal: '',
+    className:
+      'hidden whitespace-nowrap sm:block text-xs font-semibold px-6 py-2 border-x-[1px] flex-1 text-center  md:hidden lg:block cursor-pointer hover:shadow-md hover:bg-emerald-50',
+  },
+  {
+    // icon: TbScoreboard,
+    label: 'Livescore',
+    href: '/dashboard/livescore',
+    className:
+      'hidden sm:block text-xs bg-slate-50 rounded-r-full py-2  font-semibold px-6 border-x-[1px] flex-1 text-center cursor-pointer h-full hover:shadow-md hover:bg-emerald-50',
+  },
+];
+
+export const dashboardCardItems = [
+  {
+    title: 'Posts',
+    // icon: <Newspaper className='text-slate-500' size={72} />,
+    icon: Newspaper,
+    count: 100,
+  },
+  {
+    title: 'Categories',
+    // icon: <Folder className='text-slate-500' size={72} />,
+    icon: Folder,
+    count: 12,
+  },
+  {
+    title: 'Users',
+    // icon: <User className='text-slate-500' size={72} />,
+    icon: User,
+    count: 750,
+  },
+  {
+    title: 'Deposits',
+    // icon: <User className='text-slate-500' size={72} />,
+    icon: Banknote,
+    count: 150,
+  },
+  {
+    title: 'Wds',
+    // icon: <User className='text-slate-500' size={72} />,
+    icon: HandCoins,
+    count: 250,
+  },
+  {
+    title: 'Comments',
+    // icon: <MessageCircle className='text-slate-500' size={72} />,
+    icon: MessageCircle,
+    count: 1200,
+  },
+];
+
+export const dashboardUserMenu = [
+  {
+    title: 'Dashboard',
+    icon: LayoutDashboard,
+    link: '/dashboard',
+  },
+  {
+    title: 'Posts',
+    icon: Newspaper,
+    link: '/dashboard/posts',
+  },
+  {
+    title: 'Categories',
+    icon: Folder,
+    link: '/dashboard/categories',
+  },
+  {
+    title: 'Deposits',
+    icon: BadgeDollarSign,
+    link: (userId: string) => `/dashboard/deposit/${userId}`,
+  },
+  {
+    title: 'Wds',
+    icon: HandCoins,
+    link: (userId: string) => `/dashboard/wds/${userId}`,
+  },
+  {
+    title: 'Messages',
+    icon: MessageCircleMore,
+    // link: '/dashboard/messages',
+    link: (container: string) => `/dashboard/messages?container=${container}`,
+  },
+];
+export const dashboardSettingMenu = [
+  {
+    title: 'Profile',
+    icon: UserCog2,
+    link: '/dashboard/members/profile',
+    shortcut: '⌘P',
+  },
+  {
+    title: 'Billing',
+    icon: CreditCard,
+    link: '/dashboard/members/billings',
+    shortcut: '⌘B',
+  },
+  {
+    title: 'Settings',
+    icon: Settings,
+    link: '/dashboard/members/settings',
+    shortcut: '⌘S',
+  },
+];
+
+export const dashboardAdminMenu = [
+  {
+    title: 'Deposits',
+    icon: CircleDollarSign,
+    link: '/dashboard/admin/deposits',
+  },
+  {
+    title: 'Wds',
+    icon: Banknote,
+    link: '/dashboard/admin/wds',
+  },
+  {
+    title: 'Posts',
+    icon: Newspaper,
+    link: '/dashboard/admin/posts',
+  },
+  {
+    title: 'Schedules',
+    icon: CalendarDays,
+    link: '/dashboard/admin/schedules',
+  },
+  {
+    title: 'Topics',
+    icon: ListChecks,
+    link: '/dashboard/admin/topics',
+  },
+  {
+    title: 'Sliders',
+    icon: Image,
+    link: '/dashboard/admin/sliders',
+  },
+  {
+    title: 'Messages',
+    icon: MessageSquareMore,
+    // link: `/dashboard/admin/messages`,
+    link: (container: string) =>
+      `/dashboard/admin/messages?container=${container}`,
+  },
+  {
+    title: 'Users',
+    icon: Users2,
+    link: '/dashboard/admin/users',
   },
 ];

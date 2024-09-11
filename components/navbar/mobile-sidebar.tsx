@@ -3,7 +3,7 @@
 import { FcMenu } from 'react-icons/fc';
 import { SheetTrigger, SheetContent, Sheet } from '../ui/sheet';
 import Sidebar from './sidebar';
-import { RoutesProps } from '@/types';
+import { RoutesProps } from '@/types/types';
 
 type MobileSidebarProps = {
   routes: RoutesProps[];

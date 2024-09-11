@@ -14,7 +14,7 @@ import toast from 'react-hot-toast';
 import { Schedule } from '@prisma/client';
 import useModal from '@/hooks/use-modal';
 import { useSession } from 'next-auth/react';
-import { FixtureProps } from '@/types';
+import { FixtureProps } from '@/types/types';
 
 type CellActionProps = {
   data: FixtureProps | any;

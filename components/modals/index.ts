@@ -1,7 +1,7 @@
 import AddPostModal from './add-post-modal';
 import AuthModal from './auth-modal';
 import DeleteModal from './delete-modal';
-import DepositWdModal from './deposit-wd-modal';
+// import DepositWdModal from './deposit-wd-modal';
 import EuroModal from './euro-modal';
 import LiveScoreModal from './live-score-modal';
 import Modal from './modal';
@@ -16,7 +16,7 @@ export {
   AddPostModal,
   AuthModal,
   DeleteModal,
-  DepositWdModal,
+  // DepositWdModal,
   LiveScoreModal,
   Modal,
   NoUserModal,

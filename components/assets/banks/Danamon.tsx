@@ -359,20 +359,15 @@ import * as React from 'react';
 type IconProps = {
   className?: string;
 };
-export const Danamon = ({ className }: IconProps, props: any) => (
+export const Danamon = ({ className }: IconProps) => (
   <svg
     xmlns='http://www.w3.org/2000/svg'
     xmlSpace='preserve'
     id='layer'
     x={0}
     y={0}
-    style={{
-      enableBackground: 'new -153-46 652 652',
-    }}
     className={cn('w-6 h-auto', className)}
-    viewBox='-153 -46 652 652'
-    {...props}
-  >
+    viewBox='-153 -46 652 652'>
     <style>{'.st0{fill:#ea5504}.st1{fill:#fcc800}.st2{fill:#f39700}'}</style>
     <path d='M-131.3 201.1v43.1h97.8v-23.1z' className='st0' />
     <path d='m77.7 244.2-111.2-43.1v20.1z' className='st1' />

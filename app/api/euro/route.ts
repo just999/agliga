@@ -6,7 +6,6 @@ import { ObjectId } from 'mongodb';
 import getCurrentUser from '@/actions/get-user';
 
 import { NextApiRequest, NextApiResponse } from 'next';
-import { EuroTeamSubGroupProps } from '@/types';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   // Run the cors middleware

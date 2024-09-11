@@ -1,5 +1,3 @@
-'use client';
-
 import Link from 'next/link';
 import Logo from './navbar/logo';
 
@@ -24,14 +22,11 @@ const Footer = () => {
             <li>
               <Link href='/'>Terms of Service</Link>
             </li>
-            {/* <li>
-              <Link href='/sitemap'>Sitemap</Link>
-            </li> */}
           </ul>
         </div>
         <div>
           <p className='flex flex-row  items-center justify-center gap-1 text-sm text-gray-500 mt-2 md:mt-0'>
-            © {currentYear}{' '}
+            © {currentYear}
             <Logo
               className='w-10 h-auto '
               styles={{ width: '8%', height: 'auto' }}

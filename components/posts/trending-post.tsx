@@ -1,7 +1,7 @@
 'use client';
 
 import './trendingPost.css';
-import { PostProps } from '@/types';
+import { PostProps } from '@/types/types';
 import { EB_Garamond } from 'next/font/google';
 
 import Link from 'next/link';

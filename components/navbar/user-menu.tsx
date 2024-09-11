@@ -3,13 +3,14 @@
 import { AiOutlineMenu } from 'react-icons/ai';
 import Avatar from '../avatar';
 
-import { RoutesProps, SafeUser } from '@/types';
+import { RoutesProps, SafeUser } from '@/types/types';
 import useModal from '@/hooks/use-modal';
 import { useClickOutside } from '@/hooks/use-click-outside';
 
 import { PiUserCirclePlusLight } from 'react-icons/pi';
 
 import SidebarRoutes from './sidebar-routes';
+import { useEffect, useState } from 'react';
 
 type UserMenuProps = {
   currentUser?: SafeUser | null;
@@ -18,7 +19,7 @@ type UserMenuProps = {
 };
 
 const UserMenu = ({ currentUser, status, routes }: UserMenuProps) => {
-  // const { data: session, status } = useSession();
+  const [userStatus, setUserStatus] = useState<string>();
   const { toggle, isToggle, onOpen } = useModal();
 
   const ref = useClickOutside(() => {
@@ -27,14 +28,17 @@ const UserMenu = ({ currentUser, status, routes }: UserMenuProps) => {
     }
   });
 
+  useEffect(() => {
+    if (status) setUserStatus(status);
+  }, [status]);
+
   return (
     <div className='relative ' ref={ref}>
       <div className='flex flex-row items-center gap-3 '>
-        {status !== 'authenticated' && (
+        {userStatus === 'unauthenticated' && (
           <div
             onClick={() => onOpen('register')}
-            className='hidden   md:block  text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 hover:shadow-md  transition cursor-pointer '
-          >
+            className='hidden   md:block  text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 hover:shadow-md  transition cursor-pointer '>
             <span className=' flex flex-row gap-1 items-center justify-end '>
               <PiUserCirclePlusLight size={20} />
               <span>Daftar</span>
@@ -43,10 +47,9 @@ const UserMenu = ({ currentUser, status, routes }: UserMenuProps) => {
         )}
         <div
           onClick={() => toggle(isToggle)}
-          className='p-4 md:py-2 md:px-3 border-[1px]  border-neutral-200 flex flex-row items-center gap-3 rounded-full cursor-pointer hover:shadow-md hover:bg-neutral-100 transition'
-        >
+          className='p-4 md:py-2 md:px-3 border-[1px]  border-neutral-200 flex flex-row items-center gap-3 rounded-full cursor-pointer hover:shadow-md hover:bg-neutral-100 transition'>
           <AiOutlineMenu />
-          {status === 'authenticated' && (
+          {userStatus === 'authenticated' && (
             <div className='hidden md:block '>
               <Avatar src={currentUser?.image} />
             </div>

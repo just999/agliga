@@ -4,6 +4,9 @@ import { PrismaAdapter } from '@auth/prisma-adapter';
 import { db } from './lib/db';
 import { getUserById } from './actions/get-user';
 import { getTwoFactorConfirmationByUserId } from './lib/auth-token/get-two-factor-confirmation';
+import { Role } from '@prisma/client';
+import { UserProps } from './types/types';
+import { Adapter } from 'next-auth/adapters';
 
 const test = process.env.AUTH_SECRET;
 export const {
@@ -39,32 +42,32 @@ export const {
     //   return true;
     // },
     async session({ token, session }) {
-      // console.log({ token, session });
-
       if (token.sub && session.user) {
         session.user.id = token.sub;
+        session.user.profileComplete = token.profileComplete as boolean;
+        session.user.role = token.role as Role;
       }
 
       if (token.curUser && session.user) {
-        session.user.curUser = token.curUser;
+        session.user.curUser = token.curUser as UserProps;
       }
       return session;
     },
-    async jwt({ token, user, profile }) {
-      // console.log({ token });
-
-      if (!token.sub) return token;
-      token.customField = 'test';
-
+    async jwt({ user, token, profile }) {
       const curUser = await getUserById(token.sub);
       if (!curUser) return token;
 
-      // token.role = curUser.role;
+      if (user) {
+        token.profileComplete = user.profileComplete;
+        token.role = user.role;
+      }
       token.curUser = curUser;
+      token.name = curUser.name;
+      token.picture = curUser.image;
       return token;
     },
   },
-  adapter: PrismaAdapter(db),
+  adapter: PrismaAdapter(db) as unknown as Adapter,
   session: { strategy: 'jwt' },
   ...authConfig,
 });

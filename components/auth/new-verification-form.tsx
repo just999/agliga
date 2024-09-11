@@ -35,11 +35,9 @@ const NewVerificationForm = () => {
     <CardWrapper
       headerLabel='Confirming your verification'
       backButtonLabel='Back to login'
-      backButtonHref='/auth/login'
-    >
+      backButtonHref='/login'>
       <div className='flex items-center w-full justify-center'>
         {!success && !error && <BeatLoader />}
-
         <FormSuccess message={success} />
         <FormError message={error} />
       </div>

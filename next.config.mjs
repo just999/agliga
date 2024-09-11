@@ -1,5 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    staleTimes: {
+      dynamic: 0,
+    },
+  },
   images: {
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [
@@ -35,7 +40,6 @@ const nextConfig = {
       },
     ],
   },
-  reactStrictMode: true,
   async headers() {
     return [
       {
@@ -56,6 +60,10 @@ const nextConfig = {
           {
             key: 'Content-Security-Policy',
             value: `script-src 'self' 'unsafe-eval' https://freelive.7msport.com;`,
+          },
+          {
+            key: 'Content-Security-Policy',
+            value: "frame-ancestors 'self' https://allowed-domain.com;",
           },
         ],
       },

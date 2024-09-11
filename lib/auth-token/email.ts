@@ -1,8 +1,13 @@
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const key = process.env.RESEND_API_KEY;
+if (!key || key === undefined) throw new Error('send key not found');
 
-const domain = process.env.NEXT_PUBLIC_APP_URL;
+const resend = new Resend(key);
+
+const domain = process.env.NEXT_PUBLIC_DOMAIN;
+
+if (!domain || domain === undefined) throw new Error('no url link found');
 
 export const sendTwoFactorTokenEmail = async (email: string, token: string) => {
   await resend.emails.send({
@@ -13,13 +18,41 @@ export const sendTwoFactorTokenEmail = async (email: string, token: string) => {
   });
 };
 
+// export const sendVerificationEmail = async (email: string, token: string) => {
+//   const confirmLinkUrl = `${domain}/auth/new-verification?token=${token}`;
+
+//   await resend.emails.send({
+//     from: 'onboarding@resend.dev',
+//     to: email,
+//     subject: 'Confirm your email',
+//     html: `<p>Click <a href='${confirmLinkUrl}'>here</a> to confirm email  </p>`,
+//   });
+// };
+
 export const sendVerificationEmail = async (email: string, token: string) => {
-  const confirmLinkUrl = `${domain}/auth/new-verification?token=${token}`;
+  const link = `${domain}/verify-email?token=${token}`;
 
   await resend.emails.send({
     from: 'onboarding@resend.dev',
     to: email,
-    subject: 'Confirm your email',
-    html: `<p>Click <a href='${confirmLinkUrl}'>here</a> to confirm email  </p>`,
+    subject: 'Verify your email address',
+    html: `<h1>Verify your emil address</h1>
+           <p>Click the link to verify your email address </p>
+          <a href='${link}'>Verify email</a>
+          `,
+  });
+};
+
+export const sendPasswordResetEmail = async (email: string, token: string) => {
+  const link = `${domain}/reset-password?token=${token}`;
+
+  await resend.emails.send({
+    from: 'onboarding@resend.dev',
+    to: email,
+    subject: 'Reset your password',
+    html: `<h1>You have requested reset password </h1>
+           <p>Click the link to reset password </p>
+          <a href='${link}'>Reset password</a>
+          `,
   });
 };

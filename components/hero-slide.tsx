@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 
 type HeroSlideProps = {
@@ -17,8 +16,7 @@ const HeroSlide = ({ slide }: HeroSlideProps) => {
     <Link
       href='/'
       className='img-bg absolute inset-0 bg-cover bg-center'
-      style={{ backgroundImage: `url(${slide})` }}
-    >
+      style={{ backgroundImage: `url(${slide})` }}>
       {/* <Image
         src={slide.bgImg}
         alt='slice'

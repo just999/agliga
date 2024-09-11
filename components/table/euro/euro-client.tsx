@@ -9,7 +9,7 @@ import {
   EuroProps,
   EuroWithIconProps,
   FixtureProps,
-} from '@/types';
+} from '@/types/types';
 import { useEffect, useState } from 'react';
 import React from 'react';
 

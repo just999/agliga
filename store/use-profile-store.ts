@@ -1,4 +1,4 @@
-import { PostProps, ProfileProps } from '@/types';
+import { PostProps, ProfileProps } from '@/types/types';
 import { create } from 'zustand';
 
 type ProfileState = {

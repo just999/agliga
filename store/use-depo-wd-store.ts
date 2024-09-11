@@ -1,4 +1,4 @@
-import { DepoProps, WdProps } from '@/types';
+import { DepoProps, WdProps } from '@/types/types';
 import { create } from 'zustand';
 
 type DepoWdState = {

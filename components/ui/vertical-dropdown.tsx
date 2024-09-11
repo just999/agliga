@@ -10,7 +10,7 @@ import {
 import { MoreVertical } from 'lucide-react';
 import { Button } from '../ui/button';
 
-import { PostProps, SafeUser } from '@/types';
+import { PostProps, SafeUser } from '@/types/types';
 
 // import useFavoriteStore from '@/store/use-favorite-store';
 import { BsTrash, BsPen } from 'react-icons/bs';

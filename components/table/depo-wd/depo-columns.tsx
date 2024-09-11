@@ -20,7 +20,7 @@ import { cn, noto, numberWithCommas, poppins } from '@/lib/utils';
 
 import { Button } from '@/components/ui/button';
 import { ArrowUpDown } from 'lucide-react';
-import { Depo, DepoProps, DepoWdProps } from '@/types';
+import { Depo, DepoProps, DepoWdProps } from '@/types/types';
 import { banks, games, statuses } from '@/lib/helper';
 
 import CellDepoWdActions from './cell-depo-wd-actions';

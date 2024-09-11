@@ -18,10 +18,11 @@ import { useRouter } from 'next/navigation';
 
 import useBanks from '@/hooks/use-banks';
 
-import SelectInput from '../select-input';
+import SelectInput from '../ui/select-input';
 import useGames from '@/hooks/use-games';
 import { Button } from '../ui/button';
 import { BsEye, BsEyeSlash } from 'react-icons/bs';
+import { register as registerUser } from '@/actions/auth-actions';
 // import BankSelect from '../select-input';
 
 // const bankOptions = banks.map((bank) => ({
@@ -100,29 +101,37 @@ const AuthModal = () => {
   };
 
   if (!isMounted) return null;
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+  const onSubmit: SubmitHandler<FieldValues> = async (data: any) => {
     setIsLoading(true);
 
     if (modalType === 'register') {
-      axios
-        .post('/api/register', data)
-        .then(() => {
-          toast.success('user successfully registered');
-          onClose();
-        })
-        .catch((error) => {
-          toast.error('Something Went Wrong');
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
+      // axios
+      //   .post('/api/register', data)
+      //   .then(() => {
+      //     toast.success('user successfully registered');
+      //     onClose();
+      //   })
+      //   .catch((error) => {
+      //     toast.error('Something Went Wrong');
+      //   })
+      //   .finally(() => {
+      //     setIsLoading(false);
+      //   });
+      const res = await registerUser(data);
+
+      if (res.status === 'success') {
+        router.push('/members');
+        router.refresh();
+      } else {
+        toast.error(res.error as string);
+      }
     }
 
     if (modalType === 'login') {
       signIn('credentials', {
         ...data,
         redirect: false,
-      }).then((callback) => {
+      }).then((callback: any) => {
         setIsLoading(false);
 
         if (callback?.ok) {
@@ -131,7 +140,7 @@ const AuthModal = () => {
           onClose();
         }
 
-        if (callback?.error) {
+        if (callback?.error === 'AccessDenied') {
           toast.error(callback.error);
         }
       });
@@ -210,8 +219,7 @@ const AuthModal = () => {
               isPasswordVisible ? 'show' : ''
             }`}
             onClick={handleToggleVisibility}
-            aria-label={isPasswordVisible ? 'Hide password' : 'Show password'}
-          >
+            aria-label={isPasswordVisible ? 'Hide password' : 'Show password'}>
             {isPasswordVisible ? (
               <BsEyeSlash className='h-5 w-5' />
             ) : (
@@ -335,8 +343,7 @@ const AuthModal = () => {
           className='text-xs '
           // label='Continue with Google'
           // icon={FcGoogle}
-          onClick={() => signIn('google')}
-        >
+          onClick={() => signIn('google')}>
           <FcGoogle className='mr-2 ' size={20} />
           Login with Google
         </Button>
@@ -345,8 +352,7 @@ const AuthModal = () => {
           className='text-xs '
           // label='Continue with Github'
           // icon={AiFillGithub}
-          onClick={() => signIn('github')}
-        >
+          onClick={() => signIn('github')}>
           <AiFillGithub className='mr-2 ' size={20} />
           Login with Github
         </Button>
@@ -355,8 +361,7 @@ const AuthModal = () => {
           className='text-xs '
           // label='Continue with Github'
           // icon={AiFillGithub}
-          onClick={() => signIn('facebook')}
-        >
+          onClick={() => signIn('facebook')}>
           <ImFacebook2 className='mr-2 text-[#3b5999] ' size={20} />
           Login with Facebook
         </Button>
@@ -395,8 +400,7 @@ const AuthModal = () => {
                     onOpen('register');
                   }
             }
-            className='text-neutral-800 cursor-pointer hover:underline '
-          >
+            className='text-neutral-800 cursor-pointer hover:underline '>
             {modalType === 'register' ? 'Login' : 'Daftar'}
           </div>
         </div>

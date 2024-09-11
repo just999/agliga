@@ -2,7 +2,7 @@
 
 import { useFavorite } from '@/hooks/use-favorite';
 import { cn } from '@/lib/utils';
-import { SafeUser } from '@/types';
+import { SafeUser } from '@/types/types';
 
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 

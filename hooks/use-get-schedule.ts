@@ -11,7 +11,7 @@ import { fetchSchedule, fetchScheduleById } from '@/lib/queries/schedule';
 import useEuroStore from '@/store/use-euro-store';
 import useFixturesStore from '@/store/use-fixture-store';
 import useSchedulesStore from '@/store/use-schedule-store';
-import { EuroWithIconProps } from '@/types';
+import { EuroWithIconProps } from '@/types/types';
 import { id } from 'date-fns/locale';
 
 import { useEffect } from 'react';

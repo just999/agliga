@@ -64,7 +64,7 @@ import {
   EuroWithIconProps,
   tabsAdmin,
   WdProps,
-} from '@/types';
+} from '@/types/types';
 import { EPL } from '../assets/sports';
 
 import Periods from '../soccer/periods';

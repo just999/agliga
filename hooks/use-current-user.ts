@@ -1,11 +1,9 @@
 'use client';
 
 import getCurrentUser from '@/actions/get-user';
+import { getUserById } from '@/actions/user-actions';
 
-import { auth } from '@/auth'; // Assuming this imports your NextAuth.js session provider
-import { db } from '@/lib/db'; // Assuming this imports your Prisma client
-
-import { User } from 'next-auth';
+import { User } from '@prisma/client';
 
 import { useEffect, useState } from 'react';
 
@@ -25,7 +23,7 @@ const useCurrentUser = () => {
     const fetchCurrentUser = async () => {
       try {
         setIsLoading(true);
-        const res = await getCurrentUser();
+        const res = (await getCurrentUser()) as any;
         if (!res) throw new Error('Failed to fetch user');
         setCurrentUser(currentUser);
       } catch (err: any) {
@@ -43,3 +41,29 @@ const useCurrentUser = () => {
 };
 
 export default useCurrentUser;
+
+export const useUserByUserId = (userId: string) => {
+  const [user, setUser] = useState<User | undefined>(undefined);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        setIsLoading(true);
+        const res = await getUserById(userId);
+        if (!res) throw new Error('Failed to fetch user');
+        setUser(res);
+      } catch (err: any) {
+        console.error('error fetching data', err);
+        setError('Failed');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchUser();
+  }, [setUser, setIsLoading, setError]);
+
+  return { error, user, isLoading };
+};

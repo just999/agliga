@@ -1,6 +1,6 @@
 'use client';
 
-import { PostProps } from '@/types';
+import { PostProps } from '@/types/types';
 import Link from 'next/link';
 import { BsDot } from 'react-icons/bs';
 import PostAuthor from './post-author';

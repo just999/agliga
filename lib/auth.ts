@@ -3,12 +3,17 @@ import { auth } from '@/auth';
 export const currentUser = async () => {
   const session = await auth();
 
-  return session?.user;
+  return session?.user.curUser;
+};
+export const useGetUserId = async () => {
+  const session = await auth();
+
+  return session?.user.id;
 };
 
-export const currentRole = async () => {
+export const userRole = async () => {
   const session = await auth();
   if (!session) throw new Error('No session');
 
-  return session?.user?.curUser.role;
+  return session?.user?.role;
 };

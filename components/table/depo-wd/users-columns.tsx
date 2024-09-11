@@ -6,7 +6,7 @@ import { cn, noto, numberWithCommas } from '@/lib/utils';
 
 import { Button } from '@/components/ui/button';
 import { ArrowUpDown } from 'lucide-react';
-import { Depo, DepoWdProps, WdProps } from '@/types';
+import { Depo, DepoWdProps, WdProps } from '@/types/types';
 import { banks, games, statuses } from '@/lib/helper';
 
 import { User } from '@prisma/client';

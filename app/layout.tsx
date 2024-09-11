@@ -22,7 +22,7 @@ import {
   SoccerModal,
   LiveScoreModal,
   DeleteModal,
-  DepositWdModal,
+  // DepositWdModal,
   PostModal,
   SliderModal,
   NoUserModal,
@@ -33,6 +33,9 @@ import {
 import FixtureModal from '@/components/modals/fixture-modal';
 import DepoWdProcessModal from '@/components/modals/depo-wd-process-modal';
 import UserActiveModal from '@/components/modals/user-active-modal';
+import TopNav from '@/components/navbar/top-nav';
+import NewWidget from '@/components/chat/new-widget';
+import Providers from '@/components/providers/providers';
 
 // import EuroModal from '@/components/modals/euro-modal';
 
@@ -52,46 +55,53 @@ export default async function RootLayout({
   children,
   className,
 }: Readonly<RootLayoutProps>) {
-  const currentUser = await getCurrentUser();
   const session = await auth();
 
+  const userId = session?.user.id || null;
+
+  const profileComplete = session?.user.profileComplete as boolean;
+
   return (
-    <SessionProvider session={session}>
-      <html lang='en' className='relative'>
-        <body
-          className={cn(
-            'flex flex-col   overflow-x-hidden ',
-            inter.className,
-            className
-          )}
-          suppressHydrationWarning={true}
-        >
-          <GoogleCaptchaWrapper>
-            <ToasterProvider />
-            <UserActiveModal />
-            <DepoWdProcessModal />
-            <FixtureModal />
-            <EuroModal />
-            <UserProfileModal />
-            <SoccerModal />
-            <TopicModal />
-            <LiveScoreModal />
-            <DeleteModal />
-            <DepositWdModal />
-            <PostModal />
-            {/* <AddPostModal /> */}
-            <SliderModal />
-            {/* <SearchModal /> */}
-            <NoUserModal />
-            <AuthModal />
-            <Navbar currentUser={currentUser} />
-            <div className='pb-20 flex-1'>{children}</div>
-            <div>
+    <html lang='en' className='relative'>
+      <body
+        className={cn(
+          'flex flex-col   overflow-x-hidden ',
+          inter.className,
+          className
+        )}
+        suppressHydrationWarning>
+        <SessionProvider session={session}>
+          <Providers userId={userId} profileComplete={profileComplete}>
+            <GoogleCaptchaWrapper>
+              <ToasterProvider />
+              <UserActiveModal />
+              <DepoWdProcessModal />
+              <FixtureModal />
+              <EuroModal />
+              {/* <UserProfileModal /> */}
+              <SoccerModal />
+              <TopicModal />
+              <LiveScoreModal />
+              <DeleteModal />
+              {/* <DepositWdModal /> */}
+              <PostModal />
+              {/* <AddPostModal /> */}
+              <SliderModal />
+              {/* <SearchModal /> */}
+              <NoUserModal />
+              <AuthModal />
+              <TopNav />
+              {/* <Navbar currentUser={currentUser} /> */}
+              <div className='pb-20 flex-1'>{children}</div>
               <Footer />
-            </div>
-          </GoogleCaptchaWrapper>
-        </body>
-      </html>
-    </SessionProvider>
+              <div className='fixed flex w-13 h-13 m-0 p-0 bottom-4 right-2 z-9999'>
+                {/* <ChatWidget /> */}
+                <NewWidget />
+              </div>
+            </GoogleCaptchaWrapper>
+          </Providers>
+        </SessionProvider>
+      </body>
+    </html>
   );
 }

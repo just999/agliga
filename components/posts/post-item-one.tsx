@@ -10,7 +10,7 @@ import { Source_Serif_4 } from 'next/font/google';
 import { cn } from '@/lib/utils';
 import { BsDot } from 'react-icons/bs';
 import Loader from '../loader';
-import { PostProps, SafeUser } from '@/types';
+import { PostProps, SafeUser } from '@/types/types';
 
 import PostAuthor from './post-author';
 import VerticalDropdown from './vertical-dropdown';

@@ -1,11 +1,14 @@
-'use client';
-
-import Loader from '@/components/loader';
-
-type LoadingProps = {};
+import BarLoaderSpinner from '@/components/bar-loader-spinner';
 
 const Loading = () => {
-  return <Loader />;
+  return (
+    <BarLoaderSpinner
+      color='#ff790b'
+      width='100%'
+      height={4}
+      speedMultiplier={1}
+    />
+  );
 };
 
 export default Loading;

@@ -5,8 +5,7 @@ import DepoWdTabsActive from '@/components/table/depo-wd/depo-wd-tabs-active';
 
 import { fetchDepo, fetchWd } from '@/lib/queries/depo-wd';
 import { fetchUsers } from '@/lib/queries/users';
-
-import { tabsAdmin } from '@/types';
+import { tabsAdmin } from '@/types/types';
 
 type AdminPageProps = {};
 

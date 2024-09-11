@@ -3,7 +3,7 @@ import Container from '@/components/container';
 import DepoWdTabsActive from '@/components/table/depo-wd/depo-wd-tabs-active';
 import { fetchDepoByUserId, fetchWdByUserId } from '@/lib/queries/depo-wd';
 import { fetchUsers } from '@/lib/queries/users';
-import { tabsMember } from '@/types';
+import { tabsMember } from '@/types/types';
 
 type UsersPageProps = {};
 

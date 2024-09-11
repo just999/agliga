@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { BsDot, BsTrash, BsPen } from 'react-icons/bs';
 import { Button } from '../ui/button';
 import PostAuthor from './post-author';
-import { PostProps } from '@/types';
+import { PostProps } from '@/types/types';
 
 import CommentsList from './comments/comments-list';
 

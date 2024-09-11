@@ -1,7 +1,7 @@
 'use client';
 
 import { useSession } from 'next-auth/react';
-import { PostProps } from '@/types';
+import { PostProps } from '@/types/types';
 import VerticalDropdown from '../ui/vertical-dropdown';
 import { Slider } from '@prisma/client';
 

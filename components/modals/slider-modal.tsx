@@ -11,7 +11,7 @@ import toast from 'react-hot-toast';
 import { useParams, useRouter } from 'next/navigation';
 import useModal from '@/hooks/use-modal';
 import Images from '../candidate-form/images';
-import { InitialPostProps } from '@/types';
+import { InitialPostProps } from '@/types/types';
 import { useSliderImages } from '@/hooks/use-get-slider-images';
 import { useImageStore } from '@/store/use-image-store';
 import ClientOnly from '@/lib/client-only';

@@ -1,6 +1,6 @@
 'use client';
 
-import { PostProps } from '@/types';
+import { PostProps } from '@/types/types';
 import Image from 'next/image';
 
 type PostAuthorProps = {
@@ -30,7 +30,6 @@ const PostAuthor = ({ item }: PostAuthorProps) => {
       <div className='name text-xs flex '>
         &nbsp;By:
         <p className='m-0 p-0 text-xs white-space-nowrap  '>
-          {' '}
           &nbsp;{item.author}
         </p>
       </div>

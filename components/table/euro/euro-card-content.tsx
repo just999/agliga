@@ -8,7 +8,7 @@ import useModal from '@/hooks/use-modal';
 
 import { convertDateTime } from '@/lib/convert-date-time';
 import { cn, getMatchStatus, noto } from '@/lib/utils';
-import { EuroWithIconProps } from '@/types';
+import { EuroWithIconProps } from '@/types/types';
 import { useSession } from 'next-auth/react';
 
 import { BsTrashFill, BsPencilFill } from 'react-icons/bs';

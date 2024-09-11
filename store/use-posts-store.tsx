@@ -1,4 +1,4 @@
-import { PostProps } from '@/types';
+import { PostProps } from '@/types/types';
 import { create } from 'zustand';
 
 type PostState = {

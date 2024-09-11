@@ -13,14 +13,10 @@ import { Button } from '../ui/button';
 const Categories = () => {
   const params = useSearchParams();
   const category = params.get('category');
-  // const pathname = usePathname();
+
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
     Autoplay({ delay: 4000 }),
   ]);
-
-  // const isMainPage = pathname === '/soccer';
-
-  // if (!isMainPage) return null;
 
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev();
@@ -38,16 +34,14 @@ const Categories = () => {
           size='sm'
           type='button'
           className='embla__prev mr-2 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-110 duration-300 hover:bg-emerald-100  hover:text-orange-700'
-          onClick={scrollPrev}
-        >
+          onClick={scrollPrev}>
           <BsChevronDoubleLeft size={18} />
         </Button>
       </div>
       <div className='embla bg-zinc-50  border-x-2 border-orange-100'>
         <div
           className='container max-w-[1440px] shadow-inner pt-2 flex flex-row items-center justify-between  border-b-[1px] border-b-neutral-900/10 embla__viewport overflow-hidden'
-          ref={emblaRef}
-        >
+          ref={emblaRef}>
           <div className='flex-row rounded-md w-full embla__container'>
             {categories.map((cat) => (
               <CategoryBox
@@ -66,8 +60,7 @@ const Categories = () => {
           size='sm'
           type='button'
           className='embla__next ml-2 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-110 duration-300 hover:bg-emerald-100 hover:shadow-lg hover:text-orange-700'
-          onClick={scrollNext}
-        >
+          onClick={scrollNext}>
           <BsChevronDoubleRight size={18} />
         </Button>
       </div>

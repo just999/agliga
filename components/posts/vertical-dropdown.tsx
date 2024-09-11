@@ -10,7 +10,7 @@ import {
 import { MoreVertical } from 'lucide-react';
 import { Button } from '../ui/button';
 
-import { PostProps, SafeUser } from '@/types';
+import { PostProps, SafeUser } from '@/types/types';
 import { BiCommentDots, BiPencil } from 'react-icons/bi';
 import { useFavorite } from '@/hooks/use-favorite';
 

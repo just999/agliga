@@ -1,7 +1,7 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import { RoutesProps } from '@/types';
+import { RoutesProps } from '@/types/types';
 import Link from 'next/link';
 
 type UserMenuProps = {

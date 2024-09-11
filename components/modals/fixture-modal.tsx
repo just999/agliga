@@ -10,13 +10,13 @@ import toast from 'react-hot-toast';
 
 import { useRouter } from 'next/navigation';
 
-import SelectInput from '../select-input';
+import SelectInput from '../ui/select-input';
 
 import useModal from '@/hooks/use-modal';
 
 import { useWeeks, useTeams } from '@/hooks/use-teams';
 
-import { FixtureProps } from '@/types';
+import { FixtureProps } from '@/types/types';
 
 import { initialFixtureFormValues } from '@/lib/helper';
 import { usePenalty } from '@/hooks/use-euro';

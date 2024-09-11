@@ -2,7 +2,6 @@
 
 import { fetchUserById, fetchUsers } from '@/lib/queries/users';
 import useUserStore from '@/store/use-active-user-store';
-import { UserProps } from '@/types';
 
 import { useEffect } from 'react';
 

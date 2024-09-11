@@ -3,7 +3,7 @@
 import { ColumnDef } from '@tanstack/react-table';
 
 import { convertDateTime } from '@/lib/convert-date-time';
-import { EuroWithIconProps } from '@/types';
+import { EuroWithIconProps } from '@/types/types';
 import { cn, noto, orbit } from '@/lib/utils';
 import { ArrowUpDown, Edit, MoreHorizontal, Trash } from 'lucide-react';
 import { Button } from '@/components/ui/button';

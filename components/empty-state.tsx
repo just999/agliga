@@ -1,33 +1,27 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import Heading from './heading';
-import Btn from './ui/btn';
+import BackButton from './back-button';
+
+import HeadingLogo from './ui/heading-logo';
 
 type EmptyStateProps = {
   title: string;
   subtitle?: string;
   showReset?: boolean;
+  link: string;
 };
 
 const EmptyState = ({
   title = 'No exact matches',
   subtitle = 'Try changing or removing some of your filters',
   showReset,
+  link,
 }: EmptyStateProps) => {
-  const router = useRouter();
-
   return (
     <div className='h-[60vh] flex flex-col gap-2 justify-center items-center '>
-      <Heading center title={title} subtitle={subtitle} />
+      <HeadingLogo center title={title} subtitle={subtitle} />
       <div className='w-48 mt-4 '>
-        {showReset && (
-          <Btn
-            outline
-            label='Remove all filters'
-            onClick={() => router.push('/')}
-          />
-        )}
+        {showReset && <BackButton text='Go Back' link={link} />}
       </div>
     </div>
   );

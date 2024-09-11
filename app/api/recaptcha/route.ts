@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import axios from 'axios';
 
 export async function POST(request: Request, response: Response) {
-  const secretKey = process.env.NEXT_PUBLIC_RECAPTCHA_SECRET_KEY;
+  const secretKey = process.env.RECAPTCHA_SECRET_KEY;
 
   if (!secretKey) throw new Error('No secret key found!');
 

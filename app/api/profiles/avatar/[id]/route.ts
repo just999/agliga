@@ -42,13 +42,6 @@ export async function PUT(
   }
 
   let imageUploadPromises = [];
-
-  console.log(
-    '🚀 ~ image:',
-    images instanceof File,
-    images instanceof Blob,
-    images
-  );
   if (images instanceof File) {
     const imageBuffer = await images.arrayBuffer();
     const imageArray = Array.from(new Uint8Array(imageBuffer));
@@ -97,11 +90,11 @@ export async function PUT(
       status: 200,
     });
 
-    return new Response(JSON.stringify({ message: 'Success' }), {
-      status: 200,
-    });
+    // return new Response(JSON.stringify({ message: 'Success' }), {
+    //   status: 200,
+    // });
 
-    return Response.redirect(`${process.env.NEXTAUTH_URL}/posts/${id}`);
+    // return Response.redirect(`${process.env.NEXTAUTH_URL}/posts/${id}`);
   } catch (err) {
     return new Response(JSON.stringify({ message: 'Server Error' }), {
       status: 500,

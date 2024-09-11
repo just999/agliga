@@ -3,7 +3,7 @@
 import { db } from '@/lib/db';
 
 import { cache } from 'react';
-import { PostProps } from '@/types';
+import { PostProps } from '@/types/types';
 
 export type PostWithData = Post & {
   topic: { slug: string } | null;
@@ -12,17 +12,16 @@ export type PostWithData = Post & {
 };
 
 export const getPostByPostId = cache(async (id?: string) => {
+  if (!id) throw new Error('id no found');
   try {
-    if (!id) return;
-    const data = await db.post.findUnique({
+    return await db.post.findUnique({
       where: { id: id },
       include: {
         comments: true,
       },
     });
-    return data;
-  } catch (err: unknown) {
-    throw new Error('Something went wrong');
+  } catch (err) {
+    console.error(err);
   }
 });
 

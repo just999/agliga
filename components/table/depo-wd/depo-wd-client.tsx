@@ -11,7 +11,7 @@ import {
   DepoWdProps,
   DepoProps,
   WdProps,
-} from '@/types';
+} from '@/types/types';
 import React from 'react';
 
 import useLeague, { TeamStats } from '@/hooks/use-league';

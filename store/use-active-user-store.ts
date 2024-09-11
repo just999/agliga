@@ -1,4 +1,4 @@
-import { UserProps } from '@/types';
+import { UserProps } from '@/types/types';
 import { create } from 'zustand';
 
 // export type UserProps = {
@@ -20,15 +20,22 @@ export const userData: UserProps = {
   id: '',
   name: '',
   email: '',
-  active: null,
+  emailVerified: null,
   phone: '',
   bank: null,
   game: [],
   accountNumber: '',
   image: null,
   password: null,
+  hashedPassword: '',
+  profileComplete: false,
+  active: null,
   role: 'user',
+  createdAt: new Date(),
+  updatedAt: new Date(),
+  editorId: '',
   favoriteIds: [],
+  isTwoFactorEnabled: null,
 };
 
 type UserId = string;

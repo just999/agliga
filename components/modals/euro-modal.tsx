@@ -10,13 +10,13 @@ import toast from 'react-hot-toast';
 
 import { useRouter } from 'next/navigation';
 
-import SelectInput from '../select-input';
+import SelectInput from '../ui/select-input';
 
 import useModal from '@/hooks/use-modal';
 
 import { useGetEuros } from '@/hooks/use-get-schedule';
 
-import { EuroWithIconProps } from '@/types';
+import { EuroWithIconProps } from '@/types/types';
 
 import { initialEuroFormWithIconValues, team } from '@/lib/helper';
 import { useEuros, usePenalty } from '@/hooks/use-euro';

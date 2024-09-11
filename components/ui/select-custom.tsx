@@ -1,4 +1,4 @@
-import Image from 'next/image';
+'use client';
 import React, { Fragment, useState } from 'react';
 
 interface BankOptionsProps {
@@ -33,8 +33,7 @@ const SelectCustom: React.FC<Option> = ({
         id='select'
         value={selectedValue}
         onChange={handleChange}
-        className='w-full h-50'
-      >
+        className='w-full h-50'>
         {options.map((option, i) => (
           <Fragment key={option.value}>
             <option key={i} value={option.value}>

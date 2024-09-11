@@ -9,7 +9,7 @@ import { Schedule } from '@prisma/client';
 import useRunToggleStore from '@/store/use-table-store';
 import { useSearchParams } from 'next/navigation';
 import { runData } from '@/lib/helper';
-import { FixtureProps } from '@/types';
+import { FixtureProps } from '@/types/types';
 import { useGetFixtures } from '@/hooks/use-get-schedule';
 // import ApiList from '@/components/ui/api-list';
 

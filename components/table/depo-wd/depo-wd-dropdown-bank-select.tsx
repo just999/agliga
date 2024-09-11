@@ -12,7 +12,7 @@ import {
 
 import { cn } from '@/lib/utils';
 
-import { DepoProps, ValueIconProps } from '@/types';
+import { DepoProps, ValueIconProps } from '@/types/types';
 
 import {
   Popover,

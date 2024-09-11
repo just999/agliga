@@ -1,4 +1,4 @@
-import moment from 'moment';
+import { parseISO, parse, isValid } from 'date-fns';
 import { db } from './db';
 
 export const updateDates = async () => {
@@ -16,17 +16,29 @@ export const updateDates = async () => {
 
     for (const match of matchesWithDateStrings) {
       const dateString = match.date as unknown as string; // Original date stored as a string
-      const newDate = moment(dateString, [
-        moment.ISO_8601,
-        'YYYY-MM-DD HH:mm:ssZ',
-      ]).toDate();
+      // const newDate = moment(dateString, [
+      //   moment.ISO_8601,
+      //   'YYYY-MM-DD HH:mm:ssZ',
+      // ]).toDate();
+      let newDate: Date | null = null;
 
-      await db.ePL2122.update({
-        where: { id: match.id },
-        data: { date: newDate },
-      });
+      newDate = parseISO(dateString);
 
-      console.log(`Updated match ${match.id} date to ${newDate}`);
+      if (!isValid(newDate)) {
+        newDate = parse(dateString, 'yyyy-MM-dd HH:mm:ssX', new Date());
+      }
+
+      if (isValid(newDate)) {
+        await db.ePL2122.update({
+          where: { id: match.id },
+          data: { date: newDate },
+        });
+        console.log(`Updated match ${match.id} date to ${newDate}`);
+      } else {
+        console.log(
+          `Failed to parse date for match ${match.id}: ${dateString}`
+        );
+      }
     }
 
     console.log('Dates updated successfully.');

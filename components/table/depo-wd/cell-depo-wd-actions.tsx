@@ -14,7 +14,7 @@ import toast from 'react-hot-toast';
 
 import useModal from '@/hooks/use-modal';
 import { useSession } from 'next-auth/react';
-import { DepoWdProps } from '@/types';
+import { DepoWdProps } from '@/types/types';
 import { Button } from '@/components/ui/button';
 import { Depo, Wd } from '@prisma/client';
 
@@ -44,8 +44,9 @@ const CellDepoWdActions = ({ data }: CellDepoWdActionsProps) => {
 
   // const period = data.name;
   // const newPeriod = period.slice(0, 2) + period.slice(3);
-  const newDeleteModalType = 'delete-depo' || 'delete-wd';
-  const newEditModalType = `edit-depo` || `edit-wd`;
+  const newDeleteModalType =
+    modalType === 'delete-depo' ? 'delete-depo' : 'delete-wd';
+  const newEditModalType = modalType === `edit-depo` ? 'edit-depo' : `edit-wd`;
 
   const id = data.id;
   const handleEditDepoWd = () => {
@@ -85,8 +86,7 @@ const CellDepoWdActions = ({ data }: CellDepoWdActionsProps) => {
           </DropdownMenuTrigger>
           <DropdownMenuContent
             align='end'
-            className='backdrop-blur-sm bg-white/20'
-          >
+            className='backdrop-blur-sm bg-white/20'>
             {/* <DropdownMenuLabel className='text-xs '></DropdownMenuLabel> */}
             {/* <DropdownMenuItem
           onClick={() => onCopy(data.id)}
@@ -97,16 +97,14 @@ const CellDepoWdActions = ({ data }: CellDepoWdActionsProps) => {
         </DropdownMenuItem> */}
             <DropdownMenuItem
               onClick={() => handleEditDepoWd()}
-              className='text-xs text-slate-500 hover:text-black cursor-pointer hover:bg-emerald-100 '
-            >
+              className='text-xs text-slate-500 hover:text-black cursor-pointer hover:bg-emerald-100 '>
               <Edit className='mr-4 h-4 w-4' />
               Update
             </DropdownMenuItem>
             {newDeleteModalType && (
               <DropdownMenuItem
                 onClick={() => handleDeleteDepoWd()}
-                className='text-xs text-slate-500 hover:text-black hover:bg-emerald-100 cursor-pointer '
-              >
+                className='text-xs text-slate-500 hover:text-black hover:bg-emerald-100 cursor-pointer '>
                 <Trash className='mr-4 h-4 w-4 ' />
                 Delete
               </DropdownMenuItem>

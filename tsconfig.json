@@ -19,7 +19,8 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@types/*": ["./types/*"]
     }
   },
   "include": [
@@ -27,6 +28,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
+    "types/*.ts",
     "lib/facebook.js",
     "public/(sitemap)/robots.ts.bak"
   ],

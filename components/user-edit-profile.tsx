@@ -4,7 +4,7 @@ import { Label } from '@radix-ui/react-label';
 
 import { BiUser } from 'react-icons/bi';
 import { BsHouse } from 'react-icons/bs';
-import SelectInput from './select-input';
+import SelectInput from './ui/select-input';
 import { Button } from './ui/button';
 import {
   Card,
@@ -260,8 +260,7 @@ const UserEditProfile = () => {
                 size='sm'
                 variant='ghost'
                 asChild
-                className='text-xs flex-flex-row items-center justify-center gap-2 drop-shadow-lg bg-stone-50'
-              >
+                className='text-xs flex-flex-row items-center justify-center gap-2 drop-shadow-lg bg-stone-50'>
                 <Link href='/'>
                   Back to Homepage{' '}
                   <BsHouse className='text-neutral-400 h-4 w-4 m-0 p-0 cursor-pointer hover:text-red-500 hover:font-bold hover:shadow-lg ' />
@@ -272,8 +271,7 @@ const UserEditProfile = () => {
                 variant='ghost'
                 type='button'
                 className='text-xs flex-flex-row items-center justify-center gap-2 drop-shadow-lg bg-stone-50'
-                onClick={() => onOpen('profile')}
-              >
+                onClick={() => onOpen('profile')}>
                 Back to your profile
                 <BiUser className='text-neutral-400  hover:font-bold h-4 w-4 m-0 cursor-pointer hover:text-sky-500  hover:shadow-lg' />
               </Button>

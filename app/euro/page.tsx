@@ -6,8 +6,6 @@ import EuroClient from '@/components/table/euro/euro-client';
 
 import EuroCarousel from '@/components/soccer/euro-carousel';
 
-import { EuroWithIconProps } from '@/types';
-
 import { fetchEuro } from '@/lib/queries/euro';
 import { cn, fixtureFiltered } from '@/lib/utils';
 import { euroGroup } from '@/lib/helper';

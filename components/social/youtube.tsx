@@ -1,4 +1,4 @@
-import { IconProps } from '@/types';
+import { IconProps } from '@/types/types';
 import React from 'react';
 
 export function Youtube({ size }: IconProps) {

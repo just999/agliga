@@ -1,14 +1,14 @@
 'use client';
 
-import { PostProps, SafeUser } from '@/types';
+import { PostProps, SafeUser } from '@/types/types';
 import { EB_Garamond } from 'next/font/google';
 import PostItemOne from './post-item-one';
 import TrendingPost from './trending-post';
-// import { useGetPost } from '@/hooks/use-get-post';
+
 import Container from '../container';
 
-import { cn } from '@/lib/utils';
-// import useRandomPost from '@/hooks/use-random-post';
+import { cn, ol } from '@/lib/utils';
+
 import Sci from './sci';
 
 const eb = EB_Garamond({ subsets: ['latin'] });
@@ -22,9 +22,6 @@ type PostsProps = {
 };
 
 const Posts = ({ randPost, items, size, currentUser, cat }: PostsProps) => {
-  // const { randomItem } = useRandomPost();
-  if (!items) return [];
-
   const filterNonTopTrendingItems = (data: PostProps[]): PostProps[] =>
     data
       .filter((item) => !item.trending && !item.top)
@@ -34,11 +31,12 @@ const Posts = ({ randPost, items, size, currentUser, cat }: PostsProps) => {
 
   const sliceFirstThree = (data: PostProps[]): PostProps[] => data.slice(0, 3);
   const sliceNextThree = (data: PostProps[]): PostProps[] => data.slice(3, 6);
-  const filteredItems = filterNonTopTrendingItems(items); // Filter out non-trending and non-top posts
-  const firstThreePosts = sliceFirstThree(filteredItems); // Get the first three filtered posts
-  const nextThreePosts = sliceNextThree(filteredItems); // Get the next three filtered posts
+  const filteredItems = filterNonTopTrendingItems(items);
+  const firstThreePosts = sliceFirstThree(filteredItems);
+  const nextThreePosts = sliceNextThree(filteredItems);
 
-  if (typeof randPost === undefined) return [];
+  // if (typeof randPost === undefined) return [];
+  // if (!items) return [];
 
   return (
     <Container>
@@ -48,14 +46,14 @@ const Posts = ({ randPost, items, size, currentUser, cat }: PostsProps) => {
             <span className='opacity-0 hidden '>none</span>
             <h1
               className={cn(
-                'news  2xl:text-8xl 2xs:text-3xl xs:text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-center  font-semibold drop-shadow-sm text-shadow  w-full px-2 '
-              )}
-            >
+                'news 2xl:text-8xl 2xs:text-3xl xs:text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-center  font-semibold drop-shadow-sm text-shadow  w-full px-2',
+                ol.className
+              )}>
               {cat ? (
                 <span>
                   Sports News.
                   <span className='2xl:text-4xl 2xs:text-xl xs:text-xl sm:text-2xl md:text-2xl lg:text-3xl xl:text-3xl'>
-                    {cat}{' '}
+                    {cat}
                   </span>
                 </span>
               ) : (

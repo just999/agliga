@@ -1,4 +1,4 @@
-import { FixtureProps } from '@/types';
+import { FixtureProps } from '@/types/types';
 import { create } from 'zustand';
 
 type FixtureState = {

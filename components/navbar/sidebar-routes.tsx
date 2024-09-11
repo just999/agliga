@@ -23,7 +23,7 @@ import { capitalizeFirstCharacter, cn } from '@/lib/utils';
 import useProfileStore from '@/store/use-profile-store';
 import { useEffect, useMemo, useState } from 'react';
 
-import { RoutesProps } from '@/types';
+import { RoutesProps } from '@/types/types';
 
 type SidebarRoutesProps = {
   className?: string;

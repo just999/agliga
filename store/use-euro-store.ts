@@ -1,5 +1,5 @@
 import { team } from '@/lib/helper';
-import { EuroWithIconProps } from '@/types';
+import { EuroWithIconProps } from '@/types/types';
 import { create } from 'zustand';
 
 type EuroState = {

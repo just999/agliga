@@ -12,6 +12,9 @@ export const fetchDepo = cache(async () => {
         },
       ],
     });
+    if (!depos) {
+      return;
+    }
     return depos;
   } catch (err) {
     console.error('Error fetching depo', err);
@@ -75,6 +78,10 @@ export const fetchWd = cache(async () => {
         },
       ],
     });
+
+    if (!wd) {
+      return;
+    }
     return wd;
   } catch (err) {
     console.error('Error fetching wd', err);

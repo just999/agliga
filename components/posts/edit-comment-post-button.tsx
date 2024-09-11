@@ -4,7 +4,7 @@ import { BsTrash, BsPen } from 'react-icons/bs';
 import { Button } from '../ui/button';
 import useModal from '@/hooks/use-modal';
 import { useSession } from 'next-auth/react';
-import { PostProps } from '@/types';
+import { PostProps } from '@/types/types';
 import { BiCommentDots, BiPencil } from 'react-icons/bi';
 
 type EditCommentPostButtonProps = {

@@ -15,7 +15,7 @@ import { Button } from '../ui/button';
 
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 
-import { InitialPostProps } from '@/types';
+import { InitialPostProps } from '@/types/types';
 import useModal from '@/hooks/use-modal';
 import { MdOutlineAddPhotoAlternate } from 'react-icons/md';
 

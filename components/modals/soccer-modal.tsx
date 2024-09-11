@@ -10,7 +10,7 @@ import toast from 'react-hot-toast';
 
 import { useRouter } from 'next/navigation';
 
-import SelectInput from '../select-input';
+import SelectInput from '../ui/select-input';
 
 import useModal from '@/hooks/use-modal';
 
@@ -18,7 +18,7 @@ import { useTeams, useWeeks } from '@/hooks/use-teams';
 
 import { useGetSchedules } from '@/hooks/use-get-schedule';
 
-import { ScheduleProps } from '@/types';
+import { ScheduleProps } from '@/types/types';
 
 import { initialScheduleFormValues } from '@/lib/helper';
 

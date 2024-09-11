@@ -1,4 +1,4 @@
-import { CommentProps } from '@/types';
+import { CommentProps } from '@/types/types';
 
 import { create } from 'zustand';
 

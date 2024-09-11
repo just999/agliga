@@ -24,7 +24,7 @@ import { BsPlusCircleDotted } from 'react-icons/bs';
 import { cn } from '@/lib/utils';
 import { FcUndo } from 'react-icons/fc';
 import useModal from '@/hooks/use-modal';
-import { DepoProps } from '@/types';
+import { DepoProps } from '@/types/types';
 import { useUserRole } from '@/hooks/use-user-role';
 
 type Status = {

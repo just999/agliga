@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 // import { useGetEuros } from '@/hooks/use-get-schedule';
 
 import { Skeleton } from '../ui/skeleton';
-import { EuroWithIconProps } from '@/types';
+import { EuroWithIconProps } from '@/types/types';
 
 type EuroCarouselProps = {
   groupArrays?: {

@@ -2,13 +2,118 @@ import useGames from '@/hooks/use-games';
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { Noto_Color_Emoji, Orbitron, Poppins } from 'next/font/google';
-import { date } from 'zod';
-import { EuroWithIconProps } from '@/types';
-import { format, parse } from 'date-fns';
+import { ZodIssue } from 'zod';
+import { EuroWithIconProps } from '@/types/types';
+import { differenceInYears, format, formatDistance, parse } from 'date-fns';
+import { FieldValues, Path, UseFormSetError } from 'react-hook-form';
+import localFont from 'next/font/local';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
+
+export function getTimeOnly(date: string) {
+  const formatString = 'dd MM yy h:mm a';
+
+  const parsedDate = parse(date, formatString, new Date());
+
+  const timeString = format(parsedDate, 'HH:mm');
+  return timeString;
+  // Or if you prefer a 12-hour format with AM/PM
+  // const timeString12Hour = format(parsedDate, 'hh:mm a');
+}
+
+export function calculateAge(dob: Date) {
+  return differenceInYears(new Date(), dob);
+}
+
+export function formatShortDateTime(date: Date) {
+  return format(date, 'dd MM yy h:mm:a');
+}
+
+export function timeAgo(date: string) {
+  return formatDistance(new Date(date), new Date()) + ' ago';
+}
+
+//! Step 1: Function to parse the input string into a Date object into date month
+export function parseCustomDate(dateString: string) {
+  // RegEx to match date and time (assumption based on given format)
+  const dateTimeRegex = /^(\d{2}) (\d{2}) (\d{2}) (\d{1,2}:\d{2}):(\w{2})$/;
+  const match = dateString.match(dateTimeRegex);
+
+  if (!match) {
+    throw new Error('Invalid date string format');
+  }
+
+  // Extracting matched groups
+  const [, day, month, year, time, period] = match;
+
+  // Extract time components
+  const [hours, minutes] = time.split(':').map(Number);
+
+  // Normalize hours based on AM/PM
+  const normalizedHours =
+    period.toLowerCase() === 'pm' ? (hours % 12) + 12 : hours % 12;
+
+  // Create a Date object
+  const date = new Date(
+    2000 + Number(year), // Assuming year '24' means '2024'
+    Number(month) - 1, // month is 0-indexed
+    Number(day),
+    normalizedHours,
+    minutes
+  );
+
+  return date;
+}
+
+export const formattedDateMonthDate = (dateString: string) => {
+  const dateObj = parseCustomDate(dateString);
+
+  return format(dateObj, 'd MMMM');
+};
+
+export const normalizedDateTime = (dateString: string) => {
+  // Original date string
+  const originalDate = dateString.trim(); // e.g. "22 08 24 3:34:PM"
+
+  // Split the string and parse components
+  const parts: string[] = originalDate.split(' ');
+  if (parts.length < 4) {
+    throw new Error('Invalid date string format');
+  }
+
+  const dayPart: string = parts[0].padStart(2, '0');
+  const monthPart: string = parts[1].padStart(2, '0');
+  const yearPart: string = '20' + parts[2]; // 22 -> 2022
+  // const monthPart: string = parts[1].padStart(2, '0'); // 08 (already in 2 digits)
+  // const dayPart: string = parts[2].padStart(2, '0'); // 24 (already in 2 digits)
+
+  // Time parsing
+  const timePart = parts[3].split(':'); // Split on ':'
+  if (timePart.length < 2) {
+    throw new Error('Invalid time format');
+  }
+
+  let hourPartStr: string = timePart[0];
+  const minutePart: string = timePart[1].replace(/PM|AM/, ''); // Minute part
+  const ampm: string = timePart[1].includes('PM') ? 'PM' : 'AM'; // Get AM/PM
+
+  // Convert hour to 24-hour format
+  let hourPart: number = parseInt(hourPartStr, 10);
+  if (ampm === 'PM' && hourPart !== 12) {
+    hourPart += 12; // Convert to 24-hour format
+  } else if (ampm === 'AM' && hourPart === 12) {
+    hourPart = 0; // Handle 12 AM case
+  }
+
+  // Create the normalized date format
+  const normalizedDate = `${yearPart}-${monthPart}-${dayPart}T${hourPart
+    .toString()
+    .padStart(2, '0')}:${minutePart.padStart(2, '0')}:00`;
+
+  return normalizedDate; // e.g. "2022-08-24T15:34:00"
+};
 
 export const capitalizeFirstCharacter = (string: string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -121,22 +226,15 @@ export function findMatchingObjects(
   return matchingObjects;
 }
 
-// const data = [
-//   { value: 'SBOBET' },
-//   { value: 'NotAMatch' },
-//   { value: 'SBC168Casino' },
-//   // ... other objects
-// ];
-
-// const targetValues = ['SBOBET', 'SBC168Casino', 'SGD777'];
-
-// const matches = findMatchingObjects(games, targetValues);
-// console.log(matches);
-
 export const noto = Noto_Color_Emoji({
   subsets: ['emoji'],
   weight: ['400'],
   preload: true,
+});
+
+export const oldLondon = localFont({
+  src: '../public/fonts/OldLondon.ttf',
+  variable: '--font-oldLondon',
 });
 
 export const poppins = Poppins({
@@ -146,6 +244,8 @@ export const poppins = Poppins({
 });
 
 export const orbit = Orbitron({ subsets: ['latin'], preload: true });
+
+export const ol = localFont({ src: '../public/fonts/oldLondon.woff2' });
 
 export type Team = {
   country?: {
@@ -163,27 +263,6 @@ export type Team = {
   goalDiff: number; // Goal Difference
   points: number; // Points
 };
-
-// export type MatchesProps = {
-//   home?: string;
-//   away?: string;
-//   result?: string;
-//   group?: string;
-// };
-// let matches: TMatchesProps[] = [
-//   { home: 'Puskas Lovers', away: 'Cruyff FC', result: '1-1' },
-//   { home: 'Catenaccio', away: 'Maradona+10', result: '2-3' },
-//   { home: 'Puskas Lovers', away: 'Catenaccio', result: '0-0' },
-//   { home: 'Cruyff FC', away: 'Maradona+10', result: '2-0' },
-//   { home: 'Catenaccio', away: 'Cruyff FC', result: '1-0' },
-//   { home: 'Maradona+10', away: 'Puskas Lovers', result: '1-1' },
-//   { home: 'Cruyff FC', away: 'Puskas Lovers', result: '3-3' },
-//   { home: 'Maradona+10', away: 'Catenaccio', result: '1-0' },
-//   { home: 'Catenaccio', away: 'Puskas Lovers', result: '1-2' },
-//   { home: 'Maradona+10', away: 'Cruyff FC', result: '3-1' },
-//   { home: 'Cruyff FC', away: 'Catenaccio', result: '1-1' },
-//   { home: 'Puskas Lovers', away: 'Maradona+10', result: '1-0' },
-// ];
 
 interface Match {
   euroTeamHome: {
@@ -419,4 +498,60 @@ export const parseAndFormatDate = (dateStr: string) => {
 
 export function numberWithCommas(x: any) {
   return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, '.');
+}
+
+export function handleFormServerErrors<TFieldValues extends FieldValues>(
+  errorResponse: { error: string | ZodIssue[] },
+  setError: UseFormSetError<TFieldValues>
+) {
+  if (Array.isArray(errorResponse.error)) {
+    errorResponse.error.forEach((er) => {
+      const fieldName = er.path.join('.') as Path<TFieldValues>;
+      setError(fieldName, { message: er.message });
+    });
+  } else {
+    setError('root.serverError', { message: errorResponse.error });
+  }
+}
+
+export function transformImageUrl(imageUrl?: string | null) {
+  if (!imageUrl) return null;
+
+  if (!imageUrl.includes('cloudinary')) return imageUrl;
+
+  const uploadIndex = imageUrl.indexOf('/upload/') + '/upload/'.length;
+
+  const transformation = 'c_fill,w_300,h_300,g_faces/';
+
+  return `${imageUrl.slice(0, uploadIndex)}${transformation}${imageUrl.slice(
+    uploadIndex
+  )}`;
+}
+
+export function truncateString(text?: string | null, num = 50) {
+  if (!text) return null;
+  if (text.length <= num) {
+    return text;
+  }
+  return text.slice(0, num) + '...';
+}
+
+export function createChatId(a: string, b: string) {
+  return a > b ? `${b}-${a}` : `${a}-${b}`;
+}
+
+export function getKeyByValue<T>(
+  object: T,
+  value: T[keyof T]
+): keyof T | undefined {
+  for (let prop in object) {
+    if (Object.prototype.hasOwnProperty.call(object, prop)) {
+      if (object[prop] === value) return prop;
+    }
+  }
+  return undefined; // Return undefined if the value is not found
+}
+
+export function isNonNullString(value: string | null): value is string {
+  return typeof value === 'string';
 }

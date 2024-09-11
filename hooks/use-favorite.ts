@@ -1,6 +1,6 @@
 'use client';
 
-import { SafeUser } from '@/types';
+import { SafeUser } from '@/types/types';
 
 import useModal from './use-modal';
 import { useCallback, useEffect, useMemo, useState } from 'react';

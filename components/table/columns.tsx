@@ -9,7 +9,7 @@ import Image from 'next/image';
 import { englishPL, EPL, penalty, team } from '@/lib/helper';
 import { Schedule } from '@prisma/client';
 import { convertDateTime } from '@/lib/convert-date-time';
-import { FixtureProps } from '@/types';
+import { FixtureProps } from '@/types/types';
 import { cn, orbit } from '@/lib/utils';
 import { ArrowUpDown } from 'lucide-react';
 

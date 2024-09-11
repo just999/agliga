@@ -4,7 +4,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 import { convertDateMonthYear } from '@/lib/convert-date-time';
 import { cn } from '@/lib/utils';
-import { EuroWithIconProps } from '@/types';
+import { EuroWithIconProps } from '@/types/types';
 
 import EuroCardContent from './euro-card-content';
 

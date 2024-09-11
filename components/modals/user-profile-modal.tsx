@@ -19,7 +19,7 @@ import { BsTrash, BsPersonFillGear, BsHouse, BsPencil } from 'react-icons/bs';
 
 import { useForm, FieldValues, SubmitHandler } from 'react-hook-form';
 import Input from '../ui/input';
-import SelectInput from '../select-input';
+import SelectInput from '../ui/select-input';
 import useBanks from '@/hooks/use-banks';
 import useGames from '@/hooks/use-games';
 import axios from 'axios';
@@ -238,7 +238,7 @@ const UserProfileModal = () => {
                 priority
                 className='w-20 h-auto '
               /> */}
-              <ProfilePicture register={register} />
+              <ProfilePicture />
               {/* <p className='text-lg  flex flex-col justify-start  w-full '>
             
             
@@ -249,8 +249,7 @@ const UserProfileModal = () => {
                 variant='ghost'
                 size='sm'
                 type='button'
-                className='flex gap-2 '
-              >
+                className='flex gap-2 '>
                 <p>Email: {profile.email}</p> <BsPencil />
               </Button>
             </div>
@@ -266,8 +265,7 @@ const UserProfileModal = () => {
                     <Badge
                       key={g}
                       variant='outline'
-                      className='border-b-2 border-gray-400 shadow-lg cursor-pointer'
-                    >
+                      className='border-b-2 border-gray-400 shadow-lg cursor-pointer'>
                       {g}{' '}
                     </Badge>
                   ))}
@@ -284,8 +282,7 @@ const UserProfileModal = () => {
               size='sm'
               variant='ghost'
               asChild
-              className='group text-xs flex-flex-row items-center justify-center gap-2 shadow-sm bg-stone-50 hover:text-red-500 hover:drop-shadow-xl px-4'
-            >
+              className='group text-xs flex-flex-row items-center justify-center gap-2 shadow-sm bg-stone-50 hover:text-red-500 hover:drop-shadow-xl px-4'>
               <Link href='/'>
                 Delete Profile{' '}
                 <BsTrash className='group-hover:text-red-500  text-neutral-400 h-4 w-4 m-0 p-0 cursor-pointer hover:font-bold hover:shadow-lg ' />
@@ -296,8 +293,7 @@ const UserProfileModal = () => {
               variant='ghost'
               type='button'
               className='group text-xs flex-flex-row items-center justify-center gap-2 shadow-sm bg-stone-50 hover:text-sky-500  hover:drop-shadow-xl px-4'
-              onClick={() => onOpen('validateUser')}
-            >
+              onClick={() => onOpen('validateUser')}>
               Edit profile
               <BsPersonFillGear className='group-hover:text-sky-500 text-neutral-400  hover:font-bold h-4 w-4 m-0 cursor-pointer   hover:shadow-lg' />
             </Button>
@@ -366,9 +362,9 @@ const UserProfileModal = () => {
           <div className='grid w-full items-center gap-0'>
             <div className='flex flex-col justify-center items-center space-y-1.5'>
               <ProfilePicture
-                register={register}
-                watch={watch}
-                setValue={setValue}
+              // register={register}
+              // watch={watch}
+              // setValue={setValue}
               />
               {/* <p className='text-lg w-full'>
                 <Button
@@ -508,8 +504,7 @@ const UserProfileModal = () => {
               size='sm'
               variant='ghost'
               asChild
-              className='text-xs flex-flex-row items-center justify-center gap-2 drop-shadow-lg bg-stone-50'
-            >
+              className='text-xs flex-flex-row items-center justify-center gap-2 drop-shadow-lg bg-stone-50'>
               <Link href='/'>
                 Back to Homepage{' '}
                 <BsHouse className='text-neutral-400 h-4 w-4 m-0 p-0 cursor-pointer hover:text-red-500 hover:font-bold hover:shadow-lg ' />
@@ -520,8 +515,7 @@ const UserProfileModal = () => {
               variant='ghost'
               type='button'
               className='text-xs flex-flex-row items-center justify-center gap-2 drop-shadow-lg bg-stone-50'
-              onClick={() => onOpen('profile')}
-            >
+              onClick={() => onOpen('profile')}>
               Back to your profile
               <BiUser className='text-neutral-400  hover:font-bold h-4 w-4 m-0 cursor-pointer hover:text-sky-500  hover:shadow-lg' />
             </Button>

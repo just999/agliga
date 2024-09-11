@@ -1,6 +1,6 @@
 'use client';
 
-import { EuroGroupProps } from '@/types';
+import { EuroGroupProps } from '@/types/types';
 import EuroClient from '../table/euro/euro-client';
 
 type EuroTeamGroupProps = {

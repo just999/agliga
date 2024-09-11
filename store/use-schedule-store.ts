@@ -1,4 +1,4 @@
-import { ScheduleProps } from '@/types';
+import { ScheduleProps } from '@/types/types';
 import { create } from 'zustand';
 
 type ScheduleState = {

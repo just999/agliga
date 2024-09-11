@@ -1,6 +1,6 @@
 'use client';
 
-import { RoutesProps } from '@/types';
+import { RoutesProps } from '@/types/types';
 import Logo from './logo';
 import SidebarRoutes from './sidebar-routes';
 

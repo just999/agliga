@@ -17,16 +17,14 @@ export const fetchSchedule = cache(async () => {
   }
 });
 
-export const fetchScheduleById = cache(async (id: string) => {
+export const fetchScheduleById = cache(async (id?: string) => {
   try {
     if (!id) throw new Error('No Id');
-    const schedule = await db.schedule.findUnique({
+    return await db.schedule.findUnique({
       where: {
         id: id,
       },
     });
-
-    return schedule;
   } catch (err) {
     console.error('Error fetching schedule', err);
     return null;

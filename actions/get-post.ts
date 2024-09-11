@@ -1,7 +1,7 @@
 'use server';
 
 import { db } from '@/lib/db';
-import { PostProps } from '@/types';
+import { PostProps } from '@/types/types';
 
 type PostsResponse = PostProps[];
 

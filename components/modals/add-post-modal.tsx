@@ -10,13 +10,13 @@ import { Button } from '../ui/button';
 import Heading from '../heading';
 import React, { useEffect, useRef, useState } from 'react';
 
-import { InitialPostProps } from '@/types';
+import { InitialPostProps } from '@/types/types';
 import { initialFormState } from './post-modal';
 
 import { useParams } from 'next/navigation';
 import { useGetPost } from '@/hooks/use-get-post';
 
-import SelectInput from '../select-input';
+import SelectInput from '../ui/select-input';
 import Input from '../ui/input';
 
 type AddPostModalProps = {};
@@ -230,8 +230,7 @@ const AddPostModal = () => {
     <form
       action={modalType === 'post' ? `/api/posts` : `/api/posts/${id}`}
       method={modalType === 'post' ? `POST` : 'PUT'}
-      encType='multipart/form-data'
-    >
+      encType='multipart/form-data'>
       <div className='flex flex-col justify-center gap-1'>
         <Heading
           title={modalType === 'post' ? 'New Post' : 'Edit Post'}
@@ -344,8 +343,7 @@ const AddPostModal = () => {
           <Button
             variant='primary'
             className='bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline'
-            type='submit'
-          >
+            type='submit'>
             Add Post
           </Button>
         </div>

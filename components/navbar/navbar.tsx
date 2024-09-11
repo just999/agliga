@@ -6,7 +6,7 @@ import Categories from './categories';
 import Logo from './logo';
 
 import UserMenu from './user-menu';
-import { SafeUser } from '@/types';
+import { SafeUser } from '@/types/types';
 import DepoWdMenu from './depo-wd-menu';
 // import GamesCategories from './games-categories';
 import MobileSidebar from './mobile-sidebar';

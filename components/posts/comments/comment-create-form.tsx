@@ -5,8 +5,9 @@ import { useEffect, useRef, useState } from 'react';
 
 // import * as actions from '@/actions';
 import { Button } from '@/components/ui/button';
-import Textarea from '@/components/ui/textarea';
+
 import { createComment } from '@/actions/create-comment';
+import { Textarea } from '@/components/ui';
 
 interface CommentCreateFormProps {
   postId: string;
@@ -44,8 +45,6 @@ export default function CommentCreateForm({
       <div className='space-y-2 pt-4 px-1 bg-stone-100 rounded-lg shadow-lg'>
         <Textarea
           name='content'
-          label='Your Comment...'
-          labelClass='text-neutral-400'
           placeholder='Enter your comment'
           // isInvalid={!!formState.errors.content}
           // errorMessage={formState.errors.content?.join(', ')}
@@ -64,8 +63,7 @@ export default function CommentCreateForm({
           size='sm'
           variant='outline'
           className='shadow-md hover:disabled:bg-orange-100 px-4'
-          disabled={hasFormErrors()}
-        >
+          disabled={hasFormErrors()}>
           Submit
         </Button>
       </div>
@@ -78,8 +76,7 @@ export default function CommentCreateForm({
         size='sm'
         variant='ghost'
         onClick={() => setOpen(!open)}
-        className='drop-shadow-md hover:bg-stone-200 hover:text-black text-xs text-stone-600 bg-stone-300 border-b-2 border-b-stone-600 p-0 m-0 h-6 w-20'
-      >
+        className='drop-shadow-md hover:bg-stone-200 hover:text-black text-xs text-stone-600 bg-stone-300 border-b-2 border-b-stone-600 p-0 m-0 h-6 w-20'>
         {parentId ? 'Balas' : 'Komentar'}
       </Button>
       {open && form}

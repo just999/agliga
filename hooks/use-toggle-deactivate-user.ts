@@ -1,5 +1,5 @@
 import useToggleDeactivateUserStore from '@/store/use-favorite-store';
-import { SafeUser } from '@/types';
+import { SafeUser } from '@/types/types';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useMemo, useCallback } from 'react';
