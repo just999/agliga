@@ -102,7 +102,7 @@ const CardInnerWrapper = ({
                 )}
               </Button>
             )}
-            <span className='flex gap-2 justify-center  py-1 text-gray-600 text-xs font-semibold'>
+            <span className='flex gap-2 justify-center w-full py-1 text-gray-600 text-xs font-semibold'>
               <Calendar size={14} className='text-zinc-500' />
               {currentDate}
             </span>

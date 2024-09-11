@@ -105,7 +105,6 @@ const LoginForm = () => {
               <Button
                 disabled={!isValid || isSubmitting || isLoading}
                 variant='ghost'
-                type='submit'
                 className={cn(
                   'bg-indigo-500 px-4 text-gray-50 hover:bg-indigo-500/70 hover:text-gray-200 w-full shadow-lg'
                 )}>

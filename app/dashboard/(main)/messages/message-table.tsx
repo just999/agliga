@@ -33,6 +33,7 @@ import { MessageDto } from '@/types';
 import Heading from '@/components/ui/heading';
 import { Button, Card, Spinner } from '@/components/ui';
 import { useMessages } from '@/hooks/use-messages';
+import ClientOnly from '@/lib/client-only';
 
 const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
   const itemRank = rankItem(row.getValue(columnId), value);

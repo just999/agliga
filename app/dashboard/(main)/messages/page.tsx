@@ -20,7 +20,7 @@ const MessagesPage = async ({
   // if (messages) return <Loading />;
 
   return (
-    <ClientOnly>
+    <>
       <Container className='grid grid-cols-12 gap-5 h-[80vh] mt-10 justify-start xl:p-0 md:p-0 '>
         <div className='col-span-2 '>
           <MessageSidebar />
@@ -30,7 +30,7 @@ const MessagesPage = async ({
           {/* <MessageClient initialMessages={messages} nextCursor={nextCursor} /> */}
         </div>
       </Container>
-    </ClientOnly>
+    </>
   );
 };
 

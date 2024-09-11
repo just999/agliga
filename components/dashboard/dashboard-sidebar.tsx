@@ -47,13 +47,35 @@ const DashboardSidebar = ({ userId, userRole }: DashboardSidebarProps) => {
   }
   // const menuItems = dashboardUserMenu(userId);
 
+  const linksTitle = ['Deposits', 'Wds', 'Messages'];
+
+  const dashboardMenu =
+    userRole === 'admin' ? dashboardAdminMenu : dashboardUserMenu;
+
+  const userDepo = dashboardMenu.filter((item) =>
+    linksTitle.includes(item.title)
+  );
+  const userDepoNot = dashboardMenu.filter(
+    (item) => !linksTitle.includes(item.title)
+  );
+  const userDepoMessagesLink = userDepo.map((item) => {
+    if (typeof item.link === 'function') {
+      if (item.title === 'Deposits' || item.title === 'Wds') {
+        return item.link(userId);
+      } else if (item.title === 'Messages') {
+        return item.link(container);
+      }
+    }
+  });
   const userDepoItem = dashboardUserMenu.find(
     (item) => item.title === 'Deposits'
   );
   const userWdItem = dashboardUserMenu.find((item) => item.title === 'Wds');
+
   const userMessageItem = dashboardUserMenu.find(
     (item) => item.title === 'Messages'
   );
+
   const userDepoLink =
     typeof userDepoItem?.link === 'function'
       ? userDepoItem.link(userId)
@@ -166,7 +188,6 @@ const DashboardSidebar = ({ userId, userRole }: DashboardSidebarProps) => {
                   : title === 'Wds'
                   ? resolveWdLink(wdLink, userId)
                   : resolveMessageLink(messageLink, container);
-
               return (
                 <CommandItem
                   key={title}
@@ -194,7 +215,7 @@ const DashboardSidebar = ({ userId, userRole }: DashboardSidebarProps) => {
                     )}>
                     <span>{title}</span>
                     {userRole === 'user' &&
-                      link === resolvedDepoWdLink &&
+                      resolvedDepoWdLink.startsWith('/dashboard/messages') &&
                       unreadCount > 0 && (
                         <span className='ml-1 text-emerald-400 font-bold'>
                           ({unreadCount})

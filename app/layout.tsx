@@ -94,10 +94,12 @@ export default async function RootLayout({
               {/* <Navbar currentUser={currentUser} /> */}
               <div className='pb-20 flex-1'>{children}</div>
               <Footer />
-              <div className='fixed flex w-13 h-13 m-0 p-0 bottom-4 right-2 z-9999'>
-                {/* <ChatWidget /> */}
-                <NewWidget />
-              </div>
+              {session && (
+                <div className='fixed flex w-13 h-13 m-0 p-0 bottom-28 right-2 z-9999'>
+                  {/* <ChatWidget /> */}
+                  <NewWidget />
+                </div>
+              )}
             </GoogleCaptchaWrapper>
           </Providers>
         </SessionProvider>
