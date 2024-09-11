@@ -78,7 +78,15 @@ const NewChatWidget = ({ users, adminProfile }: NewChatWidgetProps) => {
           }
         });
     }
-  }, [userRole, setChatId, setTab]);
+  }, [
+    userRole,
+    setChatId,
+    setTab,
+    adminProfile?.id,
+    curUserId,
+    users,
+    usersId,
+  ]);
 
   const handleToggleChat = useCallback(() => {
     setIsToggle(true);
