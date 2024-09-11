@@ -26,7 +26,7 @@ import {
   PostModal,
   SliderModal,
   NoUserModal,
-  AuthModal,
+  // AuthModal,
   TopicModal,
   EuroModal,
 } from '@/components/modals';
@@ -89,7 +89,7 @@ export default async function RootLayout({
               <SliderModal />
               {/* <SearchModal /> */}
               <NoUserModal />
-              <AuthModal />
+              {/* <AuthModal /> */}
               <TopNav />
               {/* <Navbar currentUser={currentUser} /> */}
               <div className='pb-20 flex-1'>{children}</div>
