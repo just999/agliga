@@ -159,15 +159,16 @@ export type ChatFormHandle = {
 const ChatForm = forwardRef<ChatFormHandle, ChatFormProps>(
   ({ recipientData }, ref) => {
     const router = useRouter();
-    // const inputRef = useRef<HTMLInputElement | null>(null);
+    const inputRef = useRef<HTMLInputElement | null>(null);
 
-    // useImperativeHandle(ref, () => ({
-    //   focus: () => {
-    //     inputRef.current?.focus();
-    //     const length = inputRef.current?.value.length || 0;
-    //     inputRef.current?.setSelectionRange(length, length);
-    //   },
-    // }));
+    useImperativeHandle(ref, () => ({
+      focus: () => {
+        inputRef.current?.focus();
+        console.log('🚀 ~ inputRef:', inputRef);
+        const length = inputRef.current?.value.length || 0;
+        inputRef.current?.setSelectionRange(length, length);
+      },
+    }));
 
     const {
       register,

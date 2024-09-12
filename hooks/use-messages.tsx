@@ -158,12 +158,14 @@ export const useMessages = (
       }, 500);
     },
     [
+      container,
       isOutbox,
       messages,
       router,
       setChatId,
       setIsToggle,
       setShowBubbleChat,
+      setTab,
       setUser,
       urlPrefix,
       user,

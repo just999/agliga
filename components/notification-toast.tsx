@@ -1,17 +1,25 @@
 'use client';
 
-import { transformImageUrl } from '@/lib/utils';
+import { createChatId, transformImageUrl } from '@/lib/utils';
 import { MessageDto } from '@/types';
 import Image from 'next/image';
 
 import Link from 'next/link';
 import { toast } from 'react-hot-toast';
+import { Button } from './ui';
+import { useChatStore } from '@/store/use-chat-store';
+import { useSession } from 'next-auth/react';
+
+import { useCallback } from 'react';
+import { useRouter } from 'next/navigation';
+import { adminChatId } from './chat/new-widget';
 
 type NotificationToastProps = {
   image?: string | null;
-  href: string;
+  href?: string;
   title: string;
   subtitle?: string;
+  message: MessageDto;
 };
 
 const NotificationToast = ({
@@ -19,9 +27,77 @@ const NotificationToast = ({
   href,
   title,
   subtitle,
+  message,
 }: NotificationToastProps) => {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  const {
+    isToggle,
+    setIsToggle,
+    chatId,
+    setChatId,
+    tab,
+    setTab,
+    setSenderId,
+    setRecipientId,
+    showBubbleChat,
+    setShowBubbleChat,
+  } = useChatStore((state) => ({
+    setSenderId: state.setSenderId,
+    chatId: state.chatId,
+    tab: state.tab,
+    setChatId: state.setChatId,
+    setTab: state.setTab,
+    setRecipientId: state.setRecipientId,
+    setIsToggle: state.setIsToggle,
+    setShowBubbleChat: state.setShowBubbleChat,
+    isToggle: state.isToggle,
+    showBubbleChat: state.showBubbleChat,
+  }));
+
+  const handleToggleChat = useCallback(
+    (message: MessageDto) => {
+      console.log('🚀 ~ handleToggleChat ~ message:', message);
+
+      if (
+        session?.user.role === 'user' &&
+        message.senderId &&
+        session?.user.id !== message.senderId
+      ) {
+        const newChatId = createChatId(session.user.id, message.senderId);
+        if (newChatId) setChatId(newChatId);
+        setTab(message.senderId);
+      }
+      if (
+        session?.user.role === 'admin' &&
+        message.senderId &&
+        session?.user.id !== message.senderId
+      ) {
+        const newChatId = createChatId(adminChatId, message.senderId);
+        if (newChatId) setChatId(newChatId);
+        setTab(message.senderId);
+      }
+
+      setIsToggle(true);
+      setShowBubbleChat(false);
+
+      // if (session?.user.role === 'user') {
+      //   setChatId(session.)
+      // }
+    },
+    [
+      session?.user.id,
+      session?.user.role,
+      setChatId,
+      setIsToggle,
+      setShowBubbleChat,
+      setTab,
+    ]
+  );
   return (
-    <Link href={href} className='flex items-center '>
+    <Button variant='ghost' size='sm' onClick={() => handleToggleChat(message)}>
+      {/* <Link href={href} className='flex items-center'> */}
       <div className='mr-2 '>
         <Image
           src={transformImageUrl(image) || '/images/user.png'}
@@ -34,7 +110,8 @@ const NotificationToast = ({
         <div className='font-semibold '>{title}</div>
         <div className='text-sm'>{subtitle || 'Click to view'}</div>
       </div>
-    </Link>
+      {/* </Link> */}
+    </Button>
   );
 };
 
@@ -43,8 +120,9 @@ export default NotificationToast;
 export const newMessageToast = (message: MessageDto) => {
   toast(
     <NotificationToast
+      message={message}
       image={message.senderImage}
-      href={`/dashboard/chat/${message.senderId}`}
+      // href={`/dashboard/chat/${message.senderId}`}
       title={`${message.senderName} has sent you a new message`}
     />
   );
@@ -53,10 +131,12 @@ export const newMessageToast = (message: MessageDto) => {
 export const newLikeToast = (
   name: string,
   image: string | null,
-  userId: string
+  userId: string,
+  message: MessageDto
 ) => {
   toast(
     <NotificationToast
+      message={message}
       image={image}
       href={`/members/${userId}`}
       title={`You have been like by${name}`}

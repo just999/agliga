@@ -47,7 +47,7 @@ interface Comment {
   parentId: string | null;
 }
 
-export const getPosts = cache(async (params?: IPostsParams) => {
+export const getPosts = async (params?: IPostsParams) => {
   try {
     let userId;
     if (params) {
@@ -89,9 +89,15 @@ export const getPosts = cache(async (params?: IPostsParams) => {
     // return safePostings;
     // return posts;
   } catch (err: unknown) {
-    throw new Error('Something went wrong');
+    if (err instanceof Error) {
+      console.error('Database error:', err.message);
+      throw new Error('Failed to retrieve posts from the database');
+    } else {
+      console.error('Unexpected error:', err);
+      throw new Error('An unexpected error occurred');
+    }
   }
-});
+};
 
 export const getRandomPost = cache(
   async (params?: IPostsParams): Promise<PostProps | null> => {

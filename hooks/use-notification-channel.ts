@@ -9,6 +9,7 @@ import { Channel } from 'pusher-js';
 import { useCallback, useEffect, useRef } from 'react';
 
 import { useSession } from 'next-auth/react';
+import { useChatStore } from '@/store/use-chat-store';
 
 export const useNotificationChannel = (
   userId: string | null,
@@ -25,6 +26,24 @@ export const useNotificationChannel = (
     updateUnreadCount: state.updateUnreadCount,
   }));
 
+  const {
+    setChatId,
+    tab,
+    setTab,
+    isToggle,
+    setIsToggle,
+    setShowBubbleChat,
+    showBubbleChat,
+  } = useChatStore((state) => ({
+    setChatId: state.setChatId,
+    tab: state.tab,
+    setTab: state.setTab,
+    isToggle: state.isToggle,
+    setIsToggle: state.setIsToggle,
+    setShowBubbleChat: state.setShowBubbleChat,
+    showBubbleChat: state.showBubbleChat,
+  }));
+
   const role = session?.user.role;
   const pathnameRole =
     role === 'admin' ? '/dashboard/admin/messages' : '/dashboard/messages';
@@ -37,17 +56,25 @@ export const useNotificationChannel = (
       ) {
         add(message);
         updateUnreadCount(1);
-      } else if (pathname !== `/dashboard/chat/${message.senderId}`) {
+      }
+      //  else if (pathname !== `/dashboard/chat/${message.senderId}`)
+      else if (tab !== message.senderId) {
+        console.log('🚀 ~ tab:', tab);
         newMessageToast(message);
         updateUnreadCount(1);
       }
     },
-    [add, pathname, pathnameRole, searchParams, updateUnreadCount]
+    [add, pathname, pathnameRole, searchParams, tab, updateUnreadCount]
   );
 
   const handleNewLike = useCallback(
-    (data: { name: string; image: string | null; userId: string }) => {
-      newLikeToast(data.name, data.image, data.userId);
+    (data: {
+      name: string;
+      image: string | null;
+      userId: string;
+      message: MessageDto;
+    }) => {
+      newLikeToast(data.name, data.image, data.userId, data.message);
     },
     []
   );

@@ -210,7 +210,7 @@ export async function deleteMessage(messageId: string, isOutBox: boolean) {
     //   { message: 'successfully deleted message' },
     //   { status: 200 }
     // );
-    revalidatePath('/dashboard/admin/messages', 'page');
+    // revalidatePath('/dashboard/admin/messages', 'page');
   } catch (err) {
     console.error(err);
     throw err;

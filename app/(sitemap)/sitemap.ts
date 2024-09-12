@@ -75,7 +75,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     changeFrequency,
   }));
 
-  const routes = ['/', '/about', '/posts', '/soccer'].map((route) => ({
+  const routes = ['/', '/dashboard', '/posts', '/soccer'].map((route) => ({
     url: `${website_host_url}${route}`,
     lastModified: new Date().toISOString(),
     changeFrequency,
