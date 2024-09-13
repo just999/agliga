@@ -12,7 +12,7 @@ import { formatShortDateTime } from '@/lib/utils';
 import { User } from '@prisma/client';
 
 type MessageListProps = {
-  initialMessages: { messages: MessageDto[]; readCount: number };
+  initialMessages: { messages: MessageDto[]; readCount: number } | undefined;
   currentUserId: string;
   chatId: string;
   user: User;
@@ -27,13 +27,15 @@ const MessageList = ({
   const setReadCount = useRef(false);
   const channelRef = useRef<Channel | null>(null);
 
-  const [messages, setMessages] = useState(initialMessages?.messages);
+  const [messages, setMessages] = useState<MessageDto[]>(
+    initialMessages?.messages || []
+  );
   const { updateUnreadCount } = useMessageStore((state) => ({
     updateUnreadCount: state.updateUnreadCount,
   }));
 
   useEffect(() => {
-    if (!setReadCount.current) {
+    if (!setReadCount.current && initialMessages) {
       updateUnreadCount(-initialMessages.readCount);
     }
     setReadCount.current = true;
@@ -74,23 +76,25 @@ const MessageList = ({
       }
     };
   }, [chatId, handleNewMessage, handleReadMessages]);
+  // console.log('MessageList render:', { chatId, initialMessages });
+
+  if (messages.length === 0) {
+    return <div className='text-center py-4'>No messages yet.</div>;
+  }
+
   return (
     <div className='overflow-auto'>
-      {messages?.length === 0 ? (
-        ''
-      ) : (
-        <div>
-          {user &&
-            messages?.map((message) => (
-              <MessageBox
-                key={message.id}
-                user={user}
-                message={message}
-                currentUserId={currentUserId}
-              />
-            ))}
-        </div>
-      )}
+      <div>
+        {user &&
+          messages?.map((message) => (
+            <MessageBox
+              key={message.id}
+              user={user}
+              message={message}
+              currentUserId={currentUserId}
+            />
+          ))}
+      </div>
     </div>
   );
 };

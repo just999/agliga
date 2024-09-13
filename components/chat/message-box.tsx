@@ -2,7 +2,7 @@
 
 import PresenceAvatar from '@/components/presence-avatar';
 
-import { cn, transformImageUrl } from '@/lib/utils';
+import { cn, timeAgo, transformImageUrl } from '@/lib/utils';
 import { MessageDto } from '@/types';
 import { User } from '@prisma/client';
 

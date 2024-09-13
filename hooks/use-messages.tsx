@@ -129,11 +129,15 @@ export const useMessages = (
 
   const handleRowSelect = useCallback(
     (e: MouseEvent<HTMLButtonElement>, key: Key) => {
+      console.log(
+        '🚀 ~ key:=====>> handle row select on use messages hook',
+        key
+      );
       e.stopPropagation();
       const message = messages.find((m) => m.id === key);
-      const url = isOutbox
-        ? `${urlPrefix}/${message?.recipientId}`
-        : `${urlPrefix}/${message?.senderId}`;
+      const url = `${urlPrefix}?container=${container}`;
+
+      console.log('🚀 ~ url:', url);
       // router.push(url);
 
       if (container && message?.senderId && message.recipientId) {

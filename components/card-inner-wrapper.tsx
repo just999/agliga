@@ -91,12 +91,12 @@ const CardInnerWrapper = ({
                 className='cursor-pointer m-0 p-0 h-6 px-1 hover:text-emerald-600 hover:text-shadow-default hover:shadow-md'>
                 {toggleSidePanel ? (
                   <IoArrowUndoCircleOutline
-                    className='svg text-stone-400'
+                    className='svg text-stone-400 hover:text-white hover:bg-orange-300 rounded-full p-.5 hover:text-shadow'
                     size={20}
                   />
                 ) : (
                   <IoArrowRedoCircleOutline
-                    className='svg text-stone-400'
+                    className='svg text-stone-400 hover:text-white hover:bg-orange-300 rounded-full p-.5 hover:text-shadow'
                     size={20}
                   />
                 )}

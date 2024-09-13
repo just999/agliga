@@ -1,16 +1,16 @@
 'use client';
 
-import { cn, createChatId } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 
 import { User } from '@prisma/client';
 
-import { LucideMessagesSquare, MessageCircleMore } from 'lucide-react';
+import { MessageCircleMore } from 'lucide-react';
 import { usePresenceStore } from '@/store/use-presence-store';
 
 import { useMessageStore } from '@/store/use-message-store';
 import { useCallback, useEffect, useState } from 'react';
 
-import { Button, Spinner } from '../ui';
+import { Button } from '@/components/ui';
 
 import { useSession } from 'next-auth/react';
 import { useChatStore } from '@/store/use-chat-store';

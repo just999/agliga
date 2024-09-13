@@ -204,10 +204,11 @@ import ChatTabsContent from './chat-tabs-content';
 import { useSession } from 'next-auth/react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ChevronDownSquareIcon } from 'lucide-react';
+import { SafeAdminChat } from '@/types/types';
 
 type NewChatContainerProps = {
   users: User[];
-  adminProfile: User | null;
+  adminProfile: SafeAdminChat;
 };
 
 const NewChatContainer = ({ users, adminProfile }: NewChatContainerProps) => {
@@ -220,13 +221,27 @@ const NewChatContainer = ({ users, adminProfile }: NewChatContainerProps) => {
 
   const {
     tab,
-    setTab,
     setChatId,
+    setTab,
+    loading,
+    setLoading,
     isToggle,
     setIsToggle,
     toggleSidePanel,
     setShowBubbleChat,
-  } = useChatStore();
+    showBubbleChat,
+  } = useChatStore((state) => ({
+    setChatId: state.setChatId,
+    setTab: state.setTab,
+    tab: state.tab,
+    isToggle: state.isToggle,
+    setIsToggle: state.setIsToggle,
+    toggleSidePanel: state.toggleSidePanel,
+    loading: state.loading,
+    setLoading: state.setLoading,
+    setShowBubbleChat: state.setShowBubbleChat,
+    showBubbleChat: state.showBubbleChat,
+  }));
 
   const onlineUsers = useMemo(
     () =>
@@ -234,7 +249,9 @@ const NewChatContainer = ({ users, adminProfile }: NewChatContainerProps) => {
         ? users.filter(
             (user) => usersId.includes(user.id) && user.role === 'admin'
           )
-        : users.filter((user) => usersId.includes(user.id)),
+        : users.filter(
+            (user) => usersId.includes(user.id) && user.role === 'user'
+          ),
     [users, usersId, userRole]
   );
 
@@ -293,7 +310,7 @@ const NewChatContainer = ({ users, adminProfile }: NewChatContainerProps) => {
       className={cn(
         'm-0 p-0 flex flex-col items-end justify-end rounded-t-lg'
       )}>
-      {isToggle && (
+      {/* {isToggle && (
         <Button
           onClick={handleToggleChat}
           type='button'
@@ -309,7 +326,7 @@ const NewChatContainer = ({ users, adminProfile }: NewChatContainerProps) => {
           />
           <span className='text-white group-hover:text-gray-700'>Close</span>
         </Button>
-      )}
+      )} */}
       <Tabs
         value={tab}
         onValueChange={onTabChange}

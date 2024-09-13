@@ -42,6 +42,7 @@ export const useMessageStore = create<MessageState>()(
           const map = new Map(
             [...state.messages, ...messages].map((m) => [m.id, m])
           );
+          console.log({ map });
           const uniqueMessages = Array.from(map.values());
           return { messages: uniqueMessages };
         }),

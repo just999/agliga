@@ -131,15 +131,16 @@ import { MessageCircleMore } from 'lucide-react';
 import { User } from '@prisma/client';
 import { useSession } from 'next-auth/react';
 
-import { Button } from '@/components/ui';
+import { Button, Spinner } from '@/components/ui';
 import { useChatStore } from '@/store/use-chat-store';
-import { createChatId } from '@/lib/utils';
+import { cn, createChatId } from '@/lib/utils';
 import { usePresenceStore } from '@/store/use-presence-store';
 import NewChatContainer from '@/components/chat/new-chat-container';
+import { SafeAdminChat } from '@/types/types';
 
 type NewChatWidgetProps = {
   users: User[] | [];
-  adminProfile: User | null;
+  adminProfile: SafeAdminChat;
 };
 
 const NewChatWidget = ({ users, adminProfile }: NewChatWidgetProps) => {
@@ -153,17 +154,23 @@ const NewChatWidget = ({ users, adminProfile }: NewChatWidgetProps) => {
   );
 
   const {
+    chatId,
     setChatId,
     setTab,
+    loading,
+    setLoading,
     isToggle,
     setIsToggle,
     setShowBubbleChat,
     showBubbleChat,
   } = useChatStore((state) => ({
+    chatId: state.chatId,
     setChatId: state.setChatId,
     setTab: state.setTab,
     isToggle: state.isToggle,
     setIsToggle: state.setIsToggle,
+    loading: state.loading,
+    setLoading: state.setLoading,
     setShowBubbleChat: state.setShowBubbleChat,
     showBubbleChat: state.showBubbleChat,
   }));
@@ -179,11 +186,6 @@ const NewChatWidget = ({ users, adminProfile }: NewChatWidgetProps) => {
   const handleUserChatId = useCallback(() => {
     if (!adminProfile?.id || !curUserId || activeUsers.length === 0)
       return null;
-    console.log(
-      '🚀 ~ handleUserChatId ~ handleUserChatId:',
-      'handleUserChatId is trigger'
-    );
-
     if (userRole === 'user' && adminProfile?.role === 'admin') {
       const chatId = createChatId(curUserId, adminProfile?.id);
       if (chatId) setChatId(chatId);
@@ -232,16 +234,22 @@ const NewChatWidget = ({ users, adminProfile }: NewChatWidgetProps) => {
         }`}>
         <NewChatContainer users={users} adminProfile={adminProfile} />
       </div>
-      {!isToggle && showBubbleChat && (
+      {!isToggle && chatId && showBubbleChat ? (
         <Button
+          disabled={loading}
           variant='ghost'
-          className='p-0 m-0 w-13 h-13 '
+          className={cn('p-0 m-0 w-13 h-13', loading && 'cursor-not-allowed')}
           onClick={handleToggleChat}>
           <MessageCircleMore
             size={50}
             className='svg text-blue-600 hover:text-shadow hover:text-500/80 hover:fill-slate-500/20 hover:text-blue-700'
           />
         </Button>
+      ) : (
+        <Spinner
+          size={28}
+          className={cn('svg w-16 h-16', isToggle && 'hidden')}
+        />
       )}
     </div>
   );

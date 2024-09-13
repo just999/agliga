@@ -9,6 +9,7 @@ import { createChatId } from '@/lib/utils';
 import { mapMessageToMessageDto } from '@/lib/mappings';
 import { revalidateTag, revalidatePath } from 'next/cache';
 import { messageSchema, MessageSchema } from '@/schemas';
+import { Prisma } from '@prisma/client';
 
 // import { cache } from 'react';
 
@@ -91,6 +92,7 @@ export async function getMessageThread(recipientId: string) {
             m.sender?.id === recipientId
         )
         .map((m) => m.id);
+
       await db.message.updateMany({
         where: {
           id: { in: readMessageIds },
@@ -118,6 +120,7 @@ export async function getMessageThread(recipientId: string) {
   }
 }
 
+//  ?GET MESSAGES BY CONTAINERS ('INBOX' | 'OUTBOX')
 export async function getMessagesByContainer(
   container?: string | null,
   cursor?: string,
@@ -164,6 +167,48 @@ export async function getMessagesByContainer(
   }
 }
 
+//  ?GET MESSAGES BY CONTAINERS ALTERNATIVE FROM CHATGPT ('INBOX' | 'OUTBOX')
+export async function getMessagesByContainers(
+  container: string | null,
+  cursor: string | null = null,
+  limit: number = 100
+): Promise<{ messages: MessageDto[]; nextCursor: string | undefined }> {
+  try {
+    const userId = await getAuthUserId();
+
+    const whereConditions: Prisma.MessageWhereInput = {
+      ...(container === 'outbox'
+        ? { senderId: userId, senderDeleted: false }
+        : { recipientId: userId, recipientDeleted: false }),
+      ...(cursor ? { created: { lte: new Date(cursor) } } : {}),
+    };
+
+    const messages = await db.message.findMany({
+      where: whereConditions,
+      orderBy: {
+        created: 'desc',
+      },
+      select: messageSelect,
+      take: limit + 1,
+    });
+
+    let nextCursor: string | undefined;
+    if (messages.length > limit) {
+      const [, ...remainingMessages] = messages;
+      nextCursor =
+        remainingMessages[remainingMessages.length - 1]?.created.toISOString();
+    }
+
+    const messagesToReturn = messages.map(mapMessageToMessageDto);
+
+    return { messages: messagesToReturn, nextCursor };
+  } catch (err) {
+    console.error('Error fetching messages:', err);
+    throw err;
+  }
+}
+
+// ? DELETE MESSAGE BY MESSAGE ID
 export async function deleteMessage(messageId: string, isOutBox: boolean) {
   const selector = isOutBox ? 'senderDeleted' : 'recipientDeleted';
 
@@ -217,6 +262,7 @@ export async function deleteMessage(messageId: string, isOutBox: boolean) {
   }
 }
 
+// ?GET UNREAD MESSAGES COUNT
 export async function getUnreadMessageCount() {
   try {
     const userId = await getAuthUserId();
@@ -227,6 +273,7 @@ export async function getUnreadMessageCount() {
         recipientId: userId,
         recipientDeleted: false,
       },
+      take: 100,
     });
 
     // Filter messages that are unread and not deleted
@@ -269,10 +316,11 @@ export async function getUnreadMessageCount() {
 //   }
 // }
 
+// ?GET UNREAD MESSAGES COUNT ALTERNATIVE
 export async function getCountUnreadMessages() {
   try {
     const userId = await getAuthUserId();
-    return db.message.count({
+    return await db.message.count({
       where: {
         recipientId: userId,
         dateRead: null,

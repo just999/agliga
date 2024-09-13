@@ -11,11 +11,12 @@ import { userRole } from '@/lib/auth';
 import { cn, createChatId } from '@/lib/utils';
 import { useSession } from 'next-auth/react';
 import { getUnreadMessagesBySenderId } from '@/actions/message-actions';
+import { SafeAdminChat } from '@/types/types';
 
 type ChatTabsListProps = {
-  activeUser: User | null;
+  activeUser: User | SafeAdminChat | null;
   user: User;
-  adminProfile: User | null;
+  adminProfile: SafeAdminChat;
 };
 
 const ChatTabsList = ({

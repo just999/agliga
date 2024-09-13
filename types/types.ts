@@ -17,6 +17,11 @@ export type SafeUser = Omit<
   emailVerified: string | null;
 };
 
+export type SafeAdminChat = Omit<
+  User,
+  'createdAt' | 'updatedAt' | 'emailVerified' | 'password' | 'hashedPassword'
+>;
+
 export type SafeSliderImage = Omit<Slider, 'createdAt' | 'updatedAt'> & {
   createdAt: string;
   updatedAt: string;

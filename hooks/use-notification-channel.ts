@@ -26,6 +26,14 @@ export const useNotificationChannel = (
     updateUnreadCount: state.updateUnreadCount,
   }));
 
+  const isOutbox = searchParams.get('container') === 'outbox';
+
+  const container = isOutbox ? 'outbox' : 'inbox';
+
+  const role = session?.user.role;
+  const pathnameRole =
+    role === 'admin' ? '/dashboard/admin/messages' : '/dashboard/messages';
+
   const {
     setChatId,
     tab,
@@ -44,10 +52,6 @@ export const useNotificationChannel = (
     showBubbleChat: state.showBubbleChat,
   }));
 
-  const role = session?.user.role;
-  const pathnameRole =
-    role === 'admin' ? '/dashboard/admin/messages' : '/dashboard/messages';
-
   const handleNewMessage = useCallback(
     (message: MessageDto) => {
       if (
@@ -59,7 +63,6 @@ export const useNotificationChannel = (
       }
       //  else if (pathname !== `/dashboard/chat/${message.senderId}`)
       else if (tab !== message.senderId) {
-        console.log('🚀 ~ tab:', tab);
         newMessageToast(message);
         updateUnreadCount(1);
       }

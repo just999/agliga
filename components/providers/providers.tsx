@@ -23,6 +23,7 @@ const Providers = ({ children, userId, profileComplete }: ProvidersProps) => {
     messages: state.messages,
     updateUnreadCount: state.updateUnreadCount,
   }));
+
   const setUnreadCount = useCallback(
     (amount: number) => {
       updateUnreadCount(amount);
@@ -35,7 +36,7 @@ const Providers = ({ children, userId, profileComplete }: ProvidersProps) => {
       getUnreadMessageCount().then((count) => setUnreadCount(count));
       isUnreadCountSet.current = true;
     }
-  }, [setUnreadCount, userId]);
+  }, [setUnreadCount, userId, messages]);
 
   usePresenceChannel(userId, profileComplete);
   useNotificationChannel(userId, profileComplete);

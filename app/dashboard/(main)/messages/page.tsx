@@ -1,4 +1,7 @@
-import { getMessagesByContainer } from '@/actions/message-actions';
+import {
+  getMessagesByContainer,
+  getMessagesByContainers,
+} from '@/actions/message-actions';
 
 // import MessageClient from './message-client';
 import Container from '@/components/container';

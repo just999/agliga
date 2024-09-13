@@ -12,7 +12,7 @@ import { useSession } from 'next-auth/react';
 
 import { useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { adminChatId } from './chat/new-widget';
+import { adminChatProfile } from '@/lib/helper';
 
 type NotificationToastProps = {
   image?: string | null;
@@ -31,6 +31,8 @@ const NotificationToast = ({
 }: NotificationToastProps) => {
   const { data: session, status } = useSession();
   const router = useRouter();
+
+  const adminChatId = adminChatProfile.id;
 
   const {
     isToggle,
@@ -58,8 +60,6 @@ const NotificationToast = ({
 
   const handleToggleChat = useCallback(
     (message: MessageDto) => {
-      console.log('🚀 ~ handleToggleChat ~ message:', message);
-
       if (
         session?.user.role === 'user' &&
         message.senderId &&
@@ -87,6 +87,7 @@ const NotificationToast = ({
       // }
     },
     [
+      adminChatId,
       session?.user.id,
       session?.user.role,
       setChatId,

@@ -164,7 +164,6 @@ const ChatForm = forwardRef<ChatFormHandle, ChatFormProps>(
     useImperativeHandle(ref, () => ({
       focus: () => {
         inputRef.current?.focus();
-        console.log('🚀 ~ inputRef:', inputRef);
         const length = inputRef.current?.value.length || 0;
         inputRef.current?.setSelectionRange(length, length);
       },

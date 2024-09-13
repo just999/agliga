@@ -94,6 +94,7 @@ import {
   SlotGames,
 } from '@/components/assets/user-games';
 import { ContainerProps } from '@/components/dashboard/dashboard-sidebar';
+import { Role } from '@prisma/client';
 import {
   Newspaper,
   Folder,
@@ -3362,3 +3363,27 @@ export const dashboardAdminMenu = [
     link: '/dashboard/admin/users',
   },
 ];
+
+export const adminChatProfile = {
+  id: '66b5e94e1df1aa252cef500f',
+  name: 'mao',
+  email: 'mao@mao.com',
+  // emailVerified: '2024-08-09T10:02:54.609Z',
+  phone: '1111-1111-111',
+  bank: 'BNI',
+  game: ['AgenBet', 'Ibcbet'],
+  accountNumber: '1111-1111-1111',
+  image:
+    'https://res.cloudinary.com/tommy08/image/upload/v1725587833/agenliga/q5vhz8nycwtffncsgecr.jpg',
+  // password: null,
+  // hashedPassword:
+  //   '$2a$12$3bNalKKHg9CETfTOle49leBnICf2KWGyI4z51qMRfUW00qvFLnese',
+  profileComplete: true,
+  active: true,
+  role: Role.admin,
+  // createdAt: '2024-08-09T10:02:54.610Z',
+  // updatedAt: '2024-09-06T01:57:12.717Z',
+  editorId: null,
+  favoriteIds: [],
+  isTwoFactorEnabled: null,
+};

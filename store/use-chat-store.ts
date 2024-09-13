@@ -9,6 +9,8 @@ interface ChatStoreState {
   showBubbleChat: boolean;
   chatId: string | null;
   tab: string;
+  loading: boolean;
+  setLoading: (loading: boolean) => void;
   setTab: (tab: string) => void;
   setSenderId: (senderId: string) => void;
   setRecipientId: (recipientId: string) => void;
@@ -22,7 +24,7 @@ interface ChatStoreState {
 
 export const useChatStore = create<ChatStoreState>()(
   devtools(
-    (set, get) => ({
+    (set) => ({
       senderId: null,
       recipientId: null,
       isToggle: false,
@@ -30,6 +32,8 @@ export const useChatStore = create<ChatStoreState>()(
       showBubbleChat: true,
       chatId: null,
       tab: '',
+      loading: false,
+      setLoading: (loading) => set({ loading }),
       setTab: (tab) => set({ tab }),
       setSenderId: (senderId) => set({ senderId }),
       setRecipientId: (recipientId) => set({ recipientId }),

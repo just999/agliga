@@ -34,6 +34,7 @@ import Heading from '@/components/ui/heading';
 import { Button, Card, Spinner } from '@/components/ui';
 import { useMessages } from '@/hooks/use-messages';
 import ClientOnly from '@/lib/client-only';
+import { getMessageThread } from '@/actions/message-actions';
 
 const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
   const itemRank = rankItem(row.getValue(columnId), value);
@@ -96,9 +97,10 @@ const MessageTable = <TData extends DataWithId, TValue>({
     },
   });
 
-  const handleSelectRow = (e: any, data: Key) => {
-    console.log(data);
-    selectRow(e, data);
+  const handleSelectRow = async (e: any, data: any) => {
+    const res = await getMessageThread(data.senderId);
+    console.log('🚀 ~ handleSelectRow ~ res:', res);
+    selectRow(e, data.id);
   };
 
   return (
@@ -155,22 +157,25 @@ const MessageTable = <TData extends DataWithId, TValue>({
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
-                  onClick={(e) => handleSelectRow(e, row.original.id)}
+                  onClick={(e) => {
+                    console.log(row.original);
+                    handleSelectRow(e, row.original);
+                  }}
                   data-state={row.getIsSelected() && 'selected'}
                   className='h-6 bg-amber-50 even:bg-orange-50 odd:bg-amber-200/30'>
                   {row.getVisibleCells().map((cell: any) => {
-                    let activeCell;
-                    if (
-                      cell.column.id === 'active' &&
-                      cell.row.original.active === true
-                    ) {
-                      activeCell = '!bg-emerald-200 rounded-sm px-2';
-                    } else if (
-                      cell.column.id === 'active' &&
-                      cell.row.original.active === false
-                    ) {
-                      activeCell = '!bg-rose-200 rounded-sm px-2';
-                    }
+                    // let activeCell;
+                    // if (
+                    //   cell.column.id === 'active' &&
+                    //   cell.row.original.active === true
+                    // ) {
+                    //   activeCell = '!bg-emerald-200 rounded-sm px-2';
+                    // } else if (
+                    //   cell.column.id === 'active' &&
+                    //   cell.row.original.active === false
+                    // ) {
+                    //   activeCell = '!bg-rose-200 rounded-sm px-2';
+                    // }
                     return (
                       <TableCell
                         key={cell.id}

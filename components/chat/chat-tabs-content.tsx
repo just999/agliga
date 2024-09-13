@@ -11,7 +11,7 @@ import {
   normalizedDateTime,
 } from '@/lib/utils';
 import CardInnerWrapper from '../card-inner-wrapper';
-import { useCurrentUserRole } from '@/hooks/use-user';
+
 import { useChatStore } from '@/store/use-chat-store';
 import { useSession } from 'next-auth/react';
 import { RefObject, useCallback, useEffect, useState } from 'react';
@@ -24,18 +24,17 @@ import { BsChevronDown } from 'react-icons/bs';
 import PresenceAvatar from '@/components/presence-avatar';
 
 import { getMessageThread } from '@/actions/message-actions';
+import { SafeAdminChat } from '@/types/types';
 
 type ChatTabsContentProps = {
-  // chatId: string | null;
-  activeUser: User | null;
-  user: User | null;
+  activeUser: User | SafeAdminChat | null;
+  user: User;
   className?: string;
-  adminProfile?: User | null;
+  adminProfile: SafeAdminChat;
   inputRef: RefObject<HTMLInputElement>;
 };
 
 const ChatTabsContent = ({
-  // chatId,
   activeUser,
   user,
   className,
@@ -43,10 +42,7 @@ const ChatTabsContent = ({
   inputRef,
   ...props
 }: ChatTabsContentProps) => {
-  const [messages, setMessages] = useState<MessagesProps | null>(null);
-  const [newChatId, setNewChatId] = useState<string | null>(null);
-  // const [showBubbleChat, setShowBubbleChat] = useState<boolean>(true);
-  // const [isOpen, setIsOpen] = useState(false);
+  const [messages, setMessages] = useState<MessagesProps>();
 
   const { data: session } = useSession();
   const userRole = session?.user.role;
@@ -54,6 +50,9 @@ const ChatTabsContent = ({
 
   const {
     tab,
+    loading,
+    setLoading,
+    setTab,
     senderId,
     recipientId,
     setSenderId,
@@ -69,6 +68,9 @@ const ChatTabsContent = ({
   } = useChatStore((state) => ({
     senderId: state.senderId,
     tab: state.tab,
+    setTab: state.setTab,
+    loading: state.loading,
+    setLoading: state.setLoading,
     recipientId: state.recipientId,
     setSenderId: state.setSenderId,
     chatId: state.chatId,
@@ -82,27 +84,47 @@ const ChatTabsContent = ({
     showBubbleChat: state.showBubbleChat,
   }));
   useEffect(() => {
-    if (!user?.id) return;
+    setLoading(true);
+    if (!user?.id) {
+      return;
+    }
     const fetchData = async () => {
       try {
         const res = await getMessageThread(user?.id);
-        if (res) setMessages(res);
+
+        if (res && res.messages) {
+          setMessages(res);
+        } else {
+          setMessages({ messages: [], readCount: 0 });
+        }
       } catch (error) {
         console.error('Error fetching messages:', error);
+        setMessages({ messages: [], readCount: 0 });
+      } finally {
+        setLoading(false);
       }
     };
     fetchData();
-  }, [recipientId, setMessages, user?.id]);
+  }, [user?.id, setMessages, setLoading, activeUser]);
 
   useEffect(() => {
     if (userRole === 'user' && adminProfile?.id) {
       const ci = createChatId(currentUserId, adminProfile?.id);
-      if (ci) setNewChatId(ci);
-      setChatId(ci);
-    } else if (userRole === 'admin' && adminProfile?.id && activeUser?.id) {
+      if (ci)
+        // setNewChatId(ci);
+        setChatId(ci);
+      setTab(adminProfile?.id);
+    } else if (
+      userRole === 'admin' &&
+      adminProfile?.id &&
+      activeUser?.role === 'user' &&
+      activeUser?.id
+    ) {
       const ci = createChatId(adminProfile?.id, activeUser?.id);
-      if (ci) setNewChatId(ci);
-      setChatId(ci);
+      if (ci)
+        // setNewChatId(ci);
+        setChatId(ci);
+      setTab(activeUser?.id);
     }
   }, [
     activeUser?.id,
@@ -110,39 +132,12 @@ const ChatTabsContent = ({
     adminProfile?.id,
     currentUserId,
     userRole,
-    setNewChatId,
+    // setNewChatId,
     setChatId,
+    setTab,
   ]);
-  // useEffect(() => {
-  //   if (userRole === 'user' && adminProfile?.id) {
-  //     const newChatId = createChatId(currentUserId, adminProfile?.id);
-  //     if (newChatId) setChatId(newChatId);
-  //   } else if (userRole === 'admin' && adminProfile?.id) {
-  //     const newChatId = createChatId(adminProfile?.id, tab);
-  //     if (newChatId) setChatId(newChatId);
-  //   }
-  // }, [setChatId, adminProfile?.id, currentUserId, user?.id, userRole, tab]);
-
-  // const newChatId = useCallback(() => {
-  //   if (userRole === 'user' && adminProfile?.id) {
-  //     const chatId = createChatId(currentUserId, adminProfile?.id);
-  //     if (chatId) setChatId(chatId);
-  //   } else if (userRole === 'admin' && adminProfile?.id) {
-  //     const chatId = createChatId(adminProfile?.id, user.id);
-  //     if (chatId) setChatId(chatId);
-  //   }
-  // }, []);
-
   const handleToggleOff = useCallback(() => {
     if (session?.user.id) setSenderId(session?.user.id);
-
-    // if (userRole === 'user' && adminProfile?.id) {
-    //   const chatId = createChatId(currentUserId, adminProfile?.id);
-    //   if (chatId) setChatId(chatId);
-    // } else if (userRole === 'admin' && adminProfile?.id) {
-    //   const chatId = createChatId(adminProfile?.id, user.id);
-    //   if (chatId) setChatId(chatId);
-    // }
 
     setIsToggle(false);
     setShowBubbleChat(true); // Hide the BubbleChat immediately
@@ -172,21 +167,6 @@ const ChatTabsContent = ({
   const formattedMessageDate = formatShortDateTime(latestMessageDate);
   const formatMessDate = formattedDateMonthDate(formattedMessageDate);
 
-  if (!messages) return [];
-  // if (!chatId) return null;
-
-  // const renderedSidePanel =
-  //   users &&
-  //   users.map((userData) => (
-  //     <ChatSidebar
-  //       key={userData.id}
-  //       userId={userData.id}
-  //       src={userData.image}
-  //       userData={userData}
-  //       recipient={recipient}
-  //     />
-  //   ));
-
   const renderedHeader = (
     <span className='flex flex-row justify-between w-full items-center p-0 h-11'>
       {/* {recipientData?.name && ( */}
@@ -207,27 +187,35 @@ const ChatTabsContent = ({
         <span className='text-shadow font-semibold text-blue-500'>Chat</span>
       </span>
       <Button
-        // variant='ghost'
+        variant='ghost'
         size='sm'
         type='button'
-        className='p-0 m-0 h-0 hover:bg-emerald-100 hover:text-sky-700 pr-1'
+        className='p-0 m-0 h-0 rounded-full hover:bg-emerald-700 hover:text-sky-700 pr-1'
         onClick={handleToggleOff}>
         {/* <Link href={`/members/${user.id}`}> */}
-        <BsChevronDown className='fill-gray-800' />
+        <BsChevronDown
+          size={24}
+          className='p-1 fill-fuchsia-500 svg hover:fill-black hover:bg-amber-500 rounded-full'
+        />
         {/* </Link> */}
       </Button>
     </span>
   );
 
+  // if (loading) return <Spinner />;
+  // if (!messages || messages.messages.length === 0) return null;
   // const sidePanel = role === 'admin' ? renderedSidePanel : '';
-  const messageListContent = newChatId && (
+  const messageListContent = chatId && (
     <MessageList
+      // key={`${chatId}-${user?.id}`}
       initialMessages={messages}
       currentUserId={currentUserId}
-      chatId={newChatId}
+      chatId={chatId}
       user={session?.user.curUser}
     />
   );
+
+  // console.log('ChatTabsContent render:', { user, chatId, messages });
 
   return (
     user && (
