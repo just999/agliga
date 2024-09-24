@@ -28,7 +28,7 @@ import { SafeAdminChat } from '@/types/types';
 
 type ChatTabsContentProps = {
   activeUser: User | SafeAdminChat | null;
-  user: User;
+  user: User | SafeAdminChat;
   className?: string;
   adminProfile: SafeAdminChat;
   inputRef: RefObject<HTMLInputElement>;

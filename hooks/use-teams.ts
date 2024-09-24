@@ -26,22 +26,22 @@ const formattedRuns = runData.map((run) => ({
 export const useRuns = () => {
   const getRuns = () => formattedRuns;
 
-  const getRunsByValue = (value: number) => {
-    return formattedRuns.find((run) => run.value === value);
+  const getRunsByValue = (value: string) => {
+    return formattedRuns.find((run) => +run.value === +value);
   };
   return { getRuns, getRunsByValue };
 };
 
 const formattedWeeks = weeks.map((week) => ({
-  value: week.value,
+  value: week.value.toString(),
   icon: week.icon,
 }));
 
 export const useWeeks = () => {
   const getWeeks = () => formattedWeeks;
 
-  const getWeeksByValue = (value: number) => {
-    return formattedWeeks.find((week) => week.value === value);
+  const getWeeksByValue = (value: string) => {
+    return formattedWeeks.find((week) => +week.value === +value);
   };
   return { getWeeks, getWeeksByValue };
 };

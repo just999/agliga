@@ -13,29 +13,29 @@ import {
 import useBanks from '@/hooks/use-banks';
 import useGames from '@/hooks/use-games';
 import { banks } from '@/lib/helper';
-import { cn } from '@/lib/utils';
+import { cn, handleFormServerErrors } from '@/lib/utils';
 import { DepoSchema, depoSchema } from '@/schemas';
-import { DepoProps, UserProps } from '@/types/types';
+import { UserProps } from '@/types/types';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
 
 import { useEffect, useState } from 'react';
 
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 
 type DepoFormProps = { user: UserProps };
-const defaultBank = {
-  value: '',
-  icon: null,
-};
 
-const defaultGame = {
+const valueWithIcon = {
   value: '',
   icon: null,
 };
 
 const MemberDepoForm = ({ user }: DepoFormProps) => {
   const [userData, setUserData] = useState<UserProps>();
+
+  const router = useRouter();
 
   useEffect(() => {
     if (user) setUserData(user);
@@ -57,30 +57,32 @@ const MemberDepoForm = ({ user }: DepoFormProps) => {
     setError,
     formState: { errors, isValid, isSubmitting, isLoading },
   } = methods;
+
   const { getGames } = useGames();
   const banks = getBanks();
+
   const bankOptions = banks.map((bank) => ({
     value: bank.value,
     icon: bank.icon,
   }));
+
   const userBank = banks.filter(
     (bank: { value: string; icon: any }) => bank.value === userData?.bank
   ) || {
     value: '',
     icon: '',
   };
-
   useEffect(() => {
     if (user) {
       const initialData = {
         email: user.email || '',
         name: user.name || '',
-        bank: banks.find((b) => b.value === user.bank) || defaultBank,
+        bank: banks.find((b) => b.value === user.bank) || valueWithIcon,
         accountNumber: user.accountNumber || '',
         depoAmount: '',
-        game: defaultGame,
+        game: valueWithIcon,
         gameUserId: '',
-        bankPT: defaultBank,
+        bankPT: valueWithIcon,
       };
 
       reset(initialData); // Use reset from react-hook-form to set default form data
@@ -104,6 +106,13 @@ const MemberDepoForm = ({ user }: DepoFormProps) => {
   const onSubmit = async (data: DepoSchema) => {
     const depoData = JSON.parse(JSON.stringify(getValues()));
     const res = await createDepo(depoData);
+
+    if (res.status === 'success') {
+      router.refresh();
+      toast.success('Depo berhasil!');
+    } else {
+      handleFormServerErrors(res, setError);
+    }
   };
   return (
     <Card className='w-3/4 mx-auto p-4 shadow-lg'>

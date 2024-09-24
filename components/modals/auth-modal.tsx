@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import Modal from './modal';
-import Heading from '../heading';
+
 import Input from '../ui/input';
 import toast from 'react-hot-toast';
 
@@ -23,6 +23,7 @@ import useGames from '@/hooks/use-games';
 import { Button } from '../ui/button';
 import { BsEye, BsEyeSlash } from 'react-icons/bs';
 import { register as registerUser } from '@/actions/auth-actions';
+import { HeadingLogo } from '../ui';
 // import BankSelect from '../select-input';
 
 // const bankOptions = banks.map((bank) => ({
@@ -174,7 +175,7 @@ const AuthModal = () => {
 
   const bodyContent = (
     <div className='flex flex-col gap-1'>
-      <Heading
+      <HeadingLogo
         title={modalType === 'register' ? 'Daftar' : 'Login'}
         subtitle={modalType === 'register' ? 'Member Baru' : 'Login'}
       />

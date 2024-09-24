@@ -1,6 +1,5 @@
 'use client';
 
-import Heading from '@/components/ui/heading-logo';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { profileSchema, RegisterSchema, registerSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -18,6 +17,7 @@ import { register as signUp } from '@/actions/auth-actions';
 import LoginRegisterButton from '../_components/login-register-button';
 import SocialLogin from '../login/social-login';
 import { PlayCircleIcon } from 'lucide-react';
+import { HeadingLogo } from '@/components/ui';
 
 const stepSchema = [registerSchema, profileSchema];
 
@@ -76,7 +76,7 @@ const RegisterForm = () => {
   return (
     <Card className='w-full h-fit border-none shadow-lg'>
       <CardHeader>
-        <Heading
+        <HeadingLogo
           title='Daftar'
           subtitle='Selamat datang'
           center

@@ -225,7 +225,6 @@ export const fetchPostsByUserId = cache(async (params: IPostsParams) => {
 
 export const fetchPostByPostId = cache(
   async (postId: string): Promise<PostProps> => {
-    console.log('comments query making query');
     return db.post
       .findFirst({
         where: { id: postId },

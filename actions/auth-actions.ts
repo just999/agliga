@@ -80,7 +80,6 @@ export const register = async (
   data: RegisterSchema
 ): Promise<ActionResult<User>> => {
   try {
-    console.log('server register');
     const validated = combinedRegisterSchema.safeParse(data);
 
     if (!validated.success) {

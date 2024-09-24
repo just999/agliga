@@ -79,7 +79,7 @@ const MessageList = ({
   // console.log('MessageList render:', { chatId, initialMessages });
 
   if (messages.length === 0) {
-    return <div className='text-center py-4'>No messages yet.</div>;
+    return <div className='text-center py-8'>No messages yet.</div>;
   }
 
   return (

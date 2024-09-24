@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Loader from './loader';
-import Heading from './heading';
+import { HeadingLogo } from './ui';
 
 const LiveScore = () => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -57,7 +57,7 @@ const LiveScore = () => {
 
   return (
     <div className='live-score-container'>
-      {isLoading ? <Loader /> : <Heading title='Live' center />}
+      {isLoading ? <Loader /> : <HeadingLogo title='Live' center />}
       <>
         <iframe
           ref={iframeRef}

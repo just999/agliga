@@ -22,20 +22,20 @@ import { MdOutlineAddPhotoAlternate } from 'react-icons/md';
 import usePostsStore from '@/store/use-posts-store';
 import { FcAddImage, FcEmptyTrash, FcEditImage } from 'react-icons/fc';
 
-type ImagesProps = {
-  control: Control;
+type ImagesProps<T extends FieldValues> = {
+  control: Control<T>;
   text?: InitialPostProps;
   setText?: (data: any) => void;
-  register: UseFormRegister<FieldValues>;
-  watch?: UseFormWatch<FieldValues>;
-  setValue?: UseFormSetValue<FieldValues>;
+  register: any;
+  watch?: any;
+  setValue?: any;
   clear?: () => void;
   slider?: string[];
   setSlider?: () => void;
   required?: boolean;
 };
 
-const Images = ({
+const Images = <T extends FieldValues>({
   control,
   register,
   text,
@@ -44,7 +44,7 @@ const Images = ({
   watch,
   clear,
   setValue,
-}: ImagesProps) => {
+}: ImagesProps<T>) => {
   const [preview, setPreview] = useState<string>('');
   const { ref: registerRef, ...rest } = register('img');
   const hiddenFileInput = useRef<HTMLInputElement | null>(null);
@@ -108,7 +108,7 @@ const Images = ({
         }}
         {...register}
         onChange={handleAddImages}
-        className='hidden'
+        // className='hidden'
         required={required}
       />
       <div className='flex flex-row gap-4 items-center justify-start h-full my-auto '>
@@ -130,8 +130,7 @@ const Images = ({
                 size='sm'
                 type='button'
                 onClick={onAddImages}
-                className='bg-sky-50 border text-slate-400 border-sky-200 border-solid rounded-full  w-1/4 h-6 cursor-pointer'
-              >
+                className='bg-sky-50 border text-slate-400 border-sky-200 border-solid rounded-full  w-1/4 h-6 cursor-pointer'>
                 {modalType === 'add-slider' ? (
                   <span>
                     <FcAddImage size={18} />
@@ -152,8 +151,7 @@ const Images = ({
                 size='sm'
                 type='button'
                 onClick={onAddImages}
-                className='bg-sky-50 border text-slate-400 border-sky-200 border-solid rounded-full  w-1/4 h-6 cursor-pointer'
-              >
+                className='bg-sky-50 border text-slate-400 border-sky-200 border-solid rounded-full  w-1/4 h-6 cursor-pointer'>
                 <MdOutlineAddPhotoAlternate size={14} />{' '}
                 <span className='text-[10px] px-2 '>
                   {modalType === 'post' ? 'add' : 'edit'}

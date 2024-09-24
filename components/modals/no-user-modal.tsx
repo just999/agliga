@@ -2,8 +2,9 @@
 
 import useModal from '@/hooks/use-modal';
 import Modal from './modal';
-import Heading from '../heading';
+
 import { useRouter } from 'next/navigation';
+import { HeadingLogo } from '../ui';
 
 type NoUserModalProps = {};
 
@@ -14,7 +15,7 @@ const NoUserModal = () => {
 
   const bodyContent = (
     <div className='flex flex-col gap-1'>
-      <Heading
+      <HeadingLogo
         title=''
         subtitle='Please login or register to perform this task'
       />

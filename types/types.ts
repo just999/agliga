@@ -412,3 +412,12 @@ export interface AnalyticsItem {
   pv: number;
   amt: number;
 }
+
+export type UserTest = {
+  id: number;
+  birthday: Date;
+  email: string;
+  firstName: string;
+  lastName: string;
+  role: 'viewer' | 'editor';
+};

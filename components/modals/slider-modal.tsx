@@ -1,22 +1,22 @@
 'use client';
 
 import axios from 'axios';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import Modal from './modal';
-import Heading from '../heading';
-import Input from '../ui/input';
+
 import toast from 'react-hot-toast';
 
-import { useParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import useModal from '@/hooks/use-modal';
 import Images from '../candidate-form/images';
-import { InitialPostProps } from '@/types/types';
-import { useSliderImages } from '@/hooks/use-get-slider-images';
+
 import { useImageStore } from '@/store/use-image-store';
 import ClientOnly from '@/lib/client-only';
+import { HeadingLogo } from '../ui';
 
 type SliderModalProps = {};
+
 export const initialFormState = {
   title: '',
   img: '',
@@ -27,7 +27,7 @@ export const initialFormState = {
 
 const SliderModal = () => {
   const [isLoading, setIsLoading] = useState(false);
-  // const params = useParams();
+
   const router = useRouter();
   const { images, setImages } = useImageStore();
   const {
@@ -39,6 +39,7 @@ const SliderModal = () => {
     img,
     id: imgId,
   } = useModal();
+
   useEffect(() => {
     if (modalType === 'edit-slider' && img) {
       const image = img.images;
@@ -156,7 +157,7 @@ const SliderModal = () => {
 
   const bodyContent = (
     <div className='flex flex-col gap-1 '>
-      <Heading
+      <HeadingLogo
         title={modalType === 'add-slider' ? 'New Slider' : 'Edit Slider'}
         subtitle='Slider Image'
       />

@@ -1,9 +1,15 @@
-'use client';
+import { getScheduleById } from '@/actions/schedule-actions';
+import ScheduleForm from './schedule-form';
 
-type SchedulePageProps = {};
+type SchedulePageProps = {
+  params: {
+    scheduleId: string;
+  };
+};
 
-const SchedulePage = () => {
-  return <div>SchedulePage</div>;
+const SchedulePage = async ({ params }: SchedulePageProps) => {
+  // const schedule  = await getScheduleById(params.scheduleId)
+  return <ScheduleForm />;
 };
 
 export default SchedulePage;

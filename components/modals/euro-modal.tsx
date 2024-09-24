@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import Modal from './modal';
-import Heading from '../heading';
+
 import Input from '../ui/input';
 import toast from 'react-hot-toast';
 
@@ -21,6 +21,7 @@ import { EuroWithIconProps } from '@/types/types';
 import { initialEuroFormWithIconValues, team } from '@/lib/helper';
 import { useEuros, usePenalty } from '@/hooks/use-euro';
 import { cn, findMatchingObjects, noto } from '@/lib/utils';
+import { HeadingLogo } from '../ui';
 
 const EuroModal = () => {
   const [schedule, setSchedule] = useState<EuroWithIconProps>(
@@ -295,7 +296,7 @@ const EuroModal = () => {
 
   const bodyContent = (
     <div className='flex flex-col gap-1'>
-      <Heading
+      <HeadingLogo
         title={modalType === 'new-euro' ? 'New Euro' : 'Edit Euro'}
         subtitle={
           modalType === 'new-euro' ? 'Add new Euro Schedule?' : 'Editing Euro'

@@ -111,7 +111,6 @@ const EditProfileForm = ({ user }: ProfileProps) => {
   }, [user, reset]);
 
   const onSubmit = async (data: EditUserProfileSchema) => {
-    console.log(data);
     const newData = JSON.parse(JSON.stringify(getValues()));
     const res = await editUserProfile(newData);
 
@@ -204,7 +203,6 @@ const EditProfileForm = ({ user }: ProfileProps) => {
                   isMulti={true}
                   defaultValue={gameWithIcon || []}
                   onChange={(value) => {
-                    console.log([value]);
                     setCustomValue('game', value);
                   }}
                   placeholder='Games'

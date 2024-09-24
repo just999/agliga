@@ -15,12 +15,13 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { LoginSchema, loginSchema } from '@/schemas';
 import { InputCustom } from '@/components/ui/inputCustom';
 import Spinner from '@/components/ui/spinner';
-import Heading from '@/components/ui/heading-logo';
+
 import { LogInIcon, MailIcon } from 'lucide-react';
 import { PasswordInput } from '@/components/ui/password-input';
 import { cn } from '@/lib/utils';
 import ClientOnly from '@/lib/client-only';
 import LoginRegisterButton from '../_components/login-register-button';
+import { HeadingLogo } from '@/components/ui';
 
 const LoginForm = () => {
   const router = useRouter();
@@ -62,7 +63,7 @@ const LoginForm = () => {
     <>
       <Card className='w-full h-fit border-none shadow-lg'>
         <CardHeader className='flex flex-col items-center justify-center'>
-          <Heading
+          <HeadingLogo
             title='Login'
             subtitle='Selamat datang kembali'
             center

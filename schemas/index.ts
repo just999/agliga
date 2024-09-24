@@ -25,6 +25,11 @@ const gameSchema = z.object({
   icon: z.any(),
 });
 
+export const selectOptionSchema = z.object({
+  value: z.string(),
+  icon: z.any(),
+});
+
 export const profileSchema = z.object({
   name: z.string().min(3, {
     message: 'Nama Rekening Bank wajib di isi',

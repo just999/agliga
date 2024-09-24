@@ -64,7 +64,7 @@ const ScheduleClient = ({
         period={period}
         euroTableClassName={euroTableClassName}
         tableCellClassName={tableCellClassName}
-        searchKey={`teamAway` && `teamHome`}
+        searchKey={`teamHome`}
         columns={columns}
         eu={week === null ? data : filteredWeekData}
       />

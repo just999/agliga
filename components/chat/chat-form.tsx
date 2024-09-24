@@ -141,6 +141,7 @@ import { InputCustom } from '@/components/ui/inputCustom';
 import Spinner from '@/components/ui/spinner';
 import { cn, handleFormServerErrors } from '@/lib/utils';
 import { MessageSchema, messageSchema } from '@/schemas';
+import { SafeAdminChat } from '@/types/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { User } from '@prisma/client';
 import { SendIcon } from 'lucide-react';
@@ -149,7 +150,7 @@ import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 
 type ChatFormProps = {
-  recipientData: User;
+  recipientData: User | SafeAdminChat;
 };
 
 export type ChatFormHandle = {

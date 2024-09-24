@@ -4,7 +4,7 @@ import { useParams, useRouter } from 'next/navigation';
 import Modal from './modal';
 
 import { useEffect, useState } from 'react';
-import Heading from '../heading';
+
 import Input from '../ui/input';
 import {
   Controller,
@@ -28,6 +28,7 @@ import { InitialPostProps } from '@/types/types';
 import Images from '../candidate-form/images';
 
 import usePostsStore, { postItems } from '@/store/use-posts-store';
+import { HeadingLogo } from '../ui';
 
 type ImageChangeHandler = (files: FileList) => void;
 
@@ -249,7 +250,7 @@ const PostModal = () => {
 
   const bodyContent = (
     <div className='flex flex-col justify-center gap-1'>
-      <Heading
+      <HeadingLogo
         title={modalType === 'post' ? 'New Post' : 'Edit Post'}
         subtitle={
           modalType === 'post' ? 'Lets create Post' : 'Update your Post'

@@ -8,9 +8,10 @@ import { userData } from '@/store/use-active-user-store';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui';
 import { User } from '@prisma/client';
 import UserAvatar from './user-avatar';
+import { SafeAdminChat } from '@/types/types';
 
 type PresenceAvatarProps = {
-  user?: User;
+  user?: User | SafeAdminChat;
   userId?: string;
   src?: string | null;
   className?: string;

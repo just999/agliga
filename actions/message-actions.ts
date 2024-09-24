@@ -333,6 +333,7 @@ export async function getCountUnreadMessages() {
   }
 }
 
+// ?GET ALL MESSAGES
 export const getMessages = async () => {
   try {
     const messages = await db.message.findMany({
@@ -346,6 +347,8 @@ export const getMessages = async () => {
     throw err;
   }
 };
+
+// ?GET UNREAD MESSAGES BY USER ID
 export const getUnreadMessagesBySenderId = async (senderId: string) => {
   try {
     const mess = await db.message.findMany({

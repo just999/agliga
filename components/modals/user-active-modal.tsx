@@ -3,7 +3,8 @@
 import useModal from '@/hooks/use-modal';
 
 import Modal from './modal';
-import Heading from '../heading';
+import { HeadingLogo } from '../ui';
+import { title } from 'process';
 
 type UserActiveModalProps = {};
 
@@ -14,7 +15,7 @@ const UserActiveModal = () => {
   const bodyContent = (
     <div className='flex flex-col gap-1'>
       {title && (
-        <Heading
+        <HeadingLogo
           title={`${title}?`}
           subtitle={
             <span>

@@ -1,9 +1,9 @@
 'use client';
 
 import Container from '@/components/container';
-import Heading from '@/components/heading';
 
 import EditDeletePostButton from '@/components/posts/edit-delete-post-button';
+import { HeadingLogo } from '@/components/ui';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -40,7 +40,7 @@ const SlidersPage = () => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [setImages]);
 
   const { modalType, onOpen } = useModal();
   // const handleEditSlider = (img: ImageSlider) => {
@@ -55,8 +55,7 @@ const SlidersPage = () => {
           .map((_, i) => (
             <span
               key={i + 1}
-              className='relative h-full  shadow-xl rounded-xl border-slate-600 border-1'
-            >
+              className='relative h-full  shadow-xl rounded-xl border-slate-600 border-1'>
               <Avatar className='rounded-none w-auto h-20 my-auto  bg-slate-100 '>
                 <Skeleton className='w-[100px] h-[20px] rounded-lg aspect-auto  ' />
                 <Skeleton className='text-stone-400 w-[100px] h-[200px] text-xs bg-slate-100'></Skeleton>
@@ -67,7 +66,7 @@ const SlidersPage = () => {
             </span>
           ))}
 
-      <Heading
+      <HeadingLogo
         center
         title='Hero Slider'
         subtitle='Max image slider is 20 images'
@@ -77,8 +76,7 @@ const SlidersPage = () => {
           images.map((img: PageProps, i) => (
             <span
               key={img.id}
-              className='relative h-[80px]  rounded-xl border-slate-600 border-1 group cursor-pointer'
-            >
+              className='relative h-[80px]  rounded-xl border-slate-600 border-1 group cursor-pointer'>
               <Avatar className='rounded-none w-auto h-20 my-auto  bg-slate-100 '>
                 <AvatarImage
                   src={img.images}
@@ -113,8 +111,7 @@ const SlidersPage = () => {
             size='sm'
             variant='ghost'
             onClick={() => onOpen('add-slider')}
-            className='w-32 h-20 m-0  shadow-xl bg-zinc-200'
-          >
+            className='w-32 h-20 m-0  shadow-xl bg-zinc-200'>
             <Avatar className='rounded-none w-32 h-20 my-auto shadow-xl px-2 bg-slate-100 '>
               <AvatarImage
                 src={''}

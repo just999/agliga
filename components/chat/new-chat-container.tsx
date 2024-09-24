@@ -246,15 +246,12 @@ const NewChatContainer = ({ users, adminProfile }: NewChatContainerProps) => {
   const onlineUsers = useMemo(
     () =>
       userRole === 'user'
-        ? users.filter(
-            (user) => usersId.includes(user.id) && user.role === 'admin'
-          )
+        ? [adminProfile]
         : users.filter(
             (user) => usersId.includes(user.id) && user.role === 'user'
           ),
-    [users, usersId, userRole]
+    [userRole, adminProfile, users, usersId]
   );
-
   const handleChatId = useCallback(
     (receiptUserId: string) => {
       if (curUserId) {

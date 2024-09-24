@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import Modal from './modal';
-import Heading from '../heading';
+
 import Input from '../ui/input';
 import toast from 'react-hot-toast';
 
@@ -22,6 +22,7 @@ import { initialFixtureFormValues } from '@/lib/helper';
 import { usePenalty } from '@/hooks/use-euro';
 import { findMatchingObjects } from '@/lib/utils';
 import { useGetFixtures } from '@/hooks/use-get-schedule';
+import { HeadingLogo } from '../ui';
 
 const FixtureModal = () => {
   const [fixture, setFixture] = useState<FixtureProps>(
@@ -134,7 +135,7 @@ const FixtureModal = () => {
       setFixture(data);
 
       const periodWeek: any = weeks.filter(
-        (period) => period.value === Number(group)
+        (period) => period.value === group
       ) || {
         icon: '',
         value: '',
@@ -182,7 +183,7 @@ const FixtureModal = () => {
       };
       setFixture(data);
       const periodWeek: any = weeks.filter(
-        (period) => period.value === item.week
+        (period) => period.value === item?.week?.toString()
       ) || {
         icon: '',
         value: '',
@@ -351,7 +352,7 @@ const FixtureModal = () => {
 
   const bodyContent = (
     <div className='flex flex-col gap-1'>
-      <Heading
+      <HeadingLogo
         title={
           modalType === newFixtureModalType
             ? `New Week period ${group}`

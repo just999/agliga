@@ -241,7 +241,7 @@ model Schedule {
   teamAway String
   score    String   @default("VS")
   teamHome String
-  analysis String
+  analysis String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

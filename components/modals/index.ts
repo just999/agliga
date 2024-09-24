@@ -19,7 +19,7 @@ export {
   // DepositWdModal,
   LiveScoreModal,
   Modal,
-  NoUserModal,
+  // NoUserModal,
   PostModal,
   SliderModal,
   SoccerModal,

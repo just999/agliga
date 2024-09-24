@@ -9,6 +9,7 @@ import Select, { StylesConfig } from 'react-select';
 import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
 import { BiDollar } from 'react-icons/bi';
 import { categories } from '@/lib/helper';
+import { useEffect, useState } from 'react';
 
 export type SelectInputValue = {
   icon: any;
@@ -56,6 +57,7 @@ const SelectInput = ({
   isInvalid,
   errorMessage,
 }: SelectInputProps) => {
+  const [isMounted, setIsMounted] = useState(false);
   let color: string;
   let fontColor: string;
   let fontWeight: string;
@@ -102,6 +104,8 @@ const SelectInput = ({
   } else {
     multi = true;
   }
+
+  useEffect(() => setIsMounted(true), []);
   return (
     <div
       className={cn(
@@ -205,11 +209,11 @@ const SelectInput = ({
               {option &&
               // id === 'euroTeamHome' ||
               // id === 'euroTeamAway' ||
-              (id === 'teamHome' ||
-                id === 'teamAway' ||
-                // id === 'bank' ||
-                // id === 'bankPT' ||
-                id === 'week')
+              // id === 'teamHome' ||
+              // id === 'teamAway' ||
+              // id === 'bank' ||
+              // id === 'bankPT' ||
+              id === 'week'
                 ? option.value
                 : option.desc}
               {/* <pre>{JSON.stringify(option.value, null, 2)}</pre> */}
@@ -257,6 +261,7 @@ const SelectInput = ({
             primary25: '#000',
           },
         })}
+        instanceId={id}
       />
 
       {isInvalid && errorMessage && (

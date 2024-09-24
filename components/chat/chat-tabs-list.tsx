@@ -7,7 +7,7 @@ import { User } from '@prisma/client';
 import { AvatarImage } from '@radix-ui/react-avatar';
 import { useCallback, useEffect, useState } from 'react';
 import UserAvatar from '../user-avatar';
-import { userRole } from '@/lib/auth';
+
 import { cn, createChatId } from '@/lib/utils';
 import { useSession } from 'next-auth/react';
 import { getUnreadMessagesBySenderId } from '@/actions/message-actions';
@@ -15,7 +15,7 @@ import { SafeAdminChat } from '@/types/types';
 
 type ChatTabsListProps = {
   activeUser: User | SafeAdminChat | null;
-  user: User;
+  user: User | SafeAdminChat;
   adminProfile: SafeAdminChat;
 };
 
@@ -24,11 +24,12 @@ const ChatTabsList = ({
   adminProfile,
   activeUser,
 }: ChatTabsListProps) => {
-  const [userData, setUserData] = useState<User>();
+  const [userData, setUserData] = useState<User | SafeAdminChat>();
   const [count, setCount] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
 
   const { data: session } = useSession();
+  const userRole = session?.user.role;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,6 +49,8 @@ const ChatTabsList = ({
     setRecipientId,
     chatId,
     setChatId,
+    tab,
+    setTab,
     isToggle,
     setIsToggle,
     toggleSidePanel,
@@ -60,6 +63,8 @@ const ChatTabsList = ({
     setSenderId: state.setSenderId,
     chatId: state.chatId,
     setChatId: state.setChatId,
+    tab: state.tab,
+    setTab: state.setTab,
     setRecipientId: state.setRecipientId,
     setIsToggle: state.setIsToggle,
     setShowBubbleChat: state.setShowBubbleChat,
@@ -83,14 +88,21 @@ const ChatTabsList = ({
       if (userRole === 'user' && adminProfile?.id) {
         const chatId = createChatId(userId, adminProfile?.id);
         if (chatId) setChatId(chatId);
+        setTab(user.id);
       } else if (userRole === 'admin') {
         const chatId = createChatId(userId, recipientUserId);
         if (chatId) setChatId(chatId);
       }
     },
-    [setChatId, adminProfile?.id, session?.user.id, session?.user.role]
+    [
+      session?.user.id,
+      session?.user.role,
+      adminProfile?.id,
+      setChatId,
+      setTab,
+      user.id,
+    ]
   );
-
   return (
     <TabsTrigger
       key={user.id}

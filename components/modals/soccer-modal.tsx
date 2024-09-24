@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import Modal from './modal';
-import Heading from '../heading';
+
 import Input from '../ui/input';
 import toast from 'react-hot-toast';
 
@@ -21,6 +21,7 @@ import { useGetSchedules } from '@/hooks/use-get-schedule';
 import { ScheduleProps } from '@/types/types';
 
 import { initialScheduleFormValues } from '@/lib/helper';
+import { HeadingLogo } from '../ui';
 
 const SoccerModal = () => {
   const [schedule, setSchedule] = useState<ScheduleProps>(
@@ -93,7 +94,7 @@ const SoccerModal = () => {
       };
       setSchedule(data);
       const periodRun: any = runs.filter(
-        (period) => period.value === item.run
+        (period) => period.value === item.run.toString()
       ) || {
         icon: '',
         value: '',
@@ -208,7 +209,7 @@ const SoccerModal = () => {
 
   const bodyContent = (
     <div className='flex flex-col gap-1'>
-      <Heading
+      <HeadingLogo
         title={modalType === 'soccer' ? 'New Matches' : 'Edit Matches'}
         subtitle={
           modalType === 'soccer' ? 'Running period?' : 'Editing Matches'

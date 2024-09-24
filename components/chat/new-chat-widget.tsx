@@ -184,26 +184,25 @@ const NewChatWidget = ({ users, adminProfile }: NewChatWidgetProps) => {
 
   // Chat initialization effect
   const handleUserChatId = useCallback(() => {
-    if (!adminProfile?.id || !curUserId || activeUsers.length === 0)
-      return null;
-    if (userRole === 'user' && adminProfile?.role === 'admin') {
-      const chatId = createChatId(curUserId, adminProfile?.id);
+    if (!adminProfile.id || !curUserId || activeUsers.length === 0) return null;
+    if (userRole === 'user' && adminProfile.role === 'admin') {
+      const chatId = createChatId(curUserId, adminProfile.id);
       if (chatId) setChatId(chatId);
-      setTab(adminProfile?.id);
+      setTab(adminProfile.id);
     } else if (
       userRole === 'admin' &&
-      curUserId === adminProfile?.id &&
+      curUserId === adminProfile.id &&
       activeUsers[0].role === 'user'
     ) {
       const activeUser = activeUsers[0];
-      const chatId = createChatId(adminProfile?.id, activeUser.id);
+      const chatId = createChatId(adminProfile.id, activeUser.id);
       if (chatId) setChatId(chatId);
       setTab(activeUser.id);
     }
   }, [
     activeUsers,
-    adminProfile?.id,
-    adminProfile?.role,
+    adminProfile.id,
+    adminProfile.role,
     curUserId,
     setChatId,
     setTab,
@@ -212,8 +211,7 @@ const NewChatWidget = ({ users, adminProfile }: NewChatWidgetProps) => {
 
   useEffect(() => {
     handleUserChatId();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [handleUserChatId]);
 
   const handleToggleChat = useCallback(() => {
     setIsToggle(true);
@@ -229,12 +227,13 @@ const NewChatWidget = ({ users, adminProfile }: NewChatWidgetProps) => {
   return (
     <div className='w-13 h-13 m-0 p-0 relative'>
       <div
-        className={`fixed bottom-4 right-2 text-shadow-lg transition-transform duration-300 ease-in-out transform ${
+        className={cn(
+          `fixed bottom-4 right-2 text-shadow-lg transition-transform duration-300 ease-in-out transform`,
           isToggle ? 'translate-y-0' : 'translate-y-full'
-        }`}>
+        )}>
         <NewChatContainer users={users} adminProfile={adminProfile} />
       </div>
-      {!isToggle && chatId && showBubbleChat ? (
+      {!isToggle && showBubbleChat ? (
         <Button
           disabled={loading}
           variant='ghost'

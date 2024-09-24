@@ -4,12 +4,13 @@ import axios from 'axios';
 import { useCallback, useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import Modal from './modal';
-import Heading from '../heading';
+
 import Input from '../ui/input';
 import toast from 'react-hot-toast';
 
 import { useRouter } from 'next/navigation';
 import useModal from '@/hooks/use-modal';
+import { HeadingLogo } from '../ui';
 
 type TopicModalProps = {};
 
@@ -73,7 +74,7 @@ const TopicModal = () => {
 
   const bodyContent = (
     <div className='flex flex-col gap-1 '>
-      <Heading title='New Topic' subtitle='Topic' />
+      <HeadingLogo title='New Topic' subtitle='Topic' />
       <Input
         id='slug'
         type='text'

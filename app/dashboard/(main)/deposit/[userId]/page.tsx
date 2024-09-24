@@ -11,9 +11,9 @@ type MemberDepoDetailPageProps = {
 const MemberDepoDetailPage = async ({ params }: MemberDepoDetailPageProps) => {
   const user = await getUserByUserId(params.userId);
   return (
-    <ClientOnly>
+    <>
       <div className='py-2 '>{user && <MemberDepoForm user={user} />}</div>
-    </ClientOnly>
+    </>
   );
 };
 

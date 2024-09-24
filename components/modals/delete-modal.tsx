@@ -2,12 +2,13 @@
 
 // import useDepoWdModal from '@/hooks/use-depo-wd';
 import Modal from './modal';
-import Heading from '../heading';
+
 import { useRouter } from 'next/navigation';
 
 import toast from 'react-hot-toast';
 import useModal from '@/hooks/use-modal';
 import { useEffect, useState } from 'react';
+import { HeadingLogo } from '../ui';
 
 // type DeleteModalProps = {
 //   title?: string | undefined;
@@ -158,7 +159,7 @@ const DeleteModal = () => {
   const bodyContent = (
     <div className='flex flex-col gap-1'>
       {title && (
-        <Heading
+        <HeadingLogo
           title={`${title}?`}
           subtitle={`Are you sure you want to ${title} with id: ${id} ?, this action is reversible!`}
         />

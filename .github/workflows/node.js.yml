@@ -41,7 +41,6 @@ jobs:
           echo "NEXT_PUBLIC_API_DOMAIN=${{ secrets.NEXT_PUBLIC_API_DOMAIN }}" >> .env.production
           echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env.production
           echo "AUTH_SECRET=${{ secrets.AUTH_SECRET }}" >> .env.production
-          echo "NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=${{ secrets.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME }}" >> .env.production
           echo "AUTH_TRUST_HOST=${{ secrets.AUTH_TRUST_HOST }}" >> .env.production
           echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }}" >> .env.production
           echo "GOOGLE_ID=${{ secrets.GOOGLE_ID }}" >> .env.production
@@ -49,8 +48,9 @@ jobs:
           echo "ITS_GITHUB_ID=${{ secrets.ITS_GITHUB_ID }}" >> .env.production
           echo "ITS_GITHUB_SECRET=${{ secrets.ITS_GITHUB_SECRET }}" >> .env.production
           echo "CLOUDINARY_API_SECRET=${{ secrets.CLOUDINARY_API_SECRET }}" >> .env.production
-          echo "CLOUDINARY_API_KEY=${{ secrets.CLOUDINARY_API_KEY }}" >> .env.production
+          echo "NEXT_PUBLIC_CLOUDINARY_API_KEY=${{ secrets.NEXT_PUBLIC_CLOUDINARY_API_KEY }}" >> .env.production
           echo "CLOUDINARY_CLOUD_NAME=${{ secrets.CLOUDINARY_CLOUD_NAME }}" >> .env.production
+          echo "NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=${{ secrets.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME }}" >> .env.production
           echo "AUTH_FACEBOOK_ID=${{ secrets.AUTH_FACEBOOK_ID }}" >> .env.production
           echo "AUTH_FACEBOOK_SECRET=${{ secrets.AUTH_FACEBOOK_SECRET }}" >> .env.production
           echo "NEXT_PUBLIC_RECAPTCHA_KEY=${{ secrets.NEXT_PUBLIC_RECAPTCHA_KEY }}" >> .env.production

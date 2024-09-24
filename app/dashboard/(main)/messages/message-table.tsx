@@ -99,7 +99,6 @@ const MessageTable = <TData extends DataWithId, TValue>({
 
   const handleSelectRow = async (e: any, data: any) => {
     const res = await getMessageThread(data.senderId);
-    console.log('🚀 ~ handleSelectRow ~ res:', res);
     selectRow(e, data.id);
   };
 
@@ -157,10 +156,7 @@ const MessageTable = <TData extends DataWithId, TValue>({
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
-                  onClick={(e) => {
-                    console.log(row.original);
-                    handleSelectRow(e, row.original);
-                  }}
+                  onClick={(e) => handleSelectRow(e, row.original)}
                   data-state={row.getIsSelected() && 'selected'}
                   className='h-6 bg-amber-50 even:bg-orange-50 odd:bg-amber-200/30'>
                   {row.getVisibleCells().map((cell: any) => {
@@ -223,10 +219,26 @@ const MessageTable = <TData extends DataWithId, TValue>({
             ))}
           </TableFooter>
         </Table>
-        <div className='sticky bottom-0 pb-3 text-right '>
+        {/* <div className='sticky bottom-0 pb-3 text-right '>
           <Button color='secondary' disabled={!hasMore} onClick={loadMore}>
             {loadingMore ? <Spinner /> : ''}
             {hasMore ? 'Load more' : 'No more messages'}
+          </Button>
+        </div> */}
+        <div className='flex items-center justify-end space-x-2 py-4 px-4'>
+          <Button
+            variant='outline'
+            size='sm'
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}>
+            Previous
+          </Button>
+          <Button
+            variant='outline'
+            size='sm'
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}>
+            Next
           </Button>
         </div>
       </Card>

@@ -7,7 +7,6 @@ import { FieldValues, useForm } from 'react-hook-form';
 
 import useTopics from '@/hooks/use-topics';
 import { Button } from '../ui/button';
-import Heading from '../heading';
 import React, { useEffect, useRef, useState } from 'react';
 
 import { InitialPostProps } from '@/types/types';
@@ -18,6 +17,7 @@ import { useGetPost } from '@/hooks/use-get-post';
 
 import SelectInput from '../ui/select-input';
 import Input from '../ui/input';
+import { HeadingLogo } from '../ui';
 
 type AddPostModalProps = {};
 
@@ -232,7 +232,7 @@ const AddPostModal = () => {
       method={modalType === 'post' ? `POST` : 'PUT'}
       encType='multipart/form-data'>
       <div className='flex flex-col justify-center gap-1'>
-        <Heading
+        <HeadingLogo
           title={modalType === 'post' ? 'New Post' : 'Edit Post'}
           subtitle={modalType === 'post' ? 'Create Post' : 'Update your Post'}
         />

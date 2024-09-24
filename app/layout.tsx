@@ -18,14 +18,14 @@ import getCurrentUser from '@/actions/get-user';
 
 import GoogleCaptchaWrapper from './captcha-wrapper';
 import {
-  UserProfileModal,
-  SoccerModal,
+  // UserProfileModal,
+  // SoccerModal,
   LiveScoreModal,
   DeleteModal,
   // DepositWdModal,
   PostModal,
   SliderModal,
-  NoUserModal,
+  // NoUserModal,
   // AuthModal,
   TopicModal,
   EuroModal,
@@ -79,7 +79,7 @@ export default async function RootLayout({
               <FixtureModal />
               <EuroModal />
               {/* <UserProfileModal /> */}
-              <SoccerModal />
+              {/* <SoccerModal /> */}
               <TopicModal />
               <LiveScoreModal />
               <DeleteModal />
@@ -88,7 +88,7 @@ export default async function RootLayout({
               {/* <AddPostModal /> */}
               <SliderModal />
               {/* <SearchModal /> */}
-              <NoUserModal />
+              {/* <NoUserModal /> */}
               {/* <AuthModal /> */}
               <TopNav />
               {/* <Navbar currentUser={currentUser} /> */}
