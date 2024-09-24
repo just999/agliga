@@ -1,6 +1,8 @@
 import { getAllSliders } from '@/actions/slider-actions';
 import SliderForm from './slider-form';
 
+export const dynamic = 'force-dynamic';
+
 type SliderPageProps = {};
 
 const SlidersPage = async () => {

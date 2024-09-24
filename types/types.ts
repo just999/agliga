@@ -421,3 +421,11 @@ export type UserTest = {
   lastName: string;
   role: 'viewer' | 'editor';
 };
+
+export type SliderFormProps = {
+  id: string;
+  images: string;
+  userId: string;
+  createdAt: Date;
+  updatedAt: Date;
+};

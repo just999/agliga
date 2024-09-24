@@ -11,8 +11,6 @@ import { fetchSchedule, fetchScheduleById } from '@/lib/queries/schedule';
 import useEuroStore from '@/store/use-euro-store';
 import useFixturesStore from '@/store/use-fixture-store';
 import useSchedulesStore from '@/store/use-schedule-store';
-import { EuroWithIconProps } from '@/types/types';
-import { id } from 'date-fns/locale';
 
 import { useEffect } from 'react';
 
@@ -35,7 +33,7 @@ export const useGetSchedules = (id?: string) => {
         setIsLoading(true);
 
         if (!id) {
-          const res = await fetchSchedule();
+          const res = (await fetchSchedule()) as any;
           if (ignore) {
             return;
           }
@@ -43,7 +41,7 @@ export const useGetSchedules = (id?: string) => {
             setItems(res);
           }
         } else if (id) {
-          const res = await fetchScheduleById(id);
+          const res = (await fetchScheduleById(id)) as any;
           if (res) setItem(res);
         }
       } catch (err) {

@@ -205,14 +205,7 @@ import { useSession } from 'next-auth/react';
 
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
-
-export type SliderFormProps = {
-  id: string;
-  images: string; // This string represents a single image URL or path
-  userId: string;
-  createdAt: Date;
-  updatedAt: Date;
-};
+import { SliderFormProps } from '@/types/types';
 
 const SliderForm = ({ images }: { images: SliderFormProps[] }) => {
   const [preview, setPreview] = useState<string>('');
@@ -249,6 +242,7 @@ const SliderForm = ({ images }: { images: SliderFormProps[] }) => {
       setImg([]);
     }
   }, [images, setImg]);
+
   const handleUploadedFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target instanceof HTMLInputElement && e.target.type === 'file') {
       const files = e.target.files;

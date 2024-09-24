@@ -1,5 +1,5 @@
-import { SliderFormProps } from '@/app/dashboard/admin/sliders/slider-form';
-import { Slider } from '@prisma/client';
+import { SliderFormProps } from '@/types/types';
+
 import { create } from 'zustand';
 
 import { devtools } from 'zustand/middleware';
