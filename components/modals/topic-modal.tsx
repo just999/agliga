@@ -36,14 +36,6 @@ const TopicModal = () => {
   const slug = watch('slug');
   const description = watch('description');
 
-  const setCustomValue = (id: string, value: any) => {
-    setValue(id, value, {
-      shouldDirty: true,
-      shouldTouch: true,
-      shouldValidate: true,
-    });
-  };
-
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
 
@@ -68,7 +60,6 @@ const TopicModal = () => {
     onClose();
     setValue('slug', '');
     setValue('description', '');
-
     reset();
   };
 

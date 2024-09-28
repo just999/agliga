@@ -9,6 +9,7 @@
 // export type SliderSchema = z.infer<typeof sliderSchema>;
 
 import { z } from 'zod';
+import { imageUrlValidator } from '.';
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 const ACCEPTED_IMAGE_TYPES = [
@@ -38,7 +39,13 @@ const fileSchema = z
   );
 
 export const sliderSchema = z.object({
-  img: fileSchema,
+  img: z.union([z.instanceof(File), z.string()]),
 });
 
 export type SliderSchema = z.infer<typeof sliderSchema>;
+
+export const addSliderSchema = z.object({
+  img: z.instanceof(File, { message: 'Image file is required' }),
+});
+
+export type AddSliderSchema = z.infer<typeof addSliderSchema>;

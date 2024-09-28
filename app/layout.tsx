@@ -4,8 +4,6 @@ import { Nunito } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/navbar/navbar';
 
-import ToasterProvider from '@/providers/toaster-provider';
-
 import { auth } from '@/auth';
 
 import { cn } from '@/lib/utils';
@@ -14,30 +12,28 @@ import Footer from '@/components/footer';
 
 import { SessionProvider } from 'next-auth/react';
 
-import getCurrentUser from '@/actions/get-user';
-
 import GoogleCaptchaWrapper from './captcha-wrapper';
 import {
   // UserProfileModal,
   // SoccerModal,
-  LiveScoreModal,
+  // LiveScoreModal,
   DeleteModal,
   // DepositWdModal,
-  PostModal,
-  SliderModal,
+  // PostModal,
+  // SliderModal,
   // NoUserModal,
   // AuthModal,
   TopicModal,
   EuroModal,
+  FixtureModal,
+  DepoWdProcessModal,
+  UserActiveModal,
+  // UserActiveModal,
 } from '@/components/modals';
-import FixtureModal from '@/components/modals/fixture-modal';
-// import DepoWdProcessModal from '@/components/modals/depo-wd-process-modal';
-import UserActiveModal from '@/components/modals/user-active-modal';
+
 import TopNav from '@/components/navbar/top-nav';
 import NewWidget from '@/components/chat/new-widget';
 import Providers from '@/components/providers/providers';
-
-// import EuroModal from '@/components/modals/euro-modal';
 
 const inter = Nunito({ subsets: ['latin'], preload: true });
 
@@ -73,20 +69,19 @@ export default async function RootLayout({
         <SessionProvider session={session}>
           <Providers userId={userId} profileComplete={profileComplete}>
             <GoogleCaptchaWrapper>
-              <ToasterProvider />
-              <UserActiveModal />
-              {/* <DepoWdProcessModal /> */}
+              {/* <UserActiveModal /> */}
+              <DepoWdProcessModal />
               <FixtureModal />
               <EuroModal />
               {/* <UserProfileModal /> */}
               {/* <SoccerModal /> */}
               <TopicModal />
-              <LiveScoreModal />
+              {/* <LiveScoreModal /> */}
               <DeleteModal />
               {/* <DepositWdModal /> */}
-              <PostModal />
+              {/* <PostModal /> */}
               {/* <AddPostModal /> */}
-              <SliderModal />
+              {/* <SliderModal /> */}
               {/* <SearchModal /> */}
               {/* <NoUserModal /> */}
               {/* <AuthModal /> */}

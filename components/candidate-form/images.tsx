@@ -21,21 +21,22 @@ import { MdOutlineAddPhotoAlternate } from 'react-icons/md';
 
 import usePostsStore from '@/store/use-posts-store';
 import { FcAddImage, FcEmptyTrash, FcEditImage } from 'react-icons/fc';
+import useFormTypes from '@/hooks/use-form-types';
 
-type ImagesProps<T extends FieldValues> = {
-  control: Control<T>;
+type ImagesProps = {
+  control?: Control<FieldValues | any>;
   text?: InitialPostProps;
   setText?: (data: any) => void;
-  register: any;
-  watch?: any;
-  setValue?: any;
+  register: UseFormRegister<FieldValues | any>;
+  watch?: UseFormWatch<FieldValues | any>;
+  setValue?: UseFormSetValue<FieldValues | any>;
   clear?: () => void;
   slider?: string[];
   setSlider?: () => void;
   required?: boolean;
 };
 
-const Images = <T extends FieldValues>({
+const Images = ({
   control,
   register,
   text,
@@ -44,11 +45,19 @@ const Images = <T extends FieldValues>({
   watch,
   clear,
   setValue,
-}: ImagesProps<T>) => {
+}: ImagesProps) => {
   const [preview, setPreview] = useState<string>('');
   const { ref: registerRef, ...rest } = register('img');
   const hiddenFileInput = useRef<HTMLInputElement | null>(null);
-  const { modalType, img, id } = useModal();
+  const { modalType } = useModal();
+  const { formType, setOn, setOff, img, id } = useFormTypes((state) => ({
+    formType: state.formType,
+    setOn: state.setOn,
+    setOff: state.setOff,
+    img: state.img,
+    id: state.id,
+  }));
+
   const { item } = usePostsStore();
   useEffect(() => {
     if (item.img) {
@@ -60,10 +69,10 @@ const Images = <T extends FieldValues>({
   }, [item.img, modalType, text]);
 
   useEffect(() => {
-    if (modalType === 'edit-slider' && img) {
+    if (formType === 'edit-slider' && img) {
       setPreview(img.images);
     }
-  }, [img, modalType]);
+  }, [img, formType]);
 
   let watchRes;
   if (watch) {
@@ -122,16 +131,17 @@ const Images = <T extends FieldValues>({
             Post image{' '}
           </AvatarFallback>
         </Avatar>
+
         <div className='flex flex-col gap-4 w-1/2 '>
           <div className='w-full left-2 '>
-            {(modalType === 'edit-slider' || modalType === 'add-slider') && (
+            {(formType === 'edit-slider' || formType === 'add-slider') && (
               <Button
                 variant='ghost'
                 size='sm'
                 type='button'
                 onClick={onAddImages}
                 className='bg-sky-50 border text-slate-400 border-sky-200 border-solid rounded-full  w-1/4 h-6 cursor-pointer'>
-                {modalType === 'add-slider' ? (
+                {formType === 'add-slider' ? (
                   <span>
                     <FcAddImage size={18} />
                   </span>
@@ -139,7 +149,7 @@ const Images = <T extends FieldValues>({
                   <FcEditImage />
                 )}
                 <span className='text-[10px] pl-2 '>
-                  {modalType === 'add-slider' ? 'add image' : 'Edit'}
+                  {formType === 'add-slider' ? 'add image' : 'Edit'}
                 </span>
               </Button>
             )}

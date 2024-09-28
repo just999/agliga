@@ -182,7 +182,7 @@
 
 'use client';
 
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import useSlidersStore from '@/store/use-sliders-store';
 
 import {
@@ -195,126 +195,190 @@ import {
   Avatar,
   AvatarFallback,
   AvatarImage,
+  InputCustom,
+  Heading,
 } from '@/components/ui';
-import { cn } from '@/lib/utils';
+import { cn, handleFormServerErrors } from '@/lib/utils';
 import { SliderSchema, sliderSchema } from '@/schemas/slider-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { ImagePlus } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { SliderFormProps } from '@/types/types';
+import { FcAddImage } from 'react-icons/fc';
+import { useImageStore } from '@/store/use-image-store';
+import useFormTypes from '@/hooks/use-form-types';
+import Images from '@/components/candidate-form/images';
 
-const SliderForm = ({ images }: { images: SliderFormProps[] }) => {
-  const [preview, setPreview] = useState<string>('');
+import { addSlider } from '@/actions/slider-actions';
+import toast from 'react-hot-toast';
+import { IoMdClose } from 'react-icons/io';
+
+const SliderForm = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [preview, setPreview] = useState('');
   const { data: session } = useSession();
-
-  // Retrieve setImg from the zustand store (useSlidersStore)
-  const { img, setImg } = useSlidersStore((state) => ({
-    img: state.img,
-    setImg: state.setImg,
+  const router = useRouter();
+  const { images, setImages } = useImageStore((state) => ({
+    images: state.images,
+    setImages: state.setImages,
   }));
 
   const {
+    formType,
+    setOn,
+    setOff,
+    img,
+    id: imgId,
+  } = useFormTypes((state) => ({
+    formType: state.formType,
+    setOn: state.setOn,
+    setOff: state.setOff,
+    img: state.img,
+    id: state.id,
+  }));
+
+  console.log('Current form type:', formType);
+
+  useEffect(() => {
+    if (formType === 'edit-slider' && img) {
+      const image = img.images;
+      setImages(image);
+    }
+  }, [img, formType, setImages]);
+
+  const {
+    control,
     register,
     handleSubmit,
+    setError,
+    getValues,
+    watch,
+    reset,
     setValue,
-    formState: { isSubmitting },
+    formState: { isSubmitting, errors, isValid },
   } = useForm<SliderSchema>({
     resolver: zodResolver(sliderSchema),
     mode: 'onTouched',
   });
 
-  const hiddenInputRef = useRef<HTMLInputElement | null>(null);
+  // const hiddenFileInput = useRef<HTMLInputElement | null>(null);
 
-  const username = session?.user.name;
-  const role = session?.user.role;
+  const username = session?.user?.name || 'Unknown';
+  const role = session?.user?.role || 'guest';
 
-  const { ref: registerRef, ...rest } = register('img');
-
-  // UseEffect to set images into the state
-  useEffect(() => {
-    if (Array.isArray(images) && images.length > 0) {
-      setImg(images);
-    } else {
-      setImg([]);
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files && files.length > 0) {
+      const file = files[0];
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        if (event.target && event.target.result) {
+          setPreview(event.target.result as string);
+          setValue('img', file); // Assumes your SliderSchema allows for an 'img' field of file type
+        }
+      };
+      reader.readAsDataURL(file);
     }
-  }, [images, setImg]);
+  };
 
-  const handleUploadedFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target instanceof HTMLInputElement && e.target.type === 'file') {
-      const files = e.target.files;
-      if (files && files.length > 0) {
-        const file = files[0];
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          if (e.target && e.target.result) {
-            const imageURL = e.target.result as string;
-            setPreview(imageURL);
-            setValue('img', file);
-          }
-        };
-        reader.readAsDataURL(file);
+  // const triggerFileSelect = () => {
+  //   hiddenFileInput.current?.click();
+  // };
+
+  const onSubmit = async (data: SliderSchema) => {
+    setIsLoading(true);
+    const formData = new FormData();
+    if (data) {
+      formData.append('img', data.img);
+    }
+
+    if (formType === 'add-slider') {
+      try {
+        const res = await addSlider(formData);
+        if (res?.status === 'success') {
+          router.refresh();
+          toast.success('slider successfully added');
+          reset();
+          setOff();
+        } else if (res.error) {
+          handleFormServerErrors(res, setError);
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setIsLoading(false);
       }
     }
   };
 
-  const onUpload = () => {
-    if (hiddenInputRef.current) {
-      hiddenInputRef.current.click();
-    }
-  };
-
-  const onSubmit = async (data: SliderSchema) => {
-    console.log(data);
+  const handleClose = () => {
+    console.log('handle close');
+    setOff();
   };
 
   return (
-    <Card>
+    <Card className='relative'>
       <CardHeader>
-        <HeadingLogo
-          title='Slider'
-          subtitle='Setting Slider '
-          center
-          className='text-zinc-500'
+        <Heading
+          title={
+            formType === 'add-slider'
+              ? 'Slider'
+              : formType === 'delete-slider'
+              ? 'Delete Slider'
+              : 'Edit Slider'
+          }
+          className='text-zinc-500 text-center'
         />
       </CardHeader>
+      <Button
+        size='icon'
+        variant='ghost'
+        onClick={handleClose}
+        type='button'
+        className='p-1 border-0 h-6 w-6  bg-white text-stone-400 hover:opacity-80 hover:border hover:bg-rose-600/20 hover:border-solid hover:border-red-300 shadow-lg rounded-full transition absolute left-4 top-4 '>
+        <IoMdClose size={18} className='w-6 h-6 ' />
+      </Button>
       <CardContent>
         <form
           onSubmit={handleSubmit(onSubmit)}
           className='flex flex-col gap-2 items-center'>
-          <input
-            type='file'
-            {...register('img')}
-            onChange={handleUploadedFile}
-            ref={(e) => {
-              registerRef(e);
-              hiddenInputRef.current = e;
-            }}
-            // className='hidden'
-          />
-          <Avatar className='rounded-none '>
-            <AvatarImage src={preview} className='object-cover' alt='@shadcn' />
-            {username && (
-              <AvatarFallback>{username.substring(0, 3)}</AvatarFallback>
-            )}
-          </Avatar>
-          <div className='text-xs left-0 text-left '>
-            <div
-              className={cn(
-                'flex flex-row text-nowrap px-4 w-full rounded-sm text-white font-semibold text-shadow',
-                role === 'user' ? 'bg-emerald-300 ' : 'bg-yellow-500'
-              )}>
-              Status: {role}
-            </div>
+          <div>
+            <Controller
+              control={control}
+              name='img'
+              render={({ field }) => (
+                <InputCustom
+                  type='file'
+                  className='h-12'
+                  onChange={handleFileChange}
+                  isInvalid={!!errors.img}
+                  errorMessage={errors.img?.message as string}
+                />
+              )}
+            />
           </div>
+          <Avatar className='rounded-none'>
+            <AvatarImage
+              src={preview}
+              className='object-cover'
+              alt='Preview Image'
+            />
+            <AvatarFallback>
+              {username.length > 0 ? username.substring(0, 3) : 'N/A'}
+            </AvatarFallback>
+          </Avatar>
+
           <Button
             variant='ghost'
             size='sm'
+            type='submit'
+            disabled={isSubmitting || !preview}
             className='group text-xs flex flex-row gap-2 bg-blue-500 hover:!bg-blue-500/70 px-2 mb-2'>
-            {isSubmitting ? (
+            {isSubmitting || isLoading ? (
               <div className='flex gap-2 items-center justify-center'>
                 <Spinner size={16} color='gray-200' /> Submitting...
               </div>
@@ -322,10 +386,10 @@ const SliderForm = ({ images }: { images: SliderFormProps[] }) => {
               <span className='flex gap-2 items-center'>
                 <ImagePlus
                   size={24}
-                  className='svg text-white group-hover:text-black '
+                  className='svg text-white group-hover:text-black'
                 />
                 <span className='text-xs text-white font-semibold text-shadow group-hover:text-black'>
-                  Upload or Change Image
+                  Add slider Image
                 </span>
               </span>
             )}

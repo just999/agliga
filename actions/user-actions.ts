@@ -383,47 +383,80 @@ export async function updateUserAvatar(data: FormData) {
     if (!user) {
       return { status: 'error', error: 'you are not authorized' };
     }
-
     const image = data.get('image');
-    // const validated = updateAvatarSchema.safeParse(data);
 
-    // if (!validated.success)
-    //   return { status: 'error', error: validated.error.errors };
-
-    // const { image } = validated.data;
-    const updatedAvatar = {
-      image,
-    } as any;
+    // !ALTERNATE WAY MORE ELEGANT WAY TO SOLVE THE PROBLEMS
 
     if (user.image?.startsWith('http')) {
       const publicId = user.image.split('/').slice(-2).join('/').split('.')[0];
       await cloudinary.uploader.destroy(publicId, (err: any, res: any) => {});
     }
 
-    let imgUploadPromises = [];
-    if (image && image instanceof File) {
-      const imgBuffer = await image.arrayBuffer();
-      const imgData = Buffer.from(new Uint8Array(imgBuffer));
-      const imgBase64 = imgData.toString('base64');
+    if (!(image instanceof File))
+      return { status: 'error', error: 'Invalid image file' };
 
-      const res = await cloudinary.uploader.upload(
-        `data:image/png;base64,${imgBase64}`,
-        { folder: 'agenliga' }
-      );
+    const imageBuffer = await image.arrayBuffer();
+    const imageArray = Array.from(new Uint8Array(imageBuffer));
+    const imageData = Buffer.from(imageArray);
+    const imageBase64 = imageData.toString('base64');
 
-      imgUploadPromises.push(res.secure_url);
-      const uploadedImages = await Promise.all(imgUploadPromises);
-      updatedAvatar.image = uploadedImages;
+    const res = await cloudinary.uploader.upload(
+      `data:image/png;base64,${imageBase64}`,
+      { folder: 'agenliga' }
+    );
 
-      revalidatePath('/dashboard/members/profile');
-    }
+    const newAvatarImage = {
+      image: res.secure_url,
+    };
 
-    const avatar = db.user.update({
-      where: { id: userId },
-      data: {
-        image: updatedAvatar.image[0],
+    // const validated = updateAvatarSchema.safeParse(data);
+
+    // if (!validated.success)
+    //   return { status: 'error', error: validated.error.errors };
+
+    // const { image } = validated.data;
+
+    // const updatedAvatar = {
+    //   image,
+    // } as any;
+
+    // if (user.image?.startsWith('http')) {
+    //   const publicId = user.image.split('/').slice(-2).join('/').split('.')[0];
+    //   await cloudinary.uploader.destroy(publicId, (err: any, res: any) => {});
+    // }
+
+    // let imgUploadPromises = [];
+    // if (image && image instanceof File) {
+    //   const imgBuffer = await image.arrayBuffer();
+    //   const imgData = Buffer.from(new Uint8Array(imgBuffer));
+    //   const imgBase64 = imgData.toString('base64');
+
+    //   const res = await cloudinary.uploader.upload(
+    //     `data:image/png;base64,${imgBase64}`,
+    //     { folder: 'agenliga' }
+    //   );
+
+    //   imgUploadPromises.push(res.secure_url);
+    //   const uploadedImages = await Promise.all(imgUploadPromises);
+    //   updatedAvatar.image = uploadedImages;
+
+    //   revalidatePath('/dashboard/members/profile');
+    // }
+
+    const avatar = await db.user.update({
+      where: {
+        id: user.id,
       },
+      data: newAvatarImage,
     });
+
+    // const avatar = db.user.update({
+    //   where: { id: userId },
+    //   data: {
+    //     image: updatedAvatar.image[0],
+    //   },
+    // });
+    revalidatePath('/dashboard/members/profile');
     return { status: 'success', data: avatar };
   } catch (err) {
     console.error(err);

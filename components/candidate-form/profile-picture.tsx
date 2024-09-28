@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 
 import { Button } from '../ui/button';
 
@@ -21,7 +21,7 @@ import { ImagePlus } from 'lucide-react';
 import { updateAvatarSchema, UpdateAvatarSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { updateUserAvatar } from '@/actions/user-actions';
-import { Spinner } from '../ui';
+import { InputCustom, Spinner } from '../ui';
 
 type ProfilePictureProps = {
   text?: any;
@@ -35,10 +35,11 @@ const ProfilePicture = ({ text, setText }: ProfilePictureProps) => {
 
   const {
     register,
+    control,
     handleSubmit,
     setValue,
     setError,
-    watch,
+    reset,
     formState: { errors, isValid, isDirty, isSubmitting },
   } = useForm<UpdateAvatarSchema>({
     resolver: zodResolver(updateAvatarSchema),
@@ -53,19 +54,14 @@ const ProfilePicture = ({ text, setText }: ProfilePictureProps) => {
   const username = session?.user.name;
   const userId = session?.user.id;
   const role = session?.user.role;
-  // const { modalType, isOpen, onOpen, onClose } = useModal();
 
-  let imgValue: File;
-  if (watch) {
-    imgValue = watch('image');
-  }
   const { item, setItem, setIsPasswordVerified } = useProfileStore((state) => ({
     item: state.item,
     setItem: state.setItem,
     setIsPasswordVerified: state.setIsPasswordVerified,
   }));
 
-  const image = session?.user?.image || '';
+  const image = session?.user?.curUser.image;
   const newProfile = useMemo(() => {
     return {
       name: user?.name || '',
@@ -92,34 +88,7 @@ const ProfilePicture = ({ text, setText }: ProfilePictureProps) => {
 
       setItem(newProfile);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [image, setItem]);
-
-  const handleUploadedFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // if (hiddenInputRef.current && e.target.files) {
-    //   const file = e.target.files[0];
-    //   const urlImage = URL.createObjectURL(file) as string;
-
-    //   setPreview(urlImage);
-    // }
-    if (e.target instanceof HTMLInputElement && e.target.type === 'file') {
-      e.preventDefault();
-      e.stopPropagation();
-      const files = e.target.files;
-      if (files && files.length > 0) {
-        const file = files[0];
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          if (e.target && e.target.result) {
-            const imageURL = e.target.result as string;
-            setPreview(imageURL);
-            if (setValue) setValue('image', file);
-          }
-        };
-        reader.readAsDataURL(file);
-      }
-    }
-  };
+  }, [image, setItem, setPreview, newProfile]);
 
   const onUpload = () => {
     if (hiddenInputRef.current) {
@@ -127,39 +96,40 @@ const ProfilePicture = ({ text, setText }: ProfilePictureProps) => {
     }
   };
 
-  // const handleAvatarSubmit = () => {
-  //   const formData = new FormData();
-  //   formData.append('image', imgValue);
-  //   formData.append('userId', user.id);
-  //   try {
-  //     axios
-  //       .put(`/api/profiles/avatar/${user.id}`, formData, {
-  //         headers: {
-  //           'Content-Type': 'multiPart/form-data',
-  //         },
-  //       })
-  //       .then((res) => {
-  //         setIsPasswordVerified(false);
-  //         toast.success('Successfully update Avatar');
-  //         router.refresh();
-  //         onClose();
-  //       })
-  //       .catch((err) => toast.error('Something went wrong', err));
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // };
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files && files.length > 0) {
+      const file = files[0];
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        if (e.target && e.target.result) {
+          setPreview(e.target.result as string);
+          setValue('image', file);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const onSubmit = async (data: UpdateAvatarSchema) => {
     const formData = new FormData();
-    formData.append('image', imgValue);
 
-    const res = (await updateUserAvatar(formData)) as any;
+    // Check if data.image is a File or a string
+    if (data.image instanceof File) {
+      formData.append('image', data.image);
+    } else if (typeof data.image === 'string') {
+      formData.append('image', data.image);
+    }
 
-    if (res?.status === 'success') {
+    const res = await updateUserAvatar(formData);
+
+    if (res?.status === 'success' && res.data?.image) {
       toast.success('avatar successfully updated');
+
+      setPreview(res.data?.image);
       router.refresh();
-    } else {
+      reset();
+    } else if (res.error) {
       handleFormServerErrors(res, setError);
     }
   };
@@ -176,18 +146,29 @@ const ProfilePicture = ({ text, setText }: ProfilePictureProps) => {
       <form
         onSubmit={handleSubmit(onSubmit)}
         className='flex flex-col gap-2 items-center'>
-        <input
-          type='file'
-          {...rest}
-          onChange={handleUploadedFile}
-          ref={(e) => {
-            registerRef(e);
-            hiddenInputRef.current = e;
-          }}
-          className='hidden '
+        <Controller
+          control={control}
+          name='image'
+          render={({ field }) => (
+            <InputCustom
+              type='file'
+              className='h-12 hidden'
+              onChange={handleFileChange}
+              isInvalid={!!errors.image}
+              errorMessage={errors.image?.message as string}
+              ref={(e) => {
+                registerRef(e);
+                hiddenInputRef.current = e;
+              }}
+            />
+          )}
         />
         <Avatar>
-          <AvatarImage src={preview} className='object-cover' alt='@shadcn' />
+          <AvatarImage
+            src={preview}
+            className='object-cover'
+            alt='user-avatar'
+          />
           <AvatarFallback>{username.substring(0, 3)} </AvatarFallback>
         </Avatar>
         <div className='text-xs left-0 text-left '>

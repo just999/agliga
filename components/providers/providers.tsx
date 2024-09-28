@@ -5,8 +5,9 @@ import { useMessageStore } from '@/store/use-message-store';
 
 import { useNotificationChannel } from '@/hooks/use-notification-channel';
 import { usePresenceChannel } from '@/hooks/use-presence-channel';
-
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { useCallback, useEffect, useRef } from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ToasterProvider from './toaster-provider';
 // import { SessionProvider } from 'next-auth/react';
 // import { Session } from 'next-auth';
@@ -41,11 +42,19 @@ const Providers = ({ children, userId, profileComplete }: ProvidersProps) => {
   usePresenceChannel(userId, profileComplete);
   useNotificationChannel(userId, profileComplete);
 
+  const queryClient = new QueryClient();
+
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <ToasterProvider />
       {children}
-    </>
+      {process.env.NODE_ENV !== 'production' && (
+        <ReactQueryDevtools
+          initialIsOpen={false}
+          buttonPosition={'top-right'}
+        />
+      )}
+    </QueryClientProvider>
   );
 };
 

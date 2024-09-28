@@ -514,6 +514,20 @@ export function handleFormServerErrors<TFieldValues extends FieldValues>(
   }
 }
 
+// export function handleFormServerErrors<TFieldValues extends FieldValues>(
+//   errorResponse: { error: string | ZodIssue[] },
+//   setError: UseFormSetError<TFieldValues>
+// ) {
+//   if (typeof errorResponse.error === 'string') {
+//     setError('root.serverError', { message: errorResponse.error });
+//   } else if (Array.isArray(errorResponse.error)) {
+//     errorResponse.error.forEach((er) => {
+//       const fieldName = er.path.join('.') as Path<TFieldValues>;
+//       setError(fieldName, { message: er.message });
+//     });
+//   }
+// }
+
 export function transformImageUrl(imageUrl?: string | null) {
   if (!imageUrl) return null;
 

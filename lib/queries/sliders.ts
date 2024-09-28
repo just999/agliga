@@ -1,7 +1,7 @@
 'use server';
 
 import { cache } from 'react';
-import { db } from '../db';
+import { db } from '@/lib/db';
 
 export const fetchSliders = cache(async () => {
   try {

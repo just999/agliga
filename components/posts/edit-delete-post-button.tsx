@@ -28,8 +28,7 @@ const EditDeletePostButton = ({
       className={cn(
         'flex flex-row w-full justify-between items-center mb-5',
         className
-      )}
-    >
+      )}>
       <h1 className='text-2xl font-bold '>{item?.title}</h1>
       {status === 'authenticated' && userRole === 'admin' && (
         <VerticalDropdown

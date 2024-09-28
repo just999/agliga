@@ -11,6 +11,9 @@ import SliderModal from './slider-modal';
 import SoccerModal from './soccer-modal';
 import TopicModal from './topic-modal';
 import UserProfileModal from './user-profile-modal';
+import FixtureModal from './fixture-modal';
+import DepoWdProcessModal from './depo-wd-process-modal';
+import UserActiveModal from './user-active-modal';
 
 export {
   AddPostModal,
@@ -26,4 +29,7 @@ export {
   TopicModal,
   UserProfileModal,
   EuroModal,
+  FixtureModal,
+  DepoWdProcessModal,
+  UserActiveModal,
 };

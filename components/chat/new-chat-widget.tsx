@@ -237,7 +237,10 @@ const NewChatWidget = ({ users, adminProfile }: NewChatWidgetProps) => {
         <Button
           disabled={loading}
           variant='ghost'
-          className={cn('p-0 m-0 w-13 h-13', loading && 'cursor-not-allowed')}
+          className={cn(
+            'p-0 m-0 w-13 h-13 hover:bg-transparent',
+            loading && 'cursor-not-allowed'
+          )}
           onClick={handleToggleChat}>
           <MessageCircleMore
             size={50}

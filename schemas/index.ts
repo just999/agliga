@@ -103,7 +103,9 @@ const ACCEPTED_IMAGE_TYPES = [
   'image/svg+xml',
 ];
 
-const imageUrlValidator = z.any().optional();
+export const imageUrlValidator = z
+  .union([z.instanceof(File), z.string()])
+  .optional();
 // .refine((files) => files?.length === 1, 'Image is required.')
 // .refine(
 //   (files) => files[0]?.size <= MAX_FILE_SIZE,
@@ -118,7 +120,7 @@ export const postSchema = z.object({
   title: z.string().min(1, {
     message: 'Title is required',
   }),
-  img: imageUrlValidator.optional(),
+  img: imageUrlValidator,
   category: z.object({
     value: z.string(),
     icon: z.optional(z.any()),

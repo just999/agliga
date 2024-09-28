@@ -9,26 +9,10 @@ import {
 } from '@/components/ui';
 import { cn } from '@/lib/utils';
 import { Landmark, Pencil } from 'lucide-react';
-import { Switch } from '@/components/ui/switch';
-import { UserProps } from '@/types/types';
+
 import { banks } from '@/lib/helper';
 import Link from 'next/link';
 import { User } from '@prisma/client';
-
-const notifications = [
-  {
-    title: 'Your call has been confirmed.',
-    description: '1 hour ago',
-  },
-  {
-    title: 'You have a new message!',
-    description: '1 hour ago',
-  },
-  {
-    title: 'Your subscription is expiring soon!',
-    description: '2 hours ago',
-  },
-];
 
 type MemberProfileProps = {
   className?: string;
@@ -64,7 +48,6 @@ const MemberProfile = ({ className, user, ...props }: MemberProfileProps) => {
               </p>
               <p className='text-sm text-gray-50'>{user.accountNumber}</p>
             </div>
-            {/* <Switch /> */}
           </div>
           <div>
             <ul className=' flex flex-col items-start gap-2 bg-emerald-500 text-shadow py-2 rounded-lg text-white'>

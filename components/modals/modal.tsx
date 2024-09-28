@@ -48,7 +48,7 @@ const Modal = ({
     setShowModal(isOpen);
   }, [isOpen]);
 
-  const handleCLose = useCallback(() => {
+  const handleClose = useCallback(() => {
     if (disabled) return;
 
     setShowModal(false);
@@ -103,7 +103,7 @@ const Modal = ({
               <Button
                 size='icon'
                 variant='ghost'
-                onClick={handleCLose}
+                onClick={handleClose}
                 type='button'
                 className='p-1 border-0 h-6 w-6  bg-white text-stone-400 hover:opacity-80 hover:border hover:bg-rose-600/20 hover:border-solid hover:border-red-300 shadow-lg rounded-full transition absolute left-9 '>
                 <IoMdClose size={18} className='w-6 h-6 ' />

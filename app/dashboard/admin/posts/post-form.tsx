@@ -68,13 +68,19 @@ const PostForm = ({ post }: PostFormProps) => {
     if (post) {
       reset({
         title: post.title,
-        img: post.img,
+        // img: post.img,
         category: post.category,
         brief: post.brief,
         author: post.author,
       });
+      // Set the img value after reset using setValue
+      if (post.img instanceof File) {
+        setValue('img', post.img);
+      } else if (typeof post.img === 'string') {
+        setValue('img', post.img);
+      }
     }
-  }, [post, reset]);
+  }, [post, reset, setValue]);
 
   const onSubmit = async (data: PostSchema) => {
     const formData = new FormData();
@@ -83,9 +89,14 @@ const PostForm = ({ post }: PostFormProps) => {
     formData.append('author', data.author);
     formData.append('brief', data.brief);
 
-    Array.from(data.img).forEach((file: any) => {
-      formData.append('img', file);
-    });
+    // Handle image upload based on its type:
+    if (data.img instanceof File) {
+      // If it's a single file
+      formData.append('img', data.img);
+    } else if (typeof data.img === 'string') {
+      // If it's a URL string
+      formData.append('img', data.img);
+    }
 
     const res = await createPost(formData);
     if (res.status === 'error') {
@@ -116,7 +127,7 @@ const PostForm = ({ post }: PostFormProps) => {
                 type='file'
                 className='h-12'
                 // accept={ACCEPTED_IMAGE_TYPES.join(',')}
-                defaultValue={getValues('img')}
+                // defaultValue={getValues('img')}
                 placeholder='image'
                 {...register('img')}
                 isInvalid={!!errors.img}

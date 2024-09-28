@@ -194,7 +194,7 @@ const SelectInput = ({
                         .map(({ icon: Icon }, i) => (
                           <Icon key={i} className='w-7 h-7' />
                         ))}
-                      <option.icon />
+                      {/* <option.icon /> */}
                       {/* <pre>{JSON.stringify(option, null, 2)}</pre> */}
                     </span>
                   </span>
