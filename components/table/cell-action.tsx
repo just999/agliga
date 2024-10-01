@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { Copy, Edit, MoreHorizontal, Trash } from 'lucide-react';
 import { Button } from '../ui/button';
 import {
@@ -75,8 +76,7 @@ const CellAction = ({ data }: CellActionProps) => {
           </DropdownMenuTrigger>
           <DropdownMenuContent
             align='end'
-            className='backdrop-blur-sm bg-white/20'
-          >
+            className='backdrop-blur-sm bg-white/20'>
             {/* <DropdownMenuLabel className='text-xs '></DropdownMenuLabel> */}
             {/* <DropdownMenuItem
           onClick={() => onCopy(data.id)}
@@ -87,8 +87,7 @@ const CellAction = ({ data }: CellActionProps) => {
         </DropdownMenuItem> */}
             <DropdownMenuItem
               onClick={() => handleEditFixture()}
-              className='text-xs text-slate-500 hover:text-black cursor-pointer hover:bg-emerald-100 '
-            >
+              className='text-xs text-slate-500 hover:text-black cursor-pointer hover:bg-emerald-100 '>
               <Edit className='mr-4 h-4 w-4' />
               Update
             </DropdownMenuItem>
@@ -102,8 +101,7 @@ const CellAction = ({ data }: CellActionProps) => {
                   onOpen(newDeleteModalType, data.id, title);
                   setGroup(newDeleteModalType, isOpen === false, week, period);
                 }}
-                className='text-xs text-slate-500 hover:text-black hover:bg-emerald-100 cursor-pointer '
-              >
+                className='text-xs text-slate-500 hover:text-black hover:bg-emerald-100 cursor-pointer '>
                 <Trash className='mr-4 h-4 w-4 ' />
                 Delete
               </DropdownMenuItem>

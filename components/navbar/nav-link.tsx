@@ -77,6 +77,8 @@ const NavLink = ({ href, label, className, link, role }: NavLinkProps) => {
         memoizedSetOn('post');
       } else if (pathname === `${baseLink}/sliders`) {
         memoizedSetOn('add-slider');
+      } else if (pathname === `${baseLink}/wds`) {
+        memoizedSetOn('wd');
       } else if (pathname === `${baseLink}/deposit`) {
         memoizedSetOn('depo');
       } else if (pathname === `${baseLink}/wds`) {
@@ -86,7 +88,6 @@ const NavLink = ({ href, label, className, link, role }: NavLinkProps) => {
 
     handleFormType();
   }, [pathname, baseLink, memoizedSetOn]);
-
   // useEffect(() => {
   //   if (isInitialMount.current) {
   //     isInitialMount.current = false;

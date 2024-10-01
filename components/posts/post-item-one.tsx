@@ -42,9 +42,6 @@ const PostItemOne = ({
   //   setIsMounted(true);
   // }, []);
   if (!item) return <Loader />;
-
-  console.log('🚀 ~ item:', item.img);
-
   // const {img,category,date}=item
 
   // let imageSrc

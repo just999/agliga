@@ -1,4 +1,4 @@
-import ClientOnly from '@/lib/client-only';
+import React from 'react';
 import MemberDepoForm from './depo-form';
 import { getUserByUserId } from '@/actions/user-actions';
 

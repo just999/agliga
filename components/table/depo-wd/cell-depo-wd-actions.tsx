@@ -1,7 +1,7 @@
 'use client';
 
+import React from 'react';
 import { Copy, Edit, MoreHorizontal, Trash } from 'lucide-react';
-
 import {
   DropdownMenu,
   DropdownMenuContent,

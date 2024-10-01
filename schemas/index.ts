@@ -227,6 +227,81 @@ export const wdSchema = z.object({
 
 export type WdSchema = z.infer<typeof wdSchema>;
 
+export const depoWdFormSchema = z.object({
+  depoAmount: z.string().optional(),
+  wdAmount: z.string().optional(),
+  // ... other fields if needed
+});
+
+export type DepoWdFormSchema = z.infer<typeof depoWdFormSchema>;
+
+export type CombineFormSchema = z.infer<typeof depoSchema | typeof wdSchema>;
+
+export const newFormSchema = z.object({
+  email: z.string().min(1, {
+    message: 'Email is required',
+  }),
+  name: z.string().min(1, {
+    message: 'Name is required',
+  }),
+  bank: z
+    .object({
+      value: z.string(),
+      icon: z.any(),
+    })
+    .default(defaultBank),
+  accountNumber: z.string().min(3, {
+    message: 'AccountNumber is required',
+  }),
+  depoAmount: z.string().optional(),
+  wdAmount: z.string().optional(),
+  game: z
+    .union([
+      z.string(),
+      z.object({
+        value: z.string().optional(),
+        icon: z.union([z.string(), z.function()]).optional(), // Allow both string and function
+      }),
+    ])
+    .optional(),
+  gameUserId: z.string().optional(),
+  bankPT: z
+    .union([
+      z.string(),
+      z.object({
+        value: z.string().optional(),
+        icon: z.union([z.string(), z.function()]).optional(), // Allow both string and function
+      }),
+    ])
+    .optional(),
+});
+export type NewFormSchema = z.infer<typeof newFormSchema>;
+
+// !COMBINE DEPO WD SCHEMA
+
+const baseSchema = z.object({
+  email: z.string().min(1, { message: 'Email is required' }),
+  name: z.string().min(1, { message: 'Name is required' }),
+  bank: z.object({ value: z.string(), icon: z.any() }).default(defaultBank),
+  accountNumber: z.string().min(3, { message: 'AccountNumber is required' }),
+  game: z.object({ value: z.string(), icon: z.any() }).default(defaultGame),
+  gameUserId: z.string().min(1, { message: 'GameUserId is required' }),
+});
+
+export const combinedDepoWdSchema = z.discriminatedUnion('type', [
+  baseSchema.extend({
+    type: z.literal('deposit'),
+    depoAmount: z.string().min(1, { message: 'DepoAmount is required' }),
+    bankPT: z.object({ value: z.string(), icon: z.any() }).default(defaultBank),
+  }),
+  baseSchema.extend({
+    type: z.literal('withdrawal'),
+    wdAmount: z.string().min(1, { message: 'WdAmount is required' }),
+  }),
+]);
+
+export type CombinedDepoWdSchema = z.infer<typeof combinedDepoWdSchema>;
+
 export const memberDepositStatusSchema = z.object({
   status: z.string().min(1, {
     message: 'status is required',

@@ -1,7 +1,24 @@
 'use client';
 
-import React from 'react';
-import { createDepo } from '@/actions/member-actions';
+import React, { useState, useEffect } from 'react';
+import { createDepo, createWd } from '@/actions/member-actions';
+import useBanks from '@/hooks/use-banks';
+import useGames from '@/hooks/use-games';
+
+import { handleFormServerErrors, cn } from '@/lib/utils';
+import {
+  DepoSchema,
+  depoSchema,
+  NewFormSchema,
+  newFormSchema,
+  WdSchema,
+  wdSchema,
+} from '@/schemas';
+
+import { zodResolver } from '@hookform/resolvers/zod';
+
+import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import {
   Button,
   Card,
@@ -9,52 +26,49 @@ import {
   InputCustom,
   SelectInput,
   Spinner,
-} from '@/components/ui';
-
-import useBanks from '@/hooks/use-banks';
-import useGames from '@/hooks/use-games';
-import { banks } from '@/lib/helper';
-import { cn, handleFormServerErrors } from '@/lib/utils';
-import { DepoSchema, depoSchema } from '@/schemas';
-import { UserProps } from '@/types/types';
-
-import { zodResolver } from '@hookform/resolvers/zod';
+} from '../ui';
 import { useRouter } from 'next/navigation';
+import { User } from '@prisma/client';
 
-import { useEffect, useState } from 'react';
+import useFormTypes from '@/hooks/use-form-types';
 
-import { useForm } from 'react-hook-form';
-import toast from 'react-hot-toast';
+import AmountInput from '../amount-input';
 
-type DepoFormProps = { user: UserProps };
+type DepoWdFormProps = {
+  user: User;
+};
 
 const valueWithIcon = {
   value: '',
-  icon: null,
+  icon: '',
 };
 
-const MemberDepoForm = ({ user }: DepoFormProps) => {
-  const [userData, setUserData] = useState<UserProps>();
+const DepoWdForm = ({ user }: DepoWdFormProps) => {
+  const [userData, setUserData] = useState<User>();
 
   const router = useRouter();
+
+  const { formType, setOn } = useFormTypes((state) => ({
+    formType: state.formType,
+    setOn: state.setOn,
+  }));
 
   useEffect(() => {
     if (user) setUserData(user);
   }, [setUserData, user]);
+
   const { getBanks } = useBanks();
 
-  const methods = useForm<DepoSchema>({
-    resolver: zodResolver(depoSchema),
+  const methods = useForm<NewFormSchema>({
+    resolver: zodResolver(newFormSchema),
     mode: 'onTouched',
   });
-
   const {
     register,
     getValues,
     setValue,
     reset,
     handleSubmit,
-    watch,
     setError,
     formState: { errors, isValid, isSubmitting, isLoading },
   } = methods;
@@ -67,28 +81,26 @@ const MemberDepoForm = ({ user }: DepoFormProps) => {
     icon: bank.icon,
   }));
 
-  const userBank = banks.filter(
-    (bank: { value: string; icon: any }) => bank.value === userData?.bank
-  ) || {
-    value: '',
-    icon: '',
-  };
-  useEffect(() => {
-    if (user) {
-      const initialData = {
-        email: user.email || '',
-        name: user.name || '',
-        bank: banks.find((b) => b.value === user.bank) || valueWithIcon,
-        accountNumber: user.accountNumber || '',
-        depoAmount: '',
-        game: valueWithIcon,
-        gameUserId: '',
-        bankPT: valueWithIcon,
-      };
+  const userBank = banks.filter((bank) => bank.value === userData?.bank);
 
-      reset(initialData); // Use reset from react-hook-form to set default form data
+  useEffect(() => {
+    const initialData = {
+      email: user.email || '',
+      name: user.name || '',
+      bank: banks.filter((b) => b.value === user.bank)[0],
+      accountNumber: user.accountNumber || '',
+      game: valueWithIcon,
+      gameUserId: '',
+      bankPT: valueWithIcon,
+    };
+    if (user && formType === 'depo') {
+      const newInitialDepo = Object.assign(initialData, { depoAmount: '' });
+      reset(newInitialDepo); // Use reset from react-hook-form to set default form data
+    } else if (user && formType === 'wd') {
+      const newInitialDepo = Object.assign(initialData, { wdAmount: '' });
+      reset(newInitialDepo); // Use reset from react-hook-form to set default form data
     }
-  }, [user, banks, reset]);
+  }, [user, banks, reset, formType]);
 
   const setCustomValue = (id: any, value: any) => {
     if (setValue)
@@ -104,21 +116,30 @@ const MemberDepoForm = ({ user }: DepoFormProps) => {
     value: game.value,
     icon: game.icon,
   }));
-  const onSubmit = async (data: DepoSchema) => {
-    const depoData = JSON.parse(JSON.stringify(getValues()));
-    const res = await createDepo(depoData);
+
+  const onSubmit = async (data: NewFormSchema) => {
+    const depoWdData = JSON.parse(JSON.stringify(data));
+    const res =
+      formType === 'depo'
+        ? await createDepo(depoWdData)
+        : await createWd(depoWdData);
 
     if (res.status === 'success') {
       router.refresh();
       toast.success('Depo berhasil!');
+      reset();
     } else {
       handleFormServerErrors(res, setError);
     }
   };
+
   return (
     <Card className='w-3/4 mx-auto p-4 shadow-lg'>
       <div className='flex flex-col space-y-4'>
-        <HeadingLogo title='Deposit' subtitle='' />
+        <HeadingLogo
+          title={cn(formType === 'depo' ? 'Deposit' : 'Wds')}
+          subtitle=''
+        />
 
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -151,6 +172,8 @@ const MemberDepoForm = ({ user }: DepoFormProps) => {
                 placeholder='Banks'
                 options={() => bankOptions}
                 errors={errors}
+                isInvalid={!!errors.bank}
+                errorMessage={errors.bank?.message as string}
                 required
               />
               <InputCustom
@@ -163,14 +186,15 @@ const MemberDepoForm = ({ user }: DepoFormProps) => {
               />
             </>
           )}
-          <InputCustom
+          {/* <InputCustom
             className='h-12'
-            placeholder='Nominal deposit'
-            defaultValue={getValues('depoAmount')}
-            {...register('depoAmount')}
-            isInvalid={!!errors.depoAmount}
-            errorMessage={errors.depoAmount?.message as string}
-          />
+            placeholder={formType === 'depo' ? 'Nominal deposit' : 'Nominal Wd'}
+            {...register(depoWd)}
+            isInvalid={!!errors[depoWd]}
+            errorMessage={errors[depoWd]?.message as string}
+          /> */}
+
+          <AmountInput methods={methods} />
 
           <SelectInput
             label='game'
@@ -182,6 +206,8 @@ const MemberDepoForm = ({ user }: DepoFormProps) => {
             placeholder='Games'
             options={() => gameOptions}
             errors={errors}
+            isInvalid={!!errors.game}
+            errorMessage={errors.game?.message as string}
             required
           />
 
@@ -204,6 +230,8 @@ const MemberDepoForm = ({ user }: DepoFormProps) => {
             placeholder='Banks'
             options={() => bankOptions}
             errors={errors}
+            isInvalid={!!errors.bankPT}
+            errorMessage={errors.bankPT?.message as string}
             required
           />
 
@@ -230,4 +258,4 @@ const MemberDepoForm = ({ user }: DepoFormProps) => {
   );
 };
 
-export default MemberDepoForm;
+export default DepoWdForm;

@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 // import { Inter } from 'next/font/google';
 import { Nunito } from 'next/font/google';
 import './globals.css';
-import Navbar from '@/components/navbar/navbar';
+// import Navbar from '@/components/navbar/navbar';
 
 import { auth } from '@/auth';
 
@@ -27,7 +27,7 @@ import {
   EuroModal,
   FixtureModal,
   DepoWdProcessModal,
-  UserActiveModal,
+  // UserActiveModal,
   // UserActiveModal,
 } from '@/components/modals';
 
