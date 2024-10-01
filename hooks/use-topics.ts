@@ -1,11 +1,11 @@
-import { categories } from '@/lib/helper';
+import { categories, sportsCategories } from '@/lib/helper';
 
 const formattedTopics = categories.map((topic) => ({
   value: topic.label,
   icon: topic.icon,
 }));
 
-const useTopics = () => {
+export const useTopics = () => {
   const getTopics = () => formattedTopics;
 
   const getByValue = (value: string) => {
@@ -18,4 +18,20 @@ const useTopics = () => {
   };
 };
 
-export default useTopics;
+const formattedSportCategories = sportsCategories.map((cat) => ({
+  value: cat.value,
+  icon: cat.icon,
+}));
+
+export const useSportCategories = () => {
+  const getSportCategories = () => formattedSportCategories;
+
+  const getByValue = (value: string) => {
+    return formattedSportCategories.find((cat) => cat.value === value);
+  };
+
+  return {
+    getSportCategories,
+    getByValue,
+  };
+};

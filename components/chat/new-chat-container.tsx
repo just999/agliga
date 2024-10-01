@@ -328,7 +328,7 @@ const NewChatContainer = ({ users, adminProfile }: NewChatContainerProps) => {
         value={tab}
         onValueChange={onTabChange}
         className={cn(
-          'h-[570px] z-10 grid grid-cols-[400px] bg-amber-100',
+          'max-h-[570px] z-10 grid grid-cols-[400px] bg-amber-100',
           toggleSidePanel ? 'rounded-t-lg' : 'rounded-t-lg'
         )}>
         <div
@@ -358,7 +358,7 @@ const NewChatContainer = ({ users, adminProfile }: NewChatContainerProps) => {
               activeUser={activeUser}
               adminProfile={adminProfile}
               className={cn(
-                'h-[570px] rounded-t-lg',
+                'max-h-[570px] rounded-t-lg',
                 i % 2 === 0 ? 'bg-amber-50' : 'bg-emerald-50'
               )}
             />

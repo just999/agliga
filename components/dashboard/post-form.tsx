@@ -10,8 +10,9 @@ import {
   Spinner,
   Textarea,
 } from '@/components/ui';
+import useFormTypes from '@/hooks/use-form-types';
 
-import { useTopics } from '@/hooks/use-topics';
+import { useTopics, useSportCategories } from '@/hooks/use-topics';
 
 import { cn, handleFormServerErrors } from '@/lib/utils';
 import { PostSchema, postSchema } from '@/schemas';
@@ -28,7 +29,7 @@ import { useForm } from 'react-hook-form';
 type FieldKey = keyof PostSchema | 'category.value' | 'category.icon';
 
 type PostFormProps = {
-  post: PostProps | null;
+  post?: PostProps | null;
 };
 
 const PostForm = ({ post }: PostFormProps) => {
@@ -37,14 +38,18 @@ const PostForm = ({ post }: PostFormProps) => {
 
   useEffect(() => setIsMounted(true), []);
 
+  const { formType } = useFormTypes((state) => ({
+    formType: state.formType,
+  }));
+
   const methods = useForm<PostSchema>({
     resolver: zodResolver(postSchema),
     mode: 'onTouched',
   });
 
-  const { getTopics } = useTopics();
+  const { getSportCategories } = useSportCategories();
 
-  const topics = getTopics();
+  const topics = getSportCategories();
 
   const topicOptions = useMemo(
     () =>
@@ -72,14 +77,13 @@ const PostForm = ({ post }: PostFormProps) => {
       shouldValidate: true,
     });
   };
-
   // const filteredCat = topics.filter((cat) => cat.value === post?.category) || {
   //   values: '',
   //   icon: '',
   // };
 
   useEffect(() => {
-    if (post) {
+    if (post && formType === 'edit-post') {
       const filteredCat = topics.filter(
         (cat) => cat.value === post?.category
       ) || [{ value: '', icon: '' }];
@@ -97,7 +101,7 @@ const PostForm = ({ post }: PostFormProps) => {
         setValue('img', post.img);
       }
     }
-  }, [post, reset, setValue, topics]);
+  }, [post, reset, setValue, topics, formType]);
 
   const onSubmit = async (data: PostSchema) => {
     const formData = new FormData();

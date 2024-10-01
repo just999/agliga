@@ -20,8 +20,9 @@ import { ResetPasswordSchema, resetPasswordSchema } from '@/schemas';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { PasswordInput } from '@/components/ui/password-input';
 import toast from 'react-hot-toast';
-import { isDirty } from 'zod';
+
 import ResultMessage from '@/components/result-message';
+import ClientOnly from '@/lib/client-only';
 
 type ResetPasswordFormProps = {};
 
@@ -93,8 +94,7 @@ const ResetPasswordForm = () => {
       <Button type='submit' variant='primary' disabled={!isValid}>
         {isSubmitting || isLoading ? (
           <span className='flex flex-row gap-2 items-center justify-center '>
-            {' '}
-            <Spinner size={16} color='gray-200' /> Sending...{' '}
+            <Spinner size={16} color='gray-200' /> Sending...
           </span>
         ) : (
           'Send reset email'
@@ -106,13 +106,15 @@ const ResetPasswordForm = () => {
   const footerContent = <ResultMessage result={result} />;
 
   return (
-    <CardWrapper
-      headerIcon={GiDialPadlock}
-      headerText='Reset Password'
-      subHeaderText='Reset your password'
-      body={bodyContent}
-      footer={footerContent}
-    />
+    <ClientOnly>
+      <CardWrapper
+        headerIcon={GiDialPadlock}
+        headerText='Reset Password'
+        subHeaderText='Enter your new password'
+        body={bodyContent}
+        footer={footerContent}
+      />
+    </ClientOnly>
   );
 };
 

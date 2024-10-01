@@ -156,7 +156,11 @@ import {
   MdOutlineFiberNew,
   MdOutlineSurfing,
 } from 'react-icons/md';
-import { PiUserPlus } from 'react-icons/pi';
+import {
+  PiPersonSimpleSwimFill,
+  PiSoccerBallLight,
+  PiUserPlus,
+} from 'react-icons/pi';
 import { RiAdminLine } from 'react-icons/ri';
 
 import {
@@ -253,6 +257,21 @@ export const games = [
     value: 'Cahaya138',
     icon: SlotGames,
     // styles: 'text-xs',
+  },
+];
+
+export const sportsCategories = [
+  {
+    value: 'Soccer',
+    icon: PiSoccerBallLight,
+  },
+  {
+    value: 'Basketball',
+    icon: GiBasketballBasket,
+  },
+  {
+    value: 'Swimming',
+    icon: PiPersonSimpleSwimFill,
   },
 ];
 

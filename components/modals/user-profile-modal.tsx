@@ -9,7 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from '../ui/card';
-
+import React from 'react';
 import Modal from './modal';
 import useModal from '@/hooks/use-modal';
 import { useEffect, useState } from 'react';
@@ -219,6 +219,12 @@ const UserProfileModal = () => {
       onOpen('validateUser');
     }
   };
+
+  const newUser = {
+    name: profile?.name || null,
+    image: profile?.image || null,
+  };
+
   let bodyContent;
   if (modalType === 'profile' && profile) {
     bodyContent = (
@@ -238,7 +244,7 @@ const UserProfileModal = () => {
                 priority
                 className='w-20 h-auto '
               /> */}
-              <ProfilePicture />
+              <ProfilePicture user={newUser} />
               {/* <p className='text-lg  flex flex-col justify-start  w-full '>
             
             
@@ -362,9 +368,10 @@ const UserProfileModal = () => {
           <div className='grid w-full items-center gap-0'>
             <div className='flex flex-col justify-center items-center space-y-1.5'>
               <ProfilePicture
-              // register={register}
-              // watch={watch}
-              // setValue={setValue}
+                user={newUser}
+                // register={register}
+                // watch={watch}
+                // setValue={setValue}
               />
               {/* <p className='text-lg w-full'>
                 <Button

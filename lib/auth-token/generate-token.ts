@@ -6,6 +6,7 @@ import { getPasswordResetTokenByEmail } from './password-reset-token';
 import { getTwoFactorTokenByEmail } from './get-two-factor-token';
 import { TokenType } from '@prisma/client';
 
+// ?GENERATE TWO FACTOR TOKEN
 export const generateTwoFactorToken = async (email: string) => {
   const token = crypto.randomInt(100_000, 1_000_000).toString();
   const expires = new Date(new Date().getTime() + 5 * 60 * 1000);
@@ -29,6 +30,7 @@ export const generateTwoFactorToken = async (email: string) => {
   return twoFactorToken;
 };
 
+// ?GENERATE PASSWORD RESET TOKEN
 export const generatePasswordResetToken = async (email: string) => {
   const token = uuidv4();
   const expires = new Date(new Date().getTime() + 3600 * 1000);
@@ -47,6 +49,7 @@ export const generatePasswordResetToken = async (email: string) => {
   return passwordResetToken;
 };
 
+// ?GENERATE VERIFICATION TOKEN
 export const generateVerificationToken = async (email: string) => {
   const token = uuidv4();
   const expires = new Date(new Date().getTime() + 3600 * 1000);
@@ -71,6 +74,7 @@ export const generateVerificationToken = async (email: string) => {
   return verificationToken;
 };
 
+// ?GET TOKEN BY EMAIL
 export async function getTokenByEmail(email: string) {
   try {
     return db.token.findFirst({
@@ -81,6 +85,8 @@ export async function getTokenByEmail(email: string) {
     throw err;
   }
 }
+
+// ?GET TOKEN BY TOKEN
 export async function getTokenByToken(token: string) {
   try {
     return db.token.findFirst({
@@ -92,6 +98,7 @@ export async function getTokenByToken(token: string) {
   }
 }
 
+// ?GENERATE TOKEN
 export async function generateToken(email: string, type: TokenType) {
   const arrayBuffer = new Uint8Array(48);
   crypto.getRandomValues(arrayBuffer);

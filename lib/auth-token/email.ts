@@ -9,6 +9,7 @@ const domain = process.env.NEXT_PUBLIC_DOMAIN;
 
 if (!domain || domain === undefined) throw new Error('no url link found');
 
+// *SEND TWO FACTOR TOKEN EMAIL
 export const sendTwoFactorTokenEmail = async (email: string, token: string) => {
   await resend.emails.send({
     from: 'onboarding@resend.dev',
@@ -29,6 +30,7 @@ export const sendTwoFactorTokenEmail = async (email: string, token: string) => {
 //   });
 // };
 
+// *SEND VERIFICATION EMAIL
 export const sendVerificationEmail = async (email: string, token: string) => {
   const link = `${domain}/verify-email?token=${token}`;
 
@@ -43,6 +45,7 @@ export const sendVerificationEmail = async (email: string, token: string) => {
   });
 };
 
+// *SEND PASSWORD RESET EMAIL
 export const sendPasswordResetEmail = async (email: string, token: string) => {
   const link = `${domain}/reset-password?token=${token}`;
 

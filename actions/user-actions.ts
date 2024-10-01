@@ -19,8 +19,7 @@ import {
   UpdateAvatarSchema,
 } from '@/schemas';
 import getCurrentUser from './get-user';
-import { profile } from 'console';
-import { url } from 'inspector';
+
 import { revalidatePath } from 'next/cache';
 
 // ?GET USERS WITH QUERY STRING
@@ -247,6 +246,9 @@ export const fetchUsers = async () => {
       where: {
         NOT: {
           id: userId,
+        },
+        role: {
+          not: 'admin',
         },
       },
       orderBy: [

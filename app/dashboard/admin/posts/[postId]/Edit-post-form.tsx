@@ -28,10 +28,10 @@ import { useForm } from 'react-hook-form';
 type FieldKey = keyof PostSchema | 'category.value' | 'category.icon';
 
 type PostFormProps = {
-  post: PostProps | null;
+  post: PostProps;
 };
 
-const PostForm = ({ post }: PostFormProps) => {
+const EditPostForm = ({ post }: PostFormProps) => {
   const [isMounted, setIsMounted] = useState(false);
   const router = useRouter();
 
@@ -45,7 +45,6 @@ const PostForm = ({ post }: PostFormProps) => {
   const { getTopics } = useTopics();
 
   const topics = getTopics();
-
   const topicOptions = useMemo(
     () =>
       topics.map((topic) => ({
@@ -209,4 +208,4 @@ const PostForm = ({ post }: PostFormProps) => {
   );
 };
 
-export default PostForm;
+export default EditPostForm;

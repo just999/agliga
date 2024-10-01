@@ -2,16 +2,25 @@
 
 import { cn } from '@/lib/utils';
 import Logo from '../navbar/logo';
-import { ReactNode } from 'react';
+import { CSSProperties, ReactNode } from 'react';
 
 type HeadingProps = {
   title: string;
   subtitle?: ReactNode;
   center?: boolean;
   className?: string;
+
+  styles?: CSSProperties;
 };
 
-const HeadingLogo = ({ title, subtitle, center, className }: HeadingProps) => {
+const HeadingLogo = ({
+  title,
+  subtitle,
+  center,
+  className,
+
+  styles,
+}: HeadingProps) => {
   return (
     <div className={cn(center ? 'text-center' : 'text-start')}>
       <div
@@ -20,8 +29,8 @@ const HeadingLogo = ({ title, subtitle, center, className }: HeadingProps) => {
           className
         )}>
         <Logo
-          className='w-10 h-auto'
-          styles={{ width: '18%', height: 'auto' }}
+          styles={styles ? styles : { width: '18%', height: 'auto' }}
+          className={cn('w-10 h-auto svg')}
         />
         {title}
       </div>

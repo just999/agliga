@@ -6,7 +6,6 @@ import { db } from '@/lib/db';
 import cloudinary from '@/lib/cloudinary';
 import { revalidatePath } from 'next/cache';
 
-import { id } from 'date-fns/locale';
 import { addSliderSchema } from '@/schemas/slider-schema';
 import { Slider } from '@prisma/client';
 
@@ -18,6 +17,7 @@ type Sliders = {
   updatedAt: Date;
 };
 
+// !GET ALL SLIDERS
 export const getAllSliders = cache(async () => {
   try {
     const session = await auth();
@@ -42,6 +42,7 @@ export const getAllSliders = cache(async () => {
   }
 });
 
+// !ADD SLIDER FUNCTION
 export const addSlider = cache(async (data: FormData) => {
   try {
     const session = await auth();
@@ -92,9 +93,8 @@ export const addSlider = cache(async (data: FormData) => {
   }
 });
 
+//  !DELETE SLIDER IMAGE
 export const deleteSliderImage = cache(async (id: string) => {
-  console.log(id);
-
   try {
     const session = await auth();
     const userRole = session?.user.role;
@@ -135,6 +135,7 @@ export const deleteSliderImage = cache(async (id: string) => {
   }
 });
 
+// !EDIT SLIDER IMAGE
 export const editSliderImage = cache(async (id: string, data: FormData) => {
   try {
     const session = await auth();
@@ -186,3 +187,25 @@ export const editSliderImage = cache(async (id: string, data: FormData) => {
     return { status: 'error', error: 'something went wrong!' };
   }
 });
+
+export const getImageFromCloudinary = async (
+  publicUrl: string
+): Promise<{ file: Blob | null; url: string | null }> => {
+  try {
+    if (!publicUrl) {
+      console.error('Error: publicId is required.');
+      return { file: null, url: null };
+    }
+
+    // Fetch the image from Cloudinary
+    const response = await fetch(publicUrl);
+
+    // Convert the response to a Blob
+    const blob = await response.blob();
+    // Directly use response.url
+    return { file: blob, url: response.url };
+  } catch (error) {
+    console.error('Error fetching image from Cloudinary:', error);
+    return { file: null, url: null };
+  }
+};

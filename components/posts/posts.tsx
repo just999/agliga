@@ -16,7 +16,7 @@ const eb = EB_Garamond({ subsets: ['latin'] });
 
 type PostsProps = {
   items: PostProps[];
-  randPost?: PostProps;
+  randPost: PostProps | null;
   size?: number | string | undefined;
   currentUser?: SafeUser | null;
   cat?: string;

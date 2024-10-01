@@ -117,7 +117,7 @@ export const useGetPost = (postId?: string, slug?: string) => {
     };
 
     fetchData();
-  }, [setError, setItem, setItems]);
+  }, [setError, setItem, setItems, postId]);
   return { isLoading, error, item, items, itemBySlugAndPostId, setIsLoading };
 };
 

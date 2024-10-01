@@ -16,6 +16,7 @@ const UserAvatar = ({ src, alt, className, avatarClass }: UserAvatarProps) => {
   return (
     <Avatar className={cn('w-auto h-[50px] flex items-center', className)}>
       <AvatarImage
+        aria-label='user avatar'
         src={transformImageUrl(src) || '/images/cavatar.svg'}
         className={cn('w-12 h-12 rounded-full object-cover', avatarClass)}
       />

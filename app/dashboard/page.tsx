@@ -1,5 +1,5 @@
 import { getPosts } from '@/actions/get-post';
-
+import React from 'react';
 import { auth } from '@/auth';
 import AnalyticsChart from '@/components/dashboard/analytics-chart';
 import DashboardCard from '@/components/dashboard/dashboard-card';

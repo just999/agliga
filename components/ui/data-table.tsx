@@ -498,11 +498,11 @@ DataTableProps<TData, TValue>) {
                                   {/* <pre>
                                     {JSON.stringify(header.column, null, 2)}
                                   </pre> */}
-                                  {[header.column.getIsSorted() as string] ? (
+                                  {/* {[header.column.getIsSorted() as string] ? (
                                     <div className='w-[15px] opacity-0'></div>
                                   ) : (
                                     ''
-                                  )}
+                                  )} */}
                                   {{
                                     asc: '🔼',
                                     desc: '🔽',

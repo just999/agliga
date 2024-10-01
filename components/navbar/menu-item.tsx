@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { IconType } from 'react-icons';
 
 type MenuItemProps = {
-  icon?: IconType;
+  icon: IconType | any;
   onClick?: () => void;
   label: string;
   className?: string;
@@ -45,8 +45,7 @@ const MenuItem = ({
         active
           ? ' text-blue-600 grayscale-0 bg-rose-50 shadow-md transition font-semibold'
           : 'text-muted-foreground bg-slate-100'
-      )}
-    >
+      )}>
       {/* <Link
         href={href}
         className={cn(

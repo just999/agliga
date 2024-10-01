@@ -65,6 +65,7 @@ const MemberSidebar = ({ user, navLinks, className }: MemberSidebarProps) => {
           />
         </CardDescription>
         <Button
+          aria-label='member chat'
           variant='ghost'
           size='sm'
           type='button'

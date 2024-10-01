@@ -30,6 +30,7 @@ const Categories = () => {
     <div className='flex flex-row justify-center bg-stone-100 items-center'>
       <div className='w-full flex flex-row justify-end gap-4 pr-2'>
         <Button
+          aria-label='previous categories'
           variant='ghost'
           size='sm'
           type='button'
@@ -56,6 +57,7 @@ const Categories = () => {
       </div>
       <div className='w-full flex flex-row justify-start gap-4 pl-2'>
         <Button
+          aria-label='next categories'
           variant='ghost'
           size='sm'
           type='button'

@@ -1,5 +1,6 @@
 'use server';
 
+import React from 'react';
 import Image from 'next/image';
 import { BsDot, BsTrash, BsPen } from 'react-icons/bs';
 import { Button } from '../ui/button';
@@ -34,7 +35,7 @@ const PostShow = ({ item }: PostShowProps) => {
           <span>{new Date(item.date).toLocaleDateString('en-US')}</span>
         </div>
         <EditDeletePostButton item={item} />
-        {item.img ? (
+        {typeof item.img === 'string' ? (
           <figure className='my-4 p-0 '>
             {/* {item.img && (
             <Image

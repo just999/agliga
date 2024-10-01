@@ -1,4 +1,4 @@
-import LiveScore from '@/components/live-score';
+import LiveScore from '@/components/dashboard/live-score';
 
 const LivescorePage = () => {
   return <LiveScore />;

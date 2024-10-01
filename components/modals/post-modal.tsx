@@ -19,7 +19,7 @@ import { useGetPost } from '@/hooks/use-get-post';
 
 import useModal from '@/hooks/use-modal';
 
-import useTopics from '@/hooks/use-topics';
+import { useTopics } from '@/hooks/use-topics';
 import SelectInput from '../ui/select-input';
 
 import { IconType } from 'react-icons';
@@ -27,7 +27,7 @@ import { InitialPostProps } from '@/types/types';
 
 import Images from '../candidate-form/images';
 
-import usePostsStore, { postItems } from '@/store/use-posts-store';
+import usePostsStore from '@/store/use-posts-store';
 import { HeadingLogo } from '../ui';
 
 type ImageChangeHandler = (files: FileList) => void;
@@ -238,7 +238,7 @@ const PostModal = () => {
       brief: '',
     };
     setText(initialFormState);
-    setItem(postItems);
+    // setItem(postItems);
     reset();
     onClose();
     // clear();

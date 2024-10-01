@@ -42,16 +42,24 @@ const PostItemOne = ({
   //   setIsMounted(true);
   // }, []);
   if (!item) return <Loader />;
+
+  console.log('🚀 ~ item:', item.img);
+
+  // const {img,category,date}=item
+
+  // let imageSrc
+  // if(img instanceof File){
+  //   imageSrc =
+  // }
   return (
     <div
       className={cn(
         'post-entry-1 p-2 bg-yellow-50/60 shadow-xl rounded-md h-[380px] xs:flex xs:flex-col  xs:gap-2 xs:h-full',
         className,
         large ? 'lg' : undefined
-      )}
-    >
+      )}>
       <Link href={`/posts/${item.id}`}>
-        {item.img && (large || pageOne) ? (
+        {typeof item.img === 'string' && (large || pageOne) ? (
           <Image
             src={item.img}
             alt='image'
@@ -65,7 +73,7 @@ const PostItemOne = ({
               height: 'auto',
             }}
           />
-        ) : item.img ? (
+        ) : typeof item.img === 'string' ? (
           <Image
             src={item.img}
             alt='image'
@@ -88,8 +96,7 @@ const PostItemOne = ({
           className={cn(
             'post-meta flex flex-row items-center justify-start gap-0',
             className
-          )}
-        >
+          )}>
           <span className='date'>{item.category}</span>
           <span className='mx-1'>
             <BsDot />
@@ -121,8 +128,7 @@ const PostItemOne = ({
       <h2>
         <Link
           href={`/posts/${item.id}`}
-          className='text-ellipsis overflow-hidden'
-        >
+          className='text-ellipsis overflow-hidden'>
           {item.img && pageOne === false ? (
             <span className='shadow-lg px-1'>
               <div className={cn('mb-2 font-semibold', eb.className)}>
@@ -132,8 +138,7 @@ const PostItemOne = ({
                 className={cn(
                   'text-sm w-full py-2 mb-2 text-pretty text-gray-700 font-light',
                   source.className
-                )}
-              >
+                )}>
                 {item.brief?.substring(0, 60)}...
               </div>{' '}
             </span>
@@ -146,8 +151,7 @@ const PostItemOne = ({
                 className={cn(
                   'text-sm w-full py-2 text-pretty text-gray-700 font-light',
                   source.className
-                )}
-              >
+                )}>
                 {item.brief?.substring(0, 120)}...
               </div>{' '}
             </span>
@@ -164,8 +168,7 @@ const PostItemOne = ({
                 className={cn(
                   'text-sm w-full  py-2 text-pretty text-gray-700 font-light',
                   source.className
-                )}
-              >
+                )}>
                 {item.brief?.substring(0, 350)}
               </div>
             </span>

@@ -1,7 +1,7 @@
 // import { Comment User } from '@prisma/client';
 // import { User } from 'next-auth';
-import { Post, Slider, User } from '@prisma/client';
-import { IconType } from 'react-icons';
+import { Post, Slider, User, Comment } from '@prisma/client';
+
 import { status } from '../lib/helper';
 
 // export type SafeListing = Omit<Listing, 'createdAt'> & {
@@ -40,7 +40,7 @@ export type SafeSliderImage = Omit<Slider, 'createdAt' | 'updatedAt'> & {
 export type ValueIconProps = {
   value: string;
   icon: string;
-  styles: string;
+  styles?: string;
 };
 export type RunIconProps = {
   value: number;
@@ -59,7 +59,8 @@ export type GameProps = {
 
 export type CategoryProps = {
   value: string;
-  icon: string;
+  icon: IconType;
+  description?: string;
 };
 
 type TComment = {
@@ -67,26 +68,23 @@ type TComment = {
   content: string;
 };
 
-export type PostProps =
-  | {
-      id: string;
-      img: string | null;
-      category: {
-        value: string;
-        icon: IconType;
-      };
-      date: string | Date;
-      title: string;
-      brief: string | null;
-      avatar: string;
-      author: string | null;
-      userId: string | null;
-      comments?: TComment[];
-      top?: boolean | null;
-      topicId: string;
-      trending?: boolean | null;
-    }
-  | any;
+type IconType = React.ComponentType | null;
+
+export type PostProps = {
+  id: string;
+  img: string | File | null;
+  category: string;
+  date: string | Date;
+  title: string;
+  brief: string | null;
+  avatar: string;
+  author: string | null;
+  userId: string | null;
+  comments: TComment[];
+  top?: boolean | null;
+  topicId: string;
+  trending?: boolean | null;
+};
 
 export type tabsProps = {
   id: number;
@@ -280,7 +278,7 @@ export type ScheduleProps = {
 
 export type InitialPostProps = {
   title: string;
-  img: string | null;
+  img: string | File | null;
   category: string;
   author: string | null;
   brief: string | null;

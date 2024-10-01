@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { CardHeader, CardFooter, CardContent } from './ui/card';
 import { Separator } from './ui/separator';
 import { cn } from '@/lib/utils';

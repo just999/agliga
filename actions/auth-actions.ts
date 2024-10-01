@@ -54,6 +54,7 @@ export const login = async (
       password: data.password,
       redirect: false,
     });
+
     return { status: 'success', data: 'Logged in' };
   } catch (err) {
     console.log(err);
@@ -103,7 +104,7 @@ export const register = async (
       value.push(gameValue);
     });
 
-    const newDate = new Date();
+    // const newDate = new Date();
     const user = await db.user.create({
       data: {
         name,
@@ -114,7 +115,6 @@ export const register = async (
         game: value,
         phone,
         accountNumber,
-        emailVerified: newDate,
       },
     });
 
@@ -186,7 +186,7 @@ export const getAuthAdminId = async () => {
   }
 };
 
-// !GET VERIFY EMAIL
+// ! VERIFY EMAIL
 export const verifyEmail = async (
   token: string
 ): Promise<ActionResult<string>> => {
@@ -294,6 +294,7 @@ export const generateResetPasswordEmail = cache(
   }
 );
 
+// !RESET PASSWORD
 export const resetPassword = cache(
   async (
     password: string,
@@ -341,6 +342,7 @@ export const resetPassword = cache(
   }
 );
 
+// !CONTACT US
 export async function contactUs(token: string | null, formData: FormData) {
   try {
     if (!token) return { status: 'error', error: 'Missing Token' };

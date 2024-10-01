@@ -9,7 +9,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { RiProfileLine } from 'react-icons/ri';
 import ProfileForm from '../register/profile-form';
 import { completeSocialLoginProfile } from '@/actions/auth-actions';
-import { errors } from 'formidable';
+
 import { signIn } from 'next-auth/react';
 import CardWrapper from '@/components/card-wrapper';
 
@@ -27,11 +27,13 @@ const CompleteProfileForm = () => {
   } = methods;
 
   const onSubmit = async (data: ProfileSchema) => {
-    const result = await completeSocialLoginProfile(data);
+    const parseData = JSON.parse(JSON.stringify(data));
+
+    const result = await completeSocialLoginProfile(parseData);
 
     if (result.status === 'success') {
       signIn(result.data, {
-        callbackUrl: '/users',
+        callbackUrl: '/dashboard',
       });
     }
   };
@@ -57,7 +59,7 @@ const CompleteProfileForm = () => {
               )}>
               {isSubmitting ? (
                 <span>
-                  <Spinner size={24} /> process...
+                  <Spinner size={24} /> processing...
                 </span>
               ) : (
                 'Submit'

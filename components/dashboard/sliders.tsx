@@ -141,6 +141,7 @@
 'use client';
 
 // Import necessary items
+import React from 'react';
 import { getAllSliders } from '@/actions/slider-actions';
 import Container from '@/components/container';
 import EditDeletePostButton from '@/components/posts/edit-delete-post-button';
@@ -167,8 +168,8 @@ type SlidersProps = {
 };
 
 const Sliders = () => {
-  const [images, setImages] = useState<SlidersProps[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [images, setImages] = useState<SlidersProps[] | []>([]);
+  // const [loading, setLoading] = useState(false);
 
   const { setOn, formType, isOn, setOff, setImg } = useFormTypes((state) => ({
     formType: state.formType,
@@ -193,7 +194,6 @@ const Sliders = () => {
     },
     staleTime: 2000,
   });
-
   // useEffect(() => {
   //   const fetchData = async () => {
   //     try {
@@ -227,10 +227,9 @@ const Sliders = () => {
       setImg('edit-slider', img);
     }
   };
-
   return (
     <>
-      {loading &&
+      {isLoading &&
         Array(10)
           .fill(1)
           .map((_, i) => (
@@ -254,8 +253,8 @@ const Sliders = () => {
       />
       <Container className='relative flex flex-col gap-4 pt-4 '>
         <div className='flex flex-wrap gap-4 items-center '>
-          {!loading &&
-            images.map((img: SlidersProps, i) => (
+          {!isLoading &&
+            images.map((img, i) => (
               <span
                 key={img.id}
                 className='relative h-[80px]  rounded-xl border-slate-600 border-1 group cursor-pointer'>

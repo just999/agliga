@@ -1,7 +1,7 @@
 import { verifyEmail } from '@/actions/auth-actions';
 import CardWrapper from '@/components/card-wrapper';
 import ResultMessage from '@/components/result-message';
-
+import React from 'react';
 import Spinner from '@/components/ui/spinner';
 import { MdOutlineMailOutline } from 'react-icons/md';
 

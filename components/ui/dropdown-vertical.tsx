@@ -13,7 +13,7 @@ import {
 import { Button } from './button';
 import { MoreVerticalIcon } from 'lucide-react';
 import { BsPen, BsTrash } from 'react-icons/bs';
-import { id } from 'date-fns/locale';
+
 import { TbNewSection } from 'react-icons/tb';
 import { cn } from '@/lib/utils';
 import { useParams } from 'next/navigation';
@@ -97,7 +97,9 @@ const DropdownVertical = ({
             {item?.id && (
               <BsPen
                 className='text-neutral-400  hover:font-bold h-5 w-5 m-0 cursor-pointer hover:text-orange-500  hover:shadow-lg'
-                onClick={() => setOn('edit', item?.id, (title = 'Edit post'))}
+                onClick={() =>
+                  setOn('edit-post', item?.id, (title = 'Edit post'))
+                }
               />
             )}
             {img?.id && (

@@ -74,15 +74,21 @@ const PostsTable = ({ limit, title, user, posts }: PostsTableProps) => {
         cell: ({ row }) => {
           const userAdminLink =
             role === 'admin'
-              ? `/dashboard/posts/edit/${row.original.id}`
+              ? `/dashboard/admin/posts/${row.original.id}`
               : `/dashboard/posts/${row.original.id}`;
+
+          const handleEditPost = () => {
+            console.log('edit post');
+          };
           return (
             <Link
               href={userAdminLink}
               className='text-right hidden md:table-cell '>
               <Button className='bg-sky-500 hover:bg-sky-500/70 text-white font-bold px-4 rounded text-xs flex gap-2 group items-center shadow-xl text-shadow'>
                 {role === 'admin' ? (
-                  <span className='text-white flex gap-2 items-center group-hover:text-black '>
+                  <span
+                    className='text-white flex gap-2 items-center group-hover:text-black'
+                    onClick={handleEditPost}>
                     <Pencil size={16} className='svg' /> Edit
                   </span>
                 ) : (

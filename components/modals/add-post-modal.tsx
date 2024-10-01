@@ -5,11 +5,11 @@ import useModal from '@/hooks/use-modal';
 
 import { FieldValues, useForm } from 'react-hook-form';
 
-import useTopics from '@/hooks/use-topics';
+import { useSportCategories, useTopics } from '@/hooks/use-topics';
 import { Button } from '../ui/button';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 
-import { InitialPostProps } from '@/types/types';
+import { CategoryProps, InitialPostProps, ValueIconProps } from '@/types/types';
 import { initialFormState } from './post-modal';
 
 import { useParams } from 'next/navigation';
@@ -29,6 +29,7 @@ const AddPostModal = () => {
 
   const { modalType, isOpen, onClose } = useModal();
   const { getTopics } = useTopics();
+  const { getSportCategories } = useSportCategories();
 
   const { item, error } = useGetPost(id ? id : undefined);
   let initialPost;
@@ -62,27 +63,41 @@ const AddPostModal = () => {
     defaultValues: initialPost,
   });
 
-  const topics = getTopics();
-  const topicOptions = topics.map((topic) => ({
-    value: topic.value,
-    icon: topic.icon,
-  }));
+  const topics = getSportCategories();
+
+  const topicOptions = useMemo(
+    () =>
+      topics.map((topic) => ({
+        value: topic.value,
+        icon: topic.icon,
+      })),
+    [topics]
+  );
+  // const cat: CategoryProps[] = topics.filter(
+  //   (to) => to.value === item.category
+  // ) || {
+  //   icon: '',
+  //   value: '',
+  // };
 
   useEffect(() => {
     if (modalType === 'edit' && item && !error) {
+      const cat: CategoryProps[] = topics.filter(
+        (to) => to.value === item.category
+      ) || {
+        icon: '',
+        value: '',
+      };
+
       const data = {
         title: item.title,
         img: item.img,
-        category: item.category,
+        category: cat[0].value,
         author: item.author,
         brief: item.brief,
       };
       setText(data);
 
-      const cat: any = topics.filter((to) => to.value === item.category) || {
-        icon: '',
-        value: '',
-      };
       setValue('title', item.title);
       setValue('img', item.img);
       setValue('category', cat[0]);

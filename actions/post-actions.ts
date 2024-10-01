@@ -9,6 +9,8 @@ import cloudinary from '@/lib/cloudinary';
 
 import getCurrentUser from './get-user';
 import { cache } from 'react';
+import { PostProps } from '@/types/types';
+import { categories } from '@/lib/helper';
 
 export const createPost = cache(
   async (
@@ -108,15 +110,19 @@ export const createPost = cache(
 );
 
 export const getPostByPostId = cache(async (postId?: string) => {
-  if (!postId) return { status: 'error', error: 'No post id found, Fuck off' };
   try {
-    return await db.post.findFirst({
+    const post = await db.post.findFirst({
       where: {
         id: postId,
       },
+      include: {
+        comments: true,
+      },
     });
+    return { status: 'success', data: post };
   } catch (err) {
     console.error(err);
+    throw err;
   }
 });
 

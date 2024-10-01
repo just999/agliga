@@ -4,7 +4,7 @@ import { create } from 'zustand';
 type PostState = {
   items: PostProps[];
   item: PostProps;
-  randomItem: PostProps;
+  randomItem: PostProps | null;
   isLoading: boolean;
   error: any;
   itemBySlugAndPostId: PostProps;
@@ -16,30 +16,31 @@ type PostState = {
   setItemBySlugAndPostId: (itemBySlugAndPostId: PostProps) => void;
 };
 
-export const postItems = {
+// !Default post object to use as an initial state
+const emptyPostItem: PostProps = {
   id: '',
   img: '',
-  category: '',
+  category: '', // Assuming icon can be null
   title: '',
-  date: '',
+  date: new Date().toISOString(),
   brief: '',
   avatar: '',
   author: '',
   topicId: '',
+  comments: [],
   top: false,
   trending: false,
-  comments: [{ id: '', content: '' }],
+  userId: null,
 };
 
+// !Initial state definition
 const initialState = {
   items: [],
   isLoading: false,
   error: null,
-  randomItem: postItems,
-  item: postItems,
-  itemBySlugAndPostId: postItems,
-  // setItems: (items: PostProps[]) => {},
-  // setItem: (item: PostProps) => {},
+  randomItem: null,
+  item: emptyPostItem,
+  itemBySlugAndPostId: emptyPostItem,
 };
 
 const usePostsStore = create<PostState>((set) => ({

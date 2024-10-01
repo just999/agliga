@@ -15,6 +15,7 @@ import {
   InputCustom,
   Spinner,
 } from '@/components/ui';
+import UserAvatar from '@/components/user-avatar';
 import useBanks from '@/hooks/use-banks';
 import useGames from '@/hooks/use-games';
 import ClientOnly from '@/lib/client-only';
@@ -45,9 +46,10 @@ type EditProfileFormProps = {
 
 type ProfileProps = {
   user: User;
+  userInfo: { name: string | null; image: string | null } | null;
 };
 
-const EditProfileForm = ({ user }: ProfileProps) => {
+const EditProfileForm = ({ user, userInfo }: ProfileProps) => {
   // const [profile, setProfile] = useState<EditProfileFormProps>();
   const router = useRouter();
 
@@ -135,8 +137,9 @@ const EditProfileForm = ({ user }: ProfileProps) => {
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className='grid w-full items-center gap-0'>
-              <div className='flex flex-col justify-center items-center space-y-1.5'>
-                <ProfilePicture />
+              <div className='flex flex-col justify-center items-center space-y-1.5 pb-4'>
+                {/* <ProfilePicture user={userInfo} /> */}
+                <UserAvatar src={user.image} alt={user.name} />
               </div>
               {/* <div className='flex flex-col space-y-1.5'>
               <p>Email: {profile.email}</p>

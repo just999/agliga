@@ -175,7 +175,8 @@ const SelectInput = ({
                       'w-10 h-10 text-2xl rounded-lg flex flex-row items-center text-stone-900'
                     )}>
                     <span className={cn(optionIconClassName)}>
-                      {option.icon}
+                      {/* {option.icon} */}
+                      <option.icon />
                     </span>
                   </span>
                 ) : (
@@ -194,7 +195,7 @@ const SelectInput = ({
                         .map(({ icon: Icon }, i) => (
                           <Icon key={i} className='w-7 h-7' />
                         ))}
-                      {/* <option.icon /> */}
+                      <option.icon />
                       {/* <pre>{JSON.stringify(option, null, 2)}</pre> */}
                     </span>
                   </span>

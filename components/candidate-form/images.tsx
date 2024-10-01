@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Control,
   Controller,
@@ -60,7 +60,7 @@ const Images = ({
 
   const { item } = usePostsStore();
   useEffect(() => {
-    if (item.img) {
+    if (typeof item.img === 'string') {
       setPreview(item.img);
     }
     if (text?.img === '' || modalType === null) {

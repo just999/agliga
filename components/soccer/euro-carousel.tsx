@@ -37,12 +37,12 @@ const EuroCarousel = ({ groupArrays }: EuroCarouselProps) => {
     <div className='flex flex-row justify-center bg-lime-100/30 items-center'>
       <div className='w-full flex flex-row justify-end gap-4 pr-2'>
         <Button
+          aria-label='previous'
           variant='ghost'
           size='sm'
           type='button'
           className='embla__prev mr-2 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-110 duration-300 hover:bg-orange-100 hover:shadow-lg hover:text-orange-700'
-          onClick={scrollPrev}
-        >
+          onClick={scrollPrev}>
           <BsChevronDoubleLeft size={18} />
         </Button>
       </div>
@@ -66,12 +66,12 @@ const EuroCarousel = ({ groupArrays }: EuroCarouselProps) => {
       </div>
       <div className='w-full flex flex-row justify-start gap-4 pl-2'>
         <Button
+          aria-label='next'
           variant='ghost'
           size='sm'
           type='button'
           className='embla__next ml-2 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-110 duration-300 hover:bg-orange-100 hover:shadow-lg hover:text-orange-700'
-          onClick={scrollNext}
-        >
+          onClick={scrollNext}>
           <BsChevronDoubleRight size={18} />
         </Button>
       </div>

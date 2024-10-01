@@ -1,5 +1,6 @@
-import { getPostByPostId } from '@/actions/post-actions';
-import PostForm from './post-form';
+import { getPostByPostId, getPosts } from '@/actions/post-actions';
+import PostForm from '@/components/dashboard/post-form';
+
 import ClientOnly from '@/lib/client-only';
 
 type AddNewPostPageProps = {
@@ -9,12 +10,12 @@ type AddNewPostPageProps = {
 };
 
 const AddNewPostPage = async ({ params }: AddNewPostPageProps) => {
-  const post = await getPostByPostId(params.postId);
-
+  const post = (await getPostByPostId(params.postId)) || null;
+  const posts = await getPosts();
   return (
     <ClientOnly>
       <div className='py-2 '>
-        <PostForm post={post} />
+        <PostForm />
       </div>
     </ClientOnly>
   );

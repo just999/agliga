@@ -82,8 +82,7 @@ const SidebarRoutes = ({
     <div
       className={cn(
         'flex flex-col w-full h-1/2 justify-between  cursor-pointer pb-2 2xs:pb-2'
-      )}
-    >
+      )}>
       <nav>
         {session?.user.curUser.role === 'admin'
           ? routes.map((route) => (
@@ -146,16 +145,14 @@ const SidebarRoutes = ({
         className={cn(
           'flex flex-col gap-2 justify-start py-2 shadow-sm rounded-xl',
           iconClass
-        )}
-      >
+        )}>
         <p className='text-xs pl-2 text-center underline text-zinc-400'>
           Our Social-Media:
         </p>
         <div
           className={cn(
             'flex flex-wrap items-center justify-center gap-2 px-4  bg-stone-100'
-          )}
-        >
+          )}>
           <Sci
             size={size}
             className={cn(

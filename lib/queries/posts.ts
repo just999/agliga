@@ -112,6 +112,9 @@ export const getRandomPost = cache(
               },
             },
           },
+          include: {
+            comments: true,
+          },
         });
         if (posts.length === 0) return null;
       }
@@ -130,6 +133,9 @@ export const getRandomPost = cache(
                 },
               },
             ],
+          },
+          include: {
+            comments: true,
           },
         });
         if (posts.length === 0) return null;

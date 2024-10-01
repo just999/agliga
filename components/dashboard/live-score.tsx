@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import Loader from './loader';
-import { HeadingLogo } from './ui';
+import Loader from '../loader';
+import { HeadingLogo } from '../ui';
 
 const LiveScore = () => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -57,8 +57,17 @@ const LiveScore = () => {
 
   return (
     <div className='live-score-container'>
-      {isLoading ? <Loader /> : <HeadingLogo title='Live' center />}
-      <>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <HeadingLogo
+          title='Live'
+          center
+          className='py-2 text-xl'
+          styles={{ width: '10%', height: 'auto' }}
+        />
+      )}
+      <span>
         <iframe
           ref={iframeRef}
           height='100%'
@@ -66,7 +75,7 @@ const LiveScore = () => {
           className='w-full h-screen '
           style={{ overflow: 'auto', border: 'none' }}
         />
-      </>
+      </span>
     </div>
   );
 };

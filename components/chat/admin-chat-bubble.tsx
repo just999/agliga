@@ -155,6 +155,7 @@ const AdminChatBubble = ({
 
   const renderedButton = (
     <Button
+      aria-label='chat widget'
       variant='ghost'
       // disabled={role === 'admin'}
       onClick={handleToggleChat}

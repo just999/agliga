@@ -191,6 +191,7 @@ ChatContainerProps) => {
       </span>
       <Button
         // variant='ghost'
+        aria-label='member chat'
         size='sm'
         type='button'
         className='p-0 m-0 h-0 hover:bg-emerald-100 hover:text-sky-700 pr-1'
@@ -221,7 +222,7 @@ ChatContainerProps) => {
   return (
     <div
       className={cn(
-        'p-0 bottom-0 w-[424px]   right-0 max-w-md z-50 transition-transform duration-300 items-end rounded-t-lg ',
+        'p-0 bottom-0  right-0 max-w-md z-50 transition-transform duration-300 items-end rounded-t-lg ',
         isToggle ? 'slide-down' : 'slide-up',
         toggleSidePanel
           ? ' shadow-lg'

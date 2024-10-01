@@ -54,6 +54,7 @@ import ClientEmblaCarousel from '@/components/carousel/Client-embla-carousel';
 import ImageSliders from '@/components/carousel/image-sliders';
 
 import Posts from '@/components/posts/posts';
+import ClientOnly from '@/lib/client-only';
 
 import {
   fetchPostByCat,
@@ -62,15 +63,23 @@ import {
   IPostsParams,
 } from '@/lib/queries/posts';
 import { fetchSliders } from '@/lib/queries/sliders';
+import { PostProps } from '@/types/types';
 
 type HomeProps = {
   searchParams: IPostsParams;
 };
 
 const Home = async ({ searchParams }: HomeProps) => {
-  let posts = searchParams
-    ? await fetchPostByCat(searchParams)
-    : await getPosts();
+  let posts: PostProps[] = [];
+
+  if (searchParams) {
+    const fetchedPosts = await fetchPostByCat(searchParams);
+    posts = Array.isArray(fetchedPosts) ? fetchedPosts : [];
+  } else {
+    const allPosts = await getPosts();
+    posts = Array.isArray(allPosts) ? allPosts : [];
+  }
+
   let randPost = await getRandomPost(searchParams);
   const images = await fetchSliders();
   const currentUser = await getCurrentUser();
@@ -81,7 +90,7 @@ const Home = async ({ searchParams }: HomeProps) => {
   // if (Array.isArray(posts) && (!posts || posts.length === 0)) posts = [];
 
   return (
-    <>
+    <ClientOnly>
       <div className='relative'>
         {images && images.length > 0 && (
           <ClientEmblaCarousel>
@@ -98,7 +107,7 @@ const Home = async ({ searchParams }: HomeProps) => {
           currentUser={currentUser}
         />
       </div>
-    </>
+    </ClientOnly>
   );
 };
 

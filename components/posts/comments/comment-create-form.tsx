@@ -45,6 +45,7 @@ export default function CommentCreateForm({
       <div className='space-y-2 pt-4 px-1 bg-stone-100 rounded-lg shadow-lg'>
         <Textarea
           name='content'
+          aria-label='content'
           placeholder='Enter your comment'
           // isInvalid={!!formState.errors.content}
           // errorMessage={formState.errors.content?.join(', ')}

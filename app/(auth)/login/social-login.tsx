@@ -8,11 +8,14 @@ type SocialLoginProps = {};
 
 const SocialLogin = () => {
   const onClick = (provider: 'google' | 'github') => {
-    signIn();
+    signIn(provider, {
+      callbackUrl: '/dashboard',
+    });
   };
   return (
     <div className='flex items-center w-full gap-2 '>
       <Button
+        type='button'
         size='sm'
         className='w-full bg-slate-100 hover:bg-stone-200 shadow-md'
         variant='ghost'
@@ -20,7 +23,7 @@ const SocialLogin = () => {
         <FcGoogle size={24} className='svg ' />
       </Button>
       <Button
-        size='sm'
+        type='button'
         className='w-full bg-slate-100 hover:bg-stone-200 shadow-md'
         variant='ghost'
         onClick={() => onClick('github')}>

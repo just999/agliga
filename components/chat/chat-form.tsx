@@ -217,6 +217,7 @@ const ChatForm = forwardRef<ChatFormHandle, ChatFormProps>(
             errorMessageClass='hidden'
           />
           <Button
+            aria-label='chat submit'
             type='submit'
             variant='ghost'
             className={cn(

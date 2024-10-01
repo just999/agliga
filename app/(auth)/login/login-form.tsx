@@ -60,7 +60,7 @@ const LoginForm = () => {
   };
 
   return (
-    <>
+    <ClientOnly>
       <Card className='w-full h-fit border-none shadow-lg'>
         <CardHeader className='flex flex-col items-center justify-center'>
           <HeadingLogo
@@ -127,7 +127,7 @@ const LoginForm = () => {
           </form>
         </CardContent>
       </Card>
-    </>
+    </ClientOnly>
   );
 };
 

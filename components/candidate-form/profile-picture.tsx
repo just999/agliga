@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 
 import { Button } from '../ui/button';
 
@@ -22,16 +22,22 @@ import { updateAvatarSchema, UpdateAvatarSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { updateUserAvatar } from '@/actions/user-actions';
 import { InputCustom, Spinner } from '../ui';
+import UserAvatar from '../user-avatar';
 
 type ProfilePictureProps = {
   text?: any;
   setText?: () => void;
+  user: { name: string | null; image: string | null } | null;
 };
 
-const ProfilePicture = ({ text, setText }: ProfilePictureProps) => {
+const ProfilePicture = ({ text, setText, user }: ProfilePictureProps) => {
   const { data: session } = useSession();
 
-  const [preview, setPreview] = useState<string>('');
+  const [preview, setPreview] = useState<string>(user?.image || '');
+
+  const [imageFile, setImageFile] = useState<File | null>(null);
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const {
     register,
@@ -46,7 +52,7 @@ const ProfilePicture = ({ text, setText }: ProfilePictureProps) => {
     mode: 'onTouched',
   });
 
-  const user = session?.user.curUser;
+  const userData = session?.user.curUser;
 
   const { ref: registerRef, ...rest } = register('image');
   const hiddenInputRef = useRef<HTMLInputElement | null>(null);
@@ -64,31 +70,31 @@ const ProfilePicture = ({ text, setText }: ProfilePictureProps) => {
   const image = session?.user?.curUser.image;
   const newProfile = useMemo(() => {
     return {
-      name: user?.name || '',
-      bank: user?.bank || '',
-      accountNumber: user?.accountNumber || '',
-      email: user?.email || '',
-      game: user?.game || [],
-      image: user?.image || '',
-      phone: user?.phone || '',
+      name: userData?.name || '',
+      bank: userData?.bank || '',
+      accountNumber: userData?.accountNumber || '',
+      email: userData?.email || '',
+      game: userData?.game || [],
+      image: userData?.image || '',
+      phone: userData?.phone || '',
     };
   }, [
-    user?.accountNumber,
-    user?.bank,
-    user?.email,
-    user?.game,
-    user?.image,
-    user?.name,
-    user?.phone,
+    userData?.accountNumber,
+    userData?.bank,
+    userData?.email,
+    userData?.game,
+    userData?.image,
+    userData?.name,
+    userData?.phone,
   ]);
 
   useEffect(() => {
-    if (image) {
-      setPreview(image);
+    if (user?.image) {
+      setPreview(user.image);
 
       setItem(newProfile);
     }
-  }, [image, setItem, setPreview, newProfile]);
+  }, [image, setItem, setPreview, newProfile, user]);
 
   const onUpload = () => {
     if (hiddenInputRef.current) {
@@ -111,7 +117,25 @@ const ProfilePicture = ({ text, setText }: ProfilePictureProps) => {
     }
   };
 
-  const onSubmit = async (data: UpdateAvatarSchema) => {
+  const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+  };
+
+  const handleFileDrop = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    if (event.dataTransfer.files && event.dataTransfer.files[0]) {
+      const file = event.dataTransfer.files[0];
+      setImageFile(file);
+    }
+  };
+
+  const onSubmit: SubmitHandler<UpdateAvatarSchema> = async (
+    data: UpdateAvatarSchema,
+    e
+  ) => {
+    e?.preventDefault();
+    e?.stopPropagation();
+
     const formData = new FormData();
 
     // Check if data.image is a File or a string
@@ -135,13 +159,18 @@ const ProfilePicture = ({ text, setText }: ProfilePictureProps) => {
   };
 
   const uploadButtonLabel =
-    preview === item.image ? 'Upload image' : 'Change image';
+    preview === item.image || preview === user?.image
+      ? 'Upload image'
+      : 'Submit image';
 
   // const uploadAvatarAction =
   //   preview === item.image ? onUpload : () => handleAvatarSubmit();
 
   return (
-    <div className='flex flex-col justify-center items-center  gap-2 w-1/6'>
+    <div
+      className='flex flex-col justify-center items-center  gap-2 w-1/6'
+      onDragOver={handleDragOver}
+      onDrop={handleFileDrop}>
       {/* <Label>Profile picture</Label> */}
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -163,21 +192,15 @@ const ProfilePicture = ({ text, setText }: ProfilePictureProps) => {
             />
           )}
         />
-        <Avatar>
-          <AvatarImage
-            src={preview}
-            className='object-cover'
-            alt='user-avatar'
-          />
-          <AvatarFallback>{username.substring(0, 3)} </AvatarFallback>
-        </Avatar>
+        <span onClick={onUpload}>
+          <UserAvatar src={preview} alt={user?.name} />
+        </span>
         <div className='text-xs left-0 text-left '>
           <div
             className={cn(
               'flex flex-row text-nowrap px-4 w-full rounded-sm text-white font-semibold text-shadow',
               role === 'user' ? 'bg-emerald-300 ' : 'bg-yellow-500'
             )}>
-            {' '}
             Status: {role}
           </div>
         </div>
@@ -185,8 +208,16 @@ const ProfilePicture = ({ text, setText }: ProfilePictureProps) => {
         <Button
           variant='ghost'
           size='sm'
-          type={preview === item.image ? 'button' : 'submit'}
-          onClick={preview === item.image ? onUpload : () => []}
+          type={
+            preview === item.image || preview === user?.image
+              ? 'button'
+              : 'submit'
+          }
+          onClick={
+            preview === item.image || preview === user?.image
+              ? onUpload
+              : undefined
+          }
           className='group text-xs flex flex-row gap-2 bg-blue-500 hover:!bg-blue-500/70 px-2 mb-2'>
           {isSubmitting ? (
             <div className='flex gap-2 items-center justify-center'>

@@ -2,7 +2,7 @@
 
 import { Avatar, AvatarFallback, TabsList, TabsTrigger } from '@/components/ui';
 import { useChatStore } from '@/store/use-chat-store';
-import { usePresenceStore } from '@/store/use-presence-store';
+import React from 'react';
 import { User } from '@prisma/client';
 import { AvatarImage } from '@radix-ui/react-avatar';
 import { useCallback, useEffect, useState } from 'react';
@@ -105,11 +105,12 @@ const ChatTabsList = ({
   );
   return (
     <TabsTrigger
+      aria-label='chat tabs'
       key={user.id}
       value={user.id}
       onClick={() => handleChatId(user.id)}
       className={cn(
-        'flex flex-col p-0 m-0 items-center justify-start   w-13 h-13 group hover:grayscale-0',
+        'flex flex-col p-0 m-0 items-center justify-start w-13 h-13 group hover:grayscale-0',
         activeUser === user
           ? 'data-[state=active]:bg-yellow-500 p-0 m-0'
           : 'data-[state=inactive]:bg-muted-foreground/80 grayscale'

@@ -9,36 +9,35 @@ export type ImageSlider = {
   updatedAt: Date;
 };
 
+type FormType =
+  | 'add-slider'
+  | 'edit-slider'
+  | 'delete-slider'
+  | 'depo'
+  | 'edit-depo'
+  | 'delete-depo'
+  | 'wd'
+  | 'edit-wd'
+  | 'delete-wd'
+  | 'post'
+  | 'edit-post'
+  | 'delete-post'
+  | 'new-fixture'
+  | 'edit-fixture'
+  | 'delete-fixture'
+  | null;
+
 type FormTypeState = {
-  formType:
-    | 'add-slider'
-    | 'edit-slider'
-    | 'delete-slider'
-    | 'post'
-    | 'edit'
-    | 'delete-post'
-    | 'new-fixture'
-    | 'edit-fixture'
-    | 'delete-fixture'
-    | null;
+  formType: FormType;
   isOn: boolean;
-  id?: string | null;
-  img?: ImageSlider;
-  title?: string;
+  id: string | null;
+  img: ImageSlider | undefined;
+  title: string | undefined;
   setOn: (
-    type:
-      | 'add-slider'
-      | 'edit-slider'
-      | 'delete-slider'
-      | 'post'
-      | 'edit'
-      | 'delete-post'
-      | 'new-fixture'
-      | 'edit-fixture'
-      | 'delete-fixture',
+    type: FormType,
     id?: string | null,
     title?: string,
-    img?: ImageSlider | undefined
+    img?: ImageSlider
   ) => void;
   setOff: () => void;
   setImg: (type: 'edit-slider' | 'delete-slider', img: ImageSlider) => void;
@@ -52,21 +51,8 @@ const useFormTypes = create<FormTypeState>()(
       id: null,
       title: undefined,
       img: undefined,
-      setOn: (
-        type:
-          | 'add-slider'
-          | 'edit-slider'
-          | 'delete-slider'
-          | 'post'
-          | 'edit'
-          | 'delete-post'
-          | 'new-fixture'
-          | 'edit-fixture'
-          | 'delete-fixture',
-        id = null,
-        title,
-        img
-      ) => set({ formType: type, isOn: true, id, title, img }),
+      setOn: (type, id = null, title, img) =>
+        set({ formType: type, isOn: true, id, title, img }),
       setOff: () =>
         set({
           formType: null,
@@ -75,8 +61,7 @@ const useFormTypes = create<FormTypeState>()(
           title: undefined,
           id: null,
         }),
-      setImg: (type: 'edit-slider' | 'delete-slider', img) =>
-        set({ formType: type, img }), // Correctly update the 'img' state
+      setImg: (type, img) => set({ formType: type, img }),
     }),
     { name: 'FormTypeStore' }
   )

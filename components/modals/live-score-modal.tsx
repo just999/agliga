@@ -1,6 +1,6 @@
 'use client';
 
-import LiveScore from '../live-score';
+import LiveScore from '../dashboard/live-score';
 import Modal from './modal';
 import useModal from '@/hooks/use-modal';
 

@@ -190,6 +190,7 @@ const ChatTabsContent = ({
         variant='ghost'
         size='sm'
         type='button'
+        aria-label='member chat'
         className='p-0 m-0 h-0 rounded-full hover:bg-emerald-700 hover:text-sky-700 pr-1'
         onClick={handleToggleOff}>
         {/* <Link href={`/members/${user.id}`}> */}
@@ -222,10 +223,10 @@ const ChatTabsContent = ({
       <TabsContent
         {...props}
         value={user.id}
-        className={cn('bg-indigo-50 h-full m-0 p-0', className)}>
+        className={cn('bg-indigo-50 m-0 p-0', className)}>
         <div
           className={cn(
-            'p-0 bottom-0 w-[400px] h-[570px] right-0 max-w-md z-50 transition-transform duration-300 items-end rounded-t-lg ',
+            'p-0 bottom-0 w-full h-max-[570px] right-0 max-w-md z-50 transition-transform duration-300 items-end rounded-t-lg ',
             isToggle ? 'slide-down' : 'slide-up',
             toggleSidePanel
               ? ' shadow-lg'

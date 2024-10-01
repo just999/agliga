@@ -188,7 +188,6 @@ import useSlidersStore from '@/store/use-sliders-store';
 import {
   Card,
   CardHeader,
-  HeadingLogo,
   CardContent,
   Spinner,
   Button,
@@ -198,7 +197,7 @@ import {
   InputCustom,
   Heading,
 } from '@/components/ui';
-import { cn, handleFormServerErrors } from '@/lib/utils';
+import { handleFormServerErrors } from '@/lib/utils';
 import { SliderSchema, sliderSchema } from '@/schemas/slider-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -207,11 +206,9 @@ import { useSession } from 'next-auth/react';
 
 import { Controller, useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
-import { SliderFormProps } from '@/types/types';
-import { FcAddImage } from 'react-icons/fc';
+
 import { useImageStore } from '@/store/use-image-store';
 import useFormTypes from '@/hooks/use-form-types';
-import Images from '@/components/candidate-form/images';
 
 import { addSlider } from '@/actions/slider-actions';
 import toast from 'react-hot-toast';
@@ -240,8 +237,6 @@ const SliderForm = () => {
     img: state.img,
     id: state.id,
   }));
-
-  console.log('Current form type:', formType);
 
   useEffect(() => {
     if (formType === 'edit-slider' && img) {
@@ -361,14 +356,14 @@ const SliderForm = () => {
               )}
             />
           </div>
-          <Avatar className='rounded-none'>
+          <Avatar className='rounded-none w-auto h-20 shadow-md '>
             <AvatarImage
               src={preview}
-              className='object-cover'
+              className='w-auto h-18 object-cover rounded-lg aspect-auto'
               alt='Preview Image'
             />
-            <AvatarFallback>
-              {username.length > 0 ? username.substring(0, 3) : 'N/A'}
+            <AvatarFallback className='text-stone-400 text-xs bg-slate-100 px-2 py-1'>
+              slider img
             </AvatarFallback>
           </Avatar>
 

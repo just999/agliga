@@ -40,7 +40,6 @@ const UserSettingActions = ({ data }: UserSettingActionsProps) => {
   const { modalType, isOpen, onOpen, id } = useModal();
 
   const onSubmit = (data: any) => {
-    console.log(data);
     onOpen('editProfile');
   };
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,8 +55,7 @@ const UserSettingActions = ({ data }: UserSettingActionsProps) => {
   return (
     <div
       onClick={() => onOpen('edit-users', userId, title)}
-      className='flex flex-row items-center justify-start text-nowrap px-4 '
-    >
+      className='flex flex-row items-center justify-start text-nowrap px-4 '>
       <input
         type='text'
         disabled
@@ -82,8 +80,7 @@ const UserSettingActions = ({ data }: UserSettingActionsProps) => {
           variant='ghost'
           size='sm'
           type='submit'
-          className='left-0 top-0 h-6 w-20 '
-        >
+          className='left-0 top-0 h-6 w-20 '>
           active
         </Button>
       </div>

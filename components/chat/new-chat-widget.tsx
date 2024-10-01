@@ -148,11 +148,6 @@ const NewChatWidget = ({ users, adminProfile }: NewChatWidgetProps) => {
   const curUserId = session?.user.id;
   const userRole = session?.user.role;
 
-  const filteredUsersOnly = useMemo(
-    () => users.filter((user) => user.role !== 'admin'),
-    [users]
-  );
-
   const {
     chatId,
     setChatId,
@@ -178,14 +173,14 @@ const NewChatWidget = ({ users, adminProfile }: NewChatWidgetProps) => {
   const { usersId } = usePresenceStore();
 
   const activeUsers = useMemo(
-    () => filteredUsersOnly.filter((user) => usersId.includes(user.id)),
-    [filteredUsersOnly, usersId]
+    () => users.filter((user) => usersId.includes(user.id)),
+    [users, usersId]
   );
 
   // Chat initialization effect
   const handleUserChatId = useCallback(() => {
     if (!adminProfile.id || !curUserId || activeUsers.length === 0) return null;
-    if (userRole === 'user' && adminProfile.role === 'admin') {
+    if (userRole === 'user') {
       const chatId = createChatId(curUserId, adminProfile.id);
       if (chatId) setChatId(chatId);
       setTab(adminProfile.id);
@@ -199,15 +194,7 @@ const NewChatWidget = ({ users, adminProfile }: NewChatWidgetProps) => {
       if (chatId) setChatId(chatId);
       setTab(activeUser.id);
     }
-  }, [
-    activeUsers,
-    adminProfile.id,
-    adminProfile.role,
-    curUserId,
-    setChatId,
-    setTab,
-    userRole,
-  ]);
+  }, [activeUsers, adminProfile.id, curUserId, setChatId, setTab, userRole]);
 
   useEffect(() => {
     handleUserChatId();
@@ -235,6 +222,7 @@ const NewChatWidget = ({ users, adminProfile }: NewChatWidgetProps) => {
       </div>
       {!isToggle && showBubbleChat ? (
         <Button
+          aria-label='chat widget'
           disabled={loading}
           variant='ghost'
           className={cn(

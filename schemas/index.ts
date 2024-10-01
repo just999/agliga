@@ -1,5 +1,6 @@
 import * as z from 'zod';
 
+// * LOGIN SCHEMA
 export const loginSchema = z.object({
   email: z.string().email({
     message: 'Email is required',
@@ -13,6 +14,7 @@ export const loginSchema = z.object({
 
 export type LoginSchema = z.infer<typeof loginSchema>;
 
+// * REGISTER SCHEMA
 export const registerSchema = z.object({
   email: z.string().email(),
   password: z.string().min(6, {
@@ -55,6 +57,7 @@ export type RegisterSchema = z.infer<
 
 export const combinedRegisterSchema = registerSchema.and(profileSchema);
 
+// * MESSAGE SCHEMA
 export const messageSchema = z.object({
   text: z.string().min(1, {
     message: 'Content is required',
@@ -63,6 +66,7 @@ export const messageSchema = z.object({
 
 export type MessageSchema = z.infer<typeof messageSchema>;
 
+// * FORGOT PASSWORD SCHEMA
 export const resetPasswordSchema = z
   .object({
     password: z.string().min(6, {
@@ -77,6 +81,7 @@ export const resetPasswordSchema = z
 
 export type ResetPasswordSchema = z.infer<typeof resetPasswordSchema>;
 
+// * FORM SCHEMA
 export const formSchema = z.object({
   title: z.string().min(1, {
     message: 'Title is required',
@@ -116,6 +121,7 @@ export const imageUrlValidator = z
 //   '.jpg, .jpeg, .svg, .png and .webp files are accepted.'
 // );
 
+// * POST SCHEMA
 export const postSchema = z.object({
   title: z.string().min(1, {
     message: 'Title is required',

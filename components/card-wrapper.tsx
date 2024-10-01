@@ -39,7 +39,7 @@
 // };
 
 // export default CardWrapper;
-
+import React from 'react';
 import { IconType } from 'react-icons';
 import { Card, CardContent, CardFooter, CardHeader } from './ui/card';
 import { Button } from './ui/button';
@@ -98,7 +98,7 @@ const CardWrapper = ({
               {actionLabel}
             </Button>
           )}
-          {footer && <>{footer}</>}
+          {<>{footer}</>}
         </CardFooter>
       </Card>
     </div>

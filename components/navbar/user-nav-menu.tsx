@@ -1,17 +1,8 @@
 'use client';
 
-import { AiOutlineMenu } from 'react-icons/ai';
-import Avatar from '../avatar';
-
-import { RoutesProps, SafeUser } from '@/types/types';
 import useModal from '@/hooks/use-modal';
 import { useClickOutside } from '@/hooks/use-click-outside';
 
-import { PiUserCirclePlusLight } from 'react-icons/pi';
-
-import SidebarRoutes from './sidebar-routes';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { Button } from '../ui/button';
 
 import {
@@ -36,7 +27,6 @@ type UserNavMenuProps = {
 };
 
 const UserNavMenu = ({ user }: UserNavMenuProps) => {
-  const router = useRouter();
   // const [userStatus, setUserStatus] = useState<string>();
 
   const { toggle, isToggle, onOpen } = useModal((state) => ({
@@ -54,15 +44,18 @@ const UserNavMenu = ({ user }: UserNavMenuProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant='ghost'>
+        <Button
+          variant='ghost'
+          type='button'
+          size='sm'
+          aria-label='User Nav Menu'>
           {/* <AiOutlineMenu /> */}
           {/* <Avatar
             src={user?.image}
             className='w-10 h-10 object-cover resize-none'
           /> */}
-          {user?.image && user.name && (
-            <UserAvatar src={user?.image} alt={user?.name} />
-          )}
+
+          <UserAvatar src={user?.image} alt={user?.name} />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className='w-56'>
