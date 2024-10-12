@@ -28,7 +28,7 @@ export type RunTableProps = {
 
 const RunTable = ({ toggle, setIsOpen, className }: RunTableProps) => {
   const params = useSearchParams();
-  const week = params.get('week');
+  const week = params?.get('week');
   const pathname = usePathname();
 
   const isMainPage = pathname === '/soccer';
@@ -45,15 +45,13 @@ const RunTable = ({ toggle, setIsOpen, className }: RunTableProps) => {
       className={cn(
         'e_run_tb border shadow-lg overflow-hidden overscroll-x-none border-slate-200 text-xs mx-auto w-full mb-1 2xs:mt-0 xs:mt-0 sm:mt-0 md:mt-6 lg:mt-2',
         className
-      )}
-    >
+      )}>
       <TableHeader></TableHeader>
       <TableBody className='bg-stone-100 '>
         {weeksTableRows.map((row, rowIndex) => (
           <TableRow
             key={rowIndex}
-            className='text-center text-xs h-full w-full flex flex-wrap gap-0 py-1'
-          >
+            className='text-center text-xs h-full w-full flex flex-wrap gap-0 py-1'>
             {row.map((cellData, cellIndex) => (
               <TableCell
                 key={`${rowIndex}-${cellIndex}`}
@@ -65,8 +63,7 @@ const RunTable = ({ toggle, setIsOpen, className }: RunTableProps) => {
                   Number(week) === cellData.value
                     ? 'text-stone-900'
                     : 'text-neutral-400'
-                )}
-              >
+                )}>
                 <RunBox
                   label={cellData.value}
                   selected={Number(week) === cellData.value}

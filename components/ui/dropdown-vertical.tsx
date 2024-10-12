@@ -40,7 +40,7 @@ const DropdownVertical = ({
   className2,
 }: DropdownVerticalProps) => {
   const params = useParams();
-  const id = typeof params.id === 'string' ? params.id : item?.id;
+  const id = typeof params?.id === 'string' ? params?.id : item?.id;
 
   const { formType, isOn, setOn, setImg } = useFormTypes((state) => ({
     formType: state.formType,

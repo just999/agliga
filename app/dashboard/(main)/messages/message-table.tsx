@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import {
   useReactTable,
   getCoreRowModel,
@@ -104,7 +105,7 @@ const MessageTable = <TData extends DataWithId, TValue>({
 
   return (
     <>
-      <Card className='flex flex-col h-[80vh]'>
+      <Card className='flex flex-col h-fit'>
         <Heading
           title='Messages'
           description='history messages'

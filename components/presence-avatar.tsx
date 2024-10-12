@@ -6,7 +6,7 @@ import { usePresenceStore } from '@/store/use-presence-store';
 import { userData } from '@/store/use-active-user-store';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui';
-import { User } from '@prisma/client';
+import { AnonymousUser, User } from '@prisma/client';
 import UserAvatar from './user-avatar';
 import { SafeAdminChat } from '@/types/types';
 
@@ -17,6 +17,7 @@ type PresenceAvatarProps = {
   className?: string;
   dotClassName?: string;
   avatarClass?: string;
+  anonymousUser?: User;
 };
 
 const PresenceAvatar = ({
@@ -24,6 +25,7 @@ const PresenceAvatar = ({
   userId,
   src,
   className,
+  anonymousUser,
   dotClassName,
   avatarClass,
 }: PresenceAvatarProps) => {

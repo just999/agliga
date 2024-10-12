@@ -33,7 +33,7 @@ const GameBox = ({ label, icon: Icon, selected }: GameBoxProps) => {
       game: label,
     };
 
-    if (params.get('game') === label) {
+    if (params && params.get('game') === label) {
       delete updatedQuery.game;
     }
 
@@ -44,7 +44,7 @@ const GameBox = ({ label, icon: Icon, selected }: GameBoxProps) => {
       },
       { skipNull: true }
     );
-    setIsSelected(params.get('game') === label);
+    setIsSelected(params?.get('game') === label);
     router.push(url);
   }, [label, params, router]);
 
@@ -57,8 +57,7 @@ const GameBox = ({ label, icon: Icon, selected }: GameBoxProps) => {
           ? 'border-b-indigo-500/40 bg-indigo-50 drop-shadow-md rounded-sm'
           : 'border-transparent',
         selected ? 'text-stone-900' : 'text-neutral-400'
-      )}
-    >
+      )}>
       <Icon size={26} />
       <div className='font-medium text-xs'>{label}</div>
     </div>

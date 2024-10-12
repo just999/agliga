@@ -3,7 +3,7 @@
 import React, { ReactNode } from 'react';
 import { CardHeader, CardFooter, CardContent } from './ui/card';
 import { Separator } from './ui/separator';
-import { cn } from '@/lib/utils';
+import { capitalizeFirstCharacter, cn } from '@/lib/utils';
 import { Calendar } from 'lucide-react';
 
 import {
@@ -12,6 +12,7 @@ import {
 } from 'react-icons/io5';
 import { Button } from './ui';
 import { useSession } from 'next-auth/react';
+import { User } from '@prisma/client';
 
 type CardInnerWrapperProps = {
   header: ReactNode | string;
@@ -26,6 +27,7 @@ type CardInnerWrapperProps = {
   sidePanel?: ReactNode;
   toggleSidePanel?: boolean;
   setToggleSidePanel?: (toggleSidePanel: boolean) => void;
+  currentUser?: User;
 };
 
 const CardInnerWrapper = ({
@@ -40,6 +42,7 @@ const CardInnerWrapper = ({
   currentDate,
   sidePanel,
   toggleSidePanel,
+  currentUser,
   setToggleSidePanel,
 }: CardInnerWrapperProps) => {
   // const [toggleSidePanel, setToggleSidePanel] = useState(false);
@@ -48,7 +51,7 @@ const CardInnerWrapper = ({
   const role = session?.user.role;
 
   return (
-    <div className='relative h-full flex justify-end overflow-hidden rounded-t-lg'>
+    <div className='h-full flex justify-end overflow-hidden rounded-t-lg'>
       {/* <ul
         className={cn(
           'absolute left-0 top-0 h-full w-10 flex flex-col justify-center transition-transform duration-300 ease-in-out transform items-center gap-4 backdrop-blur-xl border-0 rounded-tl-lg bg-white/50 ',
@@ -77,7 +80,7 @@ const CardInnerWrapper = ({
           )}
         </CardHeader>
         <Separator />
-        <div className='bg-amber-400 shadow-inner'>
+        <div className='bg-amber-400 shadow-inner '>
           <span
             className={cn(
               'w-full flex justify-between text-center shadow-inner bg-yellow-50',
@@ -102,10 +105,16 @@ const CardInnerWrapper = ({
                 )}
               </Button>
             )}
-            <span className='flex gap-2 justify-center w-full py-1 text-gray-600 text-xs font-semibold'>
-              <Calendar size={14} className='text-zinc-500' />
-              {currentDate}
-            </span>
+            <div className='flex justify-end w-full items-center px-2'>
+              <span className='flex gap-2 justify-center w-full py-1 text-gray-600 text-xs font-semibold'>
+                <Calendar size={14} className='text-zinc-500' />
+                {currentDate}
+              </span>
+              <span className='text-[10px] text-center text-nowrap px-2 font-semibold bg-sky-600 text-shadow rounded-lg text-white'>
+                {currentUser?.name &&
+                  capitalizeFirstCharacter(currentUser?.name)}
+              </span>
+            </div>
             <div />
           </span>
 

@@ -25,6 +25,7 @@ import { useCurrentUserRole } from '@/hooks/use-user';
 import ChatSidebar from './chat-sidebar';
 import CardInnerWrapper from '../card-inner-wrapper';
 import { useSession } from 'next-auth/react';
+import { getAnonymousUser } from '@/actions/live-chat-actions';
 
 type ChatContainerProps = {
   username: string | null | undefined;
@@ -55,9 +56,10 @@ ChatContainerProps) => {
   const [messages, setMessages] = useState<MessagesProps | null>(null);
   // const [showBubbleChat, setShowBubbleChat] = useState<boolean>(true);
   // const [isOpen, setIsOpen] = useState(false);
+  const [anonymousUser, setAnonymousUser] = useState<User>();
 
   const inputRef = useRef<HTMLInputElement>(null);
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const {
     senderId,
     recipientId,
@@ -86,6 +88,32 @@ ChatContainerProps) => {
     showBubbleChat: state.showBubbleChat,
   }));
   const role = useCurrentUserRole();
+
+  useEffect(() => {
+    const checkAnonymousUser = async () => {
+      if (status === 'unauthenticated' && typeof window !== 'undefined') {
+        const storedSessionId = sessionStorage.getItem('anonymousId');
+        console.log('Retrieved anonymousId:', storedSessionId);
+        if (storedSessionId) {
+          try {
+            const existingUser = await getAnonymousUser(storedSessionId);
+            console.log('Fetched user:', existingUser);
+            if (existingUser.status === 'success' && existingUser.data) {
+              setAnonymousUser(existingUser.data);
+            } else {
+              console.log('No valid user data found');
+              sessionStorage.removeItem('anonymousId');
+            }
+          } catch (error) {
+            console.error('Error fetching anonymous user:', error);
+            sessionStorage.removeItem('anonymousId');
+          }
+        }
+      }
+    };
+
+    checkAnonymousUser();
+  }, [status]);
 
   // const fetchMessages = useCallback(async () => {
   //   if (!recipientId) return;
@@ -118,6 +146,10 @@ ChatContainerProps) => {
   }, [rUser?.id, recipientId]);
 
   const currentUserId = session?.user.id;
+  const newUserId = status === 'authenticated' ? userId : anonymousUser?.id;
+
+  const newUser =
+    status === 'authenticated' ? session.user.curUser : anonymousUser;
 
   const chatId =
     currentUserId && rUser?.id && createChatId(currentUserId, rUser?.id);
@@ -210,12 +242,12 @@ ChatContainerProps) => {
   );
   const sidePanel = role === 'admin' ? renderedSidePanel : '';
 
-  const messageListContent = chatId && (
+  const messageListContent = chatId && newUserId && (
     <MessageList
       initialMessages={messages}
-      currentUserId={userId}
+      currentUserId={newUserId}
       chatId={chatId}
-      user={session.user.curUser}
+      user={newUser}
     />
   );
 

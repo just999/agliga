@@ -1,3 +1,4 @@
+import React from 'react';
 import { getMessageThread } from '@/actions/message-actions';
 
 import { getUserById } from '@/actions/auth-actions';

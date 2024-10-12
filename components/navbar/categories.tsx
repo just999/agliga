@@ -12,7 +12,7 @@ import { Button } from '../ui/button';
 
 const Categories = () => {
   const params = useSearchParams();
-  const category = params.get('category');
+  const category = params?.get('category');
 
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
     Autoplay({ delay: 4000 }),

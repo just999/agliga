@@ -29,7 +29,7 @@ const ScheduleClient = ({
   // const router = useRouter();
   // const params = useParams();
   const params = useSearchParams();
-  const week = params.get('week');
+  const week = params?.get('week');
   const { onOpen, id } = useModal();
   const { toggle } = useRunToggleStore();
 

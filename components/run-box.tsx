@@ -34,7 +34,7 @@ const RunBox = ({ label, selected, toggle }: RunBoxProps) => {
       week: label,
     };
 
-    const el = params.get('week')?.toString();
+    const el = params?.get('week')?.toString();
     const newWeek = Number(el || 0);
     if (newWeek === label) {
       delete updatedQuery.week;

@@ -10,21 +10,120 @@ import { mapMessageToMessageDto } from '@/lib/mappings';
 import { revalidateTag, revalidatePath } from 'next/cache';
 import { messageSchema, MessageSchema } from '@/schemas';
 import { Prisma } from '@prisma/client';
+import { auth } from '@/auth';
+import { getAnonymousUser } from './live-chat-actions';
+import { cookies } from 'next/headers';
 
 // import { cache } from 'react';
 
-export async function createMessage(
-  recipientUserId: string,
-  data: MessageSchema
-): Promise<ActionResult<MessageDto>> {
-  try {
-    const userId = await getAuthUserId();
+// export async function createMessage(
+//   recipientUserId: string,
+//   data: MessageSchema,
+//   anonymousUserId?: string
+// ): Promise<ActionResult<MessageDto>> {
+//   try {
+//     const session = await auth();
+//     const userId = session ? session?.user.id : anonymousUserId;
+//     // if (!session || !userId) return { status: 'error', error: 'no login user' };
 
-    // if (!userId) return { status: 'error', error: 'no user id' };
+//     // const anonymousUser = getAnonymousUser();
+
+//     const validated = messageSchema.safeParse(data);
+//     if (!validated.success)
+//       return { status: 'error', error: validated.error.errors };
+//     const { text } = validated.data;
+
+//     const message = await db.message.create({
+//       data: {
+//         text,
+//         recipientId: recipientUserId,
+//         senderId: userId,
+//       },
+//       select: messageSelect,
+//     });
+
+//     const messageDto = mapMessageToMessageDto(message);
+
+//     await pusherServer.trigger(
+//       createChatId(userId, recipientUserId),
+//       'message:new',
+//       messageDto
+//     );
+//     await pusherServer.trigger(
+//       `private-${recipientUserId}`,
+//       'message:new',
+//       messageDto
+//     );
+
+//     return { status: 'success', data: messageDto };
+//   } catch (err) {
+//     console.log(err);
+//     return { status: 'error', error: 'Something went wrong' };
+//   }
+// }
+
+export const addNewMessage = async (
+  recipientId: string,
+  data: MessageSchema,
+  senderId?: string
+): Promise<ActionResult<MessageDto>> => {
+  try {
+    const session = await auth();
+    const userId = session ? session.user.id : senderId;
+
+    if (!userId) {
+      return { status: 'error', error: 'user not found' };
+    }
 
     const validated = messageSchema.safeParse(data);
-    if (!validated.success)
+    if (!validated.success) {
       return { status: 'error', error: validated.error.errors };
+    }
+
+    const { text } = validated.data;
+
+    const message = await db.message.create({
+      data: {
+        text,
+        recipientId,
+        senderId,
+      },
+      select: messageSelect,
+    });
+
+    const messageDto = mapMessageToMessageDto(message);
+
+    const channel = session
+      ? `private-${recipientId}`
+      : `private-anonymous-${userId}`;
+
+    await pusherServer.trigger(channel, 'message:new', messageDto);
+
+    return { status: 'success', data: messageDto };
+  } catch (err) {
+    console.error(err);
+    return { status: 'error', error: 'Something went wrong' };
+  }
+};
+
+// *CREATE NEW MESSAGE
+export async function createMessage(
+  recipientUserId: string,
+  data: MessageSchema,
+  anonymousUserId?: string
+): Promise<ActionResult<MessageDto>> {
+  try {
+    const session = await auth();
+    const userId = session ? session.user.id : anonymousUserId;
+
+    if (!userId) {
+      return { status: 'error', error: 'User not identified' }; // Handle missing user identifier
+    }
+
+    const validated = messageSchema.safeParse(data);
+    if (!validated.success) {
+      return { status: 'error', error: validated.error.errors };
+    }
     const { text } = validated.data;
 
     const message = await db.message.create({
@@ -38,16 +137,16 @@ export async function createMessage(
 
     const messageDto = mapMessageToMessageDto(message);
 
+    const channel = session?.user
+      ? `private-${recipientUserId}`
+      : `private-anonymous-${userId}`;
+
     await pusherServer.trigger(
       createChatId(userId, recipientUserId),
       'message:new',
       messageDto
     );
-    await pusherServer.trigger(
-      `private-${recipientUserId}`,
-      'message:new',
-      messageDto
-    );
+    await pusherServer.trigger(channel, 'message:new', messageDto);
 
     return { status: 'success', data: messageDto };
   } catch (err) {
@@ -56,10 +155,86 @@ export async function createMessage(
   }
 }
 
-export async function getMessageThread(recipientId: string) {
+// export async function getMessageThread(
+//   recipientId: string,
+//   anonymousUserId?: string
+// ) {
+//   try {
+//     const session = await auth();
+
+//     const userId = session ? await getAuthUserId() : anonymousUserId;
+//     if (userId === recipientId) return;
+
+//     const messages = await db.message.findMany({
+//       where: {
+//         OR: [
+//           {
+//             senderId: userId,
+//             recipientId,
+//             senderDeleted: false,
+//           },
+//           {
+//             senderId: recipientId,
+//             recipientId: userId,
+//             recipientDeleted: false,
+//           },
+//         ],
+//       },
+//       orderBy: {
+//         created: 'asc',
+//       },
+//       select: messageSelect,
+//     });
+//     let readCount = 0;
+
+//     if (messages.length > 0) {
+//       const readMessageIds = messages
+//         .filter(
+//           (m) =>
+//             m.dateRead === null &&
+//             m.recipient?.id === userId &&
+//             m.sender?.id === recipientId
+//         )
+//         .map((m) => m.id);
+
+//       await db.message.updateMany({
+//         where: {
+//           id: { in: readMessageIds },
+//         },
+//         data: { dateRead: new Date() },
+//       });
+
+//       readCount = readMessageIds.length;
+
+//       await pusherServer.trigger(
+//         createChatId(recipientId, userId),
+//         'messages:read',
+//         readMessageIds
+//       );
+//     }
+
+//     const messagesToReturn = messages.map((message) =>
+//       mapMessageToMessageDto(message)
+//     );
+
+//     return { messages: messagesToReturn, readCount };
+//   } catch (err) {
+//     console.error(err);
+//     throw err;
+//   }
+// }
+
+// *GET MESSAGE THREAD
+export async function getMessageThread(
+  recipientId: string,
+  anonymousUserId?: string
+) {
   try {
-    const userId = await getAuthUserId();
-    if (userId === recipientId) return;
+    const session = await auth();
+    const userId = session ? session.user.id : anonymousUserId;
+
+    if (!userId || userId === recipientId) return;
+
     const messages = await db.message.findMany({
       where: {
         OR: [
@@ -266,11 +441,23 @@ export async function deleteMessage(messageId: string, isOutBox: boolean) {
 export async function getUnreadMessageCount() {
   try {
     const userId = await getAuthUserId();
+    const cookieStore = cookies();
+    const anonymousId = cookieStore.get('anonymousId')?.value;
+
+    const session = await auth();
+
+    const existingUser = await db.user.findFirst({
+      where: {
+        nonUserSessionId: anonymousId,
+      },
+    });
+
+    const newUserId = session ? userId : existingUser?.id;
 
     // Fetch all messages for this user
     const res = await db.message.findMany({
       where: {
-        recipientId: userId,
+        recipientId: newUserId,
         recipientDeleted: false,
       },
       take: 100,
@@ -364,7 +551,7 @@ export const getUnreadMessagesBySenderId = async (senderId: string) => {
       (m) => m.dateRead === null && m.recipientDeleted === false
     ).length;
 
-    return { senderId, unreadMess, unreadMessCount };
+    return { unreadMess, unreadMessCount };
   } catch (err) {
     console.error('Error fetching messages', err);
     throw err;

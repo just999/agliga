@@ -160,7 +160,7 @@ const AdminChatBubble = ({
       // disabled={role === 'admin'}
       onClick={handleToggleChat}
       className={cn(
-        'bottom-0 p-0 m-0 z-9999 text-right bg-indigo-500',
+        'bottom-0 p-0 m-0 z-99 text-right bg-indigo-500',
         // !recipientUserData?.id && 'cursor-not-allowed',
         // showBubbleChat ? 'slide-up' : 'slide-down',
         className
@@ -175,7 +175,7 @@ const AdminChatBubble = ({
             // admin.role === 'admin' && 'fill-cyan-100'
           )}
         />
-        <span className='fixed animate-bounce bg-orange-500 bottom-10 right-14 rounded-full p-0 text-xs font-semibold px-1 text-right z-9999 transition ease-in-out delay-50  hover:-translate-y-1 hover:scale-150  text-white text-shadow'>
+        <span className='fixed animate-bounce bg-orange-500 bottom-10 right-14 rounded-full p-0 text-xs font-semibold px-1 text-right z-99 transition ease-in-out delay-50  hover:-translate-y-1 hover:scale-150  text-white text-shadow'>
           {unreadCount}
         </span>
       </div>

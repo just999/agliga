@@ -3,7 +3,7 @@
 import { usePathname, useRouter } from 'next/navigation';
 
 import Link from 'next/link';
-import Image from 'next/image';
+
 import { IconType } from 'react-icons';
 import { Button } from '../ui/button';
 
@@ -22,7 +22,7 @@ const SidebarItem = ({ label, icon: Icon, href }: SidebarItemProps) => {
   const active =
     (pathname === '/' && href === '/') ||
     pathname === href ||
-    pathname.startsWith(`${href}/`);
+    pathname?.startsWith(`${href}/`);
 
   const onClick = () => {
     router.push(href);
@@ -33,8 +33,7 @@ const SidebarItem = ({ label, icon: Icon, href }: SidebarItemProps) => {
       onClick={onClick}
       variant={active ? 'default' : 'outline'}
       className='justify-start h-[52px] '
-      asChild
-    >
+      asChild>
       <Link href={href} className='flex flex-row gap-2 '>
         <Icon size={24} />
         <span className='text-xs '>{label}</span>

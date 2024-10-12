@@ -73,13 +73,13 @@ export const EmblaCarousel: React.FC<PropType> = ({
         <div>
           <Button
             variant='ghost'
-            className='embla__prev absolute z-9999 right-0 top-44 bg-white/20 hover:bg-white/30 shadow-xl'
+            className='embla__prev absolute z-999 right-0 top-44 bg-white/20 hover:bg-white/30 shadow-xl'
             onClick={scrollPrev}>
             <ChevronsRightIcon size={38} className='text-white/60 svg ' />
           </Button>
           <Button
             variant='ghost'
-            className='embla__next  absolute z-9999 left-0 top-44 bg-white/20 hover:bg-white/30 shadow-xl'
+            className='embla__next  absolute z-999 left-0 top-44 bg-white/20 hover:bg-white/30 shadow-xl'
             onClick={scrollNext}>
             <ChevronsLeft size={38} className='text-white/60 svg ' />
           </Button>

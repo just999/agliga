@@ -1,6 +1,15 @@
 'use client';
 
-import { Avatar, AvatarFallback, TabsList, TabsTrigger } from '@/components/ui';
+import {
+  Avatar,
+  AvatarFallback,
+  TabsList,
+  TabsTrigger,
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui';
 import { useChatStore } from '@/store/use-chat-store';
 import React from 'react';
 import { User } from '@prisma/client';
@@ -12,6 +21,7 @@ import { cn, createChatId } from '@/lib/utils';
 import { useSession } from 'next-auth/react';
 import { getUnreadMessagesBySenderId } from '@/actions/message-actions';
 import { SafeAdminChat } from '@/types/types';
+import TooltipCustom from '../tooltip-custom';
 
 type ChatTabsListProps = {
   activeUser: User | SafeAdminChat | null;
@@ -115,14 +125,18 @@ const ChatTabsList = ({
           ? 'data-[state=active]:bg-yellow-500 p-0 m-0'
           : 'data-[state=inactive]:bg-muted-foreground/80 grayscale'
       )}>
-      {user.image && user.name && (
-        <>
+      {user.image && user.name && userRole === 'admin' && (
+        <TooltipCustom
+          position='top'
+          duration={1000}
+          content={<span>{user.name} </span>}
+          className='bg-emerald-500'>
           <UserAvatar
             src={user.image}
             alt={user.name}
             className='h-12 w-12 justify-center'
             avatarClass={cn(
-              'w-11 h-11 grayscale hover:grayscale-0 transition ease-in-out delay-50  hover:scale-110 hover:bg-slate-100 duration-300',
+              'w-10 h-10 grayscale hover:grayscale-0 transition ease-in-out delay-50  hover:scale-110 hover:bg-slate-100 duration-300',
               activeUser === user
                 ? 'border border-2 border-white'
                 : 'border-none'
@@ -132,10 +146,8 @@ const ChatTabsList = ({
             <div className='text-amber-100 text-sm text-center p-0 m-0 w-4 h-4 bg-rose-500 text-shadow rounded-full absolute top-0 right-0 grayscale-0 z-999'>
               {count}
             </div>
-          ) : (
-            <div></div>
-          )}
-        </>
+          ) : null}
+        </TooltipCustom>
       )}
     </TabsTrigger>
   );

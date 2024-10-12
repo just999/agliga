@@ -6,7 +6,7 @@ import { User } from '@prisma/client';
 import { cn } from '@/lib/utils';
 
 type PresenceDotProps = {
-  user?: User;
+  user: User | null;
   className?: string;
   sizeGoDot?: number;
   sizeGoDotFill?: number;

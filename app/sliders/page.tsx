@@ -1,6 +1,7 @@
 'use client';
 
 import Container from '@/components/container';
+import React from 'react';
 
 import EditDeletePostButton from '@/components/posts/edit-delete-post-button';
 import { HeadingLogo } from '@/components/ui';

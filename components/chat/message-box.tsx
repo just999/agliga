@@ -4,6 +4,7 @@ import PresenceAvatar from '@/components/presence-avatar';
 
 import { cn, timeAgo, transformImageUrl } from '@/lib/utils';
 import { MessageDto } from '@/types';
+import { SafeAdminChat } from '@/types/types';
 import { User } from '@prisma/client';
 
 import { format, formatISO, parse } from 'date-fns';
@@ -12,12 +13,18 @@ import { Check, CheckCheck } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 
 type MessageBoxProps = {
-  user: User;
+  recipientUser: SafeAdminChat;
   message: MessageDto;
   currentUserId: string;
+  anonymousUser?: User;
 };
 
-const MessageBox = ({ message, currentUserId, user }: MessageBoxProps) => {
+const MessageBox = ({
+  message,
+  currentUserId,
+  recipientUser,
+  anonymousUser,
+}: MessageBoxProps) => {
   const isCurrentUserSender = message.senderId === currentUserId;
   const messageEndRef = useRef<HTMLDivElement>(null);
 
@@ -29,11 +36,14 @@ const MessageBox = ({ message, currentUserId, user }: MessageBoxProps) => {
   const renderAvatar = () => (
     <div className='self-end'>
       <PresenceAvatar
-        user={user}
+        user={recipientUser}
         className='w-10 h-10 object-cover'
         src={transformImageUrl(message.senderImage) || '/images/user.png'}
         userId={message.senderId}
         dotClassName='hidden'
+        avatarClass={cn(
+          'w-10 h-10  bg-amber-500 hover:grayscale-0 transition ease-in-out delay-50  hover:scale-110 hover:bg-orange-300 duration-300 border border-2 border-white'
+        )}
       />
     </div>
   );

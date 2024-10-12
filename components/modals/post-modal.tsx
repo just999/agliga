@@ -54,7 +54,7 @@ const PostModal = () => {
   const [text, setText] = useState<InitialPostProps>(initialFormState);
   const params = useParams();
 
-  const id = params.id?.toString();
+  const id = params?.id?.toString();
   const { getTopics } = useTopics();
 
   const [isLoading, setIsLoading] = useState(false);

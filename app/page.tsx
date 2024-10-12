@@ -90,8 +90,8 @@ const Home = async ({ searchParams }: HomeProps) => {
   // if (Array.isArray(posts) && (!posts || posts.length === 0)) posts = [];
 
   return (
-    <ClientOnly>
-      <div className='relative'>
+    <>
+      <div className=''>
         {images && images.length > 0 && (
           <ClientEmblaCarousel>
             {images.map((hero) => (
@@ -107,7 +107,7 @@ const Home = async ({ searchParams }: HomeProps) => {
           currentUser={currentUser}
         />
       </div>
-    </ClientOnly>
+    </>
   );
 };
 

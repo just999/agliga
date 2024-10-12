@@ -33,11 +33,12 @@ const NavLink = ({ href, label, className, link, role }: NavLinkProps) => {
   const isInitialMount = useRef(true);
   const pathname = usePathname();
   const searchParams = useSearchParams();
+
   const { unreadCount } = useMessageStore((state) => ({
     unreadCount: state.unreadCount,
   }));
 
-  const isOutbox = searchParams.get('container') === 'outbox';
+  const isOutbox = searchParams?.get('container') === 'outbox';
 
   const container = isOutbox ? 'outbox' : 'inbox';
 
@@ -120,23 +121,25 @@ const NavLink = ({ href, label, className, link, role }: NavLinkProps) => {
 
   return (
     <ClientOnly>
-      <Link
-        // onClick={() => handleFormType()}
-        href={finalHref}
-        className={cn(
-          'h-fit flex vertical-center',
-          className,
-          isActive(pathname, finalHref)
-            ? ' text-lime-700  bg-emerald-50 drop-shadow-sm border-b-2 border-solid px-3 border-b-emerald-600 transition font-bold'
-            : 'text-stone-400 bg-slate-100 px-3'
-        )}>
-        <span onClick={handleToast}>{label}</span>
-        {finalHref.startsWith(messageLink) && unreadCount > 0 && (
-          <span className='ml-1 text-emerald-400 font-bold'>
-            ({unreadCount})
-          </span>
-        )}
-      </Link>
+      {pathname && (
+        <Link
+          // onClick={() => handleFormType()}
+          href={finalHref}
+          className={cn(
+            'h-fit flex vertical-center',
+            className,
+            isActive(pathname, finalHref)
+              ? ' text-lime-700  bg-emerald-50 drop-shadow-sm border-b-2 border-solid px-3 border-b-emerald-600 transition font-bold'
+              : 'text-stone-400 bg-slate-100 px-3'
+          )}>
+          <span onClick={handleToast}>{label}</span>
+          {finalHref.startsWith(messageLink) && unreadCount > 0 && (
+            <span className='ml-1 text-emerald-400 font-bold'>
+              ({unreadCount})
+            </span>
+          )}
+        </Link>
+      )}
     </ClientOnly>
   );
 };

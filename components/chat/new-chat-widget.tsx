@@ -137,14 +137,15 @@ import { cn, createChatId } from '@/lib/utils';
 import { usePresenceStore } from '@/store/use-presence-store';
 import NewChatContainer from '@/components/chat/new-chat-container';
 import { SafeAdminChat } from '@/types/types';
+import LiveChatContainer from './live-chat-container';
 
 type NewChatWidgetProps = {
-  users: User[] | [];
+  users: User[];
   adminProfile: SafeAdminChat;
 };
 
 const NewChatWidget = ({ users, adminProfile }: NewChatWidgetProps) => {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const curUserId = session?.user.id;
   const userRole = session?.user.role;
 
@@ -169,7 +170,6 @@ const NewChatWidget = ({ users, adminProfile }: NewChatWidgetProps) => {
     setShowBubbleChat: state.setShowBubbleChat,
     showBubbleChat: state.showBubbleChat,
   }));
-
   const { usersId } = usePresenceStore();
 
   const activeUsers = useMemo(
@@ -210,15 +210,17 @@ const NewChatWidget = ({ users, adminProfile }: NewChatWidgetProps) => {
       setShowBubbleChat(false);
     }
   }, [isToggle, setShowBubbleChat]);
-
   return (
     <div className='w-13 h-13 m-0 p-0 relative'>
       <div
         className={cn(
-          `fixed bottom-4 right-2 text-shadow-lg transition-transform duration-300 ease-in-out transform`,
+          `fixed bottom-0 right-1 text-shadow-lg transition-transform duration-300 ease-in-out transform`,
           isToggle ? 'translate-y-0' : 'translate-y-full'
         )}>
-        <NewChatContainer users={users} adminProfile={adminProfile} />
+        {/* <NewChatContainer users={users} adminProfile={adminProfile} /> */}
+        <LiveChatContainer users={users} adminProfile={adminProfile} />
+
+        {/* <LiveChat users={users} adminProfile={adminProfile} /> */}
       </div>
       {!isToggle && showBubbleChat ? (
         <Button
@@ -235,12 +237,7 @@ const NewChatWidget = ({ users, adminProfile }: NewChatWidgetProps) => {
             className='svg text-blue-600 hover:text-shadow hover:text-500/80 hover:fill-slate-500/20 hover:text-blue-700'
           />
         </Button>
-      ) : (
-        <Spinner
-          size={28}
-          className={cn('svg w-16 h-16', isToggle && 'hidden')}
-        />
-      )}
+      ) : null}
     </div>
   );
 };

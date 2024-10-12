@@ -19,7 +19,7 @@ const MessageSidebar = () => {
   const router = useRouter();
   const pathname = usePathname();
   const [selected, setSelected] = useState<string>(
-    searchParams.get('container') || 'inbox'
+    searchParams?.get('container') || 'inbox'
   );
   const items = [
     { key: 'inbox', label: 'Inbox', icon: Inbox, chip: true },

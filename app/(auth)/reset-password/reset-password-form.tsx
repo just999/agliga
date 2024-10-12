@@ -43,6 +43,7 @@ const ResetPasswordForm = () => {
 
   const onSubmit = async (data: ResetPasswordSchema) => {
     try {
+      if (!searchParams) return;
       const res = await resetPassword(data.password, searchParams.get('token'));
       if (res.status === 'success') {
         setResult(res);

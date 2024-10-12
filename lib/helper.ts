@@ -3400,6 +3400,7 @@ export const adminChatProfile = {
   profileComplete: true,
   active: true,
   role: Role.admin,
+  nonUserSessionId: null,
   // createdAt: '2024-08-09T10:02:54.610Z',
   // updatedAt: '2024-09-06T01:57:12.717Z',
   editorId: null,

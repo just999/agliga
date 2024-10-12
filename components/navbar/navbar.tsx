@@ -224,7 +224,7 @@ const Navbar = ({ currentUser, className }: NavbarProps) => {
   ];
   return (
     <ClientOnly>
-      <div className={cn('relative w-full bg-white z-10', className)}>
+      <div className={cn('relative w-full bg-white', className)}>
         <div className='py-2 border-b-[1px] bg-slate-50 shadow-sm'>
           <Container>
             <MobileSidebar routes={routes} />

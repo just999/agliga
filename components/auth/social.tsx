@@ -9,7 +9,7 @@ import { useSearchParams } from 'next/navigation';
 
 const Social = () => {
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get('callbackUrl');
+  const callbackUrl = searchParams?.get('callbackUrl');
 
   const onSocialSignIn = (provider: 'google' | 'github') => {
     signIn(provider, {
@@ -23,16 +23,14 @@ const Social = () => {
         size='lg'
         className='w-full'
         variant='outline'
-        onClick={() => onSocialSignIn('google')}
-      >
+        onClick={() => onSocialSignIn('google')}>
         <FcGoogle className='h-5 w-5' />
       </Button>
       <Button
         size='lg'
         className='w-full'
         variant='outline'
-        onClick={() => onSocialSignIn('github')}
-      >
+        onClick={() => onSocialSignIn('github')}>
         <FaGithub className='h-5 w-5' />
       </Button>
     </div>

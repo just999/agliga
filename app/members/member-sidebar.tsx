@@ -137,7 +137,7 @@ const MemberSidebar = ({ user, navLinks, className }: MemberSidebarProps) => {
               user={user}
               sizeGoDot={40}
               sizeGoDotFill={36}
-              className='absolute top-0 right-0 z-99999'
+              className='absolute top-0 right-0 z-99'
             />
           </Button>
         </CardFooter>

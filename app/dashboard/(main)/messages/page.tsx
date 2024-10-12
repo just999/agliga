@@ -1,14 +1,8 @@
-import React from 'react';
-import {
-  getMessagesByContainer,
-  getMessagesByContainers,
-} from '@/actions/message-actions';
+import { getMessagesByContainer } from '@/actions/message-actions';
 
 // import MessageClient from './message-client';
 import Container from '@/components/container';
 
-import ClientOnly from '@/lib/client-only';
-import Loading from '../../loading';
 import MessageSidebar from './message-sidebar';
 import MessageTable from './message-table';
 

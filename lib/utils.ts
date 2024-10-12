@@ -569,3 +569,22 @@ export function getKeyByValue<T>(
 export function isNonNullString(value: string | null): value is string {
   return typeof value === 'string';
 }
+
+// utilities.ts
+export function getOrCreateAnonymousId() {
+  if (typeof sessionStorage !== 'undefined') {
+    let anonymousId = sessionStorage.getItem('anonymousId');
+    if (!anonymousId) {
+      anonymousId = `anon-${Math.random()
+        .toString(36)
+        .slice(2, 2 + 9)}`;
+      sessionStorage.setItem('anonymousId', anonymousId);
+    }
+    return anonymousId;
+  } else {
+    // Fallback to an alternative storage mechanism or generate a unique ID in a different way
+    return `anon-${Math.random()
+      .toString(36)
+      .slice(2, 2 + 9)}`;
+  }
+}

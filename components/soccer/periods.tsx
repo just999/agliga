@@ -9,7 +9,7 @@ type PeriodsProps = {};
 
 const Periods = () => {
   const params = useSearchParams();
-  const period = params.get('period');
+  const period = params?.get('period');
   const pathname = usePathname();
   const router = useRouter();
   const isMainPage = pathname === '/soccer';

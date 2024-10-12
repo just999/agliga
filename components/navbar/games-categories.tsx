@@ -10,7 +10,7 @@ type GamesCategoriesProps = {};
 
 const GamesCategories = () => {
   const params = useSearchParams();
-  const game = params.get('game');
+  const game = params?.get('game');
   // const pathname = usePathname();
 
   // const isMainPage = pathname === '/';

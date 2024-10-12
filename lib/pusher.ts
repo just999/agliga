@@ -20,14 +20,24 @@ if (!global.pusherClientInstance) {
   global.pusherClientInstance = new PusherClient(
     process.env.NEXT_PUBLIC_PUSHER_APP_KEY!,
     {
-      channelAuthorization: {
-        endpoint: '/api/pusher-auth',
-        transport: 'ajax',
-      },
       cluster: 'ap1',
+      authEndpoint: '/api/pusher-auth',
     }
   );
 }
+
+// if (!global.pusherClientInstance) {
+//   global.pusherClientInstance = new PusherClient(
+//     process.env.NEXT_PUBLIC_PUSHER_APP_KEY!,
+//     {
+//       channelAuthorization: {
+//         endpoint: '/api/pusher-auth',
+//         transport: 'ajax',
+//       },
+//       cluster: 'ap1',
+//     }
+//   );
+// }
 
 export const pusherServer = global.pusherServerInstance;
 export const pusherClient = global.pusherClientInstance;

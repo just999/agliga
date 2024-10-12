@@ -1,10 +1,7 @@
-import { getMessagesByContainer } from '@/actions/message-actions';
-
-// import MessageClient from './message-client';
 import Container from '@/components/container';
-
 import MessageSidebar from '../../(main)/messages/message-sidebar';
 import MessageTable from '../../(main)/messages/message-table';
+import { getMessagesByContainer } from '@/actions/message-actions';
 
 const MessagesPage = async ({
   searchParams,
@@ -22,7 +19,6 @@ const MessagesPage = async ({
       </div>
       <div className='col-span-10 justify-self-auto'>
         <MessageTable initialMessages={messages} nextCursor={nextCursor} />
-        {/* <MessageClient initialMessages={messages} nextCursor={nextCursor} /> */}
       </div>
     </Container>
   );

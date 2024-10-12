@@ -1,3 +1,4 @@
+import React from 'react';
 import EmptyState from '@/components/empty-state';
 
 import Container from '@/components/container';
@@ -37,8 +38,8 @@ const UsersPage = async () => {
         />
       ) : (
         <Container>
-          <div className='mt-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-6 gap-8'>
-            {role &&
+          <div className='mt-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-6 gap-8 z-20'>
+            {role === 'admin' &&
               adminUser?.map((user, i) => (
                 <MemberCard likeIds={likeIds} key={user.id} user={user} />
               ))}

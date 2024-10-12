@@ -2,7 +2,11 @@
 
 import LikeButton from '@/components/like-button';
 import PresenceDot from '@/components/presence-dot';
-import { capitalizeFirstCharacter, transformImageUrl } from '@/lib/utils';
+import {
+  capitalizeFirstCharacter,
+  createChatId,
+  transformImageUrl,
+} from '@/lib/utils';
 
 import { User } from '@prisma/client';
 
@@ -42,12 +46,14 @@ const MemberCard = ({ user, likeIds }: MemberCardProps) => {
   const {
     isToggle,
     setIsToggle,
+    setChatId,
     setSenderId,
     setRecipientId,
     showBubbleChat,
     setShowBubbleChat,
   } = useChatStore((state) => ({
     setSenderId: state.setSenderId,
+    setChatId: state.setChatId,
     setRecipientId: state.setRecipientId,
     setIsToggle: state.setIsToggle,
     setShowBubbleChat: state.setShowBubbleChat,
@@ -74,29 +80,36 @@ const MemberCard = ({ user, likeIds }: MemberCardProps) => {
     e.stopPropagation();
   };
 
-  const handleToggleChat = useCallback(() => {
-    if (user) setRecipientId(user.id);
-    if (session) setSenderId(session.user.id);
-    setIsToggle(true);
-    setShowBubbleChat(false);
-    setTimeout(() => {
+  const handleToggleChat = useCallback(
+    (user: User) => {
+      if (user) setRecipientId(user.id);
+      if (session) setSenderId(session.user.id);
+
+      const chatId = createChatId(session?.user.id, user.id);
+
+      setChatId(chatId);
+      setIsToggle(true);
       setShowBubbleChat(false);
-    }, 500);
-  }, [
-    setIsToggle,
-    setShowBubbleChat,
-    session,
-    setRecipientId,
-    setSenderId,
-    user,
-  ]);
+      setTimeout(() => {
+        setShowBubbleChat(false);
+      }, 500);
+    },
+    [
+      setIsToggle,
+      setShowBubbleChat,
+      session,
+      setRecipientId,
+      setSenderId,
+      setChatId,
+    ]
+  );
   return (
     <Card className='w-full relative shadow-lg p-2 bg-emerald-100'>
-      <Button
-        variant='ghost'
-        // href={`/dashboard/chat/${user.id}`}
-        onClick={handleToggleChat}
-        className='flex flex-row items-center gap-2 cursor-pointer  z-10 p-2 bg-emerald-400 rounded-t-lg'>
+      <Link
+        // variant='ghost'
+        href={`/dashboard/admin/users/${user.id}/chat`}
+        onClick={() => handleToggleChat(user)}
+        className='flex flex-row items-center gap-2 cursor-pointer p-2 bg-emerald-400 rounded-t-lg'>
         <Image
           alt='user'
           width={50}
@@ -130,19 +143,17 @@ const MemberCard = ({ user, likeIds }: MemberCardProps) => {
           <div className='text-amber-100 text-sm text-center p-0 m-0 w-5  h-5 bg-rose-500 text-shadow rounded-full absolute top-0 right-0 '>
             {count}
           </div>
-        ) : (
-          <div></div>
-        )}
-      </Button>
+        ) : null}
+      </Link>
 
-      <CardFooter className='flex p-0 m-0 w-full justify-start bg-emerald-900 overflow-hidden  bottom-0 z-10 bg-emerald-gradient '>
+      <CardFooter className='flex p-0 m-0 w-full justify-start bg-emerald-900 overflow-hidden  bottom-0 bg-emerald-gradient '>
         <div className='flex flex-col w-full mx-auto items-center justify-center py-2 bg-slate-200/50 px-2'>
           <span className='font-semibold flex-grow w-full text-stone-600'>
             {userBank.map(({ value, icon: Icon }) => (
               <span key={value} className='flex items-center gap-2 '>
                 <span>
-                  <Icon className='svg ' />
-                </span>{' '}
+                  <Icon className='svg' />
+                </span>
                 <span className='text-sm font-bold text-shadow '>{value}</span>
               </span>
             ))}

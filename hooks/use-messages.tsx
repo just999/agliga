@@ -53,8 +53,8 @@ export const useMessages = (
     resetMessages: state.resetMessages,
   }));
   const searchParams = useSearchParams();
-  const isOutbox = searchParams.get('container') === 'outbox';
-  const container = searchParams.get('container');
+  const isOutbox = searchParams?.get('container') === 'outbox';
+  const container = searchParams?.get('container');
   const [isDeleting, setIsDeleting] = useState({ id: '', loading: false });
   const [loadingMore, setLoadingMore] = useState(false);
 

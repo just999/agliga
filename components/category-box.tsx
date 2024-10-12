@@ -41,7 +41,7 @@ const CategoryBox = ({
       category: label,
     };
 
-    if (params.get('category') === label) {
+    if (params?.get('category') === label) {
       delete updatedQuery.category;
     }
 
@@ -63,8 +63,7 @@ const CategoryBox = ({
         selected
           ? 'border-b-indigo-500/80 border-b-2 bg-indigo-50 drop-shadow-md rounded-sm text-sky-900 scale-105 font-extrabold'
           : 'border-transparent  text-neutral-400'
-      )}
-    >
+      )}>
       <Icon
         size={26}
         className={cn(

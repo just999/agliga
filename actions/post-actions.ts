@@ -128,7 +128,14 @@ export const getPostByPostId = cache(async (postId?: string) => {
 
 export const getPosts = cache(async () => {
   try {
-    return await db.post.findMany();
+    return await db.post.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      },
+      include: {
+        comments: true,
+      },
+    });
   } catch (err) {
     console.error(err);
     throw err;

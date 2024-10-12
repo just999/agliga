@@ -42,7 +42,7 @@ const VerticalDropdown = ({
   className2,
 }: VerticalDropdownProps) => {
   const params = useParams();
-  const id = typeof params.id === 'string' ? params.id : item?.id;
+  const id = typeof params?.id === 'string' ? params?.id : item?.id;
   // const { isFavorited, setIsFavorited } = useFavorite({
   //   currentUser,
   //   postId,

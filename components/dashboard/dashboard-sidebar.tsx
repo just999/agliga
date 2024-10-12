@@ -38,7 +38,7 @@ const DashboardSidebar = ({ userId, userRole }: DashboardSidebarProps) => {
     unreadCount: state.unreadCount,
   }));
 
-  const isOutbox = searchParams.get('container') === 'outbox';
+  const isOutbox = searchParams?.get('container') === 'outbox';
 
   const container = isOutbox ? 'outbox' : 'inbox';
 

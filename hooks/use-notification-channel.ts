@@ -1,12 +1,12 @@
 'use client';
 
+import { useCallback, useEffect, useRef } from 'react';
 import { newMessageToast, newLikeToast } from '@/components/notification-toast';
 import { pusherClient } from '@/lib/pusher';
 import { useMessageStore } from '@/store/use-message-store';
 import { MessageDto } from '@/types';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { Channel } from 'pusher-js';
-import { useCallback, useEffect, useRef } from 'react';
 
 import { useSession } from 'next-auth/react';
 import { useChatStore } from '@/store/use-chat-store';
@@ -19,14 +19,14 @@ export const useNotificationChannel = (
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
   const { add, updateUnreadCount } = useMessageStore((state) => ({
     add: state.add,
     updateUnreadCount: state.updateUnreadCount,
   }));
 
-  const isOutbox = searchParams.get('container') === 'outbox';
+  const isOutbox = searchParams?.get('container') === 'outbox';
 
   const container = isOutbox ? 'outbox' : 'inbox';
 
@@ -56,7 +56,7 @@ export const useNotificationChannel = (
     (message: MessageDto) => {
       if (
         pathname === pathnameRole &&
-        searchParams.get('container') !== 'outbox'
+        searchParams?.get('container') !== 'outbox'
       ) {
         add(message);
         updateUnreadCount(1);
@@ -85,7 +85,10 @@ export const useNotificationChannel = (
   useEffect(() => {
     if (!userId || !profileComplete) return;
     if (!channelRef.current) {
-      channelRef.current = pusherClient.subscribe(`private-${userId}`);
+      channelRef.current =
+        status === 'authenticated'
+          ? pusherClient.subscribe(`private-${userId}`)
+          : pusherClient.subscribe(`private-anonymous-${userId}`);
 
       channelRef.current.bind('message:new', handleNewMessage);
       channelRef.current.bind('like:new', handleNewLike);

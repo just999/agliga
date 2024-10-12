@@ -25,7 +25,7 @@ const AddPostModal = () => {
   const [text, setText] = useState<InitialPostProps>(initialFormState);
   const params = useParams();
 
-  const id = params.id?.toString();
+  const id = params?.id?.toString();
 
   const { modalType, isOpen, onClose } = useModal();
   const { getTopics } = useTopics();

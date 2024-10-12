@@ -307,14 +307,14 @@ const NewChatContainer = ({ users, adminProfile }: NewChatContainerProps) => {
       className={cn(
         'm-0 p-0 flex flex-col items-end justify-end rounded-t-lg'
       )}>
-      {/* {isToggle && (
+      {isToggle && (
         <Button
           onClick={handleToggleChat}
           type='button'
           variant='ghost'
           size='sm'
           className={cn(
-            'group h-full z-999 flex gap-2 items-center text-wrap text-white font-extrabold text-shadow text-sm bg-sky-500 hover:bg-blue-500/90 py-1',
+            'group h-full flex gap-2 items-center text-wrap text-white font-extrabold text-shadow text-sm bg-sky-500 hover:bg-blue-500/90 py-1',
             isToggle && ''
           )}>
           <ChevronDownSquareIcon
@@ -323,12 +323,12 @@ const NewChatContainer = ({ users, adminProfile }: NewChatContainerProps) => {
           />
           <span className='text-white group-hover:text-gray-700'>Close</span>
         </Button>
-      )} */}
+      )}
       <Tabs
         value={tab}
         onValueChange={onTabChange}
         className={cn(
-          'max-h-[570px] z-10 grid grid-cols-[400px] bg-amber-100',
+          'max-h-[570px] grid grid-cols-[400px] bg-amber-100',
           toggleSidePanel ? 'rounded-t-lg' : 'rounded-t-lg'
         )}>
         <div
@@ -352,7 +352,7 @@ const NewChatContainer = ({ users, adminProfile }: NewChatContainerProps) => {
           </TabsList>
           {onlineUsers.map((user, i) => (
             <ChatTabsContent
-              inputRef={inputRef}
+              // inputRef={inputRef}
               key={user.id}
               user={user}
               activeUser={activeUser}

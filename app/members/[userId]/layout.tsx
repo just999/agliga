@@ -1,8 +1,10 @@
+import React from 'react';
 import { getAdminUserId, getUserByUserId } from '@/actions/user-actions';
 import { cn } from '@/lib/utils';
 import MemberSidebar from '../member-sidebar';
 
 import { userRole } from '@/lib/auth';
+import { Card } from '@/components/ui';
 
 const UserLayout = async ({
   params,
@@ -45,7 +47,7 @@ const UserLayout = async ({
             'col-span-9 relative',
             basePath && 'mt-10 bottom-0 right-0 bg-emerald-100'
           )}>
-          <>{children}</>
+          <Card>{children}</Card>
         </div>
       </div>
     </div>

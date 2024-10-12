@@ -72,6 +72,13 @@ export {
   SelectScrollUpButton,
   SelectScrollDownButton,
 } from './select';
+
+export {
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+  TooltipProvider,
+} from './tooltip';
 export { Textarea } from './textarea';
 
 export { default as Spinner } from './spinner';

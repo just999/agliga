@@ -4,7 +4,6 @@ import { createChatId, transformImageUrl } from '@/lib/utils';
 import { MessageDto } from '@/types';
 import Image from 'next/image';
 
-import Link from 'next/link';
 import { toast } from 'react-hot-toast';
 import { Button } from './ui';
 import { useChatStore } from '@/store/use-chat-store';

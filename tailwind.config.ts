@@ -21,11 +21,15 @@ const config = {
       },
     },
     extend: {
+      gridTemplateColumns: {
+        // 24 column grid
+        '24': 'repeat(24, minmax(0, 1fr))',
+      },
       zIndex: {
         '999': '999',
         '1000': '1000',
         '10000': '10000',
-        '100000': '100000',
+        '1000000': '1000000',
       },
       fontFamily: {
         oldLondon: ['var(--font-oldLondon)'],
