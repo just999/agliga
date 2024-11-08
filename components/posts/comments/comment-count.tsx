@@ -2,12 +2,9 @@
 
 import { getCommentByPostId } from '@/actions/get-comment';
 import Loader from '@/components/loader';
-import { useGetComment } from '@/hooks/use-get-comment';
-import { useGetPost } from '@/hooks/use-get-post';
 import ClientOnly from '@/lib/client-only';
 
 import { PostProps } from '@/types/types';
-import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 type CommentCountProps = {

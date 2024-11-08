@@ -1,27 +1,25 @@
 'use client';
 
-import React from 'react';
 import {
-  useReactTable,
-  getCoreRowModel,
-  getPaginationRowModel,
-  getFilteredRowModel,
-  getSortedRowModel,
-  flexRender,
   ColumnFiltersState,
-  SortingState,
-  ColumnDef,
   FilterFn,
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  SortingState,
+  useReactTable,
 } from '@tanstack/react-table';
 
 import {
   Table,
   TableBody,
   TableCell,
+  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
-  TableFooter,
 } from '@/components/ui/table';
 
 import { cn } from '@/lib/utils';
@@ -30,12 +28,11 @@ import { Key, useState } from 'react';
 
 import { rankItem } from '@tanstack/match-sorter-utils';
 
-import { MessageDto } from '@/types';
-import Heading from '@/components/ui/heading';
-import { Button, Card, Spinner } from '@/components/ui';
-import { useMessages } from '@/hooks/use-messages';
-import ClientOnly from '@/lib/client-only';
 import { getMessageThread } from '@/actions/message-actions';
+import { Button, Card } from '@/components/ui';
+import Heading from '@/components/ui/heading';
+import { useMessages } from '@/hooks/use-messages';
+import { MessageDto } from '@/types';
 
 const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
   const itemRank = rankItem(row.getValue(columnId), value);

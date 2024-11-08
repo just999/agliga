@@ -9,9 +9,11 @@ import { Button } from './ui';
 import { useChatStore } from '@/store/use-chat-store';
 import { useSession } from 'next-auth/react';
 
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { adminChatProfile } from '@/lib/helper';
+import { User } from '@prisma/client';
+import { getAnonymousUser } from '@/actions/live-chat-actions';
 
 type NotificationToastProps = {
   image?: string | null;
@@ -28,23 +30,35 @@ const NotificationToast = ({
   subtitle,
   message,
 }: NotificationToastProps) => {
+  const [anonymousUser, setAnonymousUser] = useState<User>();
   const { data: session, status } = useSession();
   const router = useRouter();
+
+  const userRole =
+    status === 'authenticated' ? session?.user.role : anonymousUser?.role;
 
   const adminChatId = adminChatProfile.id;
 
   const {
+    anoId,
     isToggle,
     setIsToggle,
+    setAnoId,
     chatId,
     setChatId,
     tab,
     setTab,
+    toggleStartChat,
+    setToggleStartChat,
     setSenderId,
     setRecipientId,
     showBubbleChat,
     setShowBubbleChat,
   } = useChatStore((state) => ({
+    anoId: state.anoId,
+    setAnoId: state.setAnoId,
+    toggleStartChat: state.toggleStartChat,
+    setToggleStartChat: state.setToggleStartChat,
     setSenderId: state.setSenderId,
     chatId: state.chatId,
     tab: state.tab,
@@ -57,14 +71,43 @@ const NotificationToast = ({
     showBubbleChat: state.showBubbleChat,
   }));
 
+  useEffect(() => {
+    const checkAnonymousUser = async () => {
+      if (status === 'unauthenticated' && typeof window !== 'undefined') {
+        const storedSessionId = sessionStorage.getItem('anonymousId');
+        console.log('Retrieved anonymousId:', storedSessionId);
+        if (storedSessionId) {
+          try {
+            const existingUser = await getAnonymousUser(storedSessionId);
+            console.log('Fetched user:', existingUser);
+            if (existingUser.status === 'success' && existingUser.data) {
+              setAnonymousUser(existingUser.data);
+              setAnoId(existingUser.data.id);
+            } else {
+              console.log('No valid user data found');
+              sessionStorage.removeItem('anonymousId');
+            }
+          } catch (error) {
+            console.error('Error fetching anonymous user:', error);
+            sessionStorage.removeItem('anonymousId');
+          }
+        }
+      }
+    };
+
+    checkAnonymousUser();
+  }, [status, setAnoId]);
+
+  const newUserId = status === 'authenticated' ? session.user.id : anoId;
+
   const handleToggleChat = useCallback(
     (message: MessageDto) => {
       if (
-        session?.user.role === 'user' &&
+        userRole === 'user' &&
         message.senderId &&
         session?.user.id !== message.senderId
       ) {
-        const newChatId = createChatId(session.user.id, message.senderId);
+        const newChatId = createChatId(newUserId, message.senderId);
         if (newChatId) setChatId(newChatId);
         setTab(message.senderId);
       }
@@ -79,6 +122,7 @@ const NotificationToast = ({
       }
 
       setIsToggle(true);
+      setToggleStartChat(true);
       setShowBubbleChat(false);
 
       // if (session?.user.role === 'user') {
@@ -86,21 +130,25 @@ const NotificationToast = ({
       // }
     },
     [
-      adminChatId,
+      userRole,
       session?.user.id,
       session?.user.role,
-      setChatId,
       setIsToggle,
+      setToggleStartChat,
       setShowBubbleChat,
+      newUserId,
+      setChatId,
       setTab,
+      adminChatId,
     ]
   );
+
   return (
     <Button variant='ghost' size='sm' onClick={() => handleToggleChat(message)}>
       {/* <Link href={href} className='flex items-center'> */}
       <div className='mr-2 '>
         <Image
-          src={transformImageUrl(image) || '/images/user.png'}
+          src={transformImageUrl(image) || '/img/user.svg'}
           height={50}
           width={50}
           alt='Sender image'

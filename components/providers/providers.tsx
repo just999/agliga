@@ -3,16 +3,16 @@
 import { getUnreadMessageCount } from '@/actions/message-actions';
 import { useMessageStore } from '@/store/use-message-store';
 
+import { getAnonymousUser } from '@/actions/live-chat-actions';
 import { useNotificationChannel } from '@/hooks/use-notification-channel';
 import { usePresenceChannel } from '@/hooks/use-presence-channel';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import ToasterProvider from './toaster-provider';
-import { getAnonymousUser } from '@/actions/live-chat-actions';
-import { User } from '@prisma/client';
-import { useSession } from 'next-auth/react';
 import { useChatStore } from '@/store/use-chat-store';
+import { User } from '@prisma/client';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { useSession } from 'next-auth/react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import ToasterProvider from './toaster-provider';
 
 type ProvidersProps = {
   userId: string | null;
@@ -137,10 +137,9 @@ const Providers = ({ children, userId, profileComplete }: ProvidersProps) => {
 
   const newUserId = status === 'authenticated' ? userId : anoId;
   useEffect(() => {
-    console.log('Current anonymousUser:', anonymousUser);
-    console.log('Current id:', userId);
+    // console.log('Current anonymousUser:', anonymousUser);
+    // console.log('Current id:', userId);
   }, [anonymousUser, userId]);
-
   usePresenceChannel(newUserId, newProfile);
   useNotificationChannel(newUserId, newProfile);
 

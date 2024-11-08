@@ -1,12 +1,21 @@
-import useGames from '@/hooks/use-games';
-import { type ClassValue, clsx } from 'clsx';
-import { twMerge } from 'tailwind-merge';
-import { Noto_Color_Emoji, Orbitron, Poppins } from 'next/font/google';
-import { ZodIssue } from 'zod';
+import { usePerm } from '@/hooks/use-togel-bbfs';
+import { Sin4dSetSchema } from '@/schemas/togel-schema';
 import { EuroWithIconProps } from '@/types/types';
+import { type ClassValue, clsx } from 'clsx';
 import { differenceInYears, format, formatDistance, parse } from 'date-fns';
-import { FieldValues, Path, UseFormSetError } from 'react-hook-form';
+import {
+  Asset,
+  Noto_Color_Emoji,
+  Old_Standard_TT,
+  Orbitron,
+  Play,
+  Poppins,
+  Roboto,
+} from 'next/font/google';
 import localFont from 'next/font/local';
+import { FieldValues, Path, UseFormSetError } from 'react-hook-form';
+import { twMerge } from 'tailwind-merge';
+import { ZodIssue } from 'zod';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -232,14 +241,37 @@ export const noto = Noto_Color_Emoji({
   preload: true,
 });
 
+export const asset = Asset({
+  subsets: ['latin'],
+  weight: ['400'],
+  preload: true,
+});
+
 export const oldLondon = localFont({
   src: '../public/fonts/OldLondon.ttf',
   variable: '--font-oldLondon',
 });
 
+export const roboto = Roboto({
+  subsets: ['latin', 'latin-ext'],
+  weight: ['100', '300', '400', '500', '700', '900'],
+  preload: true,
+});
+
 export const poppins = Poppins({
   subsets: ['latin'],
   weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+  preload: true,
+});
+
+export const oldStandardTT = Old_Standard_TT({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  preload: true,
+});
+export const play = Play({
+  subsets: ['latin'],
+  weight: ['400', '700'],
   preload: true,
 });
 
@@ -588,3 +620,194 @@ export function getOrCreateAnonymousId() {
       .slice(2, 2 + 9)}`;
   }
 }
+
+export const safeParseFloat = (str: string) => {
+  const value = Number.parseFloat(str);
+  return Number.isNaN(value) ? '' : value;
+};
+
+export const validBet4dSet = (data: Sin4dSetSchema[]) => {
+  const val = data.filter((obj) => {
+    const dat = Object.values(obj);
+    const nonEmptyValuesCount = dat.filter((item) => item !== '').length;
+    return nonEmptyValuesCount >= 2;
+  });
+  return val;
+};
+
+export const formatInputValue = (value: string): string => {
+  // Remove any non-digit characters
+  const digits = value.replace(/\D/g, '');
+
+  // Limit to 5 characters
+  const limitedDigits = digits.slice(0, 5);
+
+  // Add commas after each digit
+  return limitedDigits.split('').join(',');
+};
+
+export const ReformatInputValueArray = (num: string[]) => {
+  const res2 = usePerm(2, num);
+  const res3 = usePerm(3, num);
+  const res4 = usePerm(4, num);
+
+  // !FORMAT NUMBER INTO 2D NUMBER
+  let newRes2: any = [];
+  const formatted2d = res2.reduce((acc, curr) => {
+    if (curr) {
+      const temp = curr.split('').map((t, i) => ({
+        d3: curr[0],
+        d4: curr[1],
+      }));
+      newRes2.push(temp);
+    }
+    return newRes2;
+  }, []);
+
+  const new2dArray = formatted2d.flat(1);
+
+  const unique2dArray = Array.from(
+    new Set(new2dArray.map((item) => JSON.stringify(item)))
+  ).map((item) => JSON.parse(item));
+
+  // !FORMAT NUMBER INTO 3D NUMBER
+  let newRes3: any = [];
+  const formatted3d = res3.reduce((acc, curr) => {
+    if (curr) {
+      const temp = curr.split('').map((t, i) => ({
+        d2: curr[0],
+        d3: curr[1],
+        d4: curr[2],
+      }));
+      newRes3.push(temp);
+    }
+    return newRes3;
+  }, []);
+
+  const new3dArray = formatted2d.flat(1);
+
+  const unique3dArray = Array.from(
+    new Set(new3dArray.map((item) => JSON.stringify(item)))
+  ).map((item) => JSON.parse(item));
+
+  // !FORMAT NUMBER INTO 4D NUMBER
+  let newRes4: any = [];
+  const formatted4d = res4.reduce((acc, curr) => {
+    if (curr) {
+      const temp = curr.split('').map((t, i) => ({
+        d1: curr[0],
+        d2: curr[1],
+        d3: curr[2],
+        d4: curr[3],
+      }));
+      newRes4.push(temp);
+    }
+    return newRes4;
+  }, []);
+  const new4dArray = formatted4d.flat(1);
+
+  const unique4dArray = Array.from(
+    new Set(new4dArray.map((item) => JSON.stringify(item)))
+  ).map((item) => JSON.parse(item));
+
+  return { unique2dArray, unique3dArray, unique4dArray };
+};
+
+export type GameArrayItem = {
+  d1: string;
+  d2: string;
+  d3: string;
+  d4: string;
+  game: string;
+  wager?: string;
+  dis: string;
+  net: string;
+};
+
+export const generateAndPadArray = (
+  game: string,
+  wager: string | undefined,
+  length: number,
+  start: number,
+  step: number = 1
+): GameArrayItem[] => {
+  const array = Array.from({ length }, (_, k) => start + k * step);
+  return array.map((num) => {
+    const val = num.toString().padStart(2, '0');
+
+    return {
+      d1: game === '2dd' ? val.charAt(0) : '',
+      d2: game === '2dd' ? val.charAt(1) : game === '2dt' ? val.charAt(0) : '',
+      d3:
+        game === '2dd'
+          ? ''
+          : game === '2dt'
+          ? val.charAt(1)
+          : game === '2d'
+          ? val.charAt(0)
+          : '',
+      d4:
+        game === '2dd'
+          ? ''
+          : game === '2dt'
+          ? ''
+          : game === '2d'
+          ? val.charAt(1)
+          : '',
+      game,
+      wager,
+      dis: '29%',
+      net: (Number(wager) * (71 / 100)).toFixed(),
+    };
+  });
+};
+
+// Generate the arrays
+// const newSmall = generateAndPadArray('2d', '100', 50, 0);
+// const newBig = generateAndPadArray('2d', '100', 50, 50);
+// const newOdd = generateAndPadArray('2d', '100', 50, 1, 2);
+// const newEven = generateAndPadArray('2d', '100', 50, 0, 2);
+
+// console.log('newSmall:', newSmall);
+// console.log('newBig:', newBig);
+// console.log('newOdd:', newOdd);
+// console.log('newEven:', newEven);
+
+export const arrayRange = (start: number, stop: number, step: number) =>
+  Array.from(
+    { length: (stop - start) / step + 1 },
+    (value, index) => start + index * step
+  );
+
+// ?VALIDATE IF OBJECT CONTAINS 2 OR MORE SELECTED NUMBER
+export type Form4dSetProps = {
+  d1?: string;
+  d2?: string;
+  d3?: string;
+  d4?: string;
+  bet4d: string;
+  bet3d: string;
+  bet2d: string;
+  allBet: string;
+  [key: string]: any;
+};
+
+export const validateObject = (obj: Form4dSetProps): boolean => {
+  const keys = ['d1', 'd2', 'd3', 'd4'];
+  const count = keys.reduce((acc, key: any) => (obj[key] ? acc + 1 : acc), 0);
+  return count >= 2;
+};
+
+export const updateBets = (arr: Form4dSetProps[]): Form4dSetProps[] => {
+  return arr.map((obj) => {
+    if (validateObject(obj) && obj.allBet) {
+      return {
+        ...obj,
+        bet4d: obj.allBet,
+        bet3d: obj.allBet,
+        bet2d: obj.allBet,
+      };
+    }
+    return obj;
+  });
+};

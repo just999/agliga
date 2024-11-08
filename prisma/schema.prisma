@@ -19,26 +19,26 @@ enum Role {
 }
 
 model User {
-  id              String    @id @default(auto()) @map("_id") @db.ObjectId
-  name            String?
-  email           String?   @unique
-  emailVerified   DateTime?
-  phone           String?
-  bank            String?   @default("NONEBANK")
-  game            String[]  @default(["Sbobet"])
-  accountNumber   String?   @default("0000000000")
-  image           String?   @default("/images/cavatar.svg")
-  password        String?
-  hashedPassword  String?
-  nonUserSessionId String?  @default(uuid()) 
-  profileComplete Boolean   @default(false)
-  active          Boolean   @default(true)
-  role            Role      @default(user)
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
-  editorId        String?   @db.ObjectId
-  editor          User?     @relation("UserEditor", fields: [editorId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  supervisees     User[]    @relation("UserEditor")
+  id               String    @id @default(auto()) @map("_id") @db.ObjectId
+  name             String?
+  email            String?   @unique
+  emailVerified    DateTime?
+  phone            String?
+  bank             String?   @default("NONEBANK")
+  game             String[]  @default(["Sbobet"])
+  accountNumber    String?   @default("0000000000")
+  image            String?   @default("/images/cavatar.svg")
+  password         String?
+  hashedPassword   String?
+  nonUserSessionId String?   @default(uuid())
+  profileComplete  Boolean   @default(false)
+  active           Boolean   @default(true)
+  role             Role      @default(user)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  editorId         String?   @db.ObjectId
+  editor           User?     @relation("UserEditor", fields: [editorId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  supervisees      User[]    @relation("UserEditor")
 
   favoriteIds String[]  @db.ObjectId
   accounts    Account[]
@@ -68,12 +68,17 @@ model User {
   photos                Photo[]
 
   chat Chat[]
+
+  sin4d Sin4d[]
+
+  operatorId Sin4d[]   @relation("operator")
+  sinPool    SinPool[]
 }
 
 model AnonymousUser {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   name      String
-  role     Role      @default(user)
+  role      Role     @default(user)
   sessionId String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -94,13 +99,13 @@ model Message {
 }
 
 model Chat {
-  id            String  @id @default(auto()) @map("_id") @db.ObjectId
-  notification  String
-  userId        String @db.ObjectId
-  user          User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id           String @id @default(auto()) @map("_id") @db.ObjectId
+  notification String
+  userId       String @db.ObjectId
+  user         User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime? @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
 }
 
 model Token {
@@ -454,3 +459,46 @@ model Photo {
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+model Sin4d {
+  id     String  @id @default(auto()) @map("_id") @db.ObjectId
+  d1     String?
+  d2     String?
+  d3     String?
+  d4     String?
+  game   String
+  wager  String
+  dis    String
+  net    String
+  period String
+
+  status String? @default("new")
+
+  operatorId String? @db.ObjectId
+  operator   User?   @relation("operator", fields: [operatorId], references: [id], onDelete: Cascade)
+
+  userId String @db.ObjectId
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // sinPool   SinPool? @relation(fields: [sinPoolId], references: [id])
+  // sinPoolId String?  @db.ObjectId
+}
+
+model SinPool {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  userId    String? @db.ObjectId
+  user      User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  copy      Boolean
+  copyWager String
+  totalBet  String
+  // sin4ds    Sin4d[]
+  sinNumber Json[]
+
+  periode String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

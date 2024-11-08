@@ -1,8 +1,6 @@
 // import { Comment User } from '@prisma/client';
 // import { User } from 'next-auth';
-import { Post, Slider, User, Comment } from '@prisma/client';
-
-import { status } from '../lib/helper';
+import { Sin4d, Slider, User } from '@prisma/client';
 
 // export type SafeListing = Omit<Listing, 'createdAt'> & {
 //   createdAt: string;
@@ -426,4 +424,45 @@ export type SliderFormProps = {
   userId: string;
   createdAt: Date;
   updatedAt: Date;
+};
+
+export type Pools4d = Omit<
+  Sin4d,
+  'createdAt' | 'updatedAt' | 'userId' | 'operatorId' | 'sinPoolId'
+> & {};
+
+export type Form4dProps = {
+  d1: string;
+  d2: string;
+  d3: string;
+  d4: string;
+  game: string;
+  wager: string;
+  dis: string;
+  net: string;
+  period: string;
+  status: string;
+};
+
+export type FormValuesProps = {
+  sin4ds: Form4dProps[];
+  copy: boolean;
+  copyWager: string;
+  totalBet: string;
+};
+export type FormBbProps = {
+  bbNumber: string;
+  game: string;
+  wager: string;
+  dis: string;
+  net: string;
+  period: string;
+  status: string;
+};
+
+export type FormBbValuesProps = {
+  bbfs: FormBbProps[];
+  copy: boolean;
+  copyWager: string;
+  totalBet: string;
 };

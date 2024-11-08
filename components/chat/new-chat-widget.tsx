@@ -234,7 +234,7 @@ const NewChatWidget = ({ users, adminProfile }: NewChatWidgetProps) => {
           onClick={handleToggleChat}>
           <MessageCircleMore
             size={50}
-            className='svg text-blue-600 hover:text-shadow hover:text-500/80 hover:fill-slate-500/20 hover:text-blue-700'
+            className='svg text-blue-600 hover:text-shadow hover:text-500/80 hover:fill-slate-500/20 hover:text-blue-700 fill-sky-100/20'
           />
         </Button>
       ) : null}

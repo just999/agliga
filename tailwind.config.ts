@@ -21,6 +21,10 @@ const config = {
       },
     },
     extend: {
+      width: {
+        '21': '84px',
+        '22': '88px',
+      },
       gridTemplateColumns: {
         // 24 column grid
         '24': 'repeat(24, minmax(0, 1fr))',

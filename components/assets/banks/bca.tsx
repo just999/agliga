@@ -1,5 +1,4 @@
 import { cn } from '@/lib/utils';
-import React from 'react';
 
 export type IconProps = {
   className?: string;
@@ -10,7 +9,7 @@ function Bca({ className }: IconProps) {
     <svg
       xmlns='http://www.w3.org/2000/svg'
       xmlnsXlink='http://www.w3.org/1999/xlink'
-      width='100'
+      width=' '
       height='72'
       viewBox='0 0 100 72'
       className={cn('w-6 h-auto', className)}>

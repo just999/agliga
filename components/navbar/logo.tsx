@@ -7,7 +7,7 @@ import { CSSProperties } from 'react';
 
 type LogoProps = {
   className: string;
-  styles: CSSProperties;
+  styles?: CSSProperties;
 };
 
 const Logo = ({ className, styles }: LogoProps) => {

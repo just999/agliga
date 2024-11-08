@@ -261,11 +261,11 @@ const ChatForm = memo(
               )}
             </Button>
           </div>
-          {errors.text && (
-            <p className='text-red-500 text-sm mt-1' role='alert'>
+          {/* {errors.text && (
+            <p className='text-red-500 text-sm mt-1 hidden' role='alert'>
               {errors.text.message}
             </p>
-          )}
+          )} */}
         </form>
       );
     }

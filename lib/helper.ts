@@ -30,7 +30,6 @@ import {
 import {
   Albania,
   Arsenal,
-  Aston,
   AstonVilla,
   Bosnia,
   Bournemouth,
@@ -76,7 +75,6 @@ import {
   Spain,
   Tth,
   Turkish,
-  UeFa,
   Ukraine,
   USA,
   Watford,
@@ -93,82 +91,73 @@ import {
   Sbo,
   SlotGames,
 } from '@/components/assets/user-games';
-import { ContainerProps } from '@/components/dashboard/dashboard-sidebar';
 import { Role } from '@prisma/client';
 import {
-  Newspaper,
-  Folder,
-  User,
-  MessageCircle,
-  LayoutDashboard,
-  DollarSign,
   BadgeDollarSign,
-  HandCoins,
-  CreditCard,
-  UserCog2,
-  Settings,
+  Banknote,
+  BaselineIcon,
+  CableIcon,
   CalendarDays,
   CircleDollarSign,
-  Banknote,
-  ListChecks,
+  CircleSlash2Icon,
+  CreditCard,
+  Divide,
+  Folder,
+  GroupIcon,
+  HandCoins,
+  HashIcon,
   Image,
-  MessageSquareMore,
-  Users2,
+  LayoutDashboard,
+  ListChecks,
+  MessageCircle,
   MessageCircleMore,
+  MessageSquareMore,
+  Newspaper,
+  Plug,
+  RecycleIcon,
+  Settings,
+  SlashIcon,
+  TargetIcon,
+  User,
+  UserCog2,
+  Users2,
+  ZapIcon,
 } from 'lucide-react';
-import user from 'pusher-js/types/src/core/user';
-import { AiOutlineLogout, AiOutlineLogin } from 'react-icons/ai';
-import { BiHome, BiMessageRoundedDots } from 'react-icons/bi';
 import { BsCalendarWeek } from 'react-icons/bs';
-import { FaExclamationTriangle, FaUser, FaUserTie } from 'react-icons/fa';
+import { FaExclamationTriangle } from 'react-icons/fa';
 
-import { FaPersonRunning } from 'react-icons/fa6';
 import {
-  FcCalendar,
-  FcCurrencyExchange,
-  FcDataSheet,
   FcDisapprove,
   FcFullTrash,
   FcHighPriority,
-  FcMoneyTransfer,
-  FcNews,
   FcOk,
-  FcPanorama,
-  FcTemplate,
 } from 'react-icons/fc';
 import {
-  GiSoccerKick,
   GiBasketballBasket,
-  GiBaseballGlove,
-  GiRugbyConversion,
-  GiBoxingGloveSurprise,
-  GiHockey,
-  GiPingPongBat,
-  GiCycling,
-  GiShuttlecock,
-  GiCricketBat,
-  GiTurd,
+  GiCow,
   GiCrossMark,
+  GiGoat,
+  GiHorseHead,
+  GiMonkey,
+  GiPig,
+  GiRabbit,
+  GiRat,
+  GiRooster,
+  GiSeaDragon,
+  GiSittingDog,
+  GiSnake,
+  GiSoccerKick,
+  GiSpikedDragonHead,
+  GiTigerHead,
+  GiTurd,
+  GiYinYang,
 } from 'react-icons/gi';
+import { MdOutlineFiberNew } from 'react-icons/md';
 import {
-  MdCasino,
-  MdKayaking,
-  MdOutlineFiberNew,
-  MdOutlineSurfing,
-} from 'react-icons/md';
-import {
+  PiFlowerLotusLight,
   PiPersonSimpleSwimFill,
   PiSoccerBallLight,
-  PiUserPlus,
 } from 'react-icons/pi';
-import { RiAdminLine } from 'react-icons/ri';
-
-import {
-  TbKarate,
-  TbPlayVolleyball,
-  TbRectangleVerticalFilled,
-  TbScoreboard,
-} from 'react-icons/tb';
 
 export const banks = [
   {
@@ -3407,3 +3396,230 @@ export const adminChatProfile = {
   favoriteIds: [],
   isTwoFactorEnabled: null,
 };
+
+export const togelSidebar4d3d2d = [
+  {
+    title: '4d/3d/2d',
+    icon: HashIcon,
+    link: (slug: string) => `/dashboard/members/togels/${slug}/4d3d2d`,
+  },
+  {
+    title: '4d/3d/2d Set',
+    icon: GroupIcon,
+    link: (slug: string) => `/dashboard/members/togels/${slug}/4d3d2d-set`,
+  },
+  {
+    title: 'bbfs',
+    icon: RecycleIcon,
+    link: (slug: string) => `/dashboard/members/togels/${slug}/bbfs`,
+  },
+  {
+    title: 'besarKecil-genapGanjil',
+    icon: ZapIcon,
+    link: (slug: string) => `/dashboard/members/togels/${slug}/bseo`,
+  },
+];
+export const togelSidebarColok = [
+  {
+    title: 'colok bebas',
+    icon: Plug,
+    link: (slug: string) => `/dashboard/members/togels/${slug}/colok-bebas`,
+  },
+  {
+    title: 'colok macau',
+    icon: CableIcon,
+    link: (slug: string) => `/dashboard/members/togels/${slug}/colok-macau`,
+  },
+  {
+    title: 'colok naga',
+    icon: GiSpikedDragonHead,
+    link: (slug: string) => `/dashboard/members/togels/${slug}/colok-naga`,
+  },
+  {
+    title: 'colok jitu',
+    icon: TargetIcon,
+    link: (slug: string) => `/dashboard/members/togels/${slug}/colok-jitu`,
+  },
+];
+export const togelSidebar5050 = [
+  {
+    title: '50-50',
+    icon: CircleSlash2Icon,
+    link: (slug: string) => `/dashboard/members/togels/${slug}/50-50`,
+  },
+  {
+    title: '50-50 special',
+    icon: SlashIcon,
+    link: (slug: string) => `/dashboard/members/togels/${slug}/50-50-special`,
+  },
+  {
+    title: '50-50 combination',
+    icon: Divide,
+    link: (slug: string) => `/dashboard/members/togels/${slug}/50-50-combo`,
+  },
+];
+export const variasiLain = [
+  {
+    title: 'Macau-Kombinasi',
+    icon: PiFlowerLotusLight,
+    link: (slug: string) => `/dashboard/members/togels/${slug}/macau-combo`,
+  },
+  {
+    title: 'Dasar',
+    icon: BaselineIcon,
+    link: (slug: string) => `/dashboard/members/togels/${slug}/dasar`,
+  },
+  {
+    title: 'Shio',
+    icon: GiYinYang,
+    link: (slug: string) => `/dashboard/members/togels/${slug}/shio`,
+  },
+];
+
+export const togelSidebar = [
+  togelSidebar4d3d2d,
+  togelSidebarColok,
+  togelSidebar5050,
+  variasiLain,
+];
+
+export const thead4d = [
+  {
+    label: 'no',
+  },
+  {
+    label: 'Nomor',
+    colspan: 4,
+  },
+
+  {
+    label: 'game',
+  },
+  {
+    label: 'wager',
+  },
+  {
+    label: 'dis%',
+  },
+  {
+    label: 'net',
+  },
+];
+
+export const thead4dData = [
+  {
+    label: 'no',
+  },
+  {
+    label: 'nomor',
+    colspan: 4,
+  },
+
+  {
+    label: 'game',
+  },
+  {
+    label: 'wager',
+  },
+  {
+    label: 'dis%',
+  },
+  {
+    label: 'net',
+  },
+  {
+    label: 'status',
+  },
+];
+
+export const thead4dSet = [
+  {
+    label: 'no',
+  },
+  {
+    label: 'nomor',
+    colspan: 4,
+  },
+
+  {
+    label: 'bet',
+    colspan: 3,
+  },
+  // {
+  //   label: 'wager',
+  // },
+  // {
+  //   label: 'dis%',
+  // },
+  // {
+  //   label: 'net',
+  // },
+  // {
+  //   label: 'status',
+  // },
+];
+
+export const positionVal = ['as', 'kop', 'kepala', 'ekor'];
+
+export const shioWithIcon = [
+  {
+    label: 'dragon',
+    name: 'Naga',
+    icon: GiSeaDragon,
+  },
+  {
+    label: 'rabbit',
+    name: 'Kelinci',
+    icon: GiRabbit,
+  },
+  {
+    label: 'tiger',
+    name: 'Harimau',
+    icon: GiTigerHead,
+  },
+  {
+    label: 'ox',
+    name: 'Sapi',
+    icon: GiCow,
+  },
+  {
+    label: 'rat',
+    name: 'Tikus',
+    icon: GiRat,
+  },
+  {
+    label: 'swine',
+    name: 'Babi',
+    icon: GiPig,
+  },
+  {
+    label: 'dog',
+    name: 'Anjing',
+    icon: GiSittingDog,
+  },
+  {
+    label: 'rooster',
+    name: 'Ayam',
+    icon: GiRooster,
+  },
+  {
+    label: 'monkey',
+    name: 'Monyet',
+    icon: GiMonkey,
+  },
+  {
+    label: 'lamb',
+    name: 'Kambing',
+    icon: GiGoat,
+  },
+  {
+    label: 'horse',
+    name: 'Kuda',
+    icon: GiHorseHead,
+  },
+  {
+    label: 'snake',
+    name: 'Ular',
+    icon: GiSnake,
+  },
+];

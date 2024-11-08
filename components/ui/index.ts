@@ -72,6 +72,16 @@ export {
   SelectScrollUpButton,
   SelectScrollDownButton,
 } from './select';
+export {
+  Table,
+  TableHeader,
+  TableBody,
+  TableFooter,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableCaption,
+} from './table';
 
 export {
   Tooltip,
@@ -90,3 +100,19 @@ export { default as SelectInput } from './select-input';
 export { default as HeadingLogo } from './heading-logo';
 
 export { default as SelectNew } from './select-new';
+
+export { Label } from './label';
+
+export {
+  navigationMenuTriggerStyle,
+  NavigationMenu,
+  NavigationMenuList,
+  NavigationMenuItem,
+  NavigationMenuContent,
+  NavigationMenuTrigger,
+  NavigationMenuLink,
+  NavigationMenuIndicator,
+  NavigationMenuViewport,
+} from './navigation-menu';
+
+export { RadioGroup, RadioGroupItem } from './radio-group';

@@ -1,5 +1,3 @@
-'use client';
-
 import { useCallback, useEffect, useRef } from 'react';
 import { newMessageToast, newLikeToast } from '@/components/notification-toast';
 import { pusherClient } from '@/lib/pusher';
@@ -10,6 +8,7 @@ import { Channel } from 'pusher-js';
 
 import { useSession } from 'next-auth/react';
 import { useChatStore } from '@/store/use-chat-store';
+import { adminChatProfile } from '@/lib/helper';
 
 export const useNotificationChannel = (
   userId: string | null,
@@ -29,45 +28,68 @@ export const useNotificationChannel = (
   const isOutbox = searchParams?.get('container') === 'outbox';
 
   const container = isOutbox ? 'outbox' : 'inbox';
-
   const role = session?.user.role;
   const pathnameRole =
     role === 'admin' ? '/dashboard/admin/messages' : '/dashboard/messages';
 
   const {
+    chatId,
     setChatId,
     tab,
     setTab,
     isToggle,
     setIsToggle,
     setShowBubbleChat,
+    toggleStartChat,
     showBubbleChat,
   } = useChatStore((state) => ({
+    chatId: state.chatId,
     setChatId: state.setChatId,
     tab: state.tab,
     setTab: state.setTab,
     isToggle: state.isToggle,
     setIsToggle: state.setIsToggle,
+    toggleStartChat: state.toggleStartChat,
     setShowBubbleChat: state.setShowBubbleChat,
     showBubbleChat: state.showBubbleChat,
   }));
+  // const handleNewMessage = useCallback(
+  //   (message: MessageDto) => {
+  //     if (
+  //       pathname === pathnameRole &&
+  //       searchParams?.get('container') === container
+  //     ) {
+  //       add(message);
+  //       updateUnreadCount(1);
+  //     }
+  //     //  else if (pathname !== `/dashboard/chat/${message.senderId}`)
+  //     else if (tab !== adminChatProfile.id) {
+  //       newMessageToast(message);
+  //       updateUnreadCount(1);
+  //     }
+  //   },
+  //   [
+  //     add,
+  //     container,
+  //     pathname,
+  //     pathnameRole,
+  //     searchParams,
+  //     tab,
+  //     updateUnreadCount,
+  //   ]
+  // );
 
   const handleNewMessage = useCallback(
     (message: MessageDto) => {
-      if (
-        pathname === pathnameRole &&
-        searchParams?.get('container') !== 'outbox'
-      ) {
+      if (chatId) {
         add(message);
         updateUnreadCount(1);
-      }
-      //  else if (pathname !== `/dashboard/chat/${message.senderId}`)
-      else if (tab !== message.senderId) {
+      } else if (isToggle === false) {
         newMessageToast(message);
         updateUnreadCount(1);
       }
     },
-    [add, pathname, pathnameRole, searchParams, tab, updateUnreadCount]
+    [add, chatId, isToggle, updateUnreadCount]
   );
 
   const handleNewLike = useCallback(
@@ -102,5 +124,5 @@ export const useNotificationChannel = (
         channelRef.current = null;
       }
     };
-  }, [userId, handleNewMessage, profileComplete, handleNewLike]);
+  }, [userId, handleNewMessage, profileComplete, handleNewLike, status]);
 };

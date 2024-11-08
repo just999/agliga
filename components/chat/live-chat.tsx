@@ -184,6 +184,7 @@ const LiveChat = ({ users, adminProfile }: LiveChatProps) => {
   };
   const currentUsername =
     status === 'authenticated' ? session?.user.name : anonymousUser?.name;
+
   return (
     <div className='w-13 h-13 m-0 p-0 relative'>
       <div
@@ -233,51 +234,57 @@ const LiveChat = ({ users, adminProfile }: LiveChatProps) => {
                         )}, Selamat datang!`
                       : 'selamat datang'
                   )}
+                  className='text-sm'
                 />
-                <div className='flex flex-col h-[368px] items-center justify-between'>
+                <div className='flex flex-col  items-center justify-between'>
                   <div className='flex flex-col w-full gap-6'>
                     <Card
                       className={cn(
-                        'flex flex-col h-[440px] justify-between'
+                        'flex flex-col justify-between'
                         // status === 'unauthenticated' ? 'h-52' : 'h-60'
                       )}>
                       <CardHeader className='p-0 px-2 py-1'>
-                        {userRole === 'user' && (
+                        {userRole !== 'admin' && (
                           <CardTitle>
-                            <div className='flex gap-4'>
+                            <div className='flex gap-4 '>
                               <UserAvatar
                                 src={adminProfile.image}
                                 alt={adminProfile.name}
                               />
                               {adminProfile.name && (
                                 <Heading
-                                  title={adminProfile?.name}
-                                  description='let"s chat boy...'
+                                  className='text-base'
+                                  title={capitalizeFirstCharacter(
+                                    adminProfile?.name
+                                  )}
+                                  description='Ada yg bisa kami bantu..?'
                                 />
                               )}
                             </div>
                           </CardTitle>
                         )}
-                        <CardDescription className='bg-stone-100 shadow-inner py-2'>
-                          <span className='font-bold text-white bg-emerald-600'>
-                            Pemberitahuan: &nbsp;
-                          </span>
-                          <span
-                            className={cn(
-                              'overflow-auto p-0 px-1 py-.5 mx-auto text-justify w-full text-xs',
-                              status === 'unauthenticated' ? 'h-52' : 'h-60'
-                            )}>
-                            Selamat datang di Target4D🎯 Situs Togel & Slot
-                            Online Terpercaya Indonesia. ✓ Minimal Deposit
-                            10.000,- ✓ Minimal Withdraw 50.000,- ✓10 Pasaran
-                            Togel Resmi ✓ Winrate Tinggi Slot Online ✓ CS Online
-                            24 Jam ✓ Proses Depo & WD Cepat ✓ Terima Deposit via
-                            DANA,GOPAY,OVO,PULSA & BANK LAINYA ✓Tersedia Deposit
-                            Scan Tercepat/ KWpay ✓ Terima Depo Via TSEL-XL 🎡
-                            SPIN HOKI : TARGETHOKI 🏆 RTP TARGET4D : RTPMAXWIN
-                            🌐 Link ALT 1: LINKMUDAHJP 🌐 Link ALT 2: LINK X1000
-                            💬 WA 1 : KLIK DISINI 💬 WA 2 : KLIK DISINI 💬
-                            TELEGRAM : KLIK DISINI
+                        <CardDescription className=' py-.5'>
+                          <span className='flex flex-col  font-bold text-white w-full pb-2'>
+                            <span className='bg-emerald-600 mx-auto w-fit px-2 py-.5 text-center  rounded-md text-shadow-default'>
+                              Pemberitahuan:
+                            </span>
+                            <span
+                              className={cn(
+                                'overflow-auto bg-stone-700 p-0 px-1 py-1 mx-auto text-justify w-full text-xs',
+                                status === 'unauthenticated' ? 'h-48' : 'h-60'
+                              )}>
+                              Selamat datang di Target4D🎯 Situs Togel & Slot
+                              Online Terpercaya Indonesia. ✓ Minimal Deposit
+                              10.000,- ✓ Minimal Withdraw 50.000,- ✓10 Pasaran
+                              Togel Resmi ✓ Winrate Tinggi Slot Online ✓ CS
+                              Online 24 Jam ✓ Proses Depo & WD Cepat ✓ Terima
+                              Deposit via DANA,GOPAY,OVO,PULSA & BANK LAINYA
+                              ✓Tersedia Deposit Scan Tercepat/ KWpay ✓ Terima
+                              Depo Via TSEL-XL 🎡 SPIN HOKI : TARGETHOKI 🏆 RTP
+                              TARGET4D : RTPMAXWIN 🌐 Link ALT 1: LINKMUDAHJP 🌐
+                              Link ALT 2: LINK X1000 💬 WA 1 : KLIK DISINI 💬 WA
+                              2 : KLIK DISINI 💬 TELEGRAM : KLIK DISINI
+                            </span>{' '}
                           </span>
                         </CardDescription>
                       </CardHeader>
@@ -316,8 +323,9 @@ const LiveChat = ({ users, adminProfile }: LiveChatProps) => {
 
                             <Button
                               type='submit'
+                              disabled={isSubmitting || !isValid}
                               className='mx-auto w-full shadow-lg py-4'>
-                              submit Name & start to chat
+                              Submit Name & start to chat
                             </Button>
                           </form>
                         </CardContent>

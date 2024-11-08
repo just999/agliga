@@ -12,14 +12,14 @@ import { banks, games, statuses } from '@/lib/helper';
 import CellDepoWdActions from './cell-depo-wd-actions';
 import { DepoWdStatusActions } from './depo-wd-status-actions';
 
-// A TanStack fork of Kent C. Dodds' match-sorter library that provides ranking information
+//* */ A TanStack fork of Kent C. Dodds' match-sorter library that provides ranking information
 import {
   RankingInfo,
   rankItem,
   compareItems,
 } from '@tanstack/match-sorter-utils';
 
-// Define a custom fuzzy sort function that will sort by rank if the row has ranking information
+// *Define a custom fuzzy sort function that will sort by rank if the row has ranking information
 const fuzzySort: SortingFn<any> = (rowA, rowB, columnId) => {
   let dir = 0;
 
@@ -31,11 +31,11 @@ const fuzzySort: SortingFn<any> = (rowA, rowB, columnId) => {
     );
   }
 
-  // Provide an alphanumeric fallback for when the item ranks are equal
+  // *Provide an alphanumeric fallback for when the item ranks are equal
   return dir === 0 ? sortingFns.alphanumeric(rowA, rowB, columnId) : dir;
 };
 
-// Function to calculate the total DepoAmount
+// *Function to calculate the total DepoAmount
 const calculateWdAmountSum = (rows: any[]) => {
   return rows.reduce((sum, row) => sum + (row.original.wdAmount || 0), 0);
 };
@@ -188,8 +188,7 @@ export const wdColumns: ColumnDef<DepoWdProps & WdProps>[] = [
       <Button
         variant='ghost'
         className='p-0 m-0 h-4 text-xs'
-        onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-      >
+        onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
         Status
         <ArrowUpDown className='ml-0 h-3 w-3' />
       </Button>
@@ -202,8 +201,7 @@ export const wdColumns: ColumnDef<DepoWdProps & WdProps>[] = [
             .map((b) => (
               <div
                 key={b.value}
-                className='flex items-center gap-2 text-nowrap '
-              >
+                className='flex items-center gap-2 text-nowrap '>
                 <span>
                   <b.icon
                     className={cn(
@@ -220,8 +218,7 @@ export const wdColumns: ColumnDef<DepoWdProps & WdProps>[] = [
                     b.styles,
                     b.value === 'gagal' && 'text-pink-600',
                     b.value === 'in progress' && 'text-blue-700'
-                  )}
-                >
+                  )}>
                   {b.value}
                 </span>
               </div>

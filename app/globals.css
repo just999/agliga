@@ -537,3 +537,11 @@ body,
 .slide-transition {
   transition: transform 0.3s ease-in-out;
 }
+
+/* select {
+  -webkit-appearance: none;
+  appearance: none;
+  -moz-appearance: none;
+  text-indent: 1px;
+  text-overflow: '';
+} */

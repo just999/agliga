@@ -152,7 +152,6 @@ const MessageList = ({
   chatId,
   user,
 }: MessageListProps) => {
-  console.log('🚀 ~ chatId:', chatId);
   const setReadCount = useRef(false);
   const channelRef = useRef<Channel | null>(null);
   const { data: session } = useSession();
