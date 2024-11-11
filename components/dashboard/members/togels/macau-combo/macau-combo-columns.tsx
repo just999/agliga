@@ -12,6 +12,7 @@ import {
   cn,
   oldStandardTT,
   poppins,
+  rp,
   safeParseFloat,
 } from '@/lib/utils';
 import {
@@ -91,9 +92,11 @@ export const useMacauCColumns = (
             'w-20 h-7 text-xs rounded-md shadow-lg cursor-pointer font-semibold px-2 hover:bg-amber-200 hover:text-gray-500 appearance-none text-zinc-400',
             getValues(`macauC.${row.index}.${type}`) === 'small'
               ? 'bg-cyan-500 text-white border border-blue-400'
+              : getValues(`macauC.${row.index}.${type}`) === 'big'
+              ? 'bg-cyan-100 text-cyan-700 border border-cyan-400'
               : getValues(`macauC.${row.index}.${type}`) === 'odd'
-              ? 'bg-fuchsia-500 text-white border border-purple-400'
-              : 'bg-transparent',
+              ? 'bg-fuchsia-500 text-white border border-fuchsia-500'
+              : 'bg-rose-100 text-rose-700 border border-red-400',
             poppins.className
           )}>
           {values.map((val, i) => (
@@ -220,13 +223,13 @@ export const useMacauCColumns = (
                 type='tel'
                 placeholder='bet'
                 className={cn(
-                  'w-24 h-7 text-xs font-semibold pl-5 border border-zinc-300 rounded-md text-zinc-600 placeholder:text-slate-300',
+                  'w-28 h-7 text-xs font-semibold pl-5 border border-zinc-300 rounded-md text-zinc-600 placeholder:text-slate-300',
                   poppins.className
                 )}
                 suffix={
                   <FaRupiahSign
                     size={12}
-                    className='text-zinc-400 absolute left-1 svg'
+                    className='text-zinc-400 absolute left-1'
                   />
                 }
               />
@@ -238,8 +241,10 @@ export const useMacauCColumns = (
       {
         accessorKey: 'dis',
         header: ({ column }: any) => (
-          <div className='flex items-center justify-center '>
-            dis (5 <Percent size={12} /> )
+          <div className='text-zinc-700 font-semibold w-24  h-full flex items-center justify-center'>
+            <div className='flex items-center text-xs font-semibold'>
+              dis (5 <Percent size={10} /> )
+            </div>
           </div>
         ),
         cell: ({ row }: any) => {
@@ -247,15 +252,21 @@ export const useMacauCColumns = (
           const discount =
             isNaN(wager) || wager === 0 ? '' : ((wager * 5) / 100).toFixed();
           return (
-            <div className='relative flex justify-center'>
-              <div
-                className={cn(
-                  'w-24 h-7 flex items-center gap-2 text-center font-semibold text-xs border border-slate-400 text-zinc-500 rounded',
-                  poppins.className
-                )}>
-                <FaRupiahSign size={12} className='text-zinc-400 ml-1 svg' />
-                {discount}
-              </div>
+            <div
+              className={cn(
+                'h-7 text-zinc-700 mx-auto flex items-center justify-between border border-amber-500 gap-x-0.5 text-xs shadow-inner font-semibold w-28 bg-amber-200/40 text-center rounded-md',
+                poppins.className
+              )}>
+              <span className='flex items-center text-zinc-400'>
+                <FaRupiahSign size={12} className='text-zinc-400 mx-1' />
+                {discount === '' ? '' : rp.format(Number(discount))}
+              </span>
+              {discount && (
+                <div className='flex items-center text-[10px] text-amber-500 pr-1  '>
+                  (-5 <Percent size={10} className='svg' />)
+                  {/* <pre>{JSON.stringify(row.original.dis, null, 2)}</pre> */}
+                </div>
+              )}
             </div>
           );
         },
@@ -268,7 +279,9 @@ export const useMacauCColumns = (
       {
         accessorKey: 'net',
         header: ({ column }: any) => (
-          <div className='flex items-center justify-center '>net</div>
+          <div className='text-zinc-700 font-semibold w-28  h-full flex items-end justify-center'>
+            net
+          </div>
         ),
         cell: ({ row }: any) => {
           const wager = Number(row.original.wager);
@@ -277,36 +290,39 @@ export const useMacauCColumns = (
               ? ''
               : (wager * 0.95).toFixed().toString();
           return (
-            <div className='relative flex justify-center'>
+            <div className='relative flex justify-center items-center bg-zinc-300/40 text-zinc-700 border border-zinc-200 rounded-md h-7 px-0 font-semibold w-28 mx-auto'>
               <div
                 className={cn(
-                  'w-24 h-7 flex items-center gap-2 text-center font-semibold text-xs border border-slate-400 text-zinc-500 rounded',
+                  'w-28 h-7 flex items-center gap-1  text-center font-semibold text-xs border border-slate-400 text-zinc-500 rounded',
                   poppins.className
                 )}>
-                <FaRupiahSign size={12} className='text-zinc-400 ml-1 svg' />
-                {net}
+                <FaRupiahSign size={12} className='text-zinc-400 ml-1' />
+                {net === '' ? '' : rp.format(Number(net))}
               </div>
             </div>
           );
         },
         footer: (info: any) => {
-          const total =
+          const total = (
             info.table
               .getFilteredRowModel()
               .rows.reduce((sum: number, row: any) => {
                 const wager = Number(row.original.wager);
                 return sum + (isNaN(wager) ? 0 : wager);
-              }, 0) * 0.95;
+              }, 0) * 0.95
+          )
+            .toFixed()
+            .toString();
           return (
-            <div className='flex justify-center '>
+            <div className='flex justify-center py-1'>
               <div
                 className={cn(
-                  'w-24 h-7 flex items-center bg-gray-500 gap-1 shadow-inner text-center font-semibold text-xs border border-slate-400 rounded',
+                  'w-28 h-7 flex items-center bg-gray-500 gap-1 shadow-inner text-center font-semibold text-xs border border-slate-400 rounded',
                   poppins.className
                 )}>
                 <FaRupiahSign size={12} className='text-zinc-400 ml-1 svg' />
                 <span className='text-white text-shadow'>
-                  {total.toFixed()}
+                  {rp.format(Number(total))}
                 </span>
               </div>
             </div>

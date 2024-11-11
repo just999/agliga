@@ -1,5 +1,6 @@
 'use client';
 
+import header from '@/components/auth/header';
 import { Form4dSetProps } from '@/components/dashboard/members/togels/togel-4d-set';
 import {
   TogelDiscount,
@@ -7,13 +8,15 @@ import {
   TogelNetWager,
   TotalNetAmount,
 } from '@/components/dashboard/members/togels/togel-games4d';
+import footer from '@/components/footer';
 import { InputCustom } from '@/components/ui';
-import { cn, oldStandardTT, poppins, safeParseFloat } from '@/lib/utils';
+import { cn, oldStandardTT, poppins, rp, safeParseFloat } from '@/lib/utils';
 import { Sin4dFormDataSchema, Sin4dSchema } from '@/schemas/togel-schema';
 
 import { Percent, Trash2Icon } from 'lucide-react';
+import { register } from 'module';
 
-import { ChangeEvent, useMemo } from 'react';
+import { ChangeEvent, useCallback, useMemo } from 'react';
 import {
   Control,
   FieldArrayWithId,
@@ -22,9 +25,21 @@ import {
   UseFormRegister,
   UseFormSetFocus,
   UseFormWatch,
+  useWatch,
 } from 'react-hook-form';
 
 import { FaRupiahSign } from 'react-icons/fa6';
+
+// enum Togel4d {
+//   D1 = 'd1',
+//   D2 = 'd2',
+//   D3 = 'd3',
+//   D4 = 'd4',
+// }
+
+// function isTogel4d(value: string): value is Togel4d {
+//   return Object.values(Togel4d).includes(value as Togel4d);
+// }
 
 export const useTogel4dColumns = (
   register: UseFormRegister<FieldValues | any>,
@@ -50,11 +65,26 @@ export const useTogel4dColumns = (
   //   }
   // };
 
+  const tog = useWatch({
+    control,
+    name: 'sin4ds',
+  });
+  const filteredPercent = useCallback(() => {
+    const res = tog.map(
+      ({ game, dis, net, period, status, ...rest }: Sin4dSchema, i: number) =>
+        Object.values(rest).filter((r) => r !== '').length
+    );
+    return res;
+  }, [tog]);
   const togel4dColumns = useMemo(
     () => [
       {
         accessorKey: 'index',
-        header: () => <div className='text-zinc-300 font-semibold'>No.</div>,
+        header: () => (
+          <div className='text-zinc-700 h-full font-semibold flex items-end justify-center'>
+            No.
+          </div>
+        ),
         cell: ({ row }: any) => (
           <div className='flex flex-row justify-center p-0'>
             <span
@@ -104,14 +134,14 @@ export const useTogel4dColumns = (
       {
         accessorKey: 'game',
         header: ({}) => (
-          <div className='text-zinc-700 h-full font-semibold flex items-end'>
+          <div className='w-8 h-full p-0 m-0 mx-auto text-zinc-700 font-semibold flex items-end justify-center'>
             game
           </div>
         ),
         cell: ({ row }: any) => (
           <div
             className={cn(
-              'text-zinc-300 h-7 flex items-center justify-center border border-emerald-400 font-semibold text-xs  bg-emerald-400/40 text-center rounded-md text-shadow',
+              'text-zinc-300 h-7 flex items-center justify-center border border-emerald-400 font-semibold text-xs  bg-emerald-50 text-center rounded-md text-shadow shadow-inner',
               poppins.className
             )}>
             <div className='text-zinc-400 text-xs px-1'>
@@ -194,8 +224,11 @@ export const useTogel4dColumns = (
       {
         accessorKey: 'dis',
         header: () => (
-          <div className='text-zinc-700 font-semibold w-28  h-full flex items-end justify-center'>
-            dis(%)
+          <div className='text-zinc-700 font-semibold w-28  h-full flex items-center justify-center'>
+            <div className='flex items-center text-xs font-semibold'>
+              dis(
+              <Percent size={10} />)
+            </div>
           </div>
         ),
         cell: ({ row }: any) => {
@@ -209,32 +242,27 @@ export const useTogel4dColumns = (
                 <FaRupiahSign size={10} className='text-zinc-400 ml-1 svg' />
                 <span
                   className={cn(
-                    'text-left px-0 w-28 text-gray-500 tracking-tight text-xs',
+                    'text-left px-0 w-28 text-gray-500 tracking-tight text-xs flex items-center justify-between',
                     poppins.className
                   )}>
-                  {row.original.dis === '66%' ? (
-                    <div className='flex items-center justify-between '>
-                      {(Number(row.original.wager) * 0.66).toFixed()}
-                      <span className='flex items-center text-[10px] text-amber-500 pr-1'>
-                        (66
-                        <Percent size={10} className='svg ' />)
-                      </span>
+                  {row.original.dis === '' ? '' : rp.format(row.original.dis)}
+
+                  {row.original.game === '4d' ? (
+                    <div className='w-full flex items-center justify-end text-xs text-amber-400 pr-1 '>
+                      (66
+                      <Percent size={10} className='text-amber-500' />)
                     </div>
-                  ) : row.original.dis === '59%' ? (
-                    <div className='flex items-center justify-between '>
-                      {(Number(row.original.wager) * 0.59).toFixed()}
-                      <span className='flex items-center text-[10px] text-amber-500 pr-1'>
-                        (59
-                        <Percent size={10} className='svg ' />)
-                      </span>
+                  ) : row.original.game === '3d' ? (
+                    <div className='w-full flex items-center justify-end text-xs text-amber-400 pr-1 '>
+                      (59
+                      <Percent size={10} className='text-amber-500' />)
                     </div>
-                  ) : row.original.dis === '29%' ? (
-                    <div className='flex items-center justify-between '>
-                      {(Number(row.original.wager) * 0.29).toFixed()}
-                      <span className='flex items-center text-[10px] text-amber-500 pr-1'>
-                        (29
-                        <Percent size={10} className='svg ' />)
-                      </span>
+                  ) : row.original.game === '2d' ||
+                    row.original.game === '2dd' ||
+                    row.original.game === '2dt' ? (
+                    <div className='w-full flex items-center justify-end text-xs text-amber-400 pr-1 '>
+                      (29
+                      <Percent size={10} className='text-amber-500' />)
                     </div>
                   ) : (
                     ''
@@ -275,7 +303,8 @@ export const useTogel4dColumns = (
                     'text-left px-0 text-gray-500 tracking-wider text-xs',
                     poppins.className
                   )}>
-                  {row.original.net}
+                  {row.original.net === '' ? '' : rp.format(row.original.net)}
+                  {/* {rp.format(row.original.net)} */}
                 </span>
               </div>
             </div>
@@ -285,12 +314,11 @@ export const useTogel4dColumns = (
           const total = info.table
             .getFilteredRowModel()
             .rows.reduce((sum: number, row: any) => {
-              console.log('🚀 ~ .rows.reduce ~ row:', row);
               const net = Number(row.original.net);
               return sum + (isNaN(net) ? 0 : net);
             }, 0);
           return (
-            <div className='flex justify-center '>
+            <div className='flex justify-center py-1'>
               <div
                 className={cn(
                   'w-28 h-7 flex items-center bg-gray-500 gap-1 shadow-inner text-center font-semibold text-xs border border-slate-400 rounded ',
@@ -298,7 +326,7 @@ export const useTogel4dColumns = (
                 )}>
                 <FaRupiahSign size={10} className='text-zinc-400 ml-1 svg' />
                 <span className='text-white text-shadow'>
-                  {total.toFixed()}
+                  {rp.format(total.toFixed())}
                   {/* <pre>{JSON.stringify(row.original, null, 2)}</pre> */}
                 </span>
               </div>

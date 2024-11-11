@@ -3413,10 +3413,15 @@ export const togelSidebar4d3d2d = [
     icon: RecycleIcon,
     link: (slug: string) => `/dashboard/members/togels/${slug}/bbfs`,
   },
+  // {
+  //   title: 'besarKecil-genapGanjil',
+  //   icon: ZapIcon,
+  //   link: (slug: string) => `/dashboard/members/togels/${slug}/bseo`,
+  // },
   {
-    title: 'besarKecil-genapGanjil',
+    title: 'quick2d',
     icon: ZapIcon,
-    link: (slug: string) => `/dashboard/members/togels/${slug}/bseo`,
+    link: (slug: string) => `/dashboard/members/togels/${slug}/quick2d`,
   },
 ];
 export const togelSidebarColok = [
@@ -3623,3 +3628,16 @@ export const shioWithIcon = [
     icon: GiSnake,
   },
 ];
+
+export const initial4dValues = {
+  d1: '',
+  d2: '',
+  d3: '',
+  d4: '',
+  game: '',
+  wager: '',
+  dis: '',
+  net: '',
+  period: '001',
+  status: 'processing',
+};

@@ -186,7 +186,6 @@ const useTogel4dSetColumns = (
           const filledFields = ['d1', 'd2', 'd3', 'd4'].filter(
             (key) => row.original[key] !== ''
           ).length;
-          console.log('🚀 ~ filledFields:', filledFields);
           return (
             <div>
               <div className='flex w-84'>

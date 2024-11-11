@@ -7,6 +7,7 @@ import {
   cn,
   oldStandardTT,
   poppins,
+  rp,
   safeParseFloat,
 } from '@/lib/utils';
 import { ColokJituTableSchema } from '@/schemas/togel-schema';
@@ -49,13 +50,9 @@ export const useColokJituColumns = (
     control,
     name: 'cj',
   });
-  // console.log('🚀 ~ cjValue:', cjValue);
-
   const filteredCjValue = cjValue.filter(
     (val: any) => val.d1 !== '' && val.d2 !== '' && val.wager !== ''
   );
-  // console.log('🚀 ~ filteredCjValue:', filteredCjValue);
-
   useEffect(() => {
     inputRefs.current.forEach((input) => {
       if (input) {
@@ -68,7 +65,11 @@ export const useColokJituColumns = (
     () => [
       {
         accessorKey: 'index',
-        header: ({}) => <div>No.</div>,
+        header: ({}) => (
+          <div className='w-7 text-zinc-700 h-full font-semibold flex items-end justify-center'>
+            No
+          </div>
+        ),
         cell: ({ row }: any) => (
           <div className='flex flex-row justify-center p-0'>
             <span
@@ -84,8 +85,8 @@ export const useColokJituColumns = (
       {
         accessorKey: 'd1',
         header: () => (
-          <div className='w-8 p-0 m-0 mx-auto text-zinc-700 font-semibold'>
-            no
+          <div className='w-8 h-full p-0 m-0 mx-auto text-zinc-700 font-semibold flex items-end justify-center'>
+            nomor
           </div>
         ),
         size: 48,
@@ -97,7 +98,7 @@ export const useColokJituColumns = (
                 onChange: (e) => handleSelectChange(e, row.index, 'd1'),
               })}
               className={cn(
-                'w-12 h-7 pt-0.5 pr-1 font-semibold border border-orange-300 rounded-md text-base text-shadow flex items-center justify-center appearance-none bg-amber-100 text-gray-500 cursor-pointer group-hover:bg-amber-100/70',
+                'w-12 h-7 pt-0.5 pr-1 font-semibold rounded-md text-base text-shadow flex items-center justify-center appearance-none  text-gray-500 cursor-pointer group-hover:bg-amber-100/70 bg-violet-100 border border-violet-300',
                 oldStandardTT.className
               )}>
               <option value=''></option>
@@ -116,7 +117,7 @@ export const useColokJituColumns = (
             <ChevronDownCircle
               size={14}
               className={cn(
-                'absolute right-1 text-gray-500 svg group-hover:text-orange-700',
+                'absolute right-1 text-violet-500 svg group-hover:text-orange-700',
                 getValues(`cj.${row.index}.d1`) !== '' && 'hidden'
               )}
             />
@@ -127,7 +128,9 @@ export const useColokJituColumns = (
       {
         accessorKey: 'position',
         header: () => (
-          <div className='w-20 p-0 m-0 text-zinc-700 font-semibold'>pos</div>
+          <div className='w-8 h-full p-0 m-0 mx-auto text-zinc-700 font-semibold flex items-end justify-center'>
+            pos
+          </div>
         ),
         size: 80,
         enableResizing: false,
@@ -138,7 +141,7 @@ export const useColokJituColumns = (
                 onChange: (e) => handleSelectChange(e, row.index, 'position'),
               })}
               className={cn(
-                'w-20 h-7 font-semibold border border-orange-300 rounded-md text-sm text-shadow flex items-center justify-center align-middle appearance-none ',
+                'w-20 h-7 font-normal rounded-md text-sm text-shadow flex items-center justify-center align-middle appearance-none bg-teal-100 border border-teal-300',
                 poppins.className
               )}>
               <option value=''></option>
@@ -147,7 +150,7 @@ export const useColokJituColumns = (
                   key={i}
                   value={pos}
                   className={cn(
-                    'text-sm font-semibold text-center',
+                    'text-sm font-normal text-center',
                     poppins.className
                   )}>
                   {pos}
@@ -157,7 +160,7 @@ export const useColokJituColumns = (
             <ChevronDownCircle
               size={14}
               className={cn(
-                'absolute right-1 text-gray-500 svg hover:text-orange-700 ',
+                'absolute right-1 text-teal-500 svg hover:text-orange-700 ',
                 getValues(`cj.${row.index}.position`) !== '' && 'hidden'
               )}
             />
@@ -178,7 +181,7 @@ export const useColokJituColumns = (
                 pattern: /^[0-9]+$/,
               })}
               type='tel'
-              className='w-28 h-7 pl-5 text-zinc-600 placeholder:text-slate-300 placeholder:pl-2'
+              className='w-28 h-7 pl-5 border border-zinc-300 text-xs text-zinc-600 placeholder:text-slate-300 placeholder:pl-2'
               placeholder='bet all'
               suffix={
                 <FaRupiahSign
@@ -196,7 +199,7 @@ export const useColokJituColumns = (
           const isDisabled = !d1Value || !posValue;
 
           return (
-            <div className='relative  flex justify-center '>
+            <div className='relative  flex justify-center text-zinc-700 border border-zinc-400 rounded-md h-7 px-0 font-semibold w-full '>
               <InputCustom
                 {...register(`cj.${row.index}.wager`, {
                   onChange: (e: ChangeEvent<HTMLInputElement>) =>
@@ -227,29 +230,35 @@ export const useColokJituColumns = (
       {
         accessorKey: 'dis',
         header: ({ column }: any) => (
-          <div className='flex items-center justify-center '>
-            dis (6 <Percent size={12} /> )
+          <div className='text-zinc-700 font-semibold w-28  h-full flex items-end justify-center'>
+            <div className='flex items-center text-xs font-semibold'>
+              dis (6 <Percent size={10} /> )
+            </div>
           </div>
         ),
         cell: ({ row }: any) => {
           const wager = Number(row.original.wager);
-          // console.log('🚀 ~ wager:', wager);
           const discount =
             isNaN(wager) || wager === 0 ? '' : (wager * 0.06).toFixed();
           return (
-            <div className='relative flex justify-center'>
-              <div
-                className={cn(
-                  'w-28 h-7 flex items-center gap-2  text-center font-semibold text-xs border border-slate-400 text-zinc-500 rounded',
-                  poppins.className
-                )}>
-                <FaRupiahSign size={12} className='text-zinc-300  ml-1' />
+            <div
+              className={cn(
+                'h-7 text-zinc-700 mx-auto flex items-center justify-between border border-amber-500 gap-x-0.5 text-xs shadow-inner font-semibold w-28 bg-amber-200/40 text-center rounded-md',
+                poppins.className
+              )}>
+              <span className='flex items-center text-zinc-400'>
+                <FaRupiahSign size={12} className='text-zinc-300  mx-1' />
                 {/* {row.original.wager === ''
                   ? ''
                   : (Number(row.original.wager) * (10 / 100)).toFixed()} */}
-                {discount}
-              </div>
-              {row.original.dis}
+                {discount === '' ? '' : rp.format(Number(discount))}
+              </span>
+              {discount && (
+                <div className='flex items-center text-[10px] text-amber-500 pr-1  '>
+                  (6 <Percent size={10} className='svg' />)
+                  {/* <pre>{JSON.stringify(row.original.dis, null, 2)}</pre> */}
+                </div>
+              )}
             </div>
           );
         },
@@ -262,42 +271,46 @@ export const useColokJituColumns = (
       {
         accessorKey: 'net',
         header: ({ column }: any) => (
-          <div className='flex items-center justify-center '>net</div>
+          <div className='text-zinc-700 font-semibold w-28  h-full flex items-end justify-center'>
+            net
+          </div>
         ),
         cell: ({ row }: any) => {
           const wager = Number(row.original.wager);
-          // console.log('🚀 ~ wager:', wager);
           const net =
             isNaN(wager) || wager === 0
               ? ''
               : (wager * 0.94).toFixed().toString();
           return (
-            <div className='relative flex justify-center'>
+            <div className='relative flex justify-center items-center bg-zinc-300/40 text-zinc-700 border border-zinc-200 rounded-md h-7 px-0 font-semibold w-28 mx-auto'>
               <div
                 className={cn(
-                  'w-28 h-7 flex items-center gap-2  text-center font-semibold text-xs border border-slate-400 text-zinc-500 rounded',
+                  'w-28 h-7 flex items-center gap-1  text-center font-semibold text-xs border border-slate-400 text-zinc-500 rounded',
                   poppins.className
                 )}>
                 <FaRupiahSign size={12} className='text-zinc-300  ml-1' />
                 {/* {row.original.wager === ''
                   ? ''
                   : (Number(row.original.wager) * (90 / 100)).toFixed()} */}
-                {net}
+                {net === '' ? '' : rp.format(Number(net))}
               </div>
             </div>
           );
         },
         footer: (info: any) => {
-          const total =
+          const total = (
             info.table
               .getFilteredRowModel()
               .rows.reduce((sum: number, row: any) => {
                 const wager = Number(row.original.wager);
                 return sum + (isNaN(wager) ? 0 : wager);
-              }, 0) * 0.94;
+              }, 0) * 0.94
+          )
+            .toFixed()
+            .toString();
 
           return (
-            <div className='flex justify-center '>
+            <div className='flex justify-center py-1'>
               <div
                 className={cn(
                   'w-28 h-7 flex items-center bg-gray-500 gap-1 shadow-inner text-center font-semibold text-xs border border-slate-400 rounded',
@@ -305,7 +318,7 @@ export const useColokJituColumns = (
                 )}>
                 <FaRupiahSign size={12} className='text-zinc-400 ml-1 svg' />
                 <span className='text-white text-shadow'>
-                  {total.toFixed().toString()}
+                  {rp.format(Number(total))}
                 </span>
               </div>
             </div>

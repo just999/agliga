@@ -201,9 +201,7 @@ const MacauComboTable = () => {
   });
 
   const watchAllInputs = watch();
-  console.log('🚀 ~ watchAllInputs:', watchAllInputs);
   const macauComb = watch('macauC');
-  console.log('🚀 ~ macau:', macauComb);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   const handleInputChange = useCallback(
@@ -225,12 +223,6 @@ const MacauComboTable = () => {
     key: string
   ) => {
     const { name, value } = e.target;
-    console.log(
-      '🚀 ~ MacauSpTable ~ name, value:',
-      `macauSp.${rowIndex}.${key}`,
-      name,
-      value
-    );
     setSelectedValues((prev: any) => ({
       ...prev,
       [`macauSp.${rowIndex}.${key}`]: value,
@@ -250,8 +242,6 @@ const MacauComboTable = () => {
     handleInputChange,
     handleRadioChange
   );
-
-  console.log('🚀 ~ MacauSpTable ~ selectedValues:', selectedValues);
   const onSubmit = (data: any) => {
     const filteredData = data.macauC.filter(
       (dat: any) => dat.wager !== '' && dat.d1 !== '' && dat.position !== ''
@@ -262,12 +252,9 @@ const MacauComboTable = () => {
       dis: (Number(item.wager) * (5 / 100)).toFixed().toString(),
       net: (Number(item.wager) * (95 / 100)).toFixed().toString(),
     }));
-    console.log('🚀 ~ renderedNet ~ renderedNet:', renderedNet);
-
     const totalBet = renderedNet.reduce(function (acc: any, cur: any) {
       return acc + Number(cur.net);
     }, 0);
-
     setValue('totalBet', totalBet);
   };
 

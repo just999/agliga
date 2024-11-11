@@ -85,9 +85,7 @@ const ColokNagaTable = () => {
   });
 
   const watchAllInputs = watch();
-  console.log('🚀 ~ watchAllInputs:', watchAllInputs);
   const colokNaga = watch('cn');
-  console.log('🚀 ~ colokNaga:', colokNaga);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   const copy = useWatch({ control, name: 'copy' });
@@ -161,8 +159,6 @@ const ColokNagaTable = () => {
   );
 
   const onSubmit = (data: any) => {
-    console.log('🚀 ~ onSubmit ~ data:', data);
-
     const filteredData = data.cn.filter(
       (dat: any) =>
         dat.wager !== '' && dat.d1 !== '' && dat.d2 !== '' && dat.d3 !== ''
@@ -173,8 +169,6 @@ const ColokNagaTable = () => {
       dis: (Number(item.wager) * (10 / 100)).toFixed().toString(),
       net: (Number(item.wager) * (90 / 100)).toFixed().toString(),
     }));
-    console.log('🚀 ~ renderedNet ~ renderedNet:', renderedNet);
-
     const totalBet = renderedNet.reduce(function (acc: any, cur: any) {
       return acc + Number(cur.net);
     }, 0);

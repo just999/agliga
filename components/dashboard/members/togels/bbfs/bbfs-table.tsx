@@ -457,9 +457,15 @@
 'use client';
 
 import {
+  Table as TanTable,
+  Column,
   FilterFn,
   flexRender,
   getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  PaginationState,
   useReactTable,
 } from '@tanstack/react-table';
 
@@ -480,7 +486,13 @@ import { rankItem } from '@tanstack/match-sorter-utils';
 import { useEffect, useState } from 'react';
 import { Control, useFieldArray, useForm, useWatch } from 'react-hook-form';
 import { useBbfsColumns } from './bbfs-columns';
-import { control } from 'leaflet';
+import { initial4dValues } from '@/lib/helper';
+import {
+  ChevronsLeft,
+  ChevronLeft,
+  ChevronRight,
+  ChevronsRight,
+} from 'lucide-react';
 
 const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
   const itemRank = rankItem(row.getValue(columnId), value);
@@ -501,24 +513,11 @@ export type FormBbfsTableProps = {
   status?: string;
 };
 
-const initialBbfsTableValues = {
-  d1: '',
-  d2: '',
-  d3: '',
-  d4: '',
-  game: '',
-  wager: '',
-  dis: '',
-  net: '',
-  period: '001',
-  status: 'processing',
-};
-
 interface DataTableProps<TData, TValue> {
   data: TData[] | any;
   bbData?: BbSchema[] | any;
   i: number;
-  control?: Control<BbSchema | any>;
+  // control?: Control<BbSchema | any>;
   bbfsTableData?: FormBbfsTableProps | any;
 }
 
@@ -530,7 +529,16 @@ export function BbfsTable<TData, TValue>({
   bbfsTableData,
   ...props
 }: DataTableProps<TData, TValue>) {
-  const [bbfs, setBbfs] = useState<BbTab4dSchema[]>([initialBbfsTableValues]);
+  const [bbfs, setBbfs] = useState<BbTab4dSchema[]>([initial4dValues]);
+  const [pagination, setPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 10,
+  });
+
+  const defaultFilterFns = {
+    fuzzy: () => true,
+    contains: () => true,
+  };
 
   const {
     register,
@@ -582,23 +590,28 @@ export function BbfsTable<TData, TValue>({
     setFocus,
     getValues,
     setValue,
-    bbData,
-    bbfsTableData,
     remove,
     fields,
+    bbData,
+    bbfsTableData,
     data
   );
 
   const onSubmit = (data: BbTabSchema) => {
-    console.log('🚀 ~ onSubmit ~ data:', data);
+    const validateBet = data.bbfs.filter((val, i) => val.game && val.wager);
   };
 
   const table = useReactTable({
     data: fields,
     columns: bbfsColumns,
     getCoreRowModel: getCoreRowModel(),
-    filterFns: {
-      fuzzy: fuzzyFilter,
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    onPaginationChange: setPagination,
+    filterFns: defaultFilterFns,
+    state: {
+      pagination,
     },
   });
   useEffect(() => {
@@ -609,7 +622,7 @@ export function BbfsTable<TData, TValue>({
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className='flex justify-between items-center '>
           <div className='font-semibold text-xs my-5'>render: {render}</div>
-          <Button type='submit' size='sm'>
+          <Button type='submit' size='sm' className='px-2 '>
             Submit
           </Button>
         </div>
@@ -698,9 +711,156 @@ export function BbfsTable<TData, TValue>({
             ))}
           </TableFooter>
         </Table>
+
+        <div className='h-2' />
+        <div className='flex justify-center items-center gap-2 bg-orange-100'>
+          <div className='text-xs '>
+            Showing {table.getRowModel().rows.length.toLocaleString()} of{' '}
+            {table.getRowCount().toLocaleString()} Rows
+          </div>
+          <div className='flex  '>
+            <Button
+              variant='ghost'
+              type='button'
+              className={cn(
+                ' border rounded-md h-5 w-7 p-0 m-auto flex items-center justify-center bg-orange-500 hover:bg-orange-500/70',
+                !table.getCanPreviousPage()
+                  ? 'bg-orange-400/70 cursor-not-allowed'
+                  : ''
+              )}
+              onClick={() => table.firstPage()}
+              disabled={!table.getCanPreviousPage()}>
+              <ChevronsLeft size={14} className='  text-white svg ' />
+            </Button>
+            <Button
+              variant='ghost'
+              type='button'
+              className={cn(
+                'border rounded-md h-5 w-7 p-0 m-auto flex items-center justify-center bg-orange-500 hover:bg-orange-500/70',
+                !table.getCanPreviousPage()
+                  ? 'bg-orange-400/70 cursor-not-allowed'
+                  : ''
+              )}
+              onClick={() => table.previousPage()}
+              disabled={!table.getCanPreviousPage()}>
+              <ChevronLeft size={14} className='  text-white svg ' />
+            </Button>
+            <Button
+              variant='ghost'
+              type='button'
+              className={cn(
+                'border rounded-md h-5 w-7 p-0 m-auto flex items-center justify-center bg-orange-500 hover:bg-orange-500/70',
+                !table.getCanNextPage()
+                  ? 'bg-orange-400/70 cursor-not-allowed'
+                  : ''
+              )}
+              onClick={() => table.nextPage()}
+              disabled={!table.getCanNextPage()}>
+              <ChevronRight size={14} className='  text-white svg ' />
+            </Button>
+            <Button
+              variant='ghost'
+              type='button'
+              className={cn(
+                'border rounded-md h-5 w-7 p-0 m-auto flex items-center justify-center bg-orange-500 hover:bg-orange-500/70',
+                !table.getCanNextPage()
+                  ? 'bg-orange-400/70 cursor-not-allowed'
+                  : ''
+              )}
+              onClick={() => table.lastPage()}
+              disabled={!table.getCanNextPage()}>
+              <ChevronsRight size={14} className='  text-white svg ' />
+            </Button>
+          </div>
+          <span className='flex items-center gap-1 text-xs'>
+            <div>Page</div>
+            <strong>
+              {table.getState().pagination.pageIndex + 1} of{' '}
+              {table.getPageCount().toLocaleString()}
+            </strong>
+          </span>
+          {/* <span className='flex items-center gap-1'>
+              | Go to page:
+              <input
+                type='number'
+                min='1'
+                max={table.getPageCount()}
+                defaultValue={table.getState().pagination.pageIndex + 1}
+                onChange={(e) => {
+                  const page = e.target.value ? Number(e.target.value) - 1 : 0;
+                  table.setPageIndex(page);
+                }}
+                className='border p-1 rounded w-16'
+              />
+            </span> */}
+          <select
+            value={table.getState().pagination.pageSize}
+            onChange={(e) => {
+              table.setPageSize(Number(e.target.value));
+            }}
+            className='text-xs bg-amber-100'>
+            {[10, 20, 30, 40, 50].map((pageSize) => (
+              <option key={pageSize} value={pageSize}>
+                Show {pageSize}
+              </option>
+            ))}
+          </select>
+        </div>
       </form>
 
       {/* <pre>{JSON.stringify(watch(), null, 2)}</pre> */}
     </ClientOnly>
+  );
+}
+
+function Filter({
+  column,
+  table,
+}: {
+  column: Column<any, any>;
+  table: TanTable<any>;
+}) {
+  const firstValue = table
+    .getPreFilteredRowModel()
+    .flatRows[0]?.getValue(column.id);
+
+  const columnFilterValue = column.getFilterValue();
+
+  return typeof firstValue === 'number' ? (
+    <div className='flex space-x-2' onClick={(e) => e.stopPropagation()}>
+      <input
+        type='number'
+        value={(columnFilterValue as [number, number])?.[0] ?? ''}
+        onChange={(e) =>
+          column.setFilterValue((old: [number, number]) => [
+            e.target.value,
+            old?.[1],
+          ])
+        }
+        placeholder={`Min`}
+        className='w-24 border shadow rounded'
+      />
+      <input
+        type='number'
+        value={(columnFilterValue as [number, number])?.[1] ?? ''}
+        onChange={(e) =>
+          column.setFilterValue((old: [number, number]) => [
+            old?.[0],
+            e.target.value,
+          ])
+        }
+        placeholder={`Max`}
+        className='w-24 border shadow rounded'
+      />
+    </div>
+  ) : (
+    <input
+      className='w-36 border shadow rounded'
+      onChange={(e) => column.setFilterValue(e.target.value)}
+      onClick={(e) => e.stopPropagation()}
+      placeholder={`Search...`}
+      type='text'
+      value={(columnFilterValue ?? '') as string}
+    />
   );
 }

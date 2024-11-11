@@ -12,6 +12,7 @@ import {
   cn,
   oldStandardTT,
   poppins,
+  rp,
   safeParseFloat,
 } from '@/lib/utils';
 import {
@@ -84,12 +85,12 @@ export const FiftyFiftySpecialColumns = (
             <div
               key={value}
               className={cn(
-                'flex w-20 items-center space-x-2 px-2 py-0 rounded-md shadow-md hover:bg-amber-400 hover:text-white cursor-pointer border border-zinc-400',
+                'flex w-20 items-center space-x-2 px-2 py-0 rounded-md shadow-md hover:bg-amber-400 hover:text-white cursor-pointer',
                 getValues(`ffSp.${row.index}.bigSmall`) === value
-                  ? 'bg-cyan-500 w-20 h-7 text-yellow-100 hover:bg-cyan-500/70'
+                  ? 'bg-cyan-500 w-20 h-7 text-yellow-100 hover:bg-cyan-500/70  border border-cyan-600'
                   : getValues(`ffSp.${row.index}.oddEven`) === value
-                  ? 'bg-fuchsia-500 w-20 h-7 text-yellow-100 hover:bg-fuchsia-500/70'
-                  : 'bg-transparent text-gray-500'
+                  ? 'bg-fuchsia-500 w-20 h-7 text-yellow-100 hover:bg-fuchsia-500/70   border border-fuchsia-600'
+                  : 'bg-transparent text-gray-500  border border-zinc-400'
               )}>
               <Label
                 className={cn(
@@ -115,9 +116,13 @@ export const FiftyFiftySpecialColumns = (
     () => [
       {
         accessorKey: 'index',
-        header: ({}) => <div>No.</div>,
+        header: ({}) => (
+          <div className='w-7 text-zinc-700 h-full font-semibold flex items-center justify-center'>
+            No.
+          </div>
+        ),
         cell: ({ row }: any) => (
-          <div className='flex flex-row justify-center p-0'>
+          <div className='w-7 flex flex-row justify-center p-0'>
             <span
               className={cn(
                 'p-0 m-0 text-zinc-300 font-semibold',
@@ -155,7 +160,9 @@ export const FiftyFiftySpecialColumns = (
             <div
               className={cn(
                 'w-16 border text-xs shadow-inner font-semibold text-shadow text-yellow-100 h-7 gap-.5 flex justify-center bg-amber-600 items-center rounded-lg p-0',
-                row.index < 4 ? 'bg-orange-500' : 'bg-rose-500',
+                row.index < 4
+                  ? 'bg-orange-500   border border-orange-600'
+                  : 'bg-rose-500   border border-red-600',
                 poppins.className
               )}>
               {row.original.suit}
@@ -314,7 +321,7 @@ export const FiftyFiftySpecialColumns = (
                 suffix={
                   <FaRupiahSign
                     size={12}
-                    className='text-zinc-400 absolute left-1 svg'
+                    className='text-zinc-400 absolute left-1'
                   />
                 }
               />
@@ -326,24 +333,34 @@ export const FiftyFiftySpecialColumns = (
       {
         accessorKey: 'dis',
         header: ({ column }: any) => (
-          <div className='flex items-center justify-center '>
-            kei (2 <Percent size={12} /> )
+          <div className='text-zinc-700 font-semibold w-28  h-full flex items-center justify-center'>
+            <div className='flex items-center text-xs font-semibold'>
+              kei (2 <Percent size={12} /> )
+            </div>
           </div>
         ),
         cell: ({ row }: any) => {
           const wager = Number(row.original.wager);
           const discount =
-            isNaN(wager) || wager === 0 ? '' : -((wager * 2) / 100).toFixed();
+            isNaN(wager) || wager === 0
+              ? ''
+              : (-wager * 0.02).toFixed().toString();
           return (
-            <div className='relative flex justify-center'>
-              <div
-                className={cn(
-                  'w-24 h-7 flex items-center gap-2 text-center font-semibold text-xs border border-slate-400 text-zinc-500 rounded',
-                  poppins.className
-                )}>
-                <FaRupiahSign size={12} className='text-zinc-400 ml-1 svg' />
-                {discount}
-              </div>
+            <div
+              className={cn(
+                'h-7 text-zinc-700 mx-auto flex items-center justify-between border border-amber-500 gap-x-0.5 text-xs shadow-inner font-semibold w-28 bg-amber-200/40 text-center rounded-md',
+                poppins.className
+              )}>
+              <span className='flex items-center text-zinc-400'>
+                <FaRupiahSign size={12} className='text-zinc-400 ml-1' />
+                {discount === '' ? '' : rp.format(Number(discount))}
+              </span>
+              {discount && (
+                <div className='flex items-center text-[10px] text-amber-500 pr-1  '>
+                  -(2 <Percent size={10} className='svg' />)
+                  {/* <pre>{JSON.stringify(row.original.dis, null, 2)}</pre> */}
+                </div>
+              )}
             </div>
           );
         },
@@ -356,7 +373,9 @@ export const FiftyFiftySpecialColumns = (
       {
         accessorKey: 'net',
         header: ({ column }: any) => (
-          <div className='flex items-center justify-center '>net</div>
+          <div className='text-zinc-700 font-semibold w-24  h-full flex items-center justify-center'>
+            net
+          </div>
         ),
         cell: ({ row }: any) => {
           const wager = Number(row.original.wager);
@@ -365,28 +384,31 @@ export const FiftyFiftySpecialColumns = (
               ? ''
               : (wager * 1.02).toFixed().toString();
           return (
-            <div className='relative flex justify-center'>
+            <div className='relative flex justify-center items-center bg-zinc-300/40 text-zinc-700 border border-zinc-200 rounded-md h-7 px-0 font-semibold w-24 mx-auto'>
               <div
                 className={cn(
-                  'w-24 h-7 flex items-center gap-2 text-center font-semibold text-xs border border-slate-400 text-zinc-500 rounded',
+                  'w-24 h-7 flex items-center gap-1  text-center font-semibold text-xs border border-slate-400 text-zinc-500 rounded',
                   poppins.className
                 )}>
-                <FaRupiahSign size={12} className='text-zinc-400 ml-1 svg' />
-                {net}
+                <FaRupiahSign size={12} className='text-zinc-400 ml-1' />
+                {net === '' ? '' : rp.format(Number(net))}
               </div>
             </div>
           );
         },
         footer: (info: any) => {
-          const total =
+          const total = (
             info.table
               .getFilteredRowModel()
               .rows.reduce((sum: number, row: any) => {
                 const wager = Number(row.original.wager);
                 return sum + (isNaN(wager) ? 0 : wager);
-              }, 0) * 1.02;
+              }, 0) * 1.02
+          )
+            .toFixed()
+            .toString();
           return (
-            <div className='flex justify-center '>
+            <div className='flex justify-center py-1'>
               <div
                 className={cn(
                   'w-24 h-7 flex items-center bg-gray-500 gap-1 shadow-inner text-center font-semibold text-xs border border-slate-400 rounded',
@@ -394,7 +416,7 @@ export const FiftyFiftySpecialColumns = (
                 )}>
                 <FaRupiahSign size={12} className='text-zinc-400 ml-1 svg' />
                 <span className='text-white text-shadow'>
-                  {total.toFixed()}
+                  {rp.format(Number(total))}
                 </span>
               </div>
             </div>

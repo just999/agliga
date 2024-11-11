@@ -12,6 +12,7 @@ import {
   cn,
   oldStandardTT,
   poppins,
+  rp,
   safeParseFloat,
 } from '@/lib/utils';
 import { FiftyFiftyTableSchema } from '@/schemas/togel-schema';
@@ -60,8 +61,6 @@ export const useFiftyFiftyColumns = (
     control,
     name: 'ff',
   });
-  console.log('🚀 ~ ffValue:', ffValue[0].bigSmall);
-
   useEffect(() => {
     inputRefs.current.forEach((input) => {
       if (input) {
@@ -125,7 +124,11 @@ export const useFiftyFiftyColumns = (
     () => [
       {
         accessorKey: 'index',
-        header: ({}) => <div>No.</div>,
+        header: ({}) => (
+          <div className='w-7 text-zinc-700 h-full font-semibold flex items-end justify-center'>
+            No.
+          </div>
+        ),
         cell: ({ row }: any) => (
           <div className='flex flex-row justify-center p-0'>
             <span
@@ -284,28 +287,28 @@ export const useFiftyFiftyColumns = (
               //       handleRadioChange(e, row.index, `bigSmall`),
               //   })}
               //   className='flex flex-col items-start w-full'>
-              //   {' '}
+              //
               //   <span className='flex gap-2'>
-              //     {' '}
+              //
               //     <div className='flex w-20 items-center space-x-2'>
-              //       {' '}
+              //
               //       <RadioGroupItem
               //         value='big'
               //         id={`ff.${row.index}.big`}
               //         // name={`ff.${row.index}.bigSmall`}
-              //       />{' '}
-              //       <Label>Big</Label>{' '}
-              //     </div>{' '}
+              //       />
+              //       <Label>Big</Label>
+              //     </div>
               //     <div className='flex w-20 items-center space-x-2'>
-              //       {' '}
+              //
               //       <RadioGroupItem
               //         value='small'
               //         id={`r2-${row.index}.small`}
               //         // name={`ff.${row.index}.bigSmall`}
-              //       />{' '}
-              //       <Label>Small</Label>{' '}
-              //     </div>{' '}
-              //   </span>{' '}
+              //       />
+              //       <Label>Small</Label>
+              //     </div>
+              //   </span>
               // </RadioGroup>
               // <div className='flex  flex-col items-start w-full'>
               //   <span className='flex gap-2 '>
@@ -328,7 +331,7 @@ export const useFiftyFiftyColumns = (
               //             'w-4 h-4 px-2 cursor-pointer input-radio',
               //             ffValue === 'big' && 'bg-emerald-700'
               //           )}
-              //         />{' '}
+              //         />
               //         <span className='text-shadow '>Besar</span>
               //       </Label>
               //     </div>
@@ -348,7 +351,7 @@ export const useFiftyFiftyColumns = (
               //           type='radio'
               //           value={'small'}
               //           className='w-4 h-4 px-2'
-              //         />{' '}
+              //         />
               //         <span className='text-shadow '>Kecil</span>
               //       </Label>
               //     </div>
@@ -366,28 +369,28 @@ export const useFiftyFiftyColumns = (
               //   })}
               //   className='flex flex-col items-start w-full'
               //   defaultValue='odd'>
-              //   {' '}
+              //
               //   <span className='flex gap-2'>
-              //     {' '}
+              //
               //     <div className='flex w-20 items-center space-x-2'>
-              //       {' '}
+              //
               //       <RadioGroupItem
               //         value='odd'
               //         id={`r3-${row.index}.odd`}
               //         // name={`ff.${row.index}.oddEven`}
-              //       />{' '}
-              //       <Label className={cn('text-sm font-semibold px2', poppins.className)} >Odd</Label>{' '}
-              //     </div>{' '}
+              //       />
+              //       <Label className={cn('text-sm font-semibold px2', poppins.className)} >Odd</Label>
+              //     </div>
               //     <div className='flex w-20 items-center space-x-2'>
-              //       {' '}
+              //
               //       <RadioGroupItem
               //         value='even'
               //         id={`r4-${row.index}.even`}
               //         // name={`ff.${row.index}.oddEven`}
-              //       />{' '}
-              //       <Label className={cn('text-sm font-semibold px2', poppins.className)} >Even</Label>{' '}
-              //     </div>{' '}
-              //   </span>{' '}
+              //       />
+              //       <Label className={cn('text-sm font-semibold px2', poppins.className)} >Even</Label>
+              //     </div>
+              //   </span>
               // </RadioGroup>
               //   <div className='flex  flex-col items-start w-full'>
               //     <span className='flex gap-2 '>
@@ -407,7 +410,7 @@ export const useFiftyFiftyColumns = (
               //             type='radio'
               //             value={'even'}
               //             className='w-4 h-4 '
-              //           />{' '}
+              //           />
               //           <span className='text-shadow '>Genap</span>
               //         </Label>
               //       </div>
@@ -427,7 +430,7 @@ export const useFiftyFiftyColumns = (
               //             type='radio'
               //             value={'odd'}
               //             className='w-4 h-4 px-2'
-              //           />{' '}
+              //           />
               //           <span className='text-shadow '>Ganjil</span>
               //         </Label>
               //       </div>
@@ -446,28 +449,28 @@ export const useFiftyFiftyColumns = (
               //   })}
               //   className='flex flex-col items-start w-full'
               //   defaultValue='middle'>
-              //   {' '}
+              //
               //   <span className='flex gap-2'>
-              //     {' '}
+              //
               //     <div className='flex w-20 items-center space-x-2'>
-              //       {' '}
+              //
               //       <RadioGroupItem
               //         value='middle'
               //         id={`ff.${row.index}.middle`}
               //         // name={`ff.${row.index}.sideMiddle`}
-              //       />{' '}
-              //       <Label className={cn('text-sm font-semibold px2', poppins.className)} >Middle</Label>{' '}
-              //     </div>{' '}
+              //       />
+              //       <Label className={cn('text-sm font-semibold px2', poppins.className)} >Middle</Label>
+              //     </div>
               //     <div className='flex w-20 items-center space-x-2'>
-              //       {' '}
+              //
               //       <RadioGroupItem
               //         value='side'
               //         id={`r6-${row.index}.side`}
               //         // name={`ff.${row.index}.sideMiddle`}
-              //       />{' '}
-              //       <Label className={cn('text-sm font-semibold px2', poppins.className)} >Side</Label>{' '}
-              //     </div>{' '}
-              //   </span>{' '}
+              //       />
+              //       <Label className={cn('text-sm font-semibold px2', poppins.className)} >Side</Label>
+              //     </div>
+              //   </span>
               // </RadioGroup>
               //   <div className='flex  flex-col items-start w-full'>
               //     <span className='flex gap-2 '>
@@ -487,7 +490,7 @@ export const useFiftyFiftyColumns = (
               //             type='radio'
               //             value={'middle'}
               //             className='w-4 h-4 px-2'
-              //           />{' '}
+              //           />
               //           <span className='text-shadow '>Tengah</span>
               //         </Label>
               //       </div>
@@ -507,7 +510,7 @@ export const useFiftyFiftyColumns = (
               //             type='radio'
               //             value={'side'}
               //             className='w-4 h-4 px-2'
-              //           />{' '}
+              //           />
               //           <span className='text-shadow '>Tepi</span>
               //         </Label>
               //       </div>
@@ -521,8 +524,7 @@ export const useFiftyFiftyColumns = (
           }
           return (
             <div className='w-48 h-7 gap-.5 flex items-center p-0'>
-              {' '}
-              {radioGroupItems}{' '}
+              {radioGroupItems}
             </div>
           );
         },
@@ -534,7 +536,7 @@ export const useFiftyFiftyColumns = (
         ),
         cell: ({ row }: any) => {
           return (
-            <div className='relative flex justify-center'>
+            <div className='relative  flex justify-center text-zinc-700 border border-zinc-400 rounded-md h-7 px-0 font-semibold w-full '>
               <InputCustom
                 {...register(`ff.${row.index}.wager`)}
                 type='tel'
@@ -557,24 +559,32 @@ export const useFiftyFiftyColumns = (
       {
         accessorKey: 'dis',
         header: ({ column }: any) => (
-          <div className='flex items-center justify-center '>
-            kei (1.5 <Percent size={12} /> )
+          <div className='text-zinc-700 font-semibold w-28  h-full flex items-center justify-center'>
+            <div className='flex items-center text-xs font-semibold'>
+              kei (1.5 <Percent size={10} /> )
+            </div>
           </div>
         ),
         cell: ({ row }: any) => {
           const wager = Number(row.original.wager);
           const discount =
-            isNaN(wager) || wager === 0 ? '' : -((wager * 1.5) / 100).toFixed();
+            isNaN(wager) || wager === 0 ? '' : (-wager * 0.015).toFixed();
           return (
-            <div className='relative flex justify-center'>
-              <div
-                className={cn(
-                  'w-28 h-7 flex items-center gap-2 text-center font-semibold text-xs border border-slate-400 text-zinc-500 rounded',
-                  poppins.className
-                )}>
-                <FaRupiahSign size={12} className='text-zinc-300 ml-1' />
-                {discount}
-              </div>
+            <div
+              className={cn(
+                'h-7 text-zinc-700 mx-auto flex items-center justify-between border border-amber-500 gap-x-0.5 text-xs shadow-inner font-semibold w-28 bg-amber-200/40 text-center rounded-md',
+                poppins.className
+              )}>
+              <span className='flex items-center text-zinc-400'>
+                <FaRupiahSign size={12} className='text-zinc-300 mx-1' />
+                {discount === '' ? '' : rp.format(Number(discount))}
+              </span>
+              {discount && (
+                <div className='flex items-center text-[10px] text-amber-500 pr-1  '>
+                  (-5 <Percent size={10} className='svg' />)
+                  {/* <pre>{JSON.stringify(row.original.dis, null, 2)}</pre> */}
+                </div>
+              )}
             </div>
           );
         },
@@ -587,7 +597,9 @@ export const useFiftyFiftyColumns = (
       {
         accessorKey: 'net',
         header: ({ column }: any) => (
-          <div className='flex items-center justify-center '>net</div>
+          <div className='text-zinc-700 font-semibold w-28  h-full flex items-end justify-center'>
+            net
+          </div>
         ),
         cell: ({ row }: any) => {
           const wager = Number(row.original.wager);
@@ -596,28 +608,31 @@ export const useFiftyFiftyColumns = (
               ? ''
               : (wager * 1.015).toFixed().toString();
           return (
-            <div className='relative flex justify-center'>
+            <div className='relative flex justify-center items-center bg-zinc-300/40 text-zinc-700 border border-zinc-200 rounded-md h-7 px-0 font-semibold w-28 mx-auto'>
               <div
                 className={cn(
-                  'w-28 h-7 flex items-center gap-2 text-center font-semibold text-xs border border-slate-400 text-zinc-500 rounded',
+                  'w-28 h-7 flex items-center gap-1  text-center font-semibold text-xs border border-slate-400 text-zinc-500 rounded',
                   poppins.className
                 )}>
                 <FaRupiahSign size={12} className='text-zinc-300 ml-1' />
-                {net}
+                {net === '' ? '' : rp.format(Number(net))}
               </div>
             </div>
           );
         },
         footer: (info: any) => {
-          const total =
+          const total = (
             info.table
               .getFilteredRowModel()
               .rows.reduce((sum: number, row: any) => {
                 const wager = Number(row.original.wager);
                 return sum + (isNaN(wager) ? 0 : wager);
-              }, 0) * 1.015;
+              }, 0) * 1.015
+          )
+            .toFixed()
+            .toString();
           return (
-            <div className='flex justify-center '>
+            <div className='flex justify-center py-1'>
               <div
                 className={cn(
                   'w-28 h-7 flex items-center bg-gray-500 gap-1 shadow-inner text-center font-semibold text-xs border border-slate-400 rounded',
@@ -625,7 +640,7 @@ export const useFiftyFiftyColumns = (
                 )}>
                 <FaRupiahSign size={12} className='text-zinc-400 ml-1 svg' />
                 <span className='text-white text-shadow'>
-                  {total === 0 ? '' : total.toFixed().toLocaleString()}
+                  {rp.format(Number(total))}
                 </span>
               </div>
             </div>

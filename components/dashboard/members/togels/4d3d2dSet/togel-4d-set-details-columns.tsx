@@ -2,7 +2,7 @@
 
 import { Form4dSetProps } from '@/components/dashboard/members/togels/togel-4d-set';
 import { Button, InputCustom } from '@/components/ui';
-import { cn, oldStandardTT, poppins, safeParseFloat } from '@/lib/utils';
+import { cn, oldStandardTT, poppins, rp, safeParseFloat } from '@/lib/utils';
 import { Trash2Icon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { ChangeEvent, useCallback, useEffect, useMemo } from 'react';
@@ -36,8 +36,6 @@ export const useTogel4dSetDetailsColumns = (
     control,
     name: 'sin4ds',
   });
-  console.log('🚀 ~ sin4dSetValue:', sin4dSetValue);
-
   const calculateTotalBet = useCallback(() => {
     const totalAll = sin4dSetValue.reduce((acc: any, cur: any) => {
       return acc + Number(cur.net);
@@ -162,7 +160,7 @@ export const useTogel4dSetDetailsColumns = (
                   'text-left px-0 text-zinc-500 font-semibold tracking-wider text-xs',
                   poppins.className
                 )}>
-                {row.original.wager}
+                {rp.format(row.original.wager)}
               </span>
             </div>
             {/* <pre>{JSON.stringify(row.original.wager, null, 2)}</pre> */}
@@ -186,14 +184,14 @@ export const useTogel4dSetDetailsColumns = (
                   <FaRupiahSign size={10} className='text-zinc-400 mx-1 svg' />
                   <div>
                     {row.original.dis === '66%'
-                      ? (Number(row.original.wager) * 0.66).toFixed()
+                      ? rp.format(Number(row.original.wager) * 0.66)
                       : row.original.dis === '59%'
-                      ? (Number(row.original.wager) * 0.59).toFixed()
-                      : (Number(row.original.wager) * 0.29).toFixed()}
+                      ? rp.format(Number(row.original.wager) * 0.59)
+                      : rp.format(Number(row.original.wager) * 0.29)}
                   </div>
                 </div>
 
-                <div className='text-nowrap flex text-[10px] text-amber-600 text-shadow'>
+                <div className='text-nowrap flex text-[10px] text-amber-600 text-shadow pr-1'>
                   ({row.original.dis})
                 </div>
               </div>
@@ -231,7 +229,7 @@ export const useTogel4dSetDetailsColumns = (
                     'text-left px-0 text-gray-500 tracking-wider text-xs',
                     poppins.className
                   )}>
-                  {Number(row.original.net).toFixed()}
+                  {rp.format(Number(row.original.net))}
                 </span>
               </div>
             </div>
@@ -246,7 +244,7 @@ export const useTogel4dSetDetailsColumns = (
             }, 0);
 
           return (
-            <div className='flex justify-center '>
+            <div className='flex justify-center py-2'>
               <div
                 className={cn(
                   'w-24 h-7 flex items-center bg-gray-500 gap-1 shadow-inner text-center font-semibold text-xs border border-slate-400 rounded',
@@ -254,7 +252,7 @@ export const useTogel4dSetDetailsColumns = (
                 )}>
                 <FaRupiahSign size={12} className='text-zinc-400 ml-1 svg' />
                 <span className='text-white text-shadow'>
-                  {total.toFixed()}
+                  {rp.format(total.toFixed())}
                 </span>
               </div>
             </div>

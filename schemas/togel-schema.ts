@@ -36,7 +36,7 @@ export const number4dBetSchema = z.object({
 });
 
 const totalBetSchema = z.object({
-  copy: z.boolean(),
+  copy: z.optional(z.boolean()),
   copyWager: z.optional(z.string()),
   totalBet: z.optional(z.string()),
 });
@@ -145,6 +145,7 @@ export const bseoTableSchema = z
   .merge(totalBetSchema);
 
 export type BseoTableSchema = z.infer<typeof bseoTableSchema>['bsEo'][number];
+export type BseoOnlySchema = z.infer<typeof bseo4dSchema>;
 
 export const bigSmallOddEvenSchema = z.object({
   bseo: bigSmallOddEvenEnum,
@@ -172,6 +173,18 @@ export const bseoSchema = z
 export type Bseo4dSchema = z.infer<typeof bseoSchema>['bs'][number];
 export type BseoSchema = z.infer<typeof bseoSchema>;
 
+export const quickTabSchema = num4dSchema.merge(number4dBetSchema);
+export const quickTabArraySchema = z.array(quickTabSchema);
+
+export const quickTab4dSchema = z
+  .object({
+    q2d: quickTabArraySchema,
+  })
+  .merge(totalBetSchema);
+
+export type QuickTab4dSchema = z.infer<typeof quickTab4dSchema>['q2d'][number];
+export type QuickTabSchema = z.infer<typeof quickTab4dSchema>;
+
 // !COLOK-BEBAS SCHEMA
 export const singleDigitSchema = z.object({
   d1: z.optional(
@@ -185,7 +198,9 @@ const colokBebasSchema = singleDigitSchema.merge(number4dBetSchema);
 
 const colokBebasArraySchema = z.array(colokBebasSchema);
 
-export const colokBebasTableSchema = z.object({ cb: colokBebasArraySchema });
+export const colokBebasTableSchema = z
+  .object({ cb: colokBebasArraySchema })
+  .merge(totalBetSchema);
 
 export type ColokBebasTableSchema = z.infer<
   typeof colokBebasTableSchema

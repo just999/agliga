@@ -95,7 +95,6 @@ export function TogelTableComponent<TData, TValue>({
   });
 
   const watchAllInputs = watch();
-  console.log('🚀 ~ watchAllInputs:', watchAllInputs);
   // const { fields, prepend, append, remove } = useFieldArray({
   //   control,
   //   name: 'allBet',

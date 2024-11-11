@@ -37,7 +37,6 @@ export const useTogel = (
   handleInputChange?: (field: any, value: any, i: number) => void,
   sin4dSet?: Form4dSetProps[]
 ) => {
-  console.log('🚀 ~ sin4dSet:', sin4dSet);
   const router = useRouter();
 
   const watchAllInputs = watch();

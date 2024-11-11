@@ -161,9 +161,7 @@ const DasarTable = () => {
   });
 
   const watchAllInputs = watch();
-  console.log('🚀 ~ watchAllInputs:', watchAllInputs);
   const dasarComb = watch('dasar');
-  console.log('🚀 ~ dasar:', dasarComb);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   const handleInputChange = useCallback(
@@ -185,12 +183,6 @@ const DasarTable = () => {
     key: string
   ) => {
     const { name, value } = e.target;
-    console.log(
-      '🚀 ~ DasarSpTable ~ name, value:',
-      `dasarSp.${rowIndex}.${key}`,
-      name,
-      value
-    );
     setSelectedValues((prev: any) => ({
       ...prev,
       [`dasarSp.${rowIndex}.${key}`]: value,
@@ -209,9 +201,6 @@ const DasarTable = () => {
     handleInputChange,
     handleRadioChange
   );
-
-  console.log('🚀 ~ DasarSpTable ~ selectedValues:', selectedValues);
-
   const onSubmit = (data: any) => {
     const filteredData = data.dasar.filter((dat: any) => dat.wager !== '');
 
@@ -220,12 +209,9 @@ const DasarTable = () => {
       dis: (Number(item.wager) * (25 / 100)).toFixed().toString(),
       net: (Number(item.wager) * (125 / 100)).toFixed().toString(),
     }));
-    console.log('🚀 ~ renderedNet ~ renderedNet:', renderedNet);
-
     const totalBet = renderedNet.reduce(function (acc: any, cur: any) {
       return acc + Number(cur.net);
     }, 0);
-
     setValue('totalBet', totalBet);
   };
 

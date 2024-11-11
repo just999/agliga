@@ -113,9 +113,6 @@ const TogelTable4dSet = ({ params }: TogelTable4dSetProps) => {
   }, [sin4dSetData]);
 
   // const allBetValues = useWatch({ control, name: 'allBet' });
-
-  // console.log('🚀 ~ TogelTable4dSet ~ togel4dSet:', togel4dSet);
-
   const validateObject = (obj: Form4dSetProps): boolean => {
     const keys = ['d1', 'd2', 'd3', 'd4'];
     const count = keys.reduce((acc, key: any) => (obj[key] ? acc + 1 : acc), 0);
@@ -127,8 +124,6 @@ const TogelTable4dSet = ({ params }: TogelTable4dSetProps) => {
   };
 
   // const validationResults = validateArray(togel4dSet);
-  // console.log('🚀 ~ TogelTable4dSet ~ validationResults:', validationResults);
-
   const { fields, prepend, append, remove, update } = useFieldArray({
     control,
     name: 'sin4dSet',

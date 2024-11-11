@@ -94,14 +94,11 @@ const Togel4dSetDetailsTable = ({
     control,
     name: 'sin4ds',
   });
-  console.log('🚀 ~ sin4dSetValue:', sin4dSetValue);
-
   useEffect(() => {
     const getTotal = sin4dSetValue.reduce((acc: any, curr) => {
       return acc + Number(curr?.net);
     }, 0);
     if (getTotal) setValue('totalBet', getTotal.toFixed());
-    console.log('🚀 ~ getTotal ~ getTotal:', getTotal.toFixed());
   }, [setValue, sin4dSetValue, sin4dSet]);
 
   useEffect(() => {
@@ -155,8 +152,6 @@ const Togel4dSetDetailsTable = ({
   }));
 
   const onSubmit = async (data: any) => {
-    console.log('🚀 ~ onSubmit ~ data:', data);
-
     try {
       const res = await createTogel(data);
       if (res.status === 'success') {

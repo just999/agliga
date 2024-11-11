@@ -125,9 +125,7 @@ const ShioTable = () => {
   });
 
   const watchAllInputs = watch();
-  console.log('🚀 ~ watchAllInputs:', watchAllInputs);
   const shioComb = watch('shio');
-  console.log('🚀 ~ shio:', shioComb);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   const handleInputChange = useCallback(
@@ -149,12 +147,6 @@ const ShioTable = () => {
     key: string
   ) => {
     const { name, value } = e.target;
-    console.log(
-      '🚀 ~ ShioSpTable ~ name, value:',
-      `shioSp.${rowIndex}.${key}`,
-      name,
-      value
-    );
     setSelectedValues((prev: any) => ({
       ...prev,
       [`shioSp.${rowIndex}.${key}`]: value,
@@ -173,20 +165,26 @@ const ShioTable = () => {
     handleInputChange,
     handleRadioChange
   );
-
-  console.log('🚀 ~ ShioSpTable ~ selectedValues:', selectedValues);
   const onSubmit = (data: any) => {
-    console.log('🚀 ~ onSubmit ~ data:', data);
+    const filteredData = data.shio.filter(
+      (dat: ShioTableSchema) => dat.wager !== ''
+    );
+    // .map((sh: ShioTableSchema) => ({
+    //   ...sh,
+    //   dis: Number(sh.wager) * (9 / 100),
+    //   net: Number(sh.wager) * (91 / 100),
+    // }));
 
-    const filteredData = data.shio
-      .filter((dat: ShioTableSchema) => dat.wager !== '')
-      .map((sh: ShioTableSchema) => ({
-        ...sh,
-        dis: Number(sh.wager) * (9 / 100),
-        net: Number(sh.wager) * (91 / 100),
-      }));
+    const renderedNet = filteredData.map((item: any) => ({
+      ...item,
+      dis: (Number(item.wager) * 0.09).toFixed().toString(),
+      net: (Number(item.wager) * 0.91).toFixed().toString(),
+    }));
 
-    console.log('🚀 ~ onSubmit ~ filteredData:', filteredData);
+    const totalBet = renderedNet.reduce(function (acc: any, cur: any) {
+      return acc + Number(cur.net);
+    }, 0);
+    setValue('totalBet', totalBet);
   };
 
   const table = useReactTable({

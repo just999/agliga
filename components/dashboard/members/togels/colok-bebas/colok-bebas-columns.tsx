@@ -1,6 +1,6 @@
 'use client';
 
-import { cn, poppins } from '@/lib/utils';
+import { cn, poppins, rp } from '@/lib/utils';
 import { ColokBebasTableSchema } from '@/schemas/togel-schema';
 
 import { InputCustom } from '@/components/ui';
@@ -102,19 +102,27 @@ export const useColokBebasColumns = (
           const discount =
             isNaN(wager) || wager === 0 ? '' : (wager * 0.05).toFixed();
           return (
-            <div className='relative flex justify-center'>
-              <div
-                className={cn(
-                  'w-28 h-7 flex items-center gap-2  text-center font-semibold text-xs border border-slate-400 text-zinc-500 rounded',
-                  poppins.className
-                )}>
-                <FaRupiahSign size={12} className='text-zinc-300  ml-1' />
+            // <div className='relative flex justify-center'>
+            <div
+              className={cn(
+                'h-7 text-zinc-700 mx-auto flex items-center justify-between border border-amber-500 gap-x-0.5 text-xs shadow-inner font-semibold w-28 bg-amber-200/40 text-center rounded-md',
+                poppins.className
+              )}>
+              <span className='flex items-center text-zinc-400 '>
+                <FaRupiahSign size={12} className='text-zinc-300  mx-1' />
                 {/* {row.original.wager === ''
-                  ? ''
-                  : (Number(row.original.wager) * (5 / 100)).toFixed()} */}
-                {discount}
-              </div>
+                    ? ''
+                    : (Number(row.original.wager) * (5 / 100)).toFixed()} */}
+                {discount === '' ? '' : rp.format(Number(discount))}
+              </span>
+              {discount && (
+                <div className='flex items-center text-[10px] text-amber-500 pr-1  '>
+                  (5 <Percent size={10} className='svg' />)
+                  {/* <pre>{JSON.stringify(row.original.dis, null, 2)}</pre> */}
+                </div>
+              )}
             </div>
+            // </div>
           );
         },
         footer: () => (
@@ -128,31 +136,34 @@ export const useColokBebasColumns = (
         header: ({ column }: any) => (
           <div className='flex items-center justify-center '>net</div>
         ),
-        cell: ({ row }: any) => (
-          <div className='relative flex justify-center'>
-            <div
-              className={cn(
-                'w-28 h-7 flex items-center gap-2  text-center font-semibold text-xs border border-slate-400 text-zinc-500 rounded',
-                poppins.className
-              )}>
-              <FaRupiahSign size={12} className='text-zinc-300  ml-1' />
-              {row.original.wager === ''
-                ? ''
-                : (Number(row.original.wager) * (95 / 100)).toFixed()}
+        cell: ({ row }: any) => {
+          const wager = row.original.wager;
+          const netValue = (Number(wager) * 0.95).toFixed();
+          return (
+            <div className='relative flex justify-center items-center bg-zinc-300/40 text-zinc-700 border border-zinc-200 rounded-md h-7 px-0 font-semibold w-28 mx-auto'>
+              <div
+                className={cn(
+                  'w-28 h-7 flex items-center gap-1  text-center font-semibold text-xs border border-slate-400 text-zinc-500 rounded',
+                  poppins.className
+                )}>
+                <FaRupiahSign size={12} className='text-zinc-300  ml-1' />
+                {row.original.wager === '' ? '' : rp.format(Number(netValue))}
+              </div>
             </div>
-          </div>
-        ),
+          );
+        },
         footer: (info: any) => {
-          const total =
+          const total = (
             info.table
               .getFilteredRowModel()
               .rows.reduce(
                 (sum: number, row: any) => sum + Number(row.original.wager),
                 0
               ) *
-            (95 / 100);
+            (95 / 100)
+          ).toFixed();
           return (
-            <div className='flex justify-center '>
+            <div className='flex justify-center py-2'>
               <div
                 className={cn(
                   'w-28 h-7 flex items-center bg-gray-500 gap-1 shadow-inner text-center font-semibold text-xs border border-slate-400 rounded',
@@ -160,7 +171,7 @@ export const useColokBebasColumns = (
                 )}>
                 <FaRupiahSign size={12} className='text-zinc-400 ml-1 svg' />
                 <span className='text-white text-shadow'>
-                  {total.toFixed().toString()}
+                  {rp.format(Number(total))}
                 </span>
               </div>
             </div>

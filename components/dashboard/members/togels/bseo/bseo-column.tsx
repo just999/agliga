@@ -29,10 +29,6 @@ export const useBsTogelColumns = <TData, TValue>(
   remove?: (i: number) => void
   // handleInputChange?: (field: any, value: any, i: number) => void
 ) => {
-  console.log('🚀 ~ gameData:', gameData);
-  // console.log('🚀 ~ data:', data);
-  console.log('🚀 ~ bsData:', bsData);
-
   const game = bsData?.map((dat) => dat.position)[0];
 
   const newWagerValue = useWatch({
@@ -40,7 +36,6 @@ export const useBsTogelColumns = <TData, TValue>(
     name: 'bs',
     defaultValue: [],
   });
-  console.log('🚀 ~ newWagerValue:', newWagerValue);
   // useEffect(() => {
   //   if (newWagerValue) setValue('wager', newWagerValue.wager);
   // }, [newWagerValue, setValue]);

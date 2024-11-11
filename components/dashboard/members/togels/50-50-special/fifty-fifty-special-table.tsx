@@ -228,9 +228,7 @@ const FiftyFiftySpecialTable = () => {
   });
 
   const watchAllInputs = watch();
-  console.log('🚀 ~ watchAllInputs:', watchAllInputs);
   const fiftyFiftySp = watch('ffSp');
-  console.log('🚀 ~ fiftyFifty:', fiftyFiftySp);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   const handleInputChange = useCallback(
@@ -252,12 +250,6 @@ const FiftyFiftySpecialTable = () => {
     key: string
   ) => {
     const { name, value } = e.target;
-    console.log(
-      '🚀 ~ FiftyFiftySpTable ~ name, value:',
-      `ffSp.${rowIndex}.${key}`,
-      name,
-      value
-    );
     setSelectedValues((prev: any) => ({
       ...prev,
       [`ffSp.${rowIndex}.${key}`]: value,
@@ -276,8 +268,6 @@ const FiftyFiftySpecialTable = () => {
     handleInputChange,
     handleRadioChange
   );
-
-  console.log('🚀 ~ FiftyFiftySpTable ~ selectedValues:', selectedValues);
   const onSubmit = (data: any) => {
     const filteredData = data.ffSp.filter(
       (dat: any) => dat.wager !== '' && dat.d1 !== '' && dat.position !== ''
@@ -288,8 +278,6 @@ const FiftyFiftySpecialTable = () => {
       dis: (Number(item.wager) * -(2 / 100)).toFixed().toString(),
       net: (Number(item.wager) * (102 / 100)).toFixed().toString(),
     }));
-    console.log('🚀 ~ renderedNet ~ renderedNet:', renderedNet);
-
     const totalBet = renderedNet.reduce(function (acc: any, cur: any) {
       return acc + Number(cur.net);
     }, 0);

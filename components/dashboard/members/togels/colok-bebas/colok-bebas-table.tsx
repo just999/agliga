@@ -45,7 +45,6 @@
 
 // let render = 0;
 // const ColokBebasTable = ({ data }: ColokBebasProps) => {
-//   console.log('🚀 ~ ColokBebasTable ~ data:', data);
 //   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 //   const [cl, setCl] = useState<ColokBebasTableSchema[]>([]);
 //   const {
@@ -96,7 +95,6 @@
 //   };
 
 //   const onSubmit = (data: any) => {
-//     console.log('🚀 ~ onSubmit ~ data:', data);
 //   };
 
 //   const table = useReactTable({
@@ -265,6 +263,7 @@ ColokBebasTableProps<TData, TValue>) => {
     mode: 'onChange',
     defaultValues: {
       cb,
+      totalBet: '',
     },
   });
 
@@ -310,7 +309,6 @@ ColokBebasTableProps<TData, TValue>) => {
       dis: (Number(item.wager) * (5 / 100)).toFixed().toString(),
       net: (Number(item.wager) * (95 / 100)).toFixed().toString(),
     }));
-    console.log('🚀 ~ renderedNet ~ renderedNet:', renderedNet);
   };
 
   const table = useReactTable({

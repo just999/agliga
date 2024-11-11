@@ -50,7 +50,6 @@ const BseoTableTest = ({
   bsData,
   i,
 }: BseoTableTestProps) => {
-  console.log('🚀 ~ data:', data);
   const defaultFilterFns = {
     fuzzy: () => true,
     contains: () => true,
@@ -64,7 +63,6 @@ const BseoTableTest = ({
     getCoreRowModel: getCoreRowModel(),
     filterFns: defaultFilterFns,
   });
-
   return (
     <Table>
       <TableHeader>

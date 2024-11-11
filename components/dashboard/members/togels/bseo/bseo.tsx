@@ -237,8 +237,6 @@ const Bseo = ({ params }: BseoProps) => {
             [name.split('.')[2]]: value,
           };
         }
-        console.log('🚀 ~ setBs ~ newState:', newState);
-
         setValue('bs', newState); // Update the form state
         return newState;
       });
@@ -247,9 +245,7 @@ const Bseo = ({ params }: BseoProps) => {
   );
 
   const handleSetBseo = () => {
-    console.log('🚀 ~ Bseo ~ wager:', wager);
     const res = getValues();
-    console.log('🚀 ~ handleSetBseo ~ res:', res);
     setShow((pre) => !pre);
   };
 

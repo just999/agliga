@@ -466,3 +466,21 @@ export type FormBbValuesProps = {
   copyWager: string;
   totalBet: string;
 };
+
+export type Togel4dValues = {
+  d1?: string;
+  d2?: string;
+  d3?: string;
+  d4?: string;
+  game?: string;
+  wager?: string;
+  dis?: string;
+  net?: string;
+};
+export type ArrayOptProps = {
+  d1?: string;
+  d2?: string;
+  d3?: string;
+  d4?: string;
+  game: '2d' | '2dt' | '2dd';
+};

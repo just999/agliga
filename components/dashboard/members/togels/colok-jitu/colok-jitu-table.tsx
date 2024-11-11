@@ -88,9 +88,7 @@ const ColokJituTable = () => {
   });
 
   const watchAllInputs = watch();
-  console.log('🚀 ~ watchAllInputs:', watchAllInputs);
   const colokJitu = watch('cj');
-  console.log('🚀 ~ colokJitu:', colokJitu);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   const copy = useWatch({ control, name: 'copy' });
@@ -144,8 +142,6 @@ const ColokJituTable = () => {
   );
 
   const onSubmit = (data: any) => {
-    console.log('🚀 ~ onSubmit ~ data:', data);
-
     const filteredData = data.cj.filter(
       (dat: any) => dat.wager !== '' && dat.d1 !== '' && dat.position !== ''
     );
@@ -155,12 +151,9 @@ const ColokJituTable = () => {
       dis: (Number(item.wager) * (6 / 100)).toFixed().toString(),
       net: (Number(item.wager) * (94 / 100)).toFixed().toString(),
     }));
-    console.log('🚀 ~ renderedNet ~ renderedNet:', renderedNet);
-
     const totalBet = renderedNet.reduce(function (acc: any, cur: any) {
       return acc + Number(cur.net);
     }, 0);
-
     setValue('totalBet', totalBet);
   };
 

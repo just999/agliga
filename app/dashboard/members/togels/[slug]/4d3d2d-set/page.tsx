@@ -2,6 +2,7 @@ import Togel4dSetTable from '@/components/dashboard/members/togels/4d3d2dSet/tog
 import Togel4dSet from '@/components/dashboard/members/togels/togel-4d-set';
 import TogelTable4dSet from '@/components/dashboard/members/togels/togel-table-4d-set';
 import TogelTable4dSetConfirm from '@/components/dashboard/members/togels/togel-table-4d-set-confirm';
+import TogelContainer from '@/components/ui/togel-container';
 import { capitalizeFirstCharacter, cn, oldStandardTT } from '@/lib/utils';
 
 type Togel4dSetPageProps = {
@@ -12,7 +13,7 @@ type Togel4dSetPageProps = {
 
 const Togel4dSetPage = async ({ params }: Togel4dSetPageProps) => {
   return (
-    <div className='bg-cyan-100 px-2 py-2 shadow-xl'>
+    <TogelContainer className='bg-cyan-100 px-2 py-2 shadow-xl'>
       <div
         className={cn(
           'mx-auto text-center font-semibold text-lg',
@@ -26,7 +27,7 @@ const Togel4dSetPage = async ({ params }: Togel4dSetPageProps) => {
         {/* <TogelTable4dSet params={params} /> */}
         {/* <TogelTable4dSetConfirm params={params} /> */}
       </div>
-    </div>
+    </TogelContainer>
   );
 };
 

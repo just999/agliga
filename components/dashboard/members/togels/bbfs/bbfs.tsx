@@ -220,17 +220,21 @@ const Bbfs = ({ params }: BbfsProps) => {
 
   const bbfsDataTable = [...unique4dArray, ...unique3dArray, ...unique2dArray];
   useEffect(() => {
-    render++;
-
     if (allRes.length > 0) {
       setShow(true);
     } else {
       setShow(false);
     }
   }, [allRes.length, bbVal, setShow, show, allRes]);
+
+  useEffect(() => {
+    render++;
+  }, []);
+
   return (
     <>
-      <div className='flex py-2 w-full'>
+      <div className='font-semibold text-xs'>render: {render}</div>
+      <div className='flex w-full'>
         <div className='flex flex-col'>
           {fields.map((field, i) => {
             return (
@@ -281,7 +285,7 @@ const Bbfs = ({ params }: BbfsProps) => {
                       })}
                       defaultValue={field.bbNumber}
                       className={cn(
-                        'p-1 w-full h-7 pl-5 text-base tracking-[8px] rounded-lg placeholder:text-zinc-200 placeholder:font-semibold font-semibold placeholder:text-xs shadow-inner placeholder:tracking-normal',
+                        'p-1 w-full h-7 text-center text-base tracking-[8px] rounded-lg placeholder:text-zinc-200 placeholder:font-semibold font-semibold placeholder:text-xs shadow-inner placeholder:tracking-normal',
                         oldStandardTT.className
                       )}
                       placeholder='max 5 angka'
@@ -356,7 +360,7 @@ const Bbfs = ({ params }: BbfsProps) => {
                       i={i}
                       bbData={watchAllInputs.bb}
                       bbfsTableData={bbfsDataTable}
-                      control={control}
+                      // control={control}
                     />
                   )}
                 </div>
@@ -365,7 +369,6 @@ const Bbfs = ({ params }: BbfsProps) => {
           })}
         </div>
       </div>
-      {/* {showBbfs && bbfsDataTable && <BbfsTable dataTable={bbData} />} */}
       {/* <pre>{JSON.stringify(watch(), null, 2)}</pre> */}
     </>
   );

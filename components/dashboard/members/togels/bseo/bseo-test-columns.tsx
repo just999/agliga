@@ -54,8 +54,6 @@ export const useBseoTestColumns = (
     control,
     name: 'bsEo',
   });
-  console.log('🚀 ~ bseoValue:', bseoValue);
-
   useEffect(() => {
     inputRefs.current.forEach((input) => {
       if (input) {

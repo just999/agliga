@@ -25,8 +25,8 @@ const TogelSidebar = ({ slug }: TogelSidebarProps) => {
       {togelSidebar.map((sidebarGroup, groupIndex) => (
         <div
           key={groupIndex}
-          className='mb-4  bg-orange-400 shadow-lg rounded-md'>
-          <h3 className='text-sm text-gray-200/70 py-1 px-2 font-bold bg-amber-600 w-full mb-1 rounded-t-md'>
+          className='mb-4  bg-orange-400 shadow-lg rounded-md pb-2'>
+          <h3 className='text-sm text-yellow-100 py-1 px-2 font-bold bg-amber-600 w-full mb-1 rounded-t-md'>
             {groupTitles[groupIndex] || `Group ${groupIndex + 1}`}
           </h3>
           {sidebarGroup.map((item, itemIndex) => {

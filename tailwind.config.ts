@@ -24,6 +24,13 @@ const config = {
       width: {
         '21': '84px',
         '22': '88px',
+        '23': '92px',
+        '27': '108px',
+        '33': '132px',
+        '34': '136px',
+        '35': '140px',
+        '108': '432px',
+        '144': '576px',
       },
       gridTemplateColumns: {
         // 24 column grid

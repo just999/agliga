@@ -80,9 +80,7 @@ const ColokMacauTable = () => {
   });
 
   const watchAllInputs = watch();
-  console.log('🚀 ~ watchAllInputs:', watchAllInputs);
   const colokMacau = watch('cm');
-  console.log('🚀 ~ colokMacau:', colokMacau);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   const copy = useWatch({ control, name: 'copy' });
@@ -153,8 +151,6 @@ const ColokMacauTable = () => {
   );
 
   const onSubmit = (data: any) => {
-    console.log('🚀 ~ onSubmit ~ data:', data);
-
     const filteredData = data.cm.filter(
       (dat: any) => dat.wager !== '' && dat.d1 !== '' && dat.d2 !== ''
     );
@@ -164,12 +160,9 @@ const ColokMacauTable = () => {
       dis: (Number(item.wager) * (10 / 100)).toFixed().toString(),
       net: (Number(item.wager) * (90 / 100)).toFixed().toString(),
     }));
-    console.log('🚀 ~ renderedNet ~ renderedNet:', renderedNet);
-
     const totalBet = renderedNet.reduce(function (acc: any, cur: any) {
       return acc + Number(cur.net);
     }, 0);
-
     setValue('totalBet', totalBet);
   };
 

@@ -36,19 +36,14 @@ export const TogelGames4d = ({
   getValues,
 }: TogelGames4dProps) => {
   const [number, setNumber] = useState('');
-  console.log('🚀 ~ number:', number);
   const value = useWatch({
     control,
     name: `sin4ds.${i}`,
     defaultValue: {},
   });
-  console.log('🚀 ~ value:', value);
-
   const type = 'game';
 
   const game4d = useTogel4d({ value, type });
-  console.log('🚀 ~ game4d:', game4d);
-
   useEffect(() => {
     if (game4d && typeof game4d === 'string') {
       setValue(`sin4ds.${i}.game`, game4d);

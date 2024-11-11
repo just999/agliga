@@ -93,8 +93,6 @@ const TogelTable = ({ slug }: TogelTableProps) => {
   });
   const watchAllInputs = watch();
   const sin4d = watch('sin4ds');
-  console.log('🚀 ~ TogelTable ~ sin4d:', sin4d);
-
   // const { copy, copyWager, sin4ds: newSin4ds } = watchAllInputs;
 
   const copy = useWatch({ control, name: 'copy' });
@@ -123,16 +121,13 @@ const TogelTable = ({ slug }: TogelTableProps) => {
       // Update the 'net' field for each item in the sin4ds array individually
       sin4d.forEach((item, i) => {
         const { game, dis, net, period, wager, status, ...rest } = item;
-        console.log('🚀 ~ newSin4ds.forEach ~ item:', item);
-
         const number = Object.values(rest).filter((no) => no).length >= 2;
-        console.log('🚀 ~ newSin4ds.forEach ~ number:', number);
-
         if (copy) {
           if (copyWager && game) {
             setValue(`sin4ds.${i}.wager`, copyWager);
             if (game === '4d' && rest.d1 && rest.d2 && rest.d3 && rest.d4) {
               setValue(`sin4ds.${i}.net`, (Number(copyWager) * 0.34).toFixed());
+              setValue(`sin4ds.${i}.dis`, (Number(copyWager) * 0.66).toFixed());
             } else if (
               game === '3d' &&
               !rest.d1 &&
@@ -141,6 +136,7 @@ const TogelTable = ({ slug }: TogelTableProps) => {
               rest.d4
             ) {
               setValue(`sin4ds.${i}.net`, (Number(copyWager) * 0.41).toFixed());
+              setValue(`sin4ds.${i}.dis`, (Number(copyWager) * 0.59).toFixed());
             } else if (
               (game === '2d' || game === '2dt' || game === '2dd') &&
               ((rest.d1 && rest.d2 && !rest.d3 && !rest.d4) ||
@@ -148,29 +144,23 @@ const TogelTable = ({ slug }: TogelTableProps) => {
                 (!rest.d1 && !rest.d2 && rest.d3 && rest.d4))
             ) {
               setValue(`sin4ds.${i}.net`, (Number(copyWager) * 0.71).toFixed());
+              setValue(`sin4ds.${i}.dis`, (Number(copyWager) * 0.29).toFixed());
             } else {
               setValue(`sin4ds.${i}.net`, '');
+              setValue(`sin4ds.${i}.dis`, '');
             }
           }
         }
       });
     }
   }, [copy, copyWager, setSin4ds, setValue, sin4d]);
-  console.log('🚀 ~ TogelTable ~ sin4ds:', sin4ds);
-
   // const copy = useWatch({ control, name: 'copy' });
   // const copyWager = useWatch({ control, name: 'copyWager' });
 
   // const newWager = useCallback(() => {
   //   if (copy) {
   //     const sin = getValues('sin4ds');
-  //     console.log('🚀 ~ newWager ~ sin:', sin);
-
   //     sin.forEach((val, idx) => {
-  //       console.log('🚀 ~ sin.forEach ~ game:', val.game);
-  //       console.log('🚀 ~ sin.forEach ~ val:', val);
-  //       console.log('🚀 ~ sin.forEach ~ val.wager:', val.wager);
-
   //       const { game, dis, net, period, status, ...rest } = val;
   //       console.log(Object.values(rest).filter((item) => item));
 
@@ -190,11 +180,7 @@ const TogelTable = ({ slug }: TogelTableProps) => {
   // const setAllWager = useCallback(() => {
   //   sin4ds.forEach((item, i) => {
   //     const { game, dis, net, period, wager, status, ...rest } = item;
-  //     console.log('🚀 ~ newSin4ds.forEach ~ item:', item);
-
   //     const number = Object.values(rest).filter((no) => no).length >= 2;
-  //     console.log('🚀 ~ newSin4ds.forEach ~ number:', number);
-
   //     if (copy) {
   //       if (copyWager && number && game) {
   //         // if (
@@ -244,8 +230,6 @@ const TogelTable = ({ slug }: TogelTableProps) => {
   //     if (copy && copyWager) setValue(`sin4ds.${i}.wager`, copyWager);
   //   });
   // }, [sin4ds, setValue]); // todo please do not add dependency array of watchAllInputs
-  // console.log('🚀 ~ TogelTable ~ sin4d:', sin4d);
-
   // useEffect(() => {
   //   setNewWager();
 
@@ -295,8 +279,6 @@ const TogelTable = ({ slug }: TogelTableProps) => {
       i: number
     ) => {
       const { name, value } = e.target;
-      console.log('🚀 ~ TogelTable ~ name, value :', name, value);
-
       // Update the value in the form state
       setValue(`sin4ds.${i}.${field}`, value);
 
@@ -315,34 +297,34 @@ const TogelTable = ({ slug }: TogelTableProps) => {
         // updatedSin4d.forEach((no, idx) => {
         const { game, wager, dis, net, period, status, ...rest } =
           updatedSin4d[i];
-        console.log('🚀 ~ updatedSin4d.forEach ~ wager:', wager);
         if (rest || wager) {
           const { d1, d2, d3, d4 } = rest;
           if (d1 && d2 && !d3 && !d4) {
             setValue(`sin4ds.${i}.game`, '2dd');
-            setValue(`sin4ds.${i}.dis`, '29%');
+            setValue(`sin4ds.${i}.dis`, (Number(wager) * 0.29).toFixed());
             setValue(`sin4ds.${i}.net`, (Number(wager) * 0.71).toFixed());
           } else if (!d1 && d2 && d3 && !d4) {
             setValue(`sin4ds.${i}.game`, '2dt');
-            setValue(`sin4ds.${i}.dis`, '29%');
+            setValue(`sin4ds.${i}.dis`, (Number(wager) * 0.29).toFixed());
             setValue(`sin4ds.${i}.net`, (Number(wager) * 0.71).toFixed());
           } else if (!d1 && !d2 && d3 && d4) {
             setValue(`sin4ds.${i}.game`, '2d');
-            setValue(`sin4ds.${i}.dis`, '29%');
+            setValue(`sin4ds.${i}.dis`, (Number(wager) * 0.29).toFixed());
             setValue(`sin4ds.${i}.net`, (Number(wager) * 0.71).toFixed());
           } else if (!d1 && d2 && d3 && d4) {
             setValue(`sin4ds.${i}.game`, '3d');
-            setValue(`sin4ds.${i}.dis`, '59%');
+            setValue(`sin4ds.${i}.dis`, (Number(wager) * 0.59).toFixed());
             setValue(`sin4ds.${i}.net`, (Number(wager) * 0.41).toFixed());
           } else if (d1 && d2 && d3 && d4) {
             setValue(`sin4ds.${i}.game`, '4d');
-            setValue(`sin4ds.${i}.dis`, '66%');
+            setValue(`sin4ds.${i}.dis`, (Number(wager) * 0.66).toFixed());
             setValue(`sin4ds.${i}.net`, (Number(wager) * 0.34).toFixed());
           } else {
             setValue(`sin4ds.${i}.game`, '');
             setValue(`sin4ds.${i}.dis`, '');
             setValue(`sin4ds.${i}.net`, '');
           }
+          // Object.values(rest).length
         }
         // });
       }
@@ -364,9 +346,6 @@ const TogelTable = ({ slug }: TogelTableProps) => {
     },
     [setFocus, getValues, setValue]
   );
-
-  console.log('🚀 ~ TogelTable ~ sin4ds:', sin4ds);
-
   const { togel4dColumns } = useTogel4dColumns(
     register,
     control,
@@ -386,6 +365,8 @@ const TogelTable = ({ slug }: TogelTableProps) => {
       ...data,
       sin4ds: data.sin4ds.filter((item: Sin4dSchema) => item.game !== ' '),
     };
+
+    const newData = data;
     const res = await createTogel(filteredData);
     if (res.status === 'success' && res.data) {
       setShowSuccessMessage(true);
@@ -491,20 +472,16 @@ const TogelTable = ({ slug }: TogelTableProps) => {
           <Button
             type='button'
             size='sm'
-            variant='default'
-            className='text-shadow-lg text-xs text-white font-semibold shadow-lg hover:bg-orange-300 hover:text-gray-600 hover:font-semibold px-2 py-1'
+            variant='primary'
+            className='text-shadow-lg text-xs text-white font-semibold shadow-lg hover:bg-blue-300 hover:text-gray-600 hover:font-semibold px-2 py-1'
             onClick={handleAddColumn}>
             <PlusCircle
-              size={14}
-              className='svg text-sky-700 pr-1 hover:text-green-600'
-            />{' '}
+              size={20}
+              className='svg text-sky-50 pr-1 hover:text-sky-500/70'
+            />
             Tambah baris
           </Button>
-          <Button
-            disabled={!isValid}
-            size='sm'
-            variant='primary'
-            className='px-3 py-.5'>
+          <Button disabled={!isValid} size='sm' className='px-3 py-.5'>
             Submit
           </Button>
         </div>

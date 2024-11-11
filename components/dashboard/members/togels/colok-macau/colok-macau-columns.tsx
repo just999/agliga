@@ -5,6 +5,7 @@ import {
   cn,
   oldStandardTT,
   poppins,
+  rp,
   safeParseFloat,
 } from '@/lib/utils';
 import { ColokBebasTableSchema } from '@/schemas/togel-schema';
@@ -50,12 +51,10 @@ export const useColokMacauColumns = (
     control,
     name: 'cm',
   });
-  // console.log('🚀 ~ cmValue:', cmValue);
 
   const filteredCmValue = cmValue.filter(
     (val: any) => val.d1 !== '' && val.d2 !== '' && val.wager !== ''
   );
-  // console.log('🚀 ~ filteredCmValue:', filteredCmValue);
 
   useEffect(() => {
     inputRefs.current.forEach((input) => {
@@ -65,14 +64,17 @@ export const useColokMacauColumns = (
     });
   }, []);
 
-  // console.log('🚀 ~ inputRefs:', inputRefs);
   const cmColumns = useMemo(
     () => [
       {
         accessorKey: 'index',
-        header: ({}) => <div>No.</div>,
+        header: ({}) => (
+          <div className='w-7 text-zinc-700 h-full font-semibold flex items-end justify-center'>
+            No.
+          </div>
+        ),
         cell: ({ row }: any) => (
-          <div className='flex flex-row justify-center p-0'>
+          <div className='w-7 flex flex-row justify-center p-0'>
             <span
               className={cn(
                 'p-0 m-0 text-zinc-300 font-semibold',
@@ -86,7 +88,7 @@ export const useColokMacauColumns = (
       ...['d1', 'd2'].map((key, index) => ({
         accessorKey: key,
         header: () => (
-          <div className='w-8 p-0 m-0 mx-auto text-zinc-700 font-semibold'>
+          <div className='w-8 h-full p-0 m-0 mx-auto text-zinc-700 font-semibold flex items-end justify-center'>
             {key}
           </div>
         ),
@@ -100,6 +102,9 @@ export const useColokMacauColumns = (
               })}
               className={cn(
                 'w-12 h-7 font-semibold border border-orange-300 rounded-md text-base text-shadow flex items-center justify-center align-middle appearance-none bg-amber-100 text-gray-500 cursor-pointer group-hover:bg-amber-100/70',
+                key === 'd1'
+                  ? 'bg-violet-100 border border-violet-300'
+                  : 'bg-teal-100 border border-teal-300',
                 oldStandardTT.className
               )}>
               {arrayRange(0, 9, 1).map((_, i: number) => (
@@ -140,7 +145,7 @@ export const useColokMacauColumns = (
               })}
               type='tel'
               // onInput={(e) => handleWagerInput(e, -1)}
-              className='w-28 h-7 pl-5 text-zinc-600 placeholder:text-slate-300 placeholder:pl-2'
+              className='w-28 h-7 pl-5 border border-zinc-300 text-xs text-zinc-600 placeholder:text-slate-300 placeholder:pl-2'
               placeholder='bet all'
               suffix={
                 <FaRupiahSign
@@ -155,12 +160,9 @@ export const useColokMacauColumns = (
           const d1Value = getValues('cm')?.[row.index]?.d1;
           const d2Value = getValues('cm')?.[row.index]?.d2;
           const isDisabled = !d1Value || !d2Value;
-          // console.log('🚀 ~ isDisabled:', isDisabled);
-
-          // console.log('🚀 ~ d1Value:', getValues('cm')?.[row.index]?.d1);
 
           return (
-            <div className='relative  flex justify-center '>
+            <div className='relative  flex justify-center text-zinc-700 border border-zinc-400 rounded-md h-7 px-0 font-semibold w-full '>
               <InputCustom
                 {...register(`cm.${row.index}.wager`, {
                   onChange: (e: ChangeEvent<HTMLInputElement>) =>
@@ -191,29 +193,36 @@ export const useColokMacauColumns = (
       {
         accessorKey: 'dis',
         header: ({ column }: any) => (
-          <div className='flex items-center justify-center '>
-            dis (10 <Percent size={12} /> )
+          <div className='text-zinc-700 font-semibold w-28  h-full flex items-end justify-center'>
+            <div className='flex items-center text-xs font-semibold'>
+              dis (10 <Percent size={10} /> )
+            </div>
           </div>
         ),
         cell: ({ row }: any) => {
           const wager = Number(row.original.wager);
-          // console.log('🚀 ~ wager:', wager);
+
           const discount =
             isNaN(wager) || wager === 0 ? '' : (wager * 0.1).toFixed();
           return (
-            <div className='relative flex justify-center'>
-              <div
-                className={cn(
-                  'w-28 h-7 flex items-center gap-2  text-center font-semibold text-xs border border-slate-400 text-zinc-500 rounded',
-                  poppins.className
-                )}>
-                <FaRupiahSign size={12} className='text-zinc-300  ml-1' />
+            <div
+              className={cn(
+                'h-7 text-zinc-700 mx-auto flex items-center justify-between border border-amber-500 gap-x-0.5 text-xs shadow-inner font-semibold w-28 bg-amber-200/40 text-center rounded-md',
+                poppins.className
+              )}>
+              <span className='flex items-center text-zinc-400'>
+                <FaRupiahSign size={12} className='text-zinc-300  mx-1' />
                 {/* {row.original.wager === ''
                   ? ''
                   : (Number(row.original.wager) * (10 / 100)).toFixed()} */}
-                {discount}
-              </div>
-              {row.original.dis}
+                {discount === '' ? '' : rp.format(Number(discount))}
+              </span>
+              {discount && (
+                <div className='flex items-center text-[10px] text-amber-500 pr-1  '>
+                  (10 <Percent size={10} className='svg' />)
+                  {/* <pre>{JSON.stringify(row.original.dis, null, 2)}</pre> */}
+                </div>
+              )}
             </div>
           );
         },
@@ -226,41 +235,46 @@ export const useColokMacauColumns = (
       {
         accessorKey: 'net',
         header: ({ column }: any) => (
-          <div className='flex items-center justify-center '>net</div>
+          <div className='text-zinc-700 font-semibold w-28  h-full flex items-end justify-center'>
+            net
+          </div>
         ),
         cell: ({ row }: any) => {
           const wager = Number(row.original.wager);
-          // console.log('🚀 ~ wager:', wager);
+
           const net =
             isNaN(wager) || wager === 0
               ? ''
               : (wager * 0.9).toFixed().toString();
           return (
-            <div className='relative flex justify-center'>
+            <div className='relative flex justify-center items-center bg-zinc-300/40 text-zinc-700 border border-zinc-200 rounded-md h-7 px-0 font-semibold w-28 mx-auto'>
               <div
                 className={cn(
-                  'w-28 h-7 flex items-center gap-2  text-center font-semibold text-xs border border-slate-400 text-zinc-500 rounded',
+                  'w-28 h-7 flex items-center gap-1  text-center font-semibold text-xs border border-slate-400 text-zinc-500 rounded',
                   poppins.className
                 )}>
-                <FaRupiahSign size={12} className='text-zinc-300  ml-1' />
+                <FaRupiahSign size={12} className='text-zinc-400  ml-1' />
                 {/* {row.original.wager === ''
                   ? ''
                   : (Number(row.original.wager) * (90 / 100)).toFixed()} */}
-                {net}
+                {net === '' ? '' : rp.format(Number(net))}
               </div>
             </div>
           );
         },
         footer: (info: any) => {
-          const total =
+          const total = (
             info.table
               .getFilteredRowModel()
               .rows.reduce((sum: number, row: any) => {
                 const wager = Number(row.original.wager);
                 return sum + (isNaN(wager) ? 0 : wager);
-              }, 0) * 0.9;
+              }, 0) * 0.9
+          )
+            .toFixed()
+            .toString();
           return (
-            <div className='flex justify-center '>
+            <div className='flex justify-center py-1'>
               <div
                 className={cn(
                   'w-28 h-7 flex items-center bg-gray-500 gap-1 shadow-inner text-center font-semibold text-xs border border-slate-400 rounded',
@@ -268,7 +282,7 @@ export const useColokMacauColumns = (
                 )}>
                 <FaRupiahSign size={12} className='text-zinc-400 ml-1 svg' />
                 <span className='text-white text-shadow'>
-                  {total.toFixed().toString()}
+                  {rp.format(Number(total))}
                 </span>
               </div>
             </div>

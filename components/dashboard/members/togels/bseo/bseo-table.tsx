@@ -94,7 +94,6 @@ export function BseoTable<TData, TValue>({
 
   ...props
 }: DataTableProps<TData, TValue>) {
-  console.log('🚀 ~ data:', data);
   const [sin4ds, setSin4ds] = useState<Sin4dSchema[]>(() => initialData);
   const [bs, setBs] = useState<Bseo4dSchema[]>([]);
 

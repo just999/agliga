@@ -1,13 +1,6 @@
 import Bbfs from '@/components/dashboard/members/togels/bbfs/bbfs';
+import TogelContainer from '@/components/ui/togel-container';
 import { capitalizeFirstCharacter, cn, oldStandardTT } from '@/lib/utils';
-import dynamic from 'next/dynamic';
-
-const BbDynamic = dynamic(
-  () => import('@/components/dashboard/members/togels/bbfs'),
-  {
-    ssr: false,
-  }
-);
 
 type BolakBalikPageProps = {
   params: {
@@ -17,7 +10,7 @@ type BolakBalikPageProps = {
 
 const BolakBalikPage = async ({ params }: BolakBalikPageProps) => {
   return (
-    <div className='bg-cyan-100 px-2 py-2 shadow-xl'>
+    <TogelContainer className='bg-cyan-100 px-2 py-2 shadow-xl'>
       <div
         className={cn(
           'mx-auto text-center font-semibold text-lg',
@@ -25,14 +18,10 @@ const BolakBalikPage = async ({ params }: BolakBalikPageProps) => {
         )}>
         {capitalizeFirstCharacter(params.slug)} - Pools - Bolak-Balik-Full-Set
       </div>
-      <div className='bg-green-50/50 px-2 py-1 rounded-lg shadow-lg'>
-        {/* <Togel4dSet params={params} /> */}
-        {/* <TogelTableBbfs params={params} /> */}
-        {/* <BbDynamic params={params} /> */}
+      <div className='bg-green-50/50 px-2 py-1 rounded-lg shadow-lg overflow-hidden'>
         <Bbfs params={params} />
-        {/* <TogelTable4dSetConfirm params={params} /> */}
       </div>
-    </div>
+    </TogelContainer>
   );
 };
 

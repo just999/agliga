@@ -47,8 +47,6 @@ export const validateArray = (arr: Form4dSetProps[]): boolean[] => {
 };
 
 const validationResults = validateArray(togel4dSet);
-console.log('🚀 ~ TogelTable4dSet ~ validationResults:', validationResults);
-
 export const UpdateBets = (
   control: Control<Form4dSetProps[]>,
   setValue: (name: string, value: any) => void

@@ -138,14 +138,14 @@ const Togel4dSetTable = ({ params }: TogelTable4dSetProps) => {
     name: 'sin4dSet',
   });
   useEffect(() => {
-    if (sin4dSet.length >= 9) {
+    if (sin4dSet.length >= 10) {
       setEmp(true);
     } else {
       setEmp(false);
     }
   }, [sin4dSet]);
   const handleAddColumn: any = () => {
-    if (!emp && sin4dSet.length < 9) {
+    if (!emp && sin4dSet.length < 10) {
       append(form4d);
     } else {
       console.log('Cannot add more rows. Maximum limit reached.');
@@ -399,8 +399,6 @@ const Togel4dSetTable = ({ params }: TogelTable4dSetProps) => {
   const handleRemove = useCallback(
     (index: number) => {
       // const filteredItem = sin4dSet.filter((val, i) => i !== index);
-      // console.log('🚀 ~ Togel4dSetTable ~ deletedItem:', filteredItem);
-
       // setSin4dSet(filteredItem);
       // setValue(`sin4dSet`, filteredItem);
       remove(index);
@@ -475,7 +473,7 @@ const Togel4dSetTable = ({ params }: TogelTable4dSetProps) => {
 
   return (
     <>
-      <div className={cn('font-semibold text-xs my-5', isToggle && 'hidden')}>
+      <div className={cn('font-semibold text-xs', isToggle && 'hidden')}>
         render form: {render}
       </div>
       <form
@@ -564,21 +562,20 @@ const Togel4dSetTable = ({ params }: TogelTable4dSetProps) => {
           <Button
             type='button'
             size='sm'
-            variant='default'
+            variant='primary'
             disabled={emp}
-            className='text-shadow-lg text-xs text-white font-semibold shadow-lg hover:bg-orange-300 hover:text-gray-600 hover:font-semibold px-2 py-1'
+            className='text-shadow-lg text-xs text-white font-semibold shadow-lg hover:bg-blue-300 hover:text-gray-600 hover:font-semibold px-2 py-1'
             onClick={handleAddColumn}>
             <PlusCircle
-              size={14}
-              className='svg text-sky-700 pr-1 hover:text-green-600'
-            />{' '}
+              size={20}
+              className='svg text-sky-50 pr-1 hover:text-sky-500/70'
+            />
             {emp ? 'max row' : 'Tambah baris'}
           </Button>
           <Button
             type='button'
             disabled={!isValid}
             size='sm'
-            variant='primary'
             className='px-3 py-.5'
             onClick={handleValidateBet}>
             {isToggle ? 'tutup details' : 'lihat details'}

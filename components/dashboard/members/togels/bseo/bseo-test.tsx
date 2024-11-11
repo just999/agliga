@@ -107,10 +107,7 @@ const BseoTest = () => {
   });
 
   const watchAllInputs = watch();
-  console.log('🚀 ~ watchAllInputs:', watchAllInputs);
   const bseoVal = watch('bsEo');
-
-  console.log('🚀 ~ bseo:', bseoVal);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   const { bseo, position: game, wager } = bseoVal[0];
@@ -121,16 +118,12 @@ const BseoTest = () => {
         const { bseo, position: game, wager } = bsVal;
         if (bseo === 'small') {
           const newSmall = generateAndPadArray(game, wager, 50, 0);
-          console.log('🚀 ~ res ~ newSmall:', newSmall);
         } else if (bseo === 'big') {
           const newBig = generateAndPadArray(game, wager, 50, 50);
-          console.log('🚀 ~ res ~ newBig:', newBig);
         } else if (bseo === 'odd') {
           const newOdd = generateAndPadArray(game, wager, 50, 1, 2);
-          console.log('🚀 ~ res ~ newOdd:', newOdd);
         } else if (bseo === 'even') {
           const newEven = generateAndPadArray(game, wager, 50, 0, 2);
-          console.log('🚀 ~ res ~ newEven:', newEven);
         }
       });
     }
@@ -149,14 +142,9 @@ const BseoTest = () => {
       even: newEven,
     };
   }, [game, wager]);
-
-  console.log('🚀 ~ BseoTest ~ arrayOptions:', arrayOptions);
-
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>, i: number) => {
       const { name, value } = e.target;
-      console.log('🚀 ~ BseoTest ~ name, value:', name, value);
-
       // setBsEo((prev) => {
       //   const newState = [...prev];
       //   if (name === `bsEo.${i}.bseo`) {
@@ -172,8 +160,6 @@ const BseoTest = () => {
       //       [name.split('.')[2]]: value,
       //     };
       //   }
-      //   console.log('🚀 ~ setBs ~ newState:', newState);
-
       //   setValue('bsEo', newState);
       //   return newState;
       // });
@@ -200,12 +186,6 @@ const BseoTest = () => {
     key: string
   ) => {
     const { name, value } = e.target;
-    console.log(
-      '🚀 ~ BseoSpTable ~ name, value:',
-      `bsEo.${rowIndex}.${key}`,
-      name,
-      value
-    );
     setSelectedValues((prev: any) => ({
       ...prev,
       [`bsEo.${rowIndex}.${key}`]: value,
@@ -225,13 +205,8 @@ const BseoTest = () => {
     handleRadioChange,
     handleChange
   );
-
-  console.log('🚀 ~ BseoSpTable ~ selectedValues:', selectedValues);
-
   const handleSetBseo = () => {
-    console.log('🚀 ~ Bseo ~ wager:', wager);
     const res = getValues();
-    console.log('🚀 ~ handleSetBseo ~ res:', res);
     setShow((pre) => !pre);
   };
 
@@ -245,8 +220,6 @@ const BseoTest = () => {
       : arrayOptions.odd;
 
   const onSubmit = (data: any) => {
-    console.log('🚀 ~ onSubmit ~ data:', data);
-
     const filteredData = data.bsEo.filter(
       (dat: any) => dat.wager !== '' && dat.d1 !== '' && dat.position !== ''
     );
@@ -256,8 +229,6 @@ const BseoTest = () => {
       dis: (Number(item.wager) * (29 / 100)).toFixed().toString(),
       net: (Number(item.wager) * (71 / 100)).toFixed().toString(),
     }));
-    console.log('🚀 ~ renderedNet ~ renderedNet:', renderedNet);
-
     renderedNet.map((val: any, i: number) => {
       setValue(`bsEo.${i}.dis`, val.dis);
       setValue(`bsEo.${i}.net`, val.net);
@@ -276,8 +247,6 @@ const BseoTest = () => {
     getCoreRowModel: getCoreRowModel(),
     filterFns: defaultFilterFns,
   });
-  console.log('🚀 ~ BseoTest ~ bseo:', bseo);
-
   useEffect(() => {
     render++;
   }, []);
