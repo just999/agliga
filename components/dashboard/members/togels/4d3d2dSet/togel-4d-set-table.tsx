@@ -86,7 +86,7 @@ let render = 0;
 
 const Togel4dSetTable = ({ params }: TogelTable4dSetProps) => {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-  // const [show, setShow] = useState(false);
+  const [show, setShow] = useState(false);
   const [emp, setEmp] = useState(false);
   const [sin4dSet, setSin4dSet] = useState<Form4dSetProps[]>(
     () => sin4dSetInitial
@@ -426,7 +426,7 @@ const Togel4dSetTable = ({ params }: TogelTable4dSetProps) => {
     if (validBet.length > 0) {
       setSin4d(validBet);
       // setShow((prev) => !prev);
-      setIsToggle(isToggle);
+      setShow(!show);
     }
   };
 
@@ -473,12 +473,10 @@ const Togel4dSetTable = ({ params }: TogelTable4dSetProps) => {
 
   return (
     <>
-      <div className={cn('font-semibold text-xs', isToggle && 'hidden')}>
+      <div className={cn('font-semibold text-xs', show && 'hidden')}>
         render form: {render}
       </div>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className={cn(isToggle && 'hidden')}>
+      <form onSubmit={handleSubmit(onSubmit)} className={cn(show && 'hidden')}>
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -578,15 +576,11 @@ const Togel4dSetTable = ({ params }: TogelTable4dSetProps) => {
             size='sm'
             className='px-3 py-.5'
             onClick={handleValidateBet}>
-            {isToggle ? 'tutup details' : 'lihat details'}
+            {show ? 'tutup details' : 'lihat details'}
           </Button>
         </div>
       </form>
-      <Togel4dSetDetailsTable
-        params={params}
-        sin4dSet={sin4d}
-        show={isToggle}
-      />
+      <Togel4dSetDetailsTable params={params} sin4dSet={sin4d} show={show} />
       {/* <TogelTable4dSetConfirm params={params} sin4dSet={sin4d} /> */}
       {/* <pre>{JSON.stringify(watch(), null, 2)}</pre> */}
     </>

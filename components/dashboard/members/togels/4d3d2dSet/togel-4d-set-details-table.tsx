@@ -179,9 +179,9 @@ const Togel4dSetDetailsTable = ({
 
   return (
     <>
-      <div className={cn('font-semibold text-xs my-5', !show && 'hidden')}>
+      {/* <div className={cn('font-semibold text-xs my-5', !show && 'hidden')}>
         render detail: {render}
-      </div>
+      </div> */}
       <form
         onSubmit={handleSubmit(onSubmit)}
         className={cn(!show ? 'hidden' : '')}>
