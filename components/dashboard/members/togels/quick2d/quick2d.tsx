@@ -268,7 +268,7 @@ const Quick2d = () => {
   }, []);
   return (
     <ClientOnly>
-      <div className='font-semibold text-xs my-5'>render: {render}</div>
+      {/* <div className='font-semibold text-xs my-5'>render: {render}</div> */}
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (

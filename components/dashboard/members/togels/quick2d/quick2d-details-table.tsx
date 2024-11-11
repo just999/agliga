@@ -177,7 +177,7 @@ const Quick2dDetailsTable = ({ q2dData }: Quick2dDetailsTableProps) => {
   const table = useReactTable({
     data: quick2dValue,
     columns: columns,
-    debugTable: true,
+    // debugTable: true,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
@@ -195,13 +195,13 @@ const Quick2dDetailsTable = ({ q2dData }: Quick2dDetailsTableProps) => {
 
   return (
     <>
-      <div
+      {/* <div
         className={cn(
           'font-semibold text-xs transition-opacity duration-2000 ease-in-out',
           isToggle ? 'opacity-100 max-h-10' : 'opacity-0 max-h-0'
         )}>
         render: {render}
-      </div>
+      </div> */}
       <form onSubmit={handleSubmit(onSubmit)} className='pb-2 '>
         <div className='w-full flex flex-row-reverse items-center justify-between'>
           <div
