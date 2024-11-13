@@ -51,7 +51,7 @@ export const useColokBebasColumns = (
       {
         id: 'number',
         header: ({ column }: any) => (
-          <div className='text-zinc-700 mx-auto font-semibold w-12'>Nomor</div>
+          <div className='text-zinc-700 mx-auto font-semibold w-12'>nomor</div>
         ),
         size: 48,
         cell: ({ row }: any) => (

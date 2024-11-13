@@ -597,7 +597,7 @@ export const useFiftyFiftyColumns = (
       {
         accessorKey: 'net',
         header: ({ column }: any) => (
-          <div className='text-zinc-700 font-semibold w-28  h-full flex items-end justify-center'>
+          <div className='text-zinc-700 font-semibold w-28  h-full flex items-center justify-center'>
             net
           </div>
         ),

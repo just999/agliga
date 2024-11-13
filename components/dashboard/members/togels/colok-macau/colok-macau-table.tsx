@@ -11,7 +11,7 @@ import {
   TableRow,
 } from '@/components/ui';
 import { useZodForm } from '@/hooks/use-zod-form';
-import { safeParseFloat } from '@/lib/utils';
+import { cn, safeParseFloat } from '@/lib/utils';
 import { colokMacauTableSchema } from '@/schemas/togel-schema';
 import {
   flexRender,
@@ -21,6 +21,8 @@ import {
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { useColokMacauColumns } from './colok-macau-columns';
 import { useWatch } from 'react-hook-form';
+import ColokMacauRules from './colok-macau-rules';
+import { ChevronUpSquareIcon, ChevronDownSquareIcon } from 'lucide-react';
 
 type ColokMacauTableProps = {};
 
@@ -59,7 +61,7 @@ let render = 0;
 
 const ColokMacauTable = () => {
   const [cm, setCm] = useState<ColokMacauTableSchema[]>(() => initialData);
-
+  const [showDescription, setShowDescription] = useState(false);
   const [selectedValues, setSelectedValues] = useState<string | []>([]);
   const {
     register,
@@ -257,6 +259,28 @@ const ColokMacauTable = () => {
           </Button>
         </div>
       </form>
+
+      <div className={cn('w-116 flex flex-col')}>
+        <Button
+          variant='ghost'
+          size='sm'
+          type='button'
+          onClick={() => setShowDescription(!showDescription)}
+          className='w-full flex justify-between hover:bg-emerald-100/70 '>
+          <div>Description Rules Payout:</div>
+          <div>
+            {showDescription ? (
+              <ChevronUpSquareIcon className='text-emerald-600 svg ' />
+            ) : (
+              <ChevronDownSquareIcon className='text-emerald-600 svg ' />
+            )}
+          </div>
+        </Button>
+        <ColokMacauRules
+          showDescription={showDescription}
+          setShowDescription={setShowDescription}
+        />
+      </div>
     </>
   );
 };

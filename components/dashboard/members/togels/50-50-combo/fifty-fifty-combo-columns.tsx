@@ -92,15 +92,15 @@ export const FiftyFiftyComboColumns = (
           className={cn(
             'w-24 h-7 text-xs rounded-md shadow-lg cursor-pointer font-semibold px-2  appearance-none text-zinc-400',
             getValues(`ffC.${row.index}.${type}`) === 'stereo'
-              ? 'bg-teal-200 text-teal-700 border border-teal-500'
+              ? 'bg-sky-100 text-sky-700 border border-sky-600'
               : getValues(`ffC.${row.index}.${type}`) === 'mono'
-              ? 'bg-lime-200 text-lime-700 border border-lime-500'
+              ? 'bg-emerald-100 text-emerald-700 border border-emerald-600'
               : getValues(`ffC.${row.index}.${type}`) === 'kempis'
-              ? 'bg-indigo-200 text-indigo-700 border border-indigo-500'
+              ? 'bg-indigo-100 text-indigo-700 border border-indigo-600'
               : getValues(`ffC.${row.index}.${type}`) === 'kembar'
-              ? 'bg-violet-200 text-violet-700 border border-violet-500'
+              ? 'bg-rose-100 text-rose-700 border border-rose-600'
               : getValues(`ffC.${row.index}.${type}`) === 'kembang'
-              ? 'bg-purple-200 text-purple-700 border border-purple-500'
+              ? 'bg-purple-100 text-purple-700 border border-purple-600'
               : 'bg-transparent',
             poppins.className
           )}>
@@ -119,9 +119,9 @@ export const FiftyFiftyComboColumns = (
         <ChevronDownCircle
           size={14}
           className={cn(
-            'absolute right-1 text-zinc-400 svg hover:text-gray-500 ',
+            'absolute right-1 text-zinc-600 svg hover:text-gray-500 ',
             getValues(`ffC.${row.index}.${type}`) !== values[0] &&
-              'text-white svg'
+              'text-zinc-600 svg'
           )}
         />
       </div>

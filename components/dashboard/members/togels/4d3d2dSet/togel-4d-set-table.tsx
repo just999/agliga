@@ -21,13 +21,18 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { PlusCircle } from 'lucide-react';
+import {
+  ChevronDownSquareIcon,
+  ChevronUpSquareIcon,
+  PlusCircle,
+} from 'lucide-react';
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 
 import { SubmitHandler, useFieldArray, useWatch } from 'react-hook-form';
 import Togel4dSetDetailsTable from './togel-4d-set-details-table';
 import useTogel4dSetColumns from './togel-4d-set-columns';
 import { useTogelStore } from '@/store/use-togel-store';
+import Togel4dRules from '../4d3d2d/togel-4d-rules';
 
 type TogelTable4dSetProps = {
   params: {
@@ -87,6 +92,7 @@ let render = 0;
 const Togel4dSetTable = ({ params }: TogelTable4dSetProps) => {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [show, setShow] = useState(false);
+  const [showDescription, setShowDescription] = useState(false);
   const [emp, setEmp] = useState(false);
   const [sin4dSet, setSin4dSet] = useState<Form4dSetProps[]>(
     () => sin4dSetInitial
@@ -605,6 +611,27 @@ const Togel4dSetTable = ({ params }: TogelTable4dSetProps) => {
       />
       {/* <TogelTable4dSetConfirm params={params} sin4dSet={sin4d} /> */}
       {/* <pre>{JSON.stringify(watch(), null, 2)}</pre> */}
+      <div className={cn('w-136 flex flex-col')}>
+        <Button
+          variant='ghost'
+          size='sm'
+          type='button'
+          onClick={() => setShowDescription(!showDescription)}
+          className='w-full flex justify-between hover:bg-emerald-100/70 '>
+          <div>Description Rules Payout:</div>
+          <div>
+            {showDescription ? (
+              <ChevronUpSquareIcon className='text-emerald-600 svg ' />
+            ) : (
+              <ChevronDownSquareIcon className='text-emerald-600 svg ' />
+            )}
+          </div>
+        </Button>
+        <Togel4dRules
+          showDescription={showDescription}
+          setShowDescription={setShowDescription}
+        />
+      </div>
     </>
   );
 };

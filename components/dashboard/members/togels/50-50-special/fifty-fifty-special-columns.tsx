@@ -347,7 +347,6 @@ export const FiftyFiftySpecialColumns = (
               : (-wager * 0.02).toFixed().toString();
 
           const discountLimit = discount.length;
-          console.log('🚀 ~ discountLimit:', discountLimit);
           return (
             <div
               className={cn(

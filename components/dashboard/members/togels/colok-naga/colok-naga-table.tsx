@@ -24,6 +24,9 @@ import {
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { useColokNagaColumns } from './colok-naga-columns';
 import { useWatch } from 'react-hook-form';
+import ColokNagaRules from './colok-naga-rules';
+import { cn as cnn } from '@/lib/utils';
+import { ChevronUpSquareIcon, ChevronDownSquareIcon } from 'lucide-react';
 
 type ColokNagaTableProps = {};
 
@@ -64,7 +67,7 @@ let render = 0;
 
 const ColokNagaTable = () => {
   const [cn, setCn] = useState<ColokNagaTableSchema[]>(() => initialData);
-
+  const [showDescription, setShowDescription] = useState(false);
   const [selectedValues, setSelectedValues] = useState<string | []>([]);
   const {
     register,
@@ -268,6 +271,28 @@ const ColokNagaTable = () => {
               Submit
             </Button>
           </div>
+        </div>
+
+        <div className={cnn('w-128 flex flex-col')}>
+          <Button
+            variant='ghost'
+            size='sm'
+            type='button'
+            onClick={() => setShowDescription(!showDescription)}
+            className='w-full flex justify-between hover:bg-emerald-100/70 '>
+            <div>Description Rules Payout:</div>
+            <div>
+              {showDescription ? (
+                <ChevronUpSquareIcon className='text-emerald-600 svg ' />
+              ) : (
+                <ChevronDownSquareIcon className='text-emerald-600 svg ' />
+              )}
+            </div>
+          </Button>
+          <ColokNagaRules
+            showDescription={showDescription}
+            setShowDescription={setShowDescription}
+          />
         </div>
       </form>
     </>

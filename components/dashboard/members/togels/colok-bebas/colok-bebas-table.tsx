@@ -218,6 +218,10 @@ import {
 } from '@tanstack/react-table';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useColokBebasColumns } from './colok-bebas-columns';
+import { cn } from '@/lib/utils';
+import { ChevronUpSquareIcon, ChevronDownSquareIcon } from 'lucide-react';
+import Togel4dRules from '../4d3d2d/togel-4d-rules';
+import ColokBebasRules from './colok-bebas-rules';
 
 type ColokBebasTableProps<TData, TValue> = {
   // columns: ColumnDef<TData, TValue>[];
@@ -247,6 +251,7 @@ const ColokBebasTable = <TData, TValue>({}: // columns,
 // data,
 ColokBebasTableProps<TData, TValue>) => {
   const [cb, setCb] = useState<ColokBebasTableSchema[]>(() => initialData);
+  const [showDescription, setShowDescription] = useState(false);
 
   const {
     register,
@@ -394,6 +399,27 @@ ColokBebasTableProps<TData, TValue>) => {
         </Button>
       </div>
       {/* <pre>{JSON.stringify(watch(), null, 2)}</pre> */}
+      <div className={cn('w-108 flex flex-col')}>
+        <Button
+          variant='ghost'
+          size='sm'
+          type='button'
+          onClick={() => setShowDescription(!showDescription)}
+          className='w-full flex justify-between hover:bg-emerald-100/70 '>
+          <div>Description Rules Payout:</div>
+          <div>
+            {showDescription ? (
+              <ChevronUpSquareIcon className='text-emerald-600 svg ' />
+            ) : (
+              <ChevronDownSquareIcon className='text-emerald-600 svg ' />
+            )}
+          </div>
+        </Button>
+        <ColokBebasRules
+          showDescription={showDescription}
+          setShowDescription={setShowDescription}
+        />
+      </div>
     </form>
   );
 };

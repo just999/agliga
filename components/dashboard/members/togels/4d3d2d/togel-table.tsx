@@ -21,12 +21,17 @@ import { useFieldArray, useWatch } from 'react-hook-form';
 
 import { createTogel } from '@/actions/togel-actions';
 import { Button } from '@/components/ui';
-import { handleFormServerErrors, safeParseFloat } from '@/lib/utils';
+import { cn, handleFormServerErrors, safeParseFloat } from '@/lib/utils';
 
 import { useZodForm } from '@/hooks/use-zod-form';
-import ClientOnly from '@/lib/client-only';
-import { PlusCircle } from 'lucide-react';
+
+import {
+  ChevronDownSquareIcon,
+  ChevronUpSquareIcon,
+  PlusCircle,
+} from 'lucide-react';
 import { useTogel4dColumns } from './togel-4d-columns';
+import Togel4dRules from './togel-4d-rules';
 
 type TogelTableProps = {
   slug: string;
@@ -68,6 +73,7 @@ let render = 0;
 
 const TogelTable = ({ slug }: TogelTableProps) => {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [showDescription, setShowDescription] = useState(false);
 
   const [sin4ds, setSin4ds] = useState<Sin4dSchema[]>(() => initialData);
 
@@ -498,6 +504,27 @@ const TogelTable = ({ slug }: TogelTableProps) => {
               </Button>
             </div>
           </div>
+        </div>
+        <div className={cn('w-136 flex flex-col')}>
+          <Button
+            variant='ghost'
+            size='sm'
+            type='button'
+            onClick={() => setShowDescription(!showDescription)}
+            className='w-full flex justify-between hover:bg-emerald-100/70 '>
+            <div>Description Rules Payout:</div>
+            <div>
+              {showDescription ? (
+                <ChevronUpSquareIcon className='text-emerald-600 svg ' />
+              ) : (
+                <ChevronDownSquareIcon className='text-emerald-600 svg ' />
+              )}
+            </div>
+          </Button>
+          <Togel4dRules
+            showDescription={showDescription}
+            setShowDescription={setShowDescription}
+          />
         </div>
       </form>
       {/* <pre>{JSON.stringify(watch(), null, 2)}</pre> */}

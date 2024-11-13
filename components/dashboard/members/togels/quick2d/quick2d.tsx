@@ -1,6 +1,7 @@
 'use client';
 
 import {
+  Button,
   Table,
   TableBody,
   TableCell,
@@ -33,6 +34,8 @@ import { ArrayOptProps } from '@/types/types';
 import { useQuick2dColumns } from './quick2d-columns';
 import Quick2dDetailsTable from './quick2d-details-table';
 import { useTogelStore } from '@/store/use-togel-store';
+import { ChevronUpSquareIcon, ChevronDownSquareIcon } from 'lucide-react';
+import Togel4dRules from '../4d3d2d/togel-4d-rules';
 
 type BseoSpecialTableProps = {};
 
@@ -102,6 +105,7 @@ let render = 0;
 const Quick2d = () => {
   const [bsEo, setBsEo] = useState<BsOe4dSchema[]>(() => initialData);
   const [show, setShow] = useState<boolean>(false);
+  const [showDescription, setShowDescription] = useState(false);
   const [selectedValues, setSelectedValues] = useState<Record<string, string>>(
     {}
   );
@@ -346,6 +350,28 @@ const Quick2d = () => {
       </div>
 
       {/* <pre>{JSON.stringify(watch(), null, 2)}</pre> */}
+
+      <div className={cn('w-136 flex flex-col')}>
+        <Button
+          variant='ghost'
+          size='sm'
+          type='button'
+          onClick={() => setShowDescription(!showDescription)}
+          className='w-full flex justify-between hover:bg-emerald-100/70 '>
+          <div>Description Rules Payout:</div>
+          <div>
+            {showDescription ? (
+              <ChevronUpSquareIcon className='text-emerald-600 svg ' />
+            ) : (
+              <ChevronDownSquareIcon className='text-emerald-600 svg ' />
+            )}
+          </div>
+        </Button>
+        <Togel4dRules
+          showDescription={showDescription}
+          setShowDescription={setShowDescription}
+        />
+      </div>
     </ClientOnly>
   );
 };

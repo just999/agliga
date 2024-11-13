@@ -1,6 +1,6 @@
 'use client';
 
-import { InputCustom } from '@/components/ui';
+import { Button, InputCustom } from '@/components/ui';
 import { Label } from '@/components/ui/label';
 import { useCalculator, usePermAndFormat } from '@/hooks/use-togel-bbfs';
 import { useZodForm } from '@/hooks/use-zod-form';
@@ -34,6 +34,8 @@ import {
   PiNumberCircleThreeBold,
   PiNumberCircleTwoBold,
 } from 'react-icons/pi';
+import { ChevronUpSquareIcon, ChevronDownSquareIcon } from 'lucide-react';
+import Togel4dRules from '../4d3d2d/togel-4d-rules';
 
 type BbfsProps = {
   params: {
@@ -56,7 +58,7 @@ const Bbfs = ({ params }: BbfsProps) => {
 
   const [bbNum, setBbNum] = useState<Number4dSetSchema[]>([]);
   const [show, setShow] = useState<boolean>(false);
-
+  const [showDescription, setShowDescription] = useState(false);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   const {
@@ -375,6 +377,28 @@ const Bbfs = ({ params }: BbfsProps) => {
         </div>
       </div>
       {/* <pre>{JSON.stringify(watch(), null, 2)}</pre> */}
+
+      <div className={cn('w-140 flex flex-col')}>
+        <Button
+          variant='ghost'
+          size='sm'
+          type='button'
+          onClick={() => setShowDescription(!showDescription)}
+          className='w-full flex justify-between hover:bg-emerald-100/70 '>
+          <div>Description Rules Payout:</div>
+          <div>
+            {showDescription ? (
+              <ChevronUpSquareIcon className='text-emerald-600 svg ' />
+            ) : (
+              <ChevronDownSquareIcon className='text-emerald-600 svg ' />
+            )}
+          </div>
+        </Button>
+        <Togel4dRules
+          showDescription={showDescription}
+          setShowDescription={setShowDescription}
+        />
+      </div>
     </>
   );
 };
