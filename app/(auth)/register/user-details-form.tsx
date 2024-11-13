@@ -18,7 +18,7 @@ const UserDetailsForm = () => {
     <ClientOnly>
       <div className='space-y-4'>
         <InputCustom
-          className='text-sm font-semibold '
+          className='w-full text-sm font-semibold '
           placeholder='Email'
           defaultValue={getValues('email')}
           {...register('email')}
@@ -33,7 +33,7 @@ const UserDetailsForm = () => {
         />
         {isDirty}
         <PasswordInput
-          className='text-sm font-semibold '
+          className='w-full text-sm font-semibold '
           placeholder='Password'
           defaultValue={getValues('password')}
           {...register('password')}

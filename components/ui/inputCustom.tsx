@@ -27,7 +27,7 @@ const InputCustom = React.forwardRef<HTMLInputElement, InputProps>(
   ) => {
     return (
       <>
-        <div className='flex gap-2 items-center relative'>
+        <div className='w-full flex gap-2 items-center relative'>
           <input
             type={type}
             className={cn(

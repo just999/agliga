@@ -75,7 +75,7 @@ const LoginForm = () => {
             <div className='space-y-4 '>
               <InputCustom
                 isDirty={isDirty}
-                className='text-sm font-semibold '
+                className='w-full text-sm font-semibold '
                 placeholder='Email'
                 defaultValue=''
                 {...register('email')}
@@ -90,7 +90,7 @@ const LoginForm = () => {
               />
               <PasswordInput
                 isDirty={isDirty}
-                className='text-sm font-semibold'
+                className='w-full text-sm font-semibold'
                 placeholder='Password'
                 defaultValue=''
                 {...register('password')}
