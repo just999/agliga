@@ -149,7 +149,7 @@ const ShioTable = () => {
     const { name, value } = e.target;
     setSelectedValues((prev: any) => ({
       ...prev,
-      [`shioSp.${rowIndex}.${key}`]: value,
+      [`shio.${rowIndex}.${key}`]: value,
     }));
 
     // setValue(`shio.${rowIndex}.${key}`, value);

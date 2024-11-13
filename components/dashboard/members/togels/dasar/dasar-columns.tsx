@@ -344,6 +344,12 @@ export const useDasarColumns = (
     const values = type === 'bigSmall' ? ['big', 'small'] : ['odd', 'even'];
     const labels =
       type === 'bigSmall' ? ['Besar', 'Kecil'] : ['Ganjil', 'Genap'];
+
+    console.log(
+      '🚀 ~ renderRadioGroup ~  getValues(`dasar.${row.index}.bigSmall`):',
+      getValues(`dasar.${row.index}.bigSmall`)
+    );
+
     return (
       <div className='flex flex-col items-start w-full'>
         <span className='flex gap-0'>
@@ -357,7 +363,7 @@ export const useDasarColumns = (
                   ? 'bg-cyan-500 w-20 h-7 text-yellow-100 border border-blue-400 hover:bg-cyan-500/70 hover:text-white/70'
                   : getValues(`dasar.${row.index}.oddEven`) === value
                   ? 'bg-fuchsia-500 w-20 h-7 text-yellow-100 hover:bg-fuchsia-500/70 hover:text-white/70 border border-purple-400'
-                  : 'bg-muted text-muted-foreground border border-zinc-200'
+                  : 'bg-muted text-violet-700 border border-purple-400'
               )}>
               <Label
                 className={cn(

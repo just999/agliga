@@ -2,7 +2,7 @@
 import { InputCustom, Label } from '@/components/ui';
 import { shioWithIcon } from '@/lib/helper';
 import { cn, poppins, rp, safeParseFloat } from '@/lib/utils';
-import { FiftyFiftyMsKkkTableSchema } from '@/schemas/togel-schema';
+import { ShioTableSchema } from '@/schemas/togel-schema';
 
 import { Percent } from 'lucide-react';
 import { ChangeEvent, useEffect, useMemo, useRef } from 'react';
@@ -16,15 +16,15 @@ import {
 } from 'react-hook-form';
 import { FaRupiahSign } from 'react-icons/fa6';
 
-type FiftyFiftyComboColumnsProps = {};
+type ShioColumnsProps = {};
 
 export const useShioColumns = (
-  register: UseFormRegister<FiftyFiftyMsKkkTableSchema | any>,
-  control: Control<FiftyFiftyMsKkkTableSchema | any>,
-  watch: UseFormWatch<FiftyFiftyMsKkkTableSchema | any>,
-  setFocus: UseFormSetFocus<FiftyFiftyMsKkkTableSchema>,
-  getValues: UseFormGetValues<FiftyFiftyMsKkkTableSchema> | any,
-  setValue: UseFormGetValues<FiftyFiftyMsKkkTableSchema> | any,
+  register: UseFormRegister<ShioTableSchema | any>,
+  control: Control<ShioTableSchema | any>,
+  watch: UseFormWatch<ShioTableSchema | any>,
+  setFocus: UseFormSetFocus<ShioTableSchema>,
+  getValues: UseFormGetValues<ShioTableSchema> | any,
+  setValue: UseFormGetValues<ShioTableSchema> | any,
   handleInputChange: (field: any, e: any, i: number) => void,
   handleRadioChange: (e: any, rowIndex: number, key: string) => void
 ) => {
@@ -81,7 +81,11 @@ export const useShioColumns = (
           const filteredShio = shioWithIcon
             .filter((shio, i) => shio.label === row.original.shio)
             .map(({ name, icon: Icon }, i) => (
-              <Icon key={name} size={20} className='text-white text-lg svg ' />
+              <Icon
+                key={name}
+                size={20}
+                className='text-yellow-100 text-lg svg '
+              />
             ))[0];
           let radioGroupItems;
           switch (row.index) {
@@ -105,10 +109,10 @@ export const useShioColumns = (
           return (
             <div
               className={cn(
-                'w-33 h-7 gap-2 flex px-2 font-semibold text-xs shadow-lg  border border-orange-700 bg-amber-500 rounded-lg pl-2 text-yellow-50 items-center p-0',
+                'w-33 h-7 gap-2 flex px-2 font-semibold text-xs shadow-lg  border border-orange-700 bg-orange-500 rounded-lg pl-2 text-orange-100 items-center p-0',
                 poppins.className
               )}>
-              <span className='pl-2 flex items-center text-shadow gap-2'>
+              <span className='pl-2 flex items-center text-yellow-100 text-shadow gap-2'>
                 {filteredShio} {row.original.shio}
               </span>
             </div>
@@ -128,7 +132,7 @@ export const useShioColumns = (
                 type='tel'
                 placeholder='bet'
                 className={cn(
-                  'w-28 h-7 text-xs font-semibold pl-5 border border-zinc-300 rounded-md text-zinc-600 placeholder:text-slate-300',
+                  'w-28 h-7 text-xs font-semibold pl-5 border border-sky-400 bg-blue-50 rounded-md text-zinc-600 placeholder:text-slate-300',
                   poppins.className
                 )}
                 suffix={

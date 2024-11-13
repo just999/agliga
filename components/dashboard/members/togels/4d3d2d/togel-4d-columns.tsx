@@ -141,10 +141,10 @@ export const useTogel4dColumns = (
         cell: ({ row }: any) => (
           <div
             className={cn(
-              'text-zinc-300 h-7 flex items-center justify-center border border-emerald-400 font-semibold text-xs  bg-emerald-50 text-center rounded-md text-shadow shadow-inner',
+              'text-green-700 h-7 flex items-center justify-center border-2 border-emerald-600 font-semibold text-xs  bg-emerald-400/40 text-center rounded-md text-shadow shadow-inner',
               poppins.className
             )}>
-            <div className='text-zinc-400 text-xs px-1'>
+            <div className='text-emerald-800 text-xs px-1'>
               {row.original.game}
             </div>
             {/* <pre>{JSON.stringify(row.original, null, 2)}</pre> */}
