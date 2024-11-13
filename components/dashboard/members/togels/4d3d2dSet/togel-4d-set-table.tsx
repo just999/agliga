@@ -123,6 +123,7 @@ const Togel4dSetTable = ({ params }: TogelTable4dSetProps) => {
     isToggle: state.isToggle,
     setIsToggle: state.setIsToggle,
   }));
+
   const sin4dSetData = watch('sin4dSet');
   useEffect(() => {
     if (sin4dSetData) setSin4dSet(sin4dSetData);
@@ -424,12 +425,34 @@ const Togel4dSetTable = ({ params }: TogelTable4dSetProps) => {
     handleInputChange
   );
 
+  console.log('🚀 ~ handleValidateBet ~ sin4dSetData:', sin4dSetData);
+  const filteredSin4dData = sin4dSetData.filter((dat, i) => {
+    const { bet4d, bet3d, bet2d, allBet, ...rest } = dat;
+
+    if (Object.values(rest).filter((val) => val !== '').length === 2 && bet2d) {
+      return 'valid 2d';
+    } else if (
+      Object.values(rest).filter((val) => val !== '').length === 3 &&
+      (bet3d || bet2d)
+    ) {
+      return 'valid 2d 3d';
+    } else if (
+      Object.values(rest).filter((val) => val !== '').length === 4 &&
+      (bet3d || bet2d || bet4d)
+    ) {
+      return 'valid 2d 3d 4d';
+    }
+  });
+  console.log('🚀 ~ filteredSin4dData ~ filteredSin4dData:', filteredSin4dData);
+
   const handleValidateBet = () => {
     const res = getValues('sin4dSet');
+    console.log('🚀 ~ handleValidateBet ~ sin4dSet:', sin4dSet);
+    console.log('🚀 ~ handleValidateBet ~ res:', res);
 
-    const validBet = validBet4dSet(res);
-    if (validBet.length > 0) {
-      setSin4d(validBet);
+    // const validBet = validBet4dSet(res);
+    if (filteredSin4dData.length > 0) {
+      setSin4d(filteredSin4dData);
       // setShow((prev) => !prev);
       setShow(!show);
     }

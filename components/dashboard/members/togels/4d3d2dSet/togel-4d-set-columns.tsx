@@ -37,7 +37,6 @@ const useTogel4dSetColumns = (
 ) => {
   const watchAllInputs = watch();
   const sin4dSet = watch('sin4dSet');
-  console.log('🚀 ~ sin4dSet:', sin4dSet);
   const { copy, copyWager } = watchAllInputs;
 
   useEffect(() => {
@@ -51,7 +50,6 @@ const useTogel4dSetColumns = (
       const filledFields = ['d1', 'd2', 'd3', 'd4'].filter(
         (key) => row[key] !== ''
       ).length;
-      console.log('🚀 ~ sin4dSet.forEach ~ filledFields:', filledFields);
       if (filledFields < 2) {
         setValue(`sin4dSet.${i}.allBet`, '', { shouldValidate: false });
         setValue(`sin4dSet.${i}.bet2d`, '', { shouldValidate: false });
@@ -119,7 +117,7 @@ const useTogel4dSetColumns = (
         accessorKey: 'index',
         header: () => (
           <div className='text-zinc-700 h-full font-semibold flex items-center justify-center'>
-            No.
+            no.
           </div>
         ),
         cell: ({ row }: any) => (
@@ -138,7 +136,7 @@ const useTogel4dSetColumns = (
         id: 'number',
         header: ({ column }: any) => (
           <div className='text-zinc-700 font-semibold w-28 h-full flex items-center justify-center'>
-            Number
+            number
           </div>
         ),
         cell: ({ row }: any) => (
