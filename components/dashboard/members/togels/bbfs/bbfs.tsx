@@ -99,17 +99,17 @@ const Bbfs = ({ params }: BbfsProps) => {
     bb.forEach((_, i) => {
       if (copy) {
         if (copyWager) {
-          if (bf[0].bbNumber.length <= 2) {
+          if (bf[0].bbNumber.length === 2) {
             setValue(`bb.${i}.bet2d`, copyWager);
             setValue(`bb.${i}.bet3d`, '');
             setValue(`bb.${i}.bet4d`, '');
           }
-          if (bf[0].bbNumber.length <= 3) {
+          if (bf[0].bbNumber.length === 3) {
             setValue(`bb.${i}.bet2d`, copyWager);
             setValue(`bb.${i}.bet3d`, copyWager);
             setValue(`bb.${i}.bet4d`, '');
           }
-          if (bf[0].bbNumber.length >= 4) {
+          if (bf[0].bbNumber.length === 4) {
             setValue(`bb.${i}.bet2d`, copyWager);
             setValue(`bb.${i}.bet3d`, copyWager);
             setValue(`bb.${i}.bet4d`, copyWager);
@@ -126,10 +126,6 @@ const Bbfs = ({ params }: BbfsProps) => {
 
   useEffect(() => {
     setAllBet();
-
-    return () => {
-      setAllBet();
-    };
   }, [setAllBet, bbNum]);
 
   const handleWagerInput = (
@@ -233,8 +229,8 @@ const Bbfs = ({ params }: BbfsProps) => {
 
   return (
     <>
-      <div className='font-semibold text-xs'>render: {render}</div>
-      <div className='flex w-full'>
+      {/* <div className='font-semibold text-xs'>render: {render}</div> */}
+      <div className='flex w-full py-2'>
         <div className='flex flex-col'>
           {fields.map((field, i) => {
             return (
@@ -251,11 +247,11 @@ const Bbfs = ({ params }: BbfsProps) => {
                       Nomor
                     </Label>
                   </div>
-                  <div className='flex gap-1 items-center '>
+                  <div className='w-108 h-full text-center flex gap-2 pl-10 items-center justify-center'>
                     <input
                       type='checkbox'
                       {...register('copy')}
-                      className='mx-1'
+                      className='w-8 flex justify-center items-end '
                     />
                     <InputCustom
                       {...register('copyWager', {
@@ -264,7 +260,8 @@ const Bbfs = ({ params }: BbfsProps) => {
                       })}
                       type='tel'
                       // onInput={() => handleWagerInput}
-                      className='w-24 h-7 text-xs flex items-center pl-5 border border-zinc-300 text-zinc-400 placeholder:text-slate-300  placeholder:text-xs'
+                      className='w-36 h-7 text-xs flex items-center pl-5 border border-zinc-300 text-zinc-400 placeholder:text-slate-300  placeholder:text-xs'
+                      additionalClass='w-36 gap-0 flex justify-center relative'
                       placeholder='bet all'
                       suffix={
                         <FaRupiahSign
@@ -273,7 +270,7 @@ const Bbfs = ({ params }: BbfsProps) => {
                         />
                       }
                     />
-                    <div className='pl-1 shadow-inner'>all bet</div>
+                    <div className='text-nowrap'>bet</div>
                   </div>
                 </span>
                 <div className='flex w-full gap-1'>
@@ -347,7 +344,7 @@ const Bbfs = ({ params }: BbfsProps) => {
                     </div>
                   </div>
                 </div>
-                <div className='w-full relative py-1'>
+                <div className='w-full relative'>
                   {/* <Button
                       type='submit'
                       size='sm'

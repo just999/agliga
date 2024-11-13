@@ -143,10 +143,12 @@ export const useBbfsColumns = (
         cell: ({ row }: any) => (
           <div
             className={cn(
-              'text-zinc-500 h-7 flex items-center justify-center border border-emerald-400 font-semibold text-xs w-full bg-emerald-400/40 text-center rounded-md text-shadow',
+              'text-green-700 h-7 flex items-center justify-center border-2 border-emerald-600 font-semibold text-xs w-full bg-emerald-400/40 text-center rounded-lg text-shadow',
               poppins.className
             )}>
-            <div className='text-stone-500'>{row.original.game}</div>
+            <div className='text-emerald-800 text-xs px-1'>
+              {row.original.game}
+            </div>
           </div>
         ),
       },

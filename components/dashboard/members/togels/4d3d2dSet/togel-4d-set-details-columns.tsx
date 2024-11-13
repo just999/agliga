@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import { ChangeEvent, useCallback, useEffect, useMemo } from 'react';
 import {
   Control,
+  FieldArrayWithId,
   FieldValues,
   UseFormGetValues,
   UseFormRegister,
@@ -25,7 +26,8 @@ export const useTogel4dSetDetailsColumns = (
   setFocus: UseFormSetFocus<FieldValues>,
   getValues: UseFormGetValues<FieldValues> | any,
   setValue: UseFormGetValues<FieldValues> | any,
-  handleRemove: (i: number) => void,
+  remove: (i: number) => void,
+  fields: FieldArrayWithId<FieldValues> | any,
   sin4dSet: Form4dSetProps[],
   type: string,
   handleInputChange?: (field: any, value: any, i: number) => void
@@ -79,7 +81,7 @@ export const useTogel4dSetDetailsColumns = (
       {
         id: 'number',
         header: ({ column }: any) => (
-          <div className='text-zinc-700 font-semibold'>Number 4d/3d/2d</div>
+          <div className='text-zinc-700 font-semibold'>Number</div>
         ),
         cell: ({ row }: any) => (
           <div className='flex justify-around w-28'>
@@ -110,15 +112,19 @@ export const useTogel4dSetDetailsColumns = (
       {
         accessorKey: 'game',
         header: ({}) => (
-          <div className='text-zinc-700 font-semibold '>Game</div>
+          <div className='w-8 h-full p-0 m-0 mx-auto text-zinc-700 font-semibold flex items-center justify-center'>
+            game
+          </div>
         ),
         cell: ({ row }: any) => (
           <div
             className={cn(
-              'text-zinc-500 h-7 flex items-center justify-center border border-emerald-400 font-semibold text-xs w-full bg-emerald-400/40 text-center rounded-lg text-shadow',
+              'text-green-700 h-7 flex items-center justify-center border-2 border-emerald-600 font-semibold text-xs w-full bg-emerald-400/40 text-center rounded-lg text-shadow',
               poppins.className
             )}>
-            <div>{row.original.game}</div>
+            <div className='text-emerald-800 text-xs px-1'>
+              {row.original.game}
+            </div>
           </div>
         ),
       },
@@ -127,7 +133,7 @@ export const useTogel4dSetDetailsColumns = (
         header: () => (
           // {head.label === 'wager' ? (
           <span className='text-center flex items-center justify-center'>
-            <input
+            {/* <input
               type='checkbox'
               {...register('copy')}
               className={cn('mx-1', type === 'togel4dSet' && 'hidden')}
@@ -144,15 +150,20 @@ export const useTogel4dSetDetailsColumns = (
                 poppins.className
               )}
               placeholder='bet'
-            />
-            {type === 'togel4dSet' && (
-              <div className={cn('text-zinc-700 font-semibold')}>bet</div>
-            )}
+            /> */}
+
+            <div
+              className={cn(
+                'w-full flex justify-center text-zinc-700 font-semibold'
+              )}>
+              bet
+            </div>
+
             {/* <div className='pl-1'>bet</div> */}
           </span>
         ),
         cell: ({ row }: any) => (
-          <div className='text-zinc-700 border border-zinc-400 rounded-lg h-7 px-0 font-semibold w-24'>
+          <div className='text-zinc-700 border border-zinc-400 rounded-lg h-7 px-0 font-semibold w-29'>
             <div className='flex gap-2 items-center bg-zinc-300/40 h-7 text-center shadow-inner rounded-md '>
               <FaRupiahSign size={10} className='text-zinc-400 ml-1 svg' />
               <span
@@ -170,24 +181,28 @@ export const useTogel4dSetDetailsColumns = (
       {
         accessorKey: 'dis',
         header: () => (
-          <div className='text-zinc-700 font-semibold w-28'>dis(%)</div>
+          <div className='text-zinc-700 font-semibold w-29'>dis(%)</div>
         ),
         cell: ({ row }: any) => {
+          const dis4d = (Number(row.original.wager) * 0.66).toFixed();
+          const dis3d = (Number(row.original.wager) * 0.59).toFixed();
+          const dis2d = (Number(row.original.wager) * 0.29).toFixed();
+
           return (
             <div
               className={cn(
-                'h-7 text-zinc-700 flex items-center border border-amber-500 gap-x-0.5 text-xs shadow-inner font-semibold w-28 bg-amber-200/40 text-center rounded-md',
+                'h-7 text-zinc-700 flex items-center border border-amber-500 gap-x-0.5 text-xs shadow-inner font-semibold w-29 bg-amber-200/40 text-center rounded-md',
                 poppins.className
               )}>
-              <div className='w-28 flex items-center text-zinc-400 gap-1  justify-between h-7 rounded-lg shadow-inner '>
+              <div className='w-29 flex items-center text-zinc-400 gap-1  justify-between h-7 rounded-lg shadow-inner '>
                 <div className='flex items-center '>
                   <FaRupiahSign size={10} className='text-zinc-400 mx-1 svg' />
                   <div>
                     {row.original.dis === '66%'
-                      ? rp.format(Number(row.original.wager) * 0.66)
+                      ? rp.format(Number(dis4d))
                       : row.original.dis === '59%'
-                      ? rp.format(Number(row.original.wager) * 0.59)
-                      : rp.format(Number(row.original.wager) * 0.29)}
+                      ? rp.format(Number(dis3d))
+                      : rp.format(Number(dis2d))}
                   </div>
                 </div>
 
@@ -203,7 +218,7 @@ export const useTogel4dSetDetailsColumns = (
         footer: () => (
           <div
             className={cn(
-              'text-xs w-28 font-semibold mx-auto text-center pt-2'
+              'text-xs w-29 font-semibold mx-auto text-center pt-2'
             )}>
             Total{' '}
           </div>
@@ -213,14 +228,17 @@ export const useTogel4dSetDetailsColumns = (
       {
         accessorKey: 'net',
         header: ({ column }: any) => (
-          <div className='flex items-center justify-center '>net</div>
+          <div className='text-zinc-700 font-semibold w-29  h-full flex items-end justify-center'>
+            net
+          </div>
         ),
         cell: ({ row }: any) => {
+          const net = Number(row.original.net).toFixed();
           return (
-            <div className='text-zinc-700 border border-zinc-400 rounded-lg h-7 px-0 font-semibold w-full'>
+            <div className='text-zinc-700 border border-zinc-400 rounded-lg h-7 px-0 font-semibold w-29'>
               <div
                 className={cn(
-                  'flex gap-2 items-center bg-zinc-300/40 h-7 text-center shadow-inner rounded-md',
+                  'flex gap-1 items-center bg-zinc-300/40 h-7 text-center shadow-inner rounded-md',
                   poppins.className
                 )}>
                 <FaRupiahSign size={12} className='text-zinc-400 ml-1' />
@@ -229,7 +247,7 @@ export const useTogel4dSetDetailsColumns = (
                     'text-left px-0 text-gray-500 tracking-wider text-xs',
                     poppins.className
                   )}>
-                  {rp.format(Number(row.original.net))}
+                  {row.original.net === '' ? '' : rp.format(row.original.net)}
                 </span>
               </div>
             </div>
@@ -247,7 +265,7 @@ export const useTogel4dSetDetailsColumns = (
             <div className='flex justify-center py-2'>
               <div
                 className={cn(
-                  'w-24 h-7 flex items-center bg-gray-500 gap-1 shadow-inner text-center font-semibold text-xs border border-slate-400 rounded',
+                  'w-29 h-7 flex items-center bg-gray-500 gap-1 shadow-inner text-center font-semibold text-xs border border-slate-400 rounded',
                   poppins.className
                 )}>
                 <FaRupiahSign size={12} className='text-zinc-400 ml-1 svg' />
@@ -264,21 +282,18 @@ export const useTogel4dSetDetailsColumns = (
         header: () => <span></span>,
         cell: ({ row }: any) => (
           <div className='w-full'>
-            <Button
-              variant='ghost'
-              type='button'
-              onClick={() => handleRemove(row.index)}
-              className='m-0 p-0 h-7 '>
+            {fields.length > 1 && (
               <Trash2Icon
                 size={20}
+                onClick={() => remove(row.index)}
                 className='svg text-rose-600 hover:-translate-y-1 mx-auto  hover:scale-150 hover:svg duration-300  cursor-pointer pl-1'
               />
-            </Button>
+            )}
           </div>
         ),
       },
     ],
-    [handleInputChange, register, handleRemove, type]
+    [fields.length, handleInputChange, register, remove, type]
   );
 
   return {

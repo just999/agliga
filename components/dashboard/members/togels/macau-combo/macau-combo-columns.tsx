@@ -121,7 +121,11 @@ export const useMacauCColumns = (
     () => [
       {
         accessorKey: 'index',
-        header: ({}) => <div>No.</div>,
+        header: ({}) => (
+          <div className='w-7 text-zinc-700 h-full font-semibold flex items-center justify-center'>
+            no.
+          </div>
+        ),
         cell: ({ row }: any) => (
           <div className='flex flex-row justify-center p-0'>
             <span
@@ -223,7 +227,7 @@ export const useMacauCColumns = (
                 type='tel'
                 placeholder='bet'
                 className={cn(
-                  'w-28 h-7 text-xs font-semibold pl-5 border border-zinc-300 rounded-md text-zinc-600 placeholder:text-slate-300',
+                  'w-24 h-7 text-xs font-semibold pl-5 border border-zinc-300 rounded-md text-zinc-600 placeholder:text-slate-300',
                   poppins.className
                 )}
                 suffix={
@@ -254,7 +258,7 @@ export const useMacauCColumns = (
           return (
             <div
               className={cn(
-                'h-7 text-zinc-700 mx-auto flex items-center justify-between border border-amber-500 gap-x-0.5 text-xs shadow-inner font-semibold w-28 bg-amber-200/40 text-center rounded-md',
+                'h-7 text-zinc-700 mx-auto flex items-center justify-between border border-amber-500 gap-x-0.5 text-xs shadow-inner font-semibold w-24 bg-amber-200/40 text-center rounded-md',
                 poppins.className
               )}>
               <span className='flex items-center text-zinc-400'>
@@ -279,7 +283,7 @@ export const useMacauCColumns = (
       {
         accessorKey: 'net',
         header: ({ column }: any) => (
-          <div className='text-zinc-700 font-semibold w-28  h-full flex items-end justify-center'>
+          <div className='text-zinc-700 font-semibold w-24  h-full flex items-center justify-center'>
             net
           </div>
         ),
@@ -290,10 +294,10 @@ export const useMacauCColumns = (
               ? ''
               : (wager * 0.95).toFixed().toString();
           return (
-            <div className='relative flex justify-center items-center bg-zinc-300/40 text-zinc-700 border border-zinc-200 rounded-md h-7 px-0 font-semibold w-28 mx-auto'>
+            <div className='relative flex justify-center items-center bg-zinc-300/40 text-zinc-700 border border-zinc-200 rounded-md h-7 px-0 font-semibold w-24 mx-auto'>
               <div
                 className={cn(
-                  'w-28 h-7 flex items-center gap-1  text-center font-semibold text-xs border border-slate-400 text-zinc-500 rounded',
+                  'w-24 h-7 flex items-center gap-1  text-center font-semibold text-xs border border-slate-400 text-zinc-500 rounded',
                   poppins.className
                 )}>
                 <FaRupiahSign size={12} className='text-zinc-400 ml-1' />
@@ -317,7 +321,7 @@ export const useMacauCColumns = (
             <div className='flex justify-center py-1'>
               <div
                 className={cn(
-                  'w-28 h-7 flex items-center bg-gray-500 gap-1 shadow-inner text-center font-semibold text-xs border border-slate-400 rounded',
+                  'w-24 h-7 flex items-center bg-gray-500 gap-1 shadow-inner text-center font-semibold text-xs border border-slate-400 rounded',
                   poppins.className
                 )}>
                 <FaRupiahSign size={12} className='text-zinc-400 ml-1 svg' />

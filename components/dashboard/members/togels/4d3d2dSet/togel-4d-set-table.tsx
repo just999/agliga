@@ -369,6 +369,11 @@ const Togel4dSetTable = ({ params }: TogelTable4dSetProps) => {
           const hasAtLeastTwoDigits =
             [d1, d2, d3, d4].filter(Boolean).length >= 2;
 
+          console.log(
+            '🚀 ~ Togel4dSetTable ~ hasAtLeastTwoDigits:',
+            hasAtLeastTwoDigits
+          );
+
           if (hasAtLeastTwoDigits) {
             if ([d1, d2, d3, d4].filter(Boolean).length >= 2) {
               setValue(`sin4dSet.${i}.bet2d`, allBetValue);
@@ -473,11 +478,11 @@ const Togel4dSetTable = ({ params }: TogelTable4dSetProps) => {
 
   return (
     <>
-      <div className={cn('font-semibold text-xs', show && 'hidden')}>
+      {/* <div className={cn('font-semibold text-xs', show && 'hidden')}>
         render form: {render}
-      </div>
+      </div> */}
       <form onSubmit={handleSubmit(onSubmit)} className={cn(show && 'hidden')}>
-        <Table>
+        <Table className='overflow-hidden'>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
@@ -580,7 +585,12 @@ const Togel4dSetTable = ({ params }: TogelTable4dSetProps) => {
           </Button>
         </div>
       </form>
-      <Togel4dSetDetailsTable params={params} sin4dSet={sin4d} show={show} />
+      <Togel4dSetDetailsTable
+        params={params}
+        sin4dSet={sin4d}
+        show={show}
+        setShow={setShow}
+      />
       {/* <TogelTable4dSetConfirm params={params} sin4dSet={sin4d} /> */}
       {/* <pre>{JSON.stringify(watch(), null, 2)}</pre> */}
     </>

@@ -183,7 +183,7 @@ export const useQuick2dColumns = (
                 type='tel'
                 placeholder='bet'
                 className={cn(
-                  'w-36 h-8 text-xs font-semibold pl-5 text-zinc-600 placeholder:text-slate-300 border border-zinc-400',
+                  'w-38 h-8 text-xs font-semibold pl-5 text-zinc-600 placeholder:text-slate-300 border border-zinc-400',
                   poppins.className
                 )}
                 suffix={

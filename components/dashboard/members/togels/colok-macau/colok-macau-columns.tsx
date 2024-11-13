@@ -70,7 +70,7 @@ export const useColokMacauColumns = (
         accessorKey: 'index',
         header: ({}) => (
           <div className='w-7 text-zinc-700 h-full font-semibold flex items-end justify-center'>
-            No.
+            no.
           </div>
         ),
         cell: ({ row }: any) => (

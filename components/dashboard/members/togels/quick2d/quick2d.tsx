@@ -298,7 +298,7 @@ const Quick2d = () => {
               <TableRow
                 key={row.id}
                 data-state={row.getIsSelected() && 'selected'}
-                className='bg-orange-50 '>
+                className='bg-orange-50 shadow-inner '>
                 {row.getVisibleCells().map((cell) => (
                   <TableCell
                     key={cell.id}

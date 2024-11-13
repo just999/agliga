@@ -168,7 +168,11 @@ export const FiftyFiftyComboColumns = (
     () => [
       {
         accessorKey: 'index',
-        header: ({}) => <div>No.</div>,
+        header: ({}) => (
+          <div className='w-7 text-zinc-700 h-full font-semibold flex items-center justify-center'>
+            no.
+          </div>
+        ),
         cell: ({ row }: any) => (
           <div className='flex flex-row justify-center p-0'>
             <span
@@ -185,7 +189,7 @@ export const FiftyFiftyComboColumns = (
       {
         id: 'position',
         header: () => (
-          <div className='w-16 p-0 m-0 text-zinc-700 font-semibold'>
+          <div className='w-16 p-0 m-0 flex justify-center text-zinc-700 font-semibold'>
             position
           </div>
         ),
@@ -329,7 +333,7 @@ export const FiftyFiftyComboColumns = (
       {
         accessorKey: 'net',
         header: ({ column }: any) => (
-          <div className='text-zinc-700 font-semibold w-28  h-full flex items-end justify-center'>
+          <div className='text-zinc-700 font-semibold w-28  h-full flex items-center justify-center'>
             net
           </div>
         ),

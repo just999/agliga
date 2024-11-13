@@ -171,7 +171,7 @@ const ColokJituTable = () => {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div>render: {render}</div>
+        {/* <div className='font-semibold text-xs my-5'>render: {render}</div> */}
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -239,12 +239,12 @@ const ColokJituTable = () => {
             ))}
           </TableFooter>
         </Table>
-        <div className='w-full text-right py-2 pr-4 '>
+        <div className='w-full text-right py-2'>
           <Button
             size='sm'
             type='submit'
             disabled={!isValid}
-            className='py-1 px-2 '>
+            className='py-0 w-28'>
             Submit
           </Button>
         </div>

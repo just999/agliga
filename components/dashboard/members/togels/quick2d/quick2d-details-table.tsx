@@ -10,7 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui';
-import { cn, generateAndPadArrayFn } from '@/lib/utils';
+import { cn, generateAndPadArrayFn, poppins } from '@/lib/utils';
 import {
   BseoOnlySchema,
   QuickTab4dSchema,
@@ -202,7 +202,7 @@ const Quick2dDetailsTable = ({ q2dData }: Quick2dDetailsTableProps) => {
         )}>
         render: {render}
       </div> */}
-      <form onSubmit={handleSubmit(onSubmit)} className='pb-2 '>
+      <form onSubmit={handleSubmit(onSubmit)} className='py-2 '>
         <div className='w-full flex flex-row-reverse items-center justify-between'>
           <div
             className={cn(
@@ -324,8 +324,23 @@ const Quick2dDetailsTable = ({ q2dData }: Quick2dDetailsTableProps) => {
           <div className='h-2' />
           <div className='flex justify-center items-center gap-2 bg-orange-100'>
             <div className='text-xs '>
-              Showing {table.getRowModel().rows.length.toLocaleString()} of{' '}
-              {table.getRowCount().toLocaleString()} Rows
+              tampil{' '}
+              <span
+                className={cn(
+                  'h-3 bg-emerald-50 rounded-sm px-1 font-semibold',
+                  poppins.className
+                )}>
+                {table.getRowModel().rows.length.toLocaleString()}{' '}
+              </span>{' '}
+              dari
+              <span
+                className={cn(
+                  'h-3 bg-emerald-50 rounded-sm px-1 font-semibold',
+                  poppins.className
+                )}>
+                {table.getRowCount().toLocaleString()}
+              </span>{' '}
+              baris
             </div>
             <div className='flex  '>
               <Button

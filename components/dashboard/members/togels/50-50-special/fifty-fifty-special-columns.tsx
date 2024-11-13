@@ -118,7 +118,7 @@ export const FiftyFiftySpecialColumns = (
         accessorKey: 'index',
         header: ({}) => (
           <div className='w-7 text-zinc-700 h-full font-semibold flex items-center justify-center'>
-            No.
+            no.
           </div>
         ),
         cell: ({ row }: any) => (

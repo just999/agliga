@@ -387,7 +387,7 @@ const TogelTable = ({ slug }: TogelTableProps) => {
   }, []);
 
   return (
-    <ClientOnly>
+    <>
       <div className='font-semibold text-xs'>render: {render}</div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Table>
@@ -487,7 +487,7 @@ const TogelTable = ({ slug }: TogelTableProps) => {
         </div>
       </form>
       {/* <pre>{JSON.stringify(watch(), null, 2)}</pre> */}
-    </ClientOnly>
+    </>
   );
 };
 

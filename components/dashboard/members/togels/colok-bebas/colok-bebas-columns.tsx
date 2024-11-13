@@ -53,7 +53,7 @@ export const useColokBebasColumns = (
         cell: ({ row }: any) => (
           <div
             className={cn(
-              'w-12 h-7 text-base flex items-center justify-center border rounded-lg    font-extrabold text-shadow shadow-inner text-zinc-700',
+              'w-12 h-7 text-base flex items-center justify-center border border-emerald-500 rounded-md font-extrabold text-shadow shadow-inner text-emerald-700 bg-emerald-100 ',
               oldStandardTT.className
             )}>
             {/* <InputCustom
@@ -70,7 +70,7 @@ export const useColokBebasColumns = (
         accessorKey: 'wager',
         header: 'bet',
         cell: ({ row }: any) => (
-          <div className='relative  flex justify-center '>
+          <div className='relative  flex justify-center text-zinc-700 border border-zinc-400 rounded-md h-7 px-0 font-semibold w-28 '>
             <InputCustom
               {...register(`cb.${row.index}.wager`)}
               type='tel'
@@ -161,7 +161,9 @@ export const useColokBebasColumns = (
                 0
               ) *
             (95 / 100)
-          ).toFixed();
+          )
+            .toFixed()
+            .toString();
           return (
             <div className='flex justify-center py-2'>
               <div

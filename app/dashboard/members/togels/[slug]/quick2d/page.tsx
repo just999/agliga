@@ -21,7 +21,7 @@ const Quick2dPage = ({ params }: Quick2dPageProps) => {
         {capitalizeFirstCharacter(params.slug)} - Pools -
         Besar-Kecil/Genap-Ganjil
       </div>
-      <div className='bg-yellow-50/50 px-2 rounded-lg shadow-lg'>
+      <div className='bg-green-50/50 px-2 py-1 rounded-lg shadow-lg overflow-hidden'>
         <Quick2d />
       </div>
     </TogelContainer>

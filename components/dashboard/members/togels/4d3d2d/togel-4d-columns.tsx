@@ -224,7 +224,7 @@ export const useTogel4dColumns = (
       {
         accessorKey: 'dis',
         header: () => (
-          <div className='text-zinc-700 font-semibold w-28  h-full flex items-center justify-center'>
+          <div className='text-zinc-700 font-semibold w-28  h-full flex items-end justify-center'>
             <div className='flex items-center text-xs font-semibold'>
               dis(
               <Percent size={10} />)
@@ -297,7 +297,7 @@ export const useTogel4dColumns = (
                   'flex gap-1 items-center bg-zinc-300/40 h-7 text-center shadow-inner rounded-md',
                   poppins.className
                 )}>
-                <FaRupiahSign size={10} className='text-zinc-400 ml-1 svg' />
+                <FaRupiahSign size={10} className='text-zinc-400 ml-1' />
                 <span
                   className={cn(
                     'text-left px-0 text-gray-500 tracking-wider text-xs',

@@ -57,7 +57,11 @@ export const useShioColumns = (
     () => [
       {
         accessorKey: 'index',
-        header: ({}) => <div>No.</div>,
+        header: ({}) => (
+          <div className='w-7 text-zinc-700 h-full font-semibold flex items-center justify-center'>
+            no.
+          </div>
+        ),
         cell: ({ row }: any) => (
           <div className='flex flex-row justify-center p-0'>
             <span
@@ -188,7 +192,7 @@ export const useShioColumns = (
       {
         accessorKey: 'net',
         header: ({ column }: any) => (
-          <div className='text-zinc-700 font-semibold w-28  h-full flex items-end justify-center'>
+          <div className='text-zinc-700 font-semibold w-28  h-full flex items-center justify-center'>
             net
           </div>
         ),

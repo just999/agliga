@@ -480,7 +480,7 @@ import {
   Button,
 } from '@/components/ui';
 import ClientOnly from '@/lib/client-only';
-import { cn } from '@/lib/utils';
+import { cn, poppins } from '@/lib/utils';
 import { BbSchema, BbTab4dSchema, BbTabSchema } from '@/schemas/togel-schema';
 import { rankItem } from '@tanstack/match-sorter-utils';
 import { useEffect, useState } from 'react';
@@ -620,8 +620,8 @@ export function BbfsTable<TData, TValue>({
   return (
     <ClientOnly>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className='flex justify-between items-center '>
-          <div className='font-semibold text-xs my-5'>render: {render}</div>
+        <div className='flex justify-between items-center py-2'>
+          {/* <div className='font-semibold text-xs my-5'>render: {render}</div> */}
           <Button type='submit' size='sm' className='px-2 '>
             Submit
           </Button>
@@ -715,8 +715,23 @@ export function BbfsTable<TData, TValue>({
         <div className='h-2' />
         <div className='flex justify-center items-center gap-2 bg-orange-100'>
           <div className='text-xs '>
-            Showing {table.getRowModel().rows.length.toLocaleString()} of{' '}
-            {table.getRowCount().toLocaleString()} Rows
+            tampil{' '}
+            <span
+              className={cn(
+                'h-3 bg-emerald-50 rounded-sm px-1 font-semibold',
+                poppins.className
+              )}>
+              {table.getRowModel().rows.length.toLocaleString()}{' '}
+            </span>{' '}
+            dari
+            <span
+              className={cn(
+                'h-3 bg-emerald-50 rounded-sm px-1 font-semibold',
+                poppins.className
+              )}>
+              {table.getRowCount().toLocaleString()}
+            </span>{' '}
+            baris
           </div>
           <div className='flex  '>
             <Button

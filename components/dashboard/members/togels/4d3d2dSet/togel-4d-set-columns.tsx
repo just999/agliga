@@ -37,21 +37,29 @@ const useTogel4dSetColumns = (
 ) => {
   const watchAllInputs = watch();
   const sin4dSet = watch('sin4dSet');
+  console.log('🚀 ~ sin4dSet:', sin4dSet);
   const { copy, copyWager } = watchAllInputs;
 
   useEffect(() => {
     sin4dSet.forEach((row: any, i: number) => {
+      if (copyWager === '') {
+        setValue(`sin4dSet.${i}.bet2d`, '');
+        setValue(`sin4dSet.${i}.bet3d`, '');
+        setValue(`sin4dSet.${i}.bet4d`, '');
+      }
+
       const filledFields = ['d1', 'd2', 'd3', 'd4'].filter(
         (key) => row[key] !== ''
       ).length;
-      if (filledFields <= 2) {
+      console.log('🚀 ~ sin4dSet.forEach ~ filledFields:', filledFields);
+      if (filledFields < 2) {
         setValue(`sin4dSet.${i}.allBet`, '', { shouldValidate: false });
         setValue(`sin4dSet.${i}.bet2d`, '', { shouldValidate: false });
         setValue(`sin4dSet.${i}.bet3d`, '', { shouldValidate: false });
         setValue(`sin4dSet.${i}.bet4d`, '', { shouldValidate: false });
       }
     });
-  }, [setValue, sin4dSet]);
+  }, [setValue, sin4dSet, copyWager]);
 
   const setWager4dSet = useCallback(() => {
     sin4dSet.forEach((sin: Sin4dSetSchema, i: number) => {
@@ -91,9 +99,6 @@ const useTogel4dSetColumns = (
 
   useEffect(() => {
     setWager4dSet();
-    return () => {
-      setWager4dSet();
-    };
   }, [setWager4dSet]);
 
   const handleOnInput = (e: ChangeEvent<HTMLInputElement>) => {
@@ -112,7 +117,11 @@ const useTogel4dSetColumns = (
     () => [
       {
         accessorKey: 'index',
-        header: () => <div className='text-zinc-300 font-semibold'>No.</div>,
+        header: () => (
+          <div className='text-zinc-700 h-full font-semibold flex items-center justify-center'>
+            No.
+          </div>
+        ),
         cell: ({ row }: any) => (
           <div className='flex flex-row justify-center p-0'>
             <span
@@ -128,7 +137,7 @@ const useTogel4dSetColumns = (
       {
         id: 'number',
         header: ({ column }: any) => (
-          <div className='text-zinc-700 font-semibold w-28 h-full flex items-end justify-center'>
+          <div className='text-zinc-700 font-semibold w-28 h-full flex items-center justify-center'>
             Number
           </div>
         ),
@@ -157,29 +166,29 @@ const useTogel4dSetColumns = (
       {
         id: 'bet',
         header: () => (
-          <span className='text-center flex items-center justify-center'>
-            {' '}
+          <span className='w-72 h-full text-center flex  items-center justify-center'>
             <input
               type='checkbox'
               {...register('copy')}
-              className='mx-1'
-            />{' '}
+              className='w-8 flex justify-center items-end '
+            />
             <InputCustom
               onInput={handleWagerInput}
               {...register('copyWager', { pattern: /^[0-9]+$/ })}
               type='tel'
               className={cn(
-                'w-21 h-7 text-xs flex items-center pl-5 border border-zinc-300 text-zinc-400 placeholder:text-slate-300  placeholder:text-xs'
+                'w-24 h-7 text-xs flex items-center pl-5 border border-zinc-300 text-zinc-400 placeholder:text-slate-300  placeholder:text-xs'
               )}
+              additionalClass='w-24 gap-0 flex justify-center relative mr-4'
               placeholder='bet all'
               suffix={
                 <FaRupiahSign
                   size={10}
-                  className='text-zinc-400 absolute left-1 svg'
+                  className='text-zinc-400 absolute left-1'
                 />
               }
-            />{' '}
-            <div className='pl-1'>bet</div>{' '}
+            />
+            <div className=''>bet</div>
           </span>
         ),
         cell: ({ row }: any) => {
@@ -187,72 +196,70 @@ const useTogel4dSetColumns = (
             (key) => row.original[key] !== ''
           ).length;
           return (
-            <div>
-              <div className='flex w-84'>
-                {['bet4d', 'bet3d', 'bet2d', 'allBet'].map((key) => (
-                  <div key={key} className='relative'>
-                    <InputCustom
-                      onInput={handleWagerInput}
-                      placeholder={key}
-                      {...register(`sin4dSet.${row.index}.${key}`, {
-                        onChange: (e: ChangeEvent<HTMLInputElement>) =>
-                          handleInputChange(key, e, row.index),
-                      })}
-                      suffix={
-                        <FaRupiahSign
-                          size={10}
-                          className='text-zinc-400 absolute left-1 svg'
-                        />
-                      }
-                      type='tel'
-                      className={cn(
-                        'w-21 h-7 p-.5  pl-5 mx-auto font-semibold text-xs text-zinc-500 rounded-md placeholder:text-zinc-300 placeholder:text-[10px]',
-                        key === 'bet4d'
-                          ? 'bg-purple-100 border border-purple-400 '
-                          : key === 'bet3d'
-                          ? 'bg-teal-100  border border-teal-400 '
-                          : 'bg-amber-100  border border-amber-400 ',
-                        poppins.className
-                      )}
-                      disabled={key === 'allBet' && filledFields < 2}
-                    />{' '}
-                    {key === 'bet4d' ? (
-                      <PiNumberCircleFourBold
-                        size={14}
-                        className={cn(
-                          'text-purple-500 absolute right-1 top-1 svg',
-                          row.original.bet4d && 'hidden'
-                        )}
+            <div className='flex w-96'>
+              {['bet4d', 'bet3d', 'bet2d', 'allBet'].map((key) => (
+                <div key={key} className='relative'>
+                  <InputCustom
+                    onInput={handleWagerInput}
+                    placeholder={key}
+                    {...register(`sin4dSet.${row.index}.${key}`, {
+                      onChange: (e: ChangeEvent<HTMLInputElement>) =>
+                        handleInputChange(key, e, row.index),
+                    })}
+                    suffix={
+                      <FaRupiahSign
+                        size={10}
+                        className='text-zinc-400 absolute left-1 '
                       />
-                    ) : key === 'bet3d' ? (
-                      <PiNumberCircleThreeBold
-                        size={14}
-                        className={cn(
-                          'text-green-500 absolute right-1 top-1 svg',
-                          row.original.bet3d && 'hidden'
-                        )}
-                      />
-                    ) : key === 'bet2d' ? (
-                      <PiNumberCircleTwoBold
-                        size={14}
-                        className={cn(
-                          'text-orange-500 absolute right-1 top-1 svg',
-                          row.original.bet2d && 'hidden'
-                        )}
-                      />
-                    ) : (
-                      <RiCharacterRecognitionLine
-                        size={14}
-                        className={cn(
-                          'text-zinc-500 absolute right-1 top-1 svg',
-                          row.original.allBet && 'hidden'
-                        )}
-                      />
+                    }
+                    type='tel'
+                    className={cn(
+                      'w-24 h-7 p-.5  pl-5 mx-auto font-semibold text-xs text-zinc-500 rounded-md placeholder:text-zinc-300 placeholder:text-[10px] flex items-center',
+                      key === 'bet4d'
+                        ? 'bg-purple-100 border border-purple-400 '
+                        : key === 'bet3d'
+                        ? 'bg-teal-100  border border-teal-400 '
+                        : 'bg-amber-100  border border-amber-400 ',
+                      poppins.className
                     )}
-                  </div>
-                ))}
-              </div>
-              {/* <pre>{JSON.stringify(row.original, null, 2)}</pre>{' '} */}
+                    disabled={key === 'allBet' && filledFields < 2}
+                  />
+                  {key === 'bet4d' ? (
+                    <PiNumberCircleFourBold
+                      size={14}
+                      className={cn(
+                        'text-purple-500 absolute right-1 top-1 svg',
+                        row.original.bet4d && 'hidden'
+                      )}
+                    />
+                  ) : key === 'bet3d' ? (
+                    <PiNumberCircleThreeBold
+                      size={14}
+                      className={cn(
+                        'text-green-500 absolute right-1 top-1 svg',
+                        row.original.bet3d && 'hidden'
+                      )}
+                    />
+                  ) : key === 'bet2d' ? (
+                    <PiNumberCircleTwoBold
+                      size={14}
+                      className={cn(
+                        'text-orange-500 absolute right-1 top-1 svg',
+                        row.original.bet2d && 'hidden'
+                      )}
+                    />
+                  ) : (
+                    <RiCharacterRecognitionLine
+                      size={14}
+                      className={cn(
+                        'text-zinc-500 absolute right-1 top-1 svg',
+                        row.original.allBet && 'hidden'
+                      )}
+                    />
+                  )}
+                </div>
+              ))}
+              {/* <pre>{JSON.stringify(row.original, null, 2)}</pre> */}
             </div>
           );
         },

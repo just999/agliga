@@ -36,6 +36,7 @@ type TogelTable4dSetConfirmProps = {
   };
   sin4dSet: Form4dSetProps[];
   show: boolean;
+  setShow: (show: boolean) => void;
 };
 
 const form4d = {
@@ -63,6 +64,7 @@ const Togel4dSetDetailsTable = ({
   params,
   sin4dSet,
   show,
+  setShow,
 }: TogelTable4dSetConfirmProps) => {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [sin4ds, setSin4ds] = useState<Sin4dSchema[]>(() => initialData);
@@ -114,7 +116,7 @@ const Togel4dSetDetailsTable = ({
     name: 'sin4ds',
   });
   const handleBackChange = () => {
-    setIsToggle(isToggle);
+    setShow(!show);
   };
   const defaultFilterFns = {
     fuzzy: () => true,
@@ -134,7 +136,8 @@ const Togel4dSetDetailsTable = ({
     setFocus,
     getValues,
     setValue,
-    handleRemove,
+    remove,
+    fields,
     sin4dSet,
     type
   );
@@ -255,7 +258,7 @@ const Togel4dSetDetailsTable = ({
             {errors.root.serverError.message as string}
           </p>
         )}
-        <div className='flex justify-between items-center px-4 py-2 relative'>
+        <div className='flex justify-between items-center px-4 py-2'>
           <Button
             type='button'
             size='sm'
@@ -273,7 +276,7 @@ const Togel4dSetDetailsTable = ({
             disabled={!isValid}
             size='sm'
             variant='primary'
-            className='px-3 py-.5 absolute right-3 top-2'>
+            className='px-3 py-.5'>
             Submit
           </Button>
         </div>

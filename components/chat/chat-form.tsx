@@ -220,7 +220,7 @@ const ChatForm = memo(
           className='w-full flex flex-col'>
           <div className='flex items-center gap-2'>
             <InputCustom
-              className='h-8 shadow-inner border-0 focus-visible:ring-0 focus:outline-none focus:right-0 '
+              className='w-full h-8 shadow-inner border-0 focus-visible:ring-0 focus:outline-none focus:right-0 '
               aria-label='Message input'
               placeholder='Type a message'
               {...register('text')}

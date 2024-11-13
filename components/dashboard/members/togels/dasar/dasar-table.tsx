@@ -229,82 +229,84 @@ const DasarTable = () => {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className='font-semibold text-xs'>render: {render}</div>
-        <Table>
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead
-                      key={header.id}
-                      className='p-0 m-0 h-8 text-xs font-bold text-center'>
+        <div className='py-2 '>
+          {/* <div className='font-semibold text-xs'>render: {render}</div> */}
+          <Table>
+            <TableHeader>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => {
+                    return (
+                      <TableHead
+                        key={header.id}
+                        className='p-0 m-0 h-8 text-xs font-bold text-center'>
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                      </TableHead>
+                    );
+                  })}
+                </TableRow>
+              ))}
+            </TableHeader>
+            <TableBody>
+              {table.getRowModel().rows?.length ? (
+                table.getRowModel().rows.map((row) => (
+                  <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && 'selected'}>
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id} className='p-0 m-0'>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                        {/* <pre>
+        {JSON.stringify(cell.column.columnDef, null, 2)}
+      </pre> */}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell
+                    colSpan={dasarColumns.length}
+                    className='h-24 text-center'>
+                    No Results
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+            <TableFooter className='bg-transparent '>
+              {table.getFooterGroups().map((footerGroup) => (
+                <TableRow key={footerGroup.id}>
+                  {footerGroup.headers.map((header) => (
+                    <TableCell key={header.id} className='p-0'>
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
+                            header.column.columnDef.footer,
                             header.getContext()
                           )}
-                    </TableHead>
-                  );
-                })}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && 'selected'}>
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className='p-0 m-0'>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                      {/* <pre>
-        {JSON.stringify(cell.column.columnDef, null, 2)}
-      </pre> */}
                     </TableCell>
                   ))}
                 </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={dasarColumns.length}
-                  className='h-24 text-center'>
-                  No Results
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-          <TableFooter className='bg-transparent '>
-            {table.getFooterGroups().map((footerGroup) => (
-              <TableRow key={footerGroup.id}>
-                {footerGroup.headers.map((header) => (
-                  <TableCell key={header.id} className='p-0'>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.footer,
-                          header.getContext()
-                        )}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))}
-          </TableFooter>
-        </Table>
-        <div className='w-full text-right py-2 pr-4 '>
-          <Button
-            size='sm'
-            type='submit'
-            disabled={!isValid}
-            className='py-1 px-2 '>
-            Submit
-          </Button>
+              ))}
+            </TableFooter>
+          </Table>
+          <div className='w-full text-right py-2'>
+            <Button
+              size='sm'
+              type='submit'
+              disabled={!isValid}
+              className='py-0 w-28'>
+              Submit
+            </Button>
+          </div>
         </div>
         {/* <pre>{JSON.stringify(watch(), null, 2)}</pre> */}
       </form>
