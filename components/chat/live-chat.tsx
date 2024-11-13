@@ -298,6 +298,7 @@ const LiveChat = ({ users, adminProfile }: LiveChatProps) => {
                                 </label> */}
                                 <InputCustom
                                   aria-label='name'
+                                  className='w-full text-sm font-semibold '
                                   id='name'
                                   placeholder='nama'
                                   {...register('name', { required: true })}
@@ -306,7 +307,7 @@ const LiveChat = ({ users, adminProfile }: LiveChatProps) => {
                                 />
                                 <InputCustom
                                   aria-label='Email'
-                                  className='text-sm font-semibold '
+                                  className='w-full text-sm font-semibold '
                                   placeholder='Email'
                                   {...register('email', { required: true })}
                                   suffix={

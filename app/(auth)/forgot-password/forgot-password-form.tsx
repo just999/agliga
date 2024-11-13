@@ -36,6 +36,7 @@ const ForgotPasswordForm = () => {
       className='flex flex-col space-y-4 '>
       <InputCustom
         type='email'
+        className='w-full text-sm font-semibold '
         placeholder='Email Address'
         defaultValue=''
         {...register('email', { required: true })}
