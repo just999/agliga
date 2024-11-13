@@ -579,7 +579,7 @@ export const useFiftyFiftyColumns = (
                 <FaRupiahSign size={12} className='text-zinc-300 mx-1' />
                 {discount === '' ? '' : rp.format(Number(discount))}
               </span>
-              {discount && (
+              {discount.length < 7 && discount && (
                 <div className='flex items-center text-[10px] text-amber-500 pr-1  '>
                   (-5 <Percent size={10} className='svg' />)
                   {/* <pre>{JSON.stringify(row.original.dis, null, 2)}</pre> */}

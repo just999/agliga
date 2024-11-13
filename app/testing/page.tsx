@@ -178,12 +178,30 @@ import Container from '@/components/container';
 
 import TanstackTable from '@/components/testing/tanstack-table';
 
+import CurrencyInput from '@/components/ui/currency-input';
+import { cn, poppins } from '@/lib/utils';
+import { ChangeEvent, useState } from 'react';
+
 type TestingPageProps = {};
 
 const TestingPage = () => {
+  const [inputValue, setInputValue] = useState('');
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
+
   return (
     <Container>
-      <TanstackTable />
+      <CurrencyInput
+        value={inputValue}
+        onChange={handleInputChange}
+        className={cn(
+          'p-1 w-full h-7 text-center text-base  rounded-lg placeholder:text-zinc-200 placeholder:font-semibold font-semibold placeholder:text-xs shadow-inner placeholder:tracking-normal placeholder:text-left',
+          poppins.className
+        )}
+        placeholder='Enter number'
+      />
     </Container>
   );
 };

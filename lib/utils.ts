@@ -874,3 +874,13 @@ export const updateBets = (arr: Form4dSetProps[]): Form4dSetProps[] => {
 };
 
 export const rp = Intl.NumberFormat('en-ID');
+
+export function numberWithComas(x: string) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
+export const thousands_separators = (num: number) => {
+  var num_parts = num.toString().split('.');
+  num_parts[0] = num_parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  return num_parts.join('.');
+};

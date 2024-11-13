@@ -345,6 +345,9 @@ export const FiftyFiftySpecialColumns = (
             isNaN(wager) || wager === 0
               ? ''
               : (-wager * 0.02).toFixed().toString();
+
+          const discountLimit = discount.length;
+          console.log('🚀 ~ discountLimit:', discountLimit);
           return (
             <div
               className={cn(
@@ -355,8 +358,8 @@ export const FiftyFiftySpecialColumns = (
                 <FaRupiahSign size={12} className='text-zinc-400 ml-1' />
                 {discount === '' ? '' : rp.format(Number(discount))}
               </span>
-              {discount && (
-                <div className='flex items-center text-[10px] text-amber-500 pr-1  '>
+              {discount.length < 7 && discount && (
+                <div className='flex items-center text-[10px] text-rose-500 pr-1  '>
                   -(2 <Percent size={10} className='svg' />)
                   {/* <pre>{JSON.stringify(row.original.dis, null, 2)}</pre> */}
                 </div>

@@ -132,13 +132,16 @@ export const useShioColumns = (
           return (
             <div className='relative flex justify-center'>
               <InputCustom
-                {...register(`shio.${row.index}.wager`)}
+                {...register(`shio.${row.index}.wager`, {
+                  onChange: (e) => handleInputChange('wager', e, row.index),
+                })}
                 type='tel'
                 placeholder='bet'
                 className={cn(
                   'w-28 h-7 text-xs font-semibold pl-5 border border-sky-400 bg-blue-50 rounded-md text-zinc-600 placeholder:text-slate-300',
                   poppins.className
                 )}
+                defaultValue={getValues(`shio.${row.index}.wager`)}
                 suffix={
                   <FaRupiahSign
                     size={12}
@@ -175,7 +178,7 @@ export const useShioColumns = (
                 {discount === '' ? '' : rp.format(Number(discount))}
               </span>
               {discount && (
-                <div className='flex items-center text-[10px] text-amber-500 pr-1  '>
+                <div className='flex items-center text-[10px] text-teal-500 pr-1  '>
                   (-9 <Percent size={10} className='svg' />)
                   {/* <pre>{JSON.stringify(row.original.dis, null, 2)}</pre> */}
                 </div>

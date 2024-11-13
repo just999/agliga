@@ -446,7 +446,7 @@ export const useDasarColumns = (
                 type='tel'
                 placeholder='bet'
                 className={cn(
-                  'w-28 h-7 text-xs font-semibold pl-5 border border-zinc-300 rounded-md text-zinc-600 placeholder:text-slate-300',
+                  'w-30 h-7 text-xs font-semibold pl-5 border border-zinc-300 rounded-md text-zinc-600 placeholder:text-slate-300',
                   poppins.className
                 )}
                 suffix={
@@ -464,7 +464,7 @@ export const useDasarColumns = (
       {
         accessorKey: 'dis',
         header: ({ column }: any) => (
-          <div className='text-zinc-700 font-semibold w-28  h-full flex items-center justify-center'>
+          <div className='text-zinc-700 font-semibold w-30  h-full flex items-center justify-center'>
             <div className='flex items-center text-xs font-semibold'>
               kei (25 <Percent size={10} /> )
             </div>
@@ -477,7 +477,7 @@ export const useDasarColumns = (
           return (
             <div
               className={cn(
-                'h-7 text-zinc-700 mx-auto flex items-center justify-between border border-amber-500 gap-x-0.5 text-xs shadow-inner font-semibold w-28 bg-amber-200/40 text-center rounded-md',
+                'h-7 text-zinc-700 mx-auto flex items-center justify-between border border-amber-500 gap-x-0.5 text-xs shadow-inner font-semibold w-30 bg-amber-200/40 text-center rounded-md',
                 poppins.className
               )}>
               <span className='flex items-center text-zinc-400'>
@@ -485,7 +485,7 @@ export const useDasarColumns = (
                 {discount === '' ? '' : rp.format(Number(discount))}
               </span>
               {discount && (
-                <div className='flex items-center text-[10px] text-amber-500 pr-1  '>
+                <div className='flex items-center text-[10px] text-rose-500 pr-1  '>
                   (-25 <Percent size={10} className='svg' />)
                   {/* <pre>{JSON.stringify(row.original.dis, null, 2)}</pre> */}
                 </div>
@@ -502,7 +502,7 @@ export const useDasarColumns = (
       {
         accessorKey: 'net',
         header: ({ column }: any) => (
-          <div className='text-zinc-700 font-semibold w-28  h-full flex items-center justify-center'>
+          <div className='text-zinc-700 font-semibold w-30  h-full flex items-center justify-center'>
             net
           </div>
         ),
@@ -513,10 +513,10 @@ export const useDasarColumns = (
               ? ''
               : (wager * 1.25).toFixed().toString();
           return (
-            <div className='relative flex justify-center items-center bg-zinc-300/40 text-zinc-700 border border-zinc-200 rounded-md h-7 px-0 font-semibold w-28 mx-auto'>
+            <div className='relative flex justify-center items-center bg-zinc-300/40 text-zinc-700 border border-zinc-200 rounded-md h-7 px-0 font-semibold w-30 mx-auto'>
               <div
                 className={cn(
-                  'w-28 h-7 flex items-center gap-1  text-center font-semibold text-xs border border-slate-400 text-zinc-500 rounded',
+                  'w-30 h-7 flex items-center gap-1  text-center font-semibold text-xs border border-slate-400 text-zinc-500 rounded',
                   poppins.className
                 )}>
                 <FaRupiahSign size={12} className='text-zinc-300 ml-1' />
@@ -540,7 +540,7 @@ export const useDasarColumns = (
             <div className='flex justify-center py-1'>
               <div
                 className={cn(
-                  'w-28 h-7 flex items-center bg-gray-500 gap-1 shadow-inner text-center font-semibold text-xs border border-slate-400 rounded',
+                  'w-30 h-7 flex items-center bg-gray-500 gap-1 shadow-inner text-center font-semibold text-xs border border-slate-400 rounded',
                   poppins.className
                 )}>
                 <FaRupiahSign size={12} className='text-zinc-400 ml-1 svg' />
