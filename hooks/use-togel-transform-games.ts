@@ -25,7 +25,7 @@ const useTransformGames = (sin4dSet: Form4dSetProps[]) => {
           game: '4d',
           wager: bet4d,
           dis: '66%',
-          net: (Number(bet4d) * (34 / 100)).toString(),
+          net: (Number(bet4d) * (34 / 100)).toFixed().toString(),
           period: '001',
           status: 'processing',
         };
@@ -75,7 +75,7 @@ const useTransformGames = (sin4dSet: Form4dSetProps[]) => {
             game: '3d',
             wager: bet3d,
             dis: '59%',
-            net: (Number(bet3d) * (41 / 100)).toString(),
+            net: (Number(bet3d) * (41 / 100)).toFixed().toString(),
             period: '001',
             status: 'processing',
           };
@@ -126,7 +126,7 @@ const useTransformGames = (sin4dSet: Form4dSetProps[]) => {
             game: '2d',
             wager: bet2d,
             dis: '29%',
-            net: (Number(bet2d) * (71 / 100)).toString(),
+            net: (Number(bet2d) * (71 / 100)).toFixed().toString(),
             period: '001',
             status: 'processing',
           };

@@ -35,6 +35,7 @@ const config = {
         '35': '140px',
         '108': '432px',
         '144': '576px',
+        '145': '580px',
       },
       gridTemplateColumns: {
         // 24 column grid

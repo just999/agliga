@@ -344,12 +344,6 @@ export const useDasarColumns = (
     const values = type === 'bigSmall' ? ['big', 'small'] : ['odd', 'even'];
     const labels =
       type === 'bigSmall' ? ['Besar', 'Kecil'] : ['Ganjil', 'Genap'];
-
-    console.log(
-      '🚀 ~ renderRadioGroup ~  getValues(`dasar.${row.index}.bigSmall`):',
-      getValues(`dasar.${row.index}.bigSmall`)
-    );
-
     return (
       <div className='flex flex-col items-start w-full'>
         <span className='flex gap-0'>

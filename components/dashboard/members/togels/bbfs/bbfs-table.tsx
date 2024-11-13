@@ -617,6 +617,8 @@ export function BbfsTable<TData, TValue>({
   useEffect(() => {
     render++;
   }, []);
+
+  const maxRowCount = table.getRowCount().toLocaleString();
   return (
     <ClientOnly>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -814,7 +816,7 @@ export function BbfsTable<TData, TValue>({
               table.setPageSize(Number(e.target.value));
             }}
             className='text-xs bg-amber-100'>
-            {[10, 20, 30, 40, 50].map((pageSize) => (
+            {[10, 20, 30, 40, 50, maxRowCount].map((pageSize) => (
               <option key={pageSize} value={pageSize}>
                 Show {pageSize}
               </option>

@@ -123,11 +123,6 @@ const Togel4dSetDetailsTable = ({
     contains: () => true,
   };
 
-  const handleRemove = (index: number) => {
-    remove(index);
-    console.log(`Removed item at index: ${index}`);
-  };
-
   const type = 'togel4dSet';
   const { togel4dSetColumns } = useTogel4dSetDetailsColumns(
     register,
@@ -142,17 +137,17 @@ const Togel4dSetDetailsTable = ({
     type
   );
 
-  const {
-    sin4dSet: sin4d,
-    setSin4dSet: setSin4d,
-    isToggle,
-    setIsToggle,
-  } = useTogelStore((state) => ({
-    sin4dSet: state.sin4dSet,
-    setSin4dSet: state.setSin4dSet,
-    isToggle: state.isToggle,
-    setIsToggle: state.setIsToggle,
-  }));
+  // const {
+  //   sin4dSet: sin4d,
+  //   setSin4dSet: setSin4d,
+  //   isToggle,
+  //   setIsToggle,
+  // } = useTogelStore((state) => ({
+  //   sin4dSet: state.sin4dSet,
+  //   setSin4dSet: state.setSin4dSet,
+  //   isToggle: state.isToggle,
+  //   setIsToggle: state.setIsToggle,
+  // }));
 
   const onSubmit = async (data: any) => {
     try {
@@ -188,97 +183,99 @@ const Togel4dSetDetailsTable = ({
       <form
         onSubmit={handleSubmit(onSubmit)}
         className={cn(!show ? 'hidden' : '')}>
-        <Table className={cn('bg-emerald-50 overflow-hidden')}>
-          <TableHeader className={'h-7 shadow-lg'}>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead
-                      key={header.id}
-                      className='p-0 m-0 h-8 text-xs font-bold text-center'>
+        <div className='py-2'>
+          <Table className={cn('bg-emerald-50 overflow-hidden')}>
+            <TableHeader className={'h-7 shadow-lg'}>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => {
+                    return (
+                      <TableHead
+                        key={header.id}
+                        className='p-0 m-0 h-8 text-xs font-bold text-center'>
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                      </TableHead>
+                    );
+                  })}
+                </TableRow>
+              ))}
+            </TableHeader>
+            <TableBody>
+              {table.getRowModel().rows?.length ? (
+                table.getRowModel().rows.map((row) => (
+                  <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && 'selected'}>
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id} className='p-0 m-0'>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell className='h-24 text-center'>No Results</TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+            <TableFooter className='bg-transparent '>
+              {table.getFooterGroups().map((footerGroup) => (
+                <TableRow key={footerGroup.id}>
+                  {footerGroup.headers.map((header) => (
+                    <TableCell key={header.id} className='p-0'>
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
+                            header.column.columnDef.footer,
                             header.getContext()
                           )}
-                    </TableHead>
-                  );
-                })}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && 'selected'}>
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className='p-0 m-0'>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
                     </TableCell>
                   ))}
                 </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell className='h-24 text-center'>No Results</TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-          <TableFooter className='bg-transparent '>
-            {table.getFooterGroups().map((footerGroup) => (
-              <TableRow key={footerGroup.id}>
-                {footerGroup.headers.map((header) => (
-                  <TableCell key={header.id} className='p-0'>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.footer,
-                          header.getContext()
-                        )}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))}
-          </TableFooter>
-        </Table>
-        {showSuccessMessage && (
-          <div className='bg-green-200 text-green-800 p-4 rounded-md mt-4'>
-            Form submitted successfully!
+              ))}
+            </TableFooter>
+          </Table>
+          {showSuccessMessage && (
+            <div className='bg-green-200 text-green-800 p-4 rounded-md mt-4'>
+              Form submitted successfully!
+            </div>
+          )}
+          {errors.root && errors.root.serverError && (
+            <p className='text-center text-red-700 w-full mx-auto text-xs bg-rose-100 shadow-md rounded-md text-shadow'>
+              {errors.root.serverError.message as string}
+            </p>
+          )}
+          <div className='flex justify-between items-center px-4 py-2'>
+            <Button
+              type='button'
+              size='sm'
+              variant='default'
+              className='group text-shadow-lg text-xs text-white font-semibold shadow-lg hover:bg-orange-300 hover:text-gray-600 hover:font-semibold px-2 py-1'
+              onClick={handleBackChange}>
+              <ChevronLeftCircle
+                size={18}
+                className='svg text-white pr-1 group-hover:text-gray-600'
+              />{' '}
+              back
+            </Button>
+            <Button
+              type='submit'
+              disabled={!isValid}
+              size='sm'
+              variant='primary'
+              className='px-3 py-.5'>
+              Submit
+            </Button>
           </div>
-        )}
-        {errors.root && errors.root.serverError && (
-          <p className='text-center text-red-700 w-full mx-auto text-xs bg-rose-100 shadow-md rounded-md text-shadow'>
-            {errors.root.serverError.message as string}
-          </p>
-        )}
-        <div className='flex justify-between items-center px-4 py-2'>
-          <Button
-            type='button'
-            size='sm'
-            variant='default'
-            className='group text-shadow-lg text-xs text-white font-semibold shadow-lg hover:bg-orange-300 hover:text-gray-600 hover:font-semibold px-2 py-1'
-            onClick={handleBackChange}>
-            <ChevronLeftCircle
-              size={18}
-              className='svg text-white pr-1 group-hover:text-gray-600'
-            />{' '}
-            back
-          </Button>
-          <Button
-            type='submit'
-            disabled={!isValid}
-            size='sm'
-            variant='primary'
-            className='px-3 py-.5'>
-            Submit
-          </Button>
         </div>
         {/* <pre>{JSON.stringify(watch(), null, 2)}</pre> */}
       </form>

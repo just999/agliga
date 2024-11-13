@@ -120,6 +120,12 @@ const TogelTable = ({ slug }: TogelTableProps) => {
 
       // Update the 'net' field for each item in the sin4ds array individually
       sin4d.forEach((item, i) => {
+        if (copy && copyWager === '') {
+          setValue(`sin4ds.${i}.wager`, '');
+          setValue(`sin4ds.${i}.dis`, '');
+          setValue(`sin4ds.${i}.net`, '');
+        }
+
         const { game, dis, net, period, wager, status, ...rest } = item;
         const number = Object.values(rest).filter((no) => no).length >= 2;
         if (copy) {
@@ -388,105 +394,113 @@ const TogelTable = ({ slug }: TogelTableProps) => {
 
   return (
     <>
-      <div className='font-semibold text-xs'>render: {render}</div>
+      {/* <div className='font-semibold text-xs'>render: {render}</div> */}
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Table>
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead
-                      key={header.id}
-                      className='p-0 m-0 h-8 text-xs font-bold text-center'>
+        <div className='py-2'>
+          <Table>
+            <TableHeader>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => {
+                    return (
+                      <TableHead
+                        key={header.id}
+                        className='p-0 m-0 h-8 text-xs font-bold text-center'>
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                      </TableHead>
+                    );
+                  })}
+                </TableRow>
+              ))}
+            </TableHeader>
+            <TableBody>
+              {table.getRowModel().rows?.length ? (
+                table.getRowModel().rows.map((row) => (
+                  <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && 'selected'}>
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id} className='p-0 m-0'>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                        {/* <pre>
+                        {JSON.stringify(cell.column.columnDef, null, 2)}
+                      </pre> */}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell
+                    colSpan={togel4dColumns.length}
+                    className='h-24 text-center'>
+                    No Results
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+            <TableFooter className='bg-transparent '>
+              {table.getFooterGroups().map((footerGroup) => (
+                <TableRow key={footerGroup.id}>
+                  {footerGroup.headers.map((header) => (
+                    <TableCell key={header.id} className='p-0'>
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
+                            header.column.columnDef.footer,
                             header.getContext()
                           )}
-                    </TableHead>
-                  );
-                })}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && 'selected'}>
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className='p-0 m-0'>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                      {/* <pre>
-                        {JSON.stringify(cell.column.columnDef, null, 2)}
-                      </pre> */}
                     </TableCell>
                   ))}
                 </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={togel4dColumns.length}
-                  className='h-24 text-center'>
-                  No Results
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-          <TableFooter className='bg-transparent '>
-            {table.getFooterGroups().map((footerGroup) => (
-              <TableRow key={footerGroup.id}>
-                {footerGroup.headers.map((header) => (
-                  <TableCell key={header.id} className='p-0'>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.footer,
-                          header.getContext()
-                        )}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))}
-          </TableFooter>
-        </Table>
+              ))}
+            </TableFooter>
+          </Table>
 
-        {showSuccessMessage && (
-          <div className='bg-green-200 text-green-800 p-4 rounded-md mt-4'>
-            Form submitted successfully!
+          {showSuccessMessage && (
+            <div className='bg-green-200 text-green-800 p-4 rounded-md mt-4'>
+              Form submitted successfully!
+            </div>
+          )}
+          {errors.root && errors.root.serverError && (
+            <p className='text-center text-red-700 w-full mx-auto text-xs bg-rose-100 shadow-md rounded-md text-shadow'>
+              {errors.root.serverError.message as string}
+            </p>
+          )}
+          <div className='flex justify-between items-center px-4 py-2'>
+            <Button
+              type='button'
+              size='sm'
+              variant='primary'
+              className='text-shadow-lg text-xs text-white font-semibold shadow-lg hover:bg-blue-300 hover:text-gray-600 hover:font-semibold px-2 py-1'
+              onClick={handleAddColumn}>
+              <PlusCircle
+                size={20}
+                className='svg text-sky-50 pr-1 hover:text-sky-500/70'
+              />
+              Tambah baris
+            </Button>
+            <div className='w-full text-right py-2'>
+              <Button
+                size='sm'
+                type='submit'
+                disabled={!isValid}
+                className='py-0 w-28'>
+                Submit
+              </Button>
+            </div>
           </div>
-        )}
-        {errors.root && errors.root.serverError && (
-          <p className='text-center text-red-700 w-full mx-auto text-xs bg-rose-100 shadow-md rounded-md text-shadow'>
-            {errors.root.serverError.message as string}
-          </p>
-        )}
-        <div className='flex justify-between items-center px-4 py-2'>
-          <Button
-            type='button'
-            size='sm'
-            variant='primary'
-            className='text-shadow-lg text-xs text-white font-semibold shadow-lg hover:bg-blue-300 hover:text-gray-600 hover:font-semibold px-2 py-1'
-            onClick={handleAddColumn}>
-            <PlusCircle
-              size={20}
-              className='svg text-sky-50 pr-1 hover:text-sky-500/70'
-            />
-            Tambah baris
-          </Button>
-          <Button disabled={!isValid} size='sm' className='px-3 py-.5'>
-            Submit
-          </Button>
         </div>
       </form>
-      {/* <pre>{JSON.stringify(watch(), null, 2)}</pre> */}
+      <pre>{JSON.stringify(watch(), null, 2)}</pre>
     </>
   );
 };

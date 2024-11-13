@@ -131,7 +131,7 @@ export const useQuick2dDetailsColumns = (
     },
     {
       accessorKey: 'net',
-      header: () => <div className='w-28'>Net</div>,
+      header: () => <div className='w-28'>net</div>,
       size: 112,
       cell: ({ row }: any) => (
         <span className='flex w-28 justify-center items-center '>

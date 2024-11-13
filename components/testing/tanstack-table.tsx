@@ -52,12 +52,6 @@
 //     getCoreRowModel: getCoreRowModel(),
 //     filterFns: defaultFilterFns,
 //   });
-
-//   console.log(
-//     '🚀 ~ TanstackTable ~ getHeaderGroup():',
-//     table.getHeaderGroups()
-//   );
-
 //   return (
 //     <ClientOnly>
 //       <TogelContainer>

@@ -370,17 +370,17 @@ const Togel4dSetTable = ({ params }: TogelTable4dSetProps) => {
           const hasAtLeastTwoDigits =
             [d1, d2, d3, d4].filter(Boolean).length >= 2;
           if (hasAtLeastTwoDigits) {
-            if ([d1, d2, d3, d4].filter(Boolean).length >= 2) {
+            if ([d1, d2, d3, d4].filter(Boolean).length === 2) {
               setValue(`sin4dSet.${i}.bet2d`, allBetValue);
               setValue(`sin4dSet.${i}.bet3d`, '');
               setValue(`sin4dSet.${i}.bet4d`, '');
             }
-            if ([d1, d2, d3, d4].filter(Boolean).length >= 3) {
+            if ([d1, d2, d3, d4].filter(Boolean).length === 3) {
               setValue(`sin4dSet.${i}.bet2d`, allBetValue);
               setValue(`sin4dSet.${i}.bet3d`, allBetValue);
               setValue(`sin4dSet.${i}.bet4d`, '');
             }
-            if ([d1, d2, d3, d4].filter(Boolean).length >= 4) {
+            if ([d1, d2, d3, d4].filter(Boolean).length === 4) {
               setValue(`sin4dSet.${i}.bet2d`, allBetValue);
               setValue(`sin4dSet.${i}.bet3d`, allBetValue);
               setValue(`sin4dSet.${i}.bet4d`, allBetValue);
@@ -492,107 +492,109 @@ const Togel4dSetTable = ({ params }: TogelTable4dSetProps) => {
         render form: {render}
       </div> */}
       <form onSubmit={handleSubmit(onSubmit)} className={cn(show && 'hidden')}>
-        <Table className='overflow-hidden'>
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead
-                      key={header.id}
-                      className={cn(
-                        'p-0 m-0 h-8 text-xs font-bold text-center',
-                        header.column.id === 'number' && 'w-28',
-                        header.column.id === 'bet' && 'w-80'
-                      )}>
+        <div className='py-4'>
+          <Table className='overflow-hidden'>
+            <TableHeader>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => {
+                    return (
+                      <TableHead
+                        key={header.id}
+                        className={cn(
+                          'p-0 m-0 h-8 text-xs font-bold text-center',
+                          header.column.id === 'number' && 'w-28',
+                          header.column.id === 'bet' && 'w-80'
+                        )}>
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                        {/* <pre>{JSON.stringify(header.column.id, null, 2)}</pre> */}
+                      </TableHead>
+                    );
+                  })}
+                </TableRow>
+              ))}
+            </TableHeader>
+            <TableBody>
+              {table.getRowModel().rows?.length ? (
+                table.getRowModel().rows.map((row) => (
+                  <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && 'selected'}>
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id} className='p-0 m-0 '>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell
+                    // colSpan={columns.length}
+                    className='h-24 text-center'>
+                    No Results
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+            <TableFooter className='bg-transparent '>
+              {table.getFooterGroups().map((footerGroup) => (
+                <TableRow key={footerGroup.id}>
+                  {footerGroup.headers.map((header) => (
+                    <TableCell key={header.id} className='p-0'>
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
+                            header.column.columnDef.footer,
                             header.getContext()
                           )}
-                      {/* <pre>{JSON.stringify(header.column.id, null, 2)}</pre> */}
-                    </TableHead>
-                  );
-                })}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && 'selected'}>
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className='p-0 m-0 '>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
                     </TableCell>
                   ))}
                 </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  // colSpan={columns.length}
-                  className='h-24 text-center'>
-                  No Results
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-          <TableFooter className='bg-transparent '>
-            {table.getFooterGroups().map((footerGroup) => (
-              <TableRow key={footerGroup.id}>
-                {footerGroup.headers.map((header) => (
-                  <TableCell key={header.id} className='p-0'>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.footer,
-                          header.getContext()
-                        )}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))}
-          </TableFooter>
-        </Table>
-        {showSuccessMessage && (
-          <div className='bg-green-200 text-green-800 p-4 rounded-md mt-4'>
-            Form submitted successfully!
+              ))}
+            </TableFooter>
+          </Table>
+          {showSuccessMessage && (
+            <div className='bg-green-200 text-green-800 p-4 rounded-md mt-4'>
+              Form submitted successfully!
+            </div>
+          )}
+          {errors.root && errors.root.serverError && (
+            <p className='text-center text-red-700 w-full mx-auto text-xs bg-rose-100 shadow-md rounded-md text-shadow'>
+              {errors.root.serverError.message as string}
+            </p>
+          )}
+          <div className='flex justify-between items-center px-4 py-2'>
+            <Button
+              type='button'
+              size='sm'
+              variant='primary'
+              disabled={emp}
+              className='text-shadow-lg text-xs text-white font-semibold shadow-lg hover:bg-blue-300 hover:text-gray-600 hover:font-semibold px-2 py-1'
+              onClick={handleAddColumn}>
+              <PlusCircle
+                size={20}
+                className='svg text-sky-50 pr-1 hover:text-sky-500/70'
+              />
+              {emp ? 'max row' : 'Tambah baris'}
+            </Button>
+            <Button
+              type='button'
+              disabled={!isValid}
+              size='sm'
+              className='px-3 py-.5'
+              onClick={handleValidateBet}>
+              {show ? 'tutup details' : 'lihat details'}
+            </Button>
           </div>
-        )}
-        {errors.root && errors.root.serverError && (
-          <p className='text-center text-red-700 w-full mx-auto text-xs bg-rose-100 shadow-md rounded-md text-shadow'>
-            {errors.root.serverError.message as string}
-          </p>
-        )}
-        <div className='flex justify-between items-center px-4 py-2'>
-          <Button
-            type='button'
-            size='sm'
-            variant='primary'
-            disabled={emp}
-            className='text-shadow-lg text-xs text-white font-semibold shadow-lg hover:bg-blue-300 hover:text-gray-600 hover:font-semibold px-2 py-1'
-            onClick={handleAddColumn}>
-            <PlusCircle
-              size={20}
-              className='svg text-sky-50 pr-1 hover:text-sky-500/70'
-            />
-            {emp ? 'max row' : 'Tambah baris'}
-          </Button>
-          <Button
-            type='button'
-            disabled={!isValid}
-            size='sm'
-            className='px-3 py-.5'
-            onClick={handleValidateBet}>
-            {show ? 'tutup details' : 'lihat details'}
-          </Button>
         </div>
       </form>
       <Togel4dSetDetailsTable

@@ -183,7 +183,7 @@ export const useQuick2dColumns = (
                 type='tel'
                 placeholder='bet'
                 className={cn(
-                  'w-38 h-8 text-xs font-semibold pl-5 text-zinc-600 placeholder:text-slate-300 border border-zinc-400',
+                  'w-44 h-8 text-xs font-semibold pl-5 text-zinc-600 placeholder:text-slate-300 border border-zinc-400',
                   poppins.className
                 )}
                 suffix={
@@ -216,7 +216,7 @@ export const useQuick2dColumns = (
               radioGroupItems = null;
           }
           return (
-            <div className='w-38 h-7 gap-.5 flex  items-center py-2 p-0'>
+            <div className='w-44 h-7 gap-.5 flex  items-center py-2 p-0'>
               {radioGroupItems}
             </div>
           );

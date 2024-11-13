@@ -200,7 +200,7 @@ export const useTogel4dSetDetailsColumns = (
               )}>
               <div className='w-29 flex items-center text-zinc-400 gap-1  justify-between h-7 rounded-lg shadow-inner '>
                 <div className='flex items-center '>
-                  <FaRupiahSign size={10} className='text-zinc-400 mx-1 svg' />
+                  <FaRupiahSign size={10} className='text-zinc-400 mx-1' />
                   <div>
                     {row.original.dis === '66%'
                       ? rp.format(Number(dis4d))
@@ -209,8 +209,7 @@ export const useTogel4dSetDetailsColumns = (
                       : rp.format(Number(dis2d))}
                   </div>
                 </div>
-
-                <div className='text-nowrap flex text-[10px] text-amber-600 text-shadow pr-1'>
+                <div className='text-nowrap flex text-[10px] text-teal-600  pr-1'>
                   ({row.original.dis})
                 </div>
               </div>
@@ -237,7 +236,7 @@ export const useTogel4dSetDetailsColumns = (
           </div>
         ),
         cell: ({ row }: any) => {
-          const net = Number(row.original.net).toFixed();
+          const net = Number(row.original.net).toFixed(0);
           return (
             <div className='text-zinc-700 border border-zinc-400 rounded-lg h-7 px-0 font-semibold w-29'>
               <div
@@ -251,8 +250,9 @@ export const useTogel4dSetDetailsColumns = (
                     'text-left px-0 text-gray-500 tracking-wider text-xs',
                     poppins.className
                   )}>
-                  {row.original.net === '' ? '' : rp.format(row.original.net)}
+                  {row.original.net === '' ? '' : rp.format(Number(net))}
                 </span>
+                {/* <pre>{JSON.stringify(row.original.net, null, 2)}</pre> */}
               </div>
             </div>
           );
@@ -265,6 +265,8 @@ export const useTogel4dSetDetailsColumns = (
               return sum + (isNaN(net) ? 0 : net);
             }, 0);
 
+          const formattedTotal = total.toFixed(0);
+
           return (
             <div className='flex justify-center py-2'>
               <div
@@ -274,7 +276,7 @@ export const useTogel4dSetDetailsColumns = (
                 )}>
                 <FaRupiahSign size={12} className='text-zinc-400 ml-1 svg' />
                 <span className='text-white text-shadow'>
-                  {rp.format(total.toFixed())}
+                  {rp.format(formattedTotal)}
                 </span>
               </div>
             </div>

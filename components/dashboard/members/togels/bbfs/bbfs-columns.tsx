@@ -99,16 +99,16 @@ export const useBbfsColumns = (
               'h-7 text-base flex justify-end items-center pr-3 w-32 font-normal text-shadow   [&>*:nth-child(odd)]:bg-orange-50',
               poppins.className
             )}>
-            <span className='text-zinc-500 text-xs w-7 bg-stone-100 rounded-sm shadow-md border border-stone-300'>
+            <span className='text-zinc-500 text-xs w-7 h-5 flex items-end justify-center bg-stone-100 rounded-sm shadow-md border border-stone-100'>
               d1
             </span>
-            <span className='text-zinc-500 text-xs w-7 bg-stone-100 rounded-sm shadow-md border border-stone-300'>
+            <span className='text-zinc-500 text-xs w-7 h-5 flex items-end justify-center bg-stone-100 rounded-sm shadow-md border border-stone-100'>
               d2
             </span>
-            <span className='text-zinc-500 text-xs w-7 bg-stone-100 rounded-sm shadow-md border border-stone-300'>
+            <span className='text-zinc-500 text-xs w-7 h-5 flex items-end justify-center bg-stone-100 rounded-sm shadow-md border border-stone-100'>
               d3
             </span>
-            <span className='text-zinc-500 text-xs w-7 bg-stone-100 rounded-sm shadow-md border border-stone-300'>
+            <span className='text-zinc-500 text-xs w-7 h-5 flex items-end justify-center bg-stone-100 rounded-sm shadow-md border border-stone-100'>
               d4
             </span>
           </div>
@@ -121,16 +121,16 @@ export const useBbfsColumns = (
                   'h-7 text-base flex justify-end items-center pr-3 w-32 font-extrabold text-shadow   [&>*:nth-child(odd)]:bg-orange-50/50',
                   oldStandardTT.className
                 )}>
-                <span className=' w-7 h-7 border border-stone-100 rounded-md flex justify-center  items-center '>
+                <span className=' w-7 h-7 border border-input bg-background rounded-md flex justify-center  items-center '>
                   {row.original.d1}
                 </span>
-                <span className=' w-7 h-7 border border-stone-100 rounded-md flex justify-center  items-center '>
+                <span className=' w-7 h-7 border border-input bg-background rounded-md flex justify-center  items-center '>
                   {row.original.d2}
                 </span>
-                <span className=' w-7 h-7 border border-stone-100 rounded-md flex justify-center  items-center '>
+                <span className=' w-7 h-7 border border-input bg-background rounded-md flex justify-center  items-center '>
                   {row.original.d3}
                 </span>
-                <span className=' w-7 h-7 border border-stone-100 rounded-md flex justify-center  items-center '>
+                <span className=' w-7 h-7 border border-input bg-background rounded-md flex justify-center  items-center '>
                   {row.original.d4}
                 </span>
                 {/* <pre>{JSON.stringify(row.original, null, 2)}</pre> */}
@@ -173,7 +173,7 @@ export const useBbfsColumns = (
                 <div
                   key={i}
                   className='flex gap-2 items-center bg-stone-300/40 h-7 text-center shadow-inner rounded-md '>
-                  <FaRupiahSign size={10} className='text-zinc-400 ml-1 svg' />
+                  <FaRupiahSign size={10} className='text-zinc-400 ml-1 ' />
                   <span
                     className={cn(
                       'text-left px-0 text-gray-500 tracking-wider text-xs',
@@ -201,7 +201,7 @@ export const useBbfsColumns = (
                 'flex gap-1 items-center bg-stone-300/40 h-7 text-center shadow-inner rounded-md',
                 poppins.className
               )}>
-              <FaRupiahSign size={10} className='text-zinc-400 ml-1 svg' />
+              <FaRupiahSign size={10} className='text-zinc-400 ml-1' />
               <span
                 className={cn(
                   'text-left px-0 text-gray-500 tracking-wider text-xs',
@@ -226,10 +226,10 @@ export const useBbfsColumns = (
                 poppins.className
               )}>
               <span className='flex items-center text-zinc-400 '>
-                <FaRupiahSign size={10} className='text-zinc-400 mx-1 svg' />
+                <FaRupiahSign size={10} className='text-zinc-400 mx-1 ' />
                 {rp.format(row.original.dis)}
               </span>
-              <div className='flex items-center text-[10px] text-amber-500 pr-1  '>
+              <div className='flex items-center text-[10px] text-teal-600 pr-1  '>
                 {row.original.game === '4d' ? (
                   <>
                     (66
@@ -257,7 +257,7 @@ export const useBbfsColumns = (
               'text-xs w-28 font-semibold mx-auto text-center pt-2',
               Number(re2) + Number(re3) + Number(re4) === 0 ? 'hidden' : ''
             )}>
-            Total{' '}
+            total{' '}
           </div>
         ),
       },
@@ -265,7 +265,7 @@ export const useBbfsColumns = (
       {
         accessorKey: 'net',
         header: () => (
-          <div className='text-zinc-700 font-semibold w-28  h-full flex items-end justify-center'>
+          <div className='text-zinc-700 font-semibold w-28  h-full flex items-center justify-center'>
             net
           </div>
         ),
@@ -277,7 +277,7 @@ export const useBbfsColumns = (
                   'flex gap-1 items-center bg-zinc-300/40 h-7 text-center shadow-inner rounded-md',
                   poppins.className
                 )}>
-                <FaRupiahSign size={10} className='text-zinc-400 ml-1 svg' />
+                <FaRupiahSign size={10} className='text-zinc-400 ml-1 ' />
                 <span
                   className={cn(
                     'text-left px-0 text-gray-500 tracking-wider text-xs',
@@ -300,7 +300,7 @@ export const useBbfsColumns = (
             <div className='flex justify-center py-2'>
               <div
                 className={cn(
-                  'w-28 h-7 flex items-center bg-gray-500 gap-2 shadow-inner text-center font-semibold text-xs border border-slate-400 rounded-md',
+                  'w-28 h-7 flex items-center bg-gray-500 gap-1 shadow-inner text-center font-semibold text-xs border border-slate-400 rounded-md',
                   Number(re2) + Number(re3) + Number(re4) === 0 ? 'hidden' : ''
                 )}>
                 <FaRupiahSign

@@ -146,19 +146,24 @@ const Bbfs = ({ params }: BbfsProps) => {
     }
   };
 
+  // const handle4dInput = (e: ChangeEvent<HTMLInputElement>) => {
+  //   e.target.value = safeParseFloat(
+  //     Math.max(0, parseInt(e.target.value)).toString().slice(0, 5)
+  //   ).toString();
+  // };
+
   const handle4dInput = (e: ChangeEvent<HTMLInputElement>) => {
-    e.target.value = safeParseFloat(
-      Math.max(0, parseInt(e.target.value)).toString().slice(0, 5)
-    ).toString();
+    const value = e.target.value.replace(/\D/g, ''); // Remove non-digit characters
+    e.target.value = value.slice(0, 5); // Limit to 5 characters
   };
 
   const handleOptionsChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     i: number
   ) => {
+    const { name, value } = e.target;
     const formattedValue = formatInputValue(e.target.value);
     setNum(formattedValue.split(','));
-
     if (bbVal) {
       updateValues(bbVal[0]);
       setValue(`bb.${i}`, bbVal[0]);
@@ -231,27 +236,30 @@ const Bbfs = ({ params }: BbfsProps) => {
     <>
       {/* <div className='font-semibold text-xs'>render: {render}</div> */}
       <div className='flex w-full py-2'>
-        <div className='flex flex-col'>
+        <div className='flex flex-col '>
           {fields.map((field, i) => {
             return (
               <div
                 key={field.id}
-                className={cn('flex flex-col', !show && 'h-32')}>
+                className={cn(
+                  'w-full flex flex-col bg-emerald-100 shadow-inner rounded-md p-2',
+                  !show && 'h-20'
+                )}>
                 <span
                   className={cn(
-                    'text-center flex items-center justify-around text-sm font-semibold py-1',
+                    'text-center flex items-center justify-around text-sm font-normal py-1',
                     poppins.className
                   )}>
                   <div className='w-fit'>
-                    <Label className='text-xs font-semibold text-center'>
-                      Nomor
+                    <Label className='text-xs font-normal text-center'>
+                      nomor
                     </Label>
                   </div>
-                  <div className='w-108 h-full text-center flex gap-2 pl-10 items-center justify-center'>
+                  <div className='w-108 h-full text-center flex gap-2 pl-12 items-center justify-center'>
                     <input
                       type='checkbox'
                       {...register('copy')}
-                      className='w-8 flex justify-center items-end '
+                      className='h-8 flex justify-center items-end '
                     />
                     <InputCustom
                       {...register('copyWager', {
@@ -282,7 +290,7 @@ const Bbfs = ({ params }: BbfsProps) => {
                       })}
                       defaultValue={field.bbNumber}
                       className={cn(
-                        'p-1 w-full h-7 text-center text-base tracking-[8px] rounded-lg placeholder:text-zinc-200 placeholder:font-semibold font-semibold placeholder:text-xs shadow-inner placeholder:tracking-normal',
+                        'p-1 w-full h-7 text-center text-base tracking-[8px] rounded-lg placeholder:text-zinc-200 placeholder:font-semibold font-semibold placeholder:text-xs shadow-inner placeholder:tracking-normal placeholder:text-left',
                         oldStandardTT.className
                       )}
                       placeholder='max 5 angka'
@@ -308,7 +316,7 @@ const Bbfs = ({ params }: BbfsProps) => {
                             suffix={
                               <FaRupiahSign
                                 size={12}
-                                className='text-zinc-400 absolute left-1 svg'
+                                className='text-zinc-400 absolute left-1 '
                               />
                             }
                             type='tel'

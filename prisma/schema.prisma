@@ -71,8 +71,9 @@ model User {
 
   sin4d Sin4d[]
 
-  operatorId Sin4d[]   @relation("operator")
-  sinPool    SinPool[]
+  operatorId Sin4d[] @relation("operator")
+
+  togelPool TogelPool[]
 }
 
 model AnonymousUser {
@@ -486,7 +487,7 @@ model Sin4d {
   // sinPoolId String?  @db.ObjectId
 }
 
-model SinPool {
+model TogelPool {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 
   userId    String? @db.ObjectId
@@ -494,8 +495,9 @@ model SinPool {
   copy      Boolean
   copyWager String
   totalBet  String
-  // sin4ds    Sin4d[]
-  sinNumber Json[]
+  pool      String
+
+  togel4d3d2d Json[]
 
   periode String
 

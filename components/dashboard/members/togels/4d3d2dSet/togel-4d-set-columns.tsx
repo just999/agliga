@@ -65,17 +65,17 @@ const useTogel4dSetColumns = (
       const countSin = Object.values(rest).filter(
         (val, i) => val !== ''
       ).length;
-      if (copy && copyWager && countSin >= 2) {
+      if (copy && copyWager && countSin === 2) {
         setValue(`sin4dSet.${i}.bet2d`, copyWager);
         setValue(`sin4dSet.${i}.bet3d`, '');
         setValue(`sin4dSet.${i}.bet4d`, '');
       }
-      if (copy && copyWager && countSin >= 3) {
+      if (copy && copyWager && countSin === 3) {
         setValue(`sin4dSet.${i}.bet2d`, copyWager);
         setValue(`sin4dSet.${i}.bet3d`, copyWager);
         setValue(`sin4dSet.${i}.bet4d`, '');
       }
-      if (copy && copyWager && countSin >= 4) {
+      if (copy && copyWager && countSin === 4) {
         setValue(`sin4dSet.${i}.bet2d`, copyWager);
         setValue(`sin4dSet.${i}.bet3d`, copyWager);
         setValue(`sin4dSet.${i}.bet4d`, copyWager);
@@ -212,7 +212,7 @@ const useTogel4dSetColumns = (
                     }
                     type='tel'
                     className={cn(
-                      'w-24 h-7 p-.5  pl-5 mx-auto font-semibold text-xs text-zinc-500 rounded-md placeholder:text-zinc-300 placeholder:text-[10px] flex items-center',
+                      'w-24 h-7 p-.5  pl-4 mx-auto font-semibold text-xs text-zinc-500 rounded-md placeholder:text-zinc-300 placeholder:text-[10px] flex items-center',
                       key === 'bet4d'
                         ? 'bg-purple-100 border border-purple-400 '
                         : key === 'bet3d'

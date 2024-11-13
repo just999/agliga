@@ -177,7 +177,7 @@ export const useTogel4dColumns = (
               suffix={
                 <FaRupiahSign
                   size={10}
-                  className='text-zinc-400 absolute left-1 svg'
+                  className='text-zinc-400 absolute left-1 '
                 />
               }
               type='tel'
@@ -205,7 +205,7 @@ export const useTogel4dColumns = (
                 suffix={
                   <FaRupiahSign
                     size={10}
-                    className='text-zinc-400 absolute left-1 svg'
+                    className='text-zinc-400 absolute left-1 '
                   />
                 }
                 type='tel'
@@ -239,7 +239,7 @@ export const useTogel4dColumns = (
                   'flex gap-1 items-center bg-zinc-300/40 h-7 text-center shadow-inner rounded-md',
                   poppins.className
                 )}>
-                <FaRupiahSign size={10} className='text-zinc-400 ml-1 svg' />
+                <FaRupiahSign size={10} className='text-zinc-400 ml-1 ' />
                 <span
                   className={cn(
                     'text-left px-0 w-28 text-gray-500 tracking-tight text-xs flex items-center justify-between',
@@ -248,21 +248,21 @@ export const useTogel4dColumns = (
                   {row.original.dis === '' ? '' : rp.format(row.original.dis)}
 
                   {row.original.game === '4d' ? (
-                    <div className='w-full flex items-center justify-end text-xs text-amber-400 pr-1 '>
+                    <div className='w-full flex items-center justify-end text-[10px] text-teal-500 pr-1 '>
                       (66
-                      <Percent size={10} className='text-amber-500' />)
+                      <Percent size={10} className='text-teal-600' />)
                     </div>
                   ) : row.original.game === '3d' ? (
-                    <div className='w-full flex items-center justify-end text-xs text-amber-400 pr-1 '>
+                    <div className='w-full flex items-center justify-end text-[10px] text-teal-500 pr-1 '>
                       (59
-                      <Percent size={10} className='text-amber-500' />)
+                      <Percent size={10} className='text-teal-600' />)
                     </div>
                   ) : row.original.game === '2d' ||
                     row.original.game === '2dd' ||
                     row.original.game === '2dt' ? (
-                    <div className='w-full flex items-center justify-end text-xs text-amber-400 pr-1 '>
+                    <div className='w-full flex items-center justify-end text-[10px] text-teal-500 pr-1 '>
                       (29
-                      <Percent size={10} className='text-amber-500' />)
+                      <Percent size={10} className='text-teal-600' />)
                     </div>
                   ) : (
                     ''
@@ -275,9 +275,9 @@ export const useTogel4dColumns = (
         footer: () => (
           <div
             className={cn(
-              'text-xs w-28 font-semibold mx-auto text-center pt-2'
+              'text-xs w-28 flex justify-end font-semibold mx-auto text-center'
             )}>
-            Total{' '}
+            total
           </div>
         ),
       },
