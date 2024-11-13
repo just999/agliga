@@ -297,7 +297,7 @@ export const useTogel4dSetDetailsColumns = (
         ),
       },
     ],
-    [fields.length, handleInputChange, register, remove, type]
+    [fields.length, handleInputChange, register, remove]
   );
 
   return {
