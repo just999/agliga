@@ -71,9 +71,9 @@ model User {
 
   sin4d Sin4d[]
 
-  operatorId Sin4d[] @relation("operator")
-
-  togelPool TogelPool[]
+  operatorId Sin4d[]     @relation("operator")
+  sinPool    SinPool[]
+  togelPool  TogelPool[]
 }
 
 model AnonymousUser {
@@ -487,6 +487,23 @@ model Sin4d {
   // sinPoolId String?  @db.ObjectId
 }
 
+model SinPool {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  userId    String? @db.ObjectId
+  user      User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  copy      Boolean
+  copyWager String
+  totalBet  String
+  // sin4ds    Sin4d[]
+  sinNumber Json[]
+
+  periode String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model TogelPool {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 
@@ -496,8 +513,8 @@ model TogelPool {
   copyWager String
   totalBet  String
   pool      String
-
-  togel4d3d2d Json[]
+  // sin4ds    Sin4d[]
+  sinNumber Json[]
 
   periode String
 
