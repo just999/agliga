@@ -635,7 +635,6 @@ export const safeParseFloat = (str: string) => {
 };
 
 export const validBet4dSet = (data: Sin4dSetSchema[]) => {
-  console.log('🚀 ~ validBet4dSet ~ data:', data);
   const val = data.filter((obj) => {
     const dat = Object.values(obj);
     const nonEmptyValuesCount = dat.filter((item) => item !== '').length;

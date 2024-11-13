@@ -82,7 +82,7 @@ export const useTogel4dColumns = (
         accessorKey: 'index',
         header: () => (
           <div className='text-zinc-700 h-full font-semibold flex items-end justify-center'>
-            No.
+            no.
           </div>
         ),
         cell: ({ row }: any) => (
@@ -101,7 +101,7 @@ export const useTogel4dColumns = (
         id: 'number',
         header: ({ column }: any) => (
           <div className='text-zinc-700 font-semibold w-28 h-full flex items-end justify-center'>
-            Number
+            number
           </div>
         ),
         cell: ({ row }: any) => (

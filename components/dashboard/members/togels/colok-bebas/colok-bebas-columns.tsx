@@ -31,7 +31,11 @@ export const useColokBebasColumns = (
     () => [
       {
         accessorKey: 'index',
-        header: ({}) => <div>No.</div>,
+        header: ({}) => (
+          <div className='w-7 text-zinc-700 h-full font-semibold flex items-center justify-center'>
+            no.
+          </div>
+        ),
         cell: ({ row }: any) => (
           <div className='flex flex-row justify-center p-0'>
             <span

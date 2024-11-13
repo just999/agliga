@@ -369,12 +369,6 @@ const Togel4dSetTable = ({ params }: TogelTable4dSetProps) => {
           const { d1, d2, d3, d4 } = res[i];
           const hasAtLeastTwoDigits =
             [d1, d2, d3, d4].filter(Boolean).length >= 2;
-
-          console.log(
-            '🚀 ~ Togel4dSetTable ~ hasAtLeastTwoDigits:',
-            hasAtLeastTwoDigits
-          );
-
           if (hasAtLeastTwoDigits) {
             if ([d1, d2, d3, d4].filter(Boolean).length >= 2) {
               setValue(`sin4dSet.${i}.bet2d`, allBetValue);
@@ -424,8 +418,6 @@ const Togel4dSetTable = ({ params }: TogelTable4dSetProps) => {
     handleRemove,
     handleInputChange
   );
-
-  console.log('🚀 ~ handleValidateBet ~ sin4dSetData:', sin4dSetData);
   const filteredSin4dData = sin4dSetData.filter((dat, i) => {
     const { bet4d, bet3d, bet2d, allBet, ...rest } = dat;
 
@@ -443,13 +435,8 @@ const Togel4dSetTable = ({ params }: TogelTable4dSetProps) => {
       return 'valid 2d 3d 4d';
     }
   });
-  console.log('🚀 ~ filteredSin4dData ~ filteredSin4dData:', filteredSin4dData);
-
   const handleValidateBet = () => {
     const res = getValues('sin4dSet');
-    console.log('🚀 ~ handleValidateBet ~ sin4dSet:', sin4dSet);
-    console.log('🚀 ~ handleValidateBet ~ res:', res);
-
     // const validBet = validBet4dSet(res);
     if (filteredSin4dData.length > 0) {
       setSin4d(filteredSin4dData);
