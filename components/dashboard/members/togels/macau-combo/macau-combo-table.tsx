@@ -17,11 +17,13 @@ import {
 } from '@tanstack/react-table';
 
 import { useZodForm } from '@/hooks/use-zod-form';
-import { safeParseFloat } from '@/lib/utils';
+import { cn, safeParseFloat } from '@/lib/utils';
 
 import { useState, useRef, useCallback, ChangeEvent, useEffect } from 'react';
 import { useMacauCColumns } from './macau-combo-columns';
 import { macauBsOeTableSchema } from '@/schemas/togel-schema';
+import MacauComboRules from './macau-combo-rules';
+import { ChevronUpSquareIcon, ChevronDownSquareIcon } from 'lucide-react';
 
 type MacauComboTableProps = {};
 
@@ -178,7 +180,7 @@ const MacauComboTable = () => {
   const [macauC, setMacauC] = useState<MacauComboTableSchema[]>(
     () => initialData
   );
-
+  const [showDescription, setShowDescription] = useState(false);
   const [selectedValues, setSelectedValues] = useState<string | []>([]);
   const {
     register,
@@ -352,6 +354,28 @@ const MacauComboTable = () => {
           </div>
         </div>
         {/* <pre>{JSON.stringify(watch(), null, 2)}</pre> */}
+
+        <div className={cn('w-140 flex flex-col')}>
+          <Button
+            variant='ghost'
+            size='sm'
+            type='button'
+            onClick={() => setShowDescription(!showDescription)}
+            className='w-full flex justify-between hover:bg-emerald-100/70 '>
+            <div>Keterangan:</div>
+            <div>
+              {showDescription ? (
+                <ChevronUpSquareIcon className='text-emerald-600 svg ' />
+              ) : (
+                <ChevronDownSquareIcon className='text-emerald-600 svg ' />
+              )}
+            </div>
+          </Button>
+          <MacauComboRules
+            showDescription={showDescription}
+            setShowDescription={setShowDescription}
+          />
+        </div>
       </form>
     </>
   );

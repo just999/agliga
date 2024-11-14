@@ -18,10 +18,12 @@ import {
 
 import { FiftyFiftyComboColumns } from './fifty-fifty-combo-columns';
 import { useZodForm } from '@/hooks/use-zod-form';
-import { safeParseFloat } from '@/lib/utils';
+import { cn, safeParseFloat } from '@/lib/utils';
 
 import { useState, useRef, useCallback, ChangeEvent, useEffect } from 'react';
 import { fiftyFiftyMsKkkTableSchema } from '@/schemas/togel-schema';
+import FiftyFiftyComboRules from './fifty-fifty-combo-rules';
+import { ChevronUpSquareIcon, ChevronDownSquareIcon } from 'lucide-react';
 
 type FiftyFiftyComboTableProps = {};
 
@@ -182,7 +184,7 @@ const FiftyFiftyComboTable = () => {
   const [ffC, setFfC] = useState<FiftyFiftyComboTableSchema[]>(
     () => initialData
   );
-
+  const [showDescription, setShowDescription] = useState(false);
   const [selectedValues, setSelectedValues] = useState<string | []>([]);
   const {
     register,
@@ -355,6 +357,28 @@ const FiftyFiftyComboTable = () => {
           </div>
         </div>
         {/* <pre>{JSON.stringify(watch(), null, 2)}</pre> */}
+
+        <div className={cn('w-140 flex flex-col')}>
+          <Button
+            variant='ghost'
+            size='sm'
+            type='button'
+            onClick={() => setShowDescription(!showDescription)}
+            className='w-full flex justify-between hover:bg-emerald-100/70 '>
+            <div>Keterangan:</div>
+            <div>
+              {showDescription ? (
+                <ChevronUpSquareIcon className='text-emerald-600 svg ' />
+              ) : (
+                <ChevronDownSquareIcon className='text-emerald-600 svg ' />
+              )}
+            </div>
+          </Button>
+          <FiftyFiftyComboRules
+            showDescription={showDescription}
+            setShowDescription={setShowDescription}
+          />
+        </div>
       </form>
     </>
   );

@@ -358,7 +358,7 @@ const Quick2d = () => {
           type='button'
           onClick={() => setShowDescription(!showDescription)}
           className='w-full flex justify-between hover:bg-emerald-100/70 '>
-          <div>Description Rules Payout:</div>
+          <div>Keterangan:</div>
           <div>
             {showDescription ? (
               <ChevronUpSquareIcon className='text-emerald-600 svg ' />

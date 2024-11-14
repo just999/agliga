@@ -175,6 +175,7 @@
 'use client';
 
 import Container from '@/components/container';
+import ShioDataTable from '@/components/dashboard/members/togels/shio/shio-data-table';
 
 import TanstackTable from '@/components/testing/tanstack-table';
 
@@ -192,8 +193,9 @@ const TestingPage = () => {
   };
 
   return (
-    <Container>
-      <CurrencyInput
+    <div className='container mx-auto p-4'>
+      <h1 className='text-2xl font-bold mb-4'>Vertical Header Table</h1>
+      {/* <CurrencyInput
         value={inputValue}
         onChange={handleInputChange}
         className={cn(
@@ -201,8 +203,9 @@ const TestingPage = () => {
           poppins.className
         )}
         placeholder='Enter number'
-      />
-    </Container>
+      /> */}
+      {/* <ShioDataTable /> */}
+    </div>
   );
 };
 

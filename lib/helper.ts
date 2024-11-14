@@ -123,6 +123,7 @@ import {
   Users2,
   ZapIcon,
 } from 'lucide-react';
+import { IconType } from 'react-icons';
 import { BsCalendarWeek } from 'react-icons/bs';
 import { FaExclamationTriangle } from 'react-icons/fa';
 
@@ -3566,65 +3567,84 @@ export const thead4dSet = [
 
 export const positionVal = ['as', 'kop', 'kepala', 'ekor'];
 
-export const shioWithIcon = [
+type ShioWithIconProps = {
+  label: string;
+  name: string;
+  year: string[];
+  icon: IconType;
+};
+
+export const shioWithIcon: ShioWithIconProps[] = [
   {
     label: 'dragon',
     name: 'Naga',
+    year: ['01', '13', '25', '37', '49', '61', '73', '85', '97'],
     icon: GiSeaDragon,
   },
   {
     label: 'rabbit',
     name: 'Kelinci',
+    year: ['02', '14', '26', '38', '50', '62', '74', '86', '98'],
     icon: GiRabbit,
   },
   {
     label: 'tiger',
     name: 'Harimau',
+    year: ['03', '15', '27', '39', '51', '63', '75', '87', '99'],
     icon: GiTigerHead,
   },
   {
     label: 'ox',
     name: 'Sapi',
+    year: ['04', '16', '28', '40', '52', '64', '76', '88', '00'],
     icon: GiCow,
   },
   {
     label: 'rat',
     name: 'Tikus',
+    year: ['05', '17', '29', '41', '53', '65', '77', '89'],
     icon: GiRat,
   },
   {
     label: 'swine',
     name: 'Babi',
+    year: ['06', '18', '30', '42', '54', '66', '78', '90'],
     icon: GiPig,
   },
   {
     label: 'dog',
     name: 'Anjing',
+    year: ['07', '19', '31', '43', '55', '67', '79', '91'],
     icon: GiSittingDog,
   },
   {
     label: 'rooster',
     name: 'Ayam',
+    year: ['08', '20', '32', '44', '56', '68', '80', '92'],
     icon: GiRooster,
   },
   {
     label: 'monkey',
     name: 'Monyet',
+    year: ['09', '21', '33', '45', '57', '69', '81', '93'],
     icon: GiMonkey,
   },
   {
     label: 'lamb',
     name: 'Kambing',
+    year: ['10', '22', '34', '46', '58', '70', '82', '94'],
     icon: GiGoat,
   },
   {
     label: 'horse',
     name: 'Kuda',
+    year: ['11', '23', '35', '47', '59', '71', '83', '95'],
     icon: GiHorseHead,
   },
   {
     label: 'snake',
     name: 'Ular',
+    year: ['12', '24', '36', '48', '60', '72', '84', '96'],
     icon: GiSnake,
   },
 ];

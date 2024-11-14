@@ -11,7 +11,7 @@ import {
   TableRow,
 } from '@/components/ui';
 import { useZodForm } from '@/hooks/use-zod-form';
-import { safeParseFloat } from '@/lib/utils';
+import { cn, safeParseFloat } from '@/lib/utils';
 import { colokJituTableSchema } from '@/schemas/togel-schema';
 import {
   flexRender,
@@ -21,6 +21,8 @@ import {
 import { useState, useRef, useCallback, ChangeEvent, useEffect } from 'react';
 import { useColokJituColumns } from '../colok-jitu/colok-jitu-columns';
 import { useWatch } from 'react-hook-form';
+import ColokJituRules from './colok-jitu-rules';
+import { ChevronUpSquareIcon, ChevronDownSquareIcon } from 'lucide-react';
 
 type ColokJituTableProps = {};
 
@@ -64,7 +66,7 @@ let render = 0;
 
 const ColokJituTable = () => {
   const [cj, setCj] = useState<ColokJituTableSchema[]>(() => initialData);
-
+  const [showDescription, setShowDescription] = useState(false);
   const [selectedValues, setSelectedValues] = useState<string | []>([]);
   const {
     register,
@@ -249,6 +251,28 @@ const ColokJituTable = () => {
           </Button>
         </div>
         {/* <pre>{JSON.stringify(watch(), null, 2)}</pre> */}
+
+        <div className={cn('w-128 flex flex-col')}>
+          <Button
+            variant='ghost'
+            size='sm'
+            type='button'
+            onClick={() => setShowDescription(!showDescription)}
+            className='w-full flex justify-between hover:bg-emerald-100/70 '>
+            <div>Keterangan:</div>
+            <div>
+              {showDescription ? (
+                <ChevronUpSquareIcon className='text-emerald-600 svg ' />
+              ) : (
+                <ChevronDownSquareIcon className='text-emerald-600 svg ' />
+              )}
+            </div>
+          </Button>
+          <ColokJituRules
+            showDescription={showDescription}
+            setShowDescription={setShowDescription}
+          />
+        </div>
       </form>
     </>
   );

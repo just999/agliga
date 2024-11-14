@@ -17,12 +17,15 @@ import {
 } from '@tanstack/react-table';
 
 import { useZodForm } from '@/hooks/use-zod-form';
-import { safeParseFloat } from '@/lib/utils';
+import { cn, safeParseFloat } from '@/lib/utils';
 
 import { useState, useRef, useCallback, ChangeEvent, useEffect } from 'react';
 import { useShioColumns } from './shio-columns';
 import { shioTableSchema } from '@/schemas/togel-schema';
 import ClientOnly from '@/lib/client-only';
+import ShioRules from './shio-rules';
+import { ChevronUpSquareIcon, ChevronDownSquareIcon } from 'lucide-react';
+import ShioDataTable from './shio-data-table';
 
 type ShioTableProps = {};
 
@@ -102,7 +105,8 @@ let render = 0;
 
 const ShioTable = () => {
   const [shio, setShio] = useState<ShioTableSchema[]>(() => initialData);
-
+  const [showDescription, setShowDescription] = useState(false);
+  const [showShioTable, setShowShioTable] = useState(false);
   const [selectedValues, setSelectedValues] = useState<string | []>([]);
   const {
     register,
@@ -281,6 +285,49 @@ const ShioTable = () => {
           </div>
         </div>
         {/* <pre>{JSON.stringify(watch(), null, 2)}</pre> */}
+
+        <div className={cn('w-124 flex flex-col')}>
+          <Button
+            variant='ghost'
+            size='sm'
+            type='button'
+            onClick={() => setShowShioTable(!showShioTable)}
+            className='w-full flex justify-between hover:bg-emerald-100/70 '>
+            <div>Shio table:</div>
+            <div>
+              {showShioTable ? (
+                <ChevronUpSquareIcon className='text-emerald-600 svg ' />
+              ) : (
+                <ChevronDownSquareIcon className='text-emerald-600 svg ' />
+              )}
+            </div>
+          </Button>
+          <ShioDataTable
+            showShioTable={showShioTable}
+            setShowDescription={setShowDescription}
+          />
+        </div>
+        <div className={cn('w-124 flex flex-col')}>
+          <Button
+            variant='ghost'
+            size='sm'
+            type='button'
+            onClick={() => setShowDescription(!showDescription)}
+            className='w-full flex justify-between hover:bg-emerald-100/70 '>
+            <div>Keterangan:</div>
+            <div>
+              {showDescription ? (
+                <ChevronUpSquareIcon className='text-emerald-600 svg ' />
+              ) : (
+                <ChevronDownSquareIcon className='text-emerald-600 svg ' />
+              )}
+            </div>
+          </Button>
+          <ShioRules
+            showDescription={showDescription}
+            setShowDescription={setShowDescription}
+          />
+        </div>
       </form>
     </ClientOnly>
   );

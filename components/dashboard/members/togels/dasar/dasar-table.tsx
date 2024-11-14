@@ -17,11 +17,13 @@ import {
 } from '@tanstack/react-table';
 
 import { useZodForm } from '@/hooks/use-zod-form';
-import { safeParseFloat } from '@/lib/utils';
+import { cn, safeParseFloat } from '@/lib/utils';
 
 import { useState, useRef, useCallback, ChangeEvent, useEffect } from 'react';
 import { useDasarColumns } from './dasar-columns';
 import { dasarBsOeTableSchema } from '@/schemas/togel-schema';
+import DasarRules from './dasar-rules';
+import { ChevronUpSquareIcon, ChevronDownSquareIcon } from 'lucide-react';
 
 type DasarTableProps = {};
 
@@ -138,7 +140,7 @@ let render = 0;
 
 const DasarTable = () => {
   const [dasar, setDasar] = useState<DasarTableSchema[]>(() => initialData);
-
+  const [showDescription, setShowDescription] = useState(false);
   const [selectedValues, setSelectedValues] = useState<string | []>([]);
   const {
     register,
@@ -309,6 +311,28 @@ const DasarTable = () => {
           </div>
         </div>
         {/* <pre>{JSON.stringify(watch(), null, 2)}</pre> */}
+
+        <div className={cn('w-140 flex flex-col')}>
+          <Button
+            variant='ghost'
+            size='sm'
+            type='button'
+            onClick={() => setShowDescription(!showDescription)}
+            className='w-full flex justify-between hover:bg-emerald-100/70 '>
+            <div>Keterangan:</div>
+            <div>
+              {showDescription ? (
+                <ChevronUpSquareIcon className='text-emerald-600 svg ' />
+              ) : (
+                <ChevronDownSquareIcon className='text-emerald-600 svg ' />
+              )}
+            </div>
+          </Button>
+          <DasarRules
+            showDescription={showDescription}
+            setShowDescription={setShowDescription}
+          />
+        </div>
       </form>
     </>
   );
