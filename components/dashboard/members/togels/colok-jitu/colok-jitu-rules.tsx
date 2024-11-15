@@ -16,7 +16,8 @@ const ColokJituRules = ({
       className={cn(
         'bg-amber-100 rounded-sm transition-all duration-1000 ease-in-out transform overflow-hidden',
         showDescription ? 'max-h-[1705px] opacity-100' : 'max-h-0 opacity-0'
-      )}>
+      )}
+    >
       <div className='flex justify-start mx-auto bg-stone-100 shadow-inner border border-zinc-300'>
         <div className='text-xs px-2 py-1'>
           <p className='mx-auto '>Diskon : 6%</p>

@@ -1,29 +1,29 @@
 'use client';
 
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
+
 import {
-  TableHeader,
-  TableRow,
-  TableHead,
+  Button,
+  Table,
   TableBody,
   TableCell,
   TableFooter,
-  Table,
-  Button,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from '@/components/ui';
+import { useZodForm } from '@/hooks/use-zod-form';
+import { cn, safeParseFloat } from '@/lib/utils';
+import { fiftyFiftyMsKkkTableSchema } from '@/schemas/togel-schema';
 import {
   flexRender,
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
+import { ChevronDownSquareIcon, ChevronUpSquareIcon } from 'lucide-react';
 
 import { FiftyFiftyComboColumns } from './fifty-fifty-combo-columns';
-import { useZodForm } from '@/hooks/use-zod-form';
-import { cn, safeParseFloat } from '@/lib/utils';
-
-import { useState, useRef, useCallback, ChangeEvent, useEffect } from 'react';
-import { fiftyFiftyMsKkkTableSchema } from '@/schemas/togel-schema';
 import FiftyFiftyComboRules from './fifty-fifty-combo-rules';
-import { ChevronUpSquareIcon, ChevronDownSquareIcon } from 'lucide-react';
 
 type FiftyFiftyComboTableProps = {};
 
@@ -287,7 +287,8 @@ const FiftyFiftyComboTable = () => {
                     return (
                       <TableHead
                         key={header.id}
-                        className='p-0 m-0 h-8 text-xs font-bold text-center'>
+                        className='m-0 h-8 p-0 text-center text-xs font-bold'
+                      >
                         {header.isPlaceholder
                           ? null
                           : flexRender(
@@ -305,9 +306,10 @@ const FiftyFiftyComboTable = () => {
                 table.getRowModel().rows.map((row) => (
                   <TableRow
                     key={row.id}
-                    data-state={row.getIsSelected() && 'selected'}>
+                    data-state={row.getIsSelected() && 'selected'}
+                  >
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id} className='p-0 m-0'>
+                      <TableCell key={cell.id} className='m-0 p-0'>
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()
@@ -323,13 +325,14 @@ const FiftyFiftyComboTable = () => {
                 <TableRow>
                   <TableCell
                     colSpan={ffCColumns.length}
-                    className='h-24 text-center'>
+                    className='h-24 text-center'
+                  >
                     No Results
                   </TableCell>
                 </TableRow>
               )}
             </TableBody>
-            <TableFooter className='bg-transparent '>
+            <TableFooter className='bg-transparent'>
               {table.getFooterGroups().map((footerGroup) => (
                 <TableRow key={footerGroup.id}>
                   {footerGroup.headers.map((header) => (
@@ -346,31 +349,33 @@ const FiftyFiftyComboTable = () => {
               ))}
             </TableFooter>
           </Table>
-          <div className='w-full text-right py-2'>
+          <div className='w-full py-2 text-right'>
             <Button
               size='sm'
               type='submit'
               disabled={!isValid}
-              className='py-0 w-28'>
+              className='w-28 py-0'
+            >
               Submit
             </Button>
           </div>
         </div>
         {/* <pre>{JSON.stringify(watch(), null, 2)}</pre> */}
 
-        <div className={cn('w-140 flex flex-col')}>
+        <div className={cn('flex w-134 flex-col')}>
           <Button
             variant='ghost'
             size='sm'
             type='button'
             onClick={() => setShowDescription(!showDescription)}
-            className='w-full flex justify-between hover:bg-emerald-100/70 '>
+            className='flex w-full justify-between hover:bg-emerald-100/70'
+          >
             <div>Keterangan:</div>
             <div>
               {showDescription ? (
-                <ChevronUpSquareIcon className='text-emerald-600 svg ' />
+                <ChevronUpSquareIcon className='svg text-emerald-600' />
               ) : (
-                <ChevronDownSquareIcon className='text-emerald-600 svg ' />
+                <ChevronDownSquareIcon className='svg text-emerald-600' />
               )}
             </div>
           </Button>

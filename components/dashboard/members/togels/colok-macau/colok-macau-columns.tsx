@@ -1,5 +1,8 @@
 'use client';
 
+import { ChangeEvent, useEffect, useMemo, useRef } from 'react';
+
+import { InputCustom } from '@/components/ui';
 import {
   arrayRange,
   cn,
@@ -9,10 +12,7 @@ import {
   safeParseFloat,
 } from '@/lib/utils';
 import { ColokBebasTableSchema } from '@/schemas/togel-schema';
-
-import { InputCustom } from '@/components/ui';
 import { ChevronDownCircle, Percent } from 'lucide-react';
-import { ChangeEvent, useEffect, useMemo, useRef } from 'react';
 import {
   Control,
   UseFormGetValues,
@@ -79,7 +79,8 @@ export const useColokMacauColumns = (
               className={cn(
                 'p-0 m-0 text-zinc-300 font-semibold',
                 poppins.className
-              )}>
+              )}
+            >
               {row.index + 1}.
             </span>
           </div>
@@ -106,16 +107,15 @@ export const useColokMacauColumns = (
                   ? 'bg-violet-100 border border-violet-300'
                   : 'bg-teal-100 border border-teal-300',
                 oldStandardTT.className
-              )}>
+              )}
+            >
               {arrayRange(0, 9, 1).map((_, i: number) => (
                 <option
                   key={i}
                   value={i.toString()}
                   disabled={isOptionDisabled(i, row.index, key)}
-                  className={cn(
-                    'text-sm text-center',
-                    oldStandardTT.className
-                  )}>
+                  className={cn('text-sm text-center', oldStandardTT.className)}
+                >
                   {i.toString()}
                 </option>
               ))}
@@ -209,7 +209,8 @@ export const useColokMacauColumns = (
               className={cn(
                 'h-7 text-zinc-700 mx-auto flex items-center justify-between border border-amber-500 gap-x-0.5 text-xs shadow-inner font-semibold w-28 bg-amber-200/40 text-center rounded-md',
                 poppins.className
-              )}>
+              )}
+            >
               <span className='flex items-center text-zinc-400'>
                 <FaRupiahSign size={12} className='text-zinc-300  mx-1' />
                 {/* {row.original.wager === ''
@@ -252,7 +253,8 @@ export const useColokMacauColumns = (
                 className={cn(
                   'w-28 h-7 flex items-center gap-1  text-center font-semibold text-xs border border-slate-400 text-zinc-500 rounded',
                   poppins.className
-                )}>
+                )}
+              >
                 <FaRupiahSign size={12} className='text-zinc-400  ml-1' />
                 {/* {row.original.wager === ''
                   ? ''
@@ -279,7 +281,8 @@ export const useColokMacauColumns = (
                 className={cn(
                   'w-28 h-7 flex items-center bg-gray-500 gap-1 shadow-inner text-center font-semibold text-xs border border-slate-400 rounded',
                   poppins.className
-                )}>
+                )}
+              >
                 <FaRupiahSign size={12} className='text-zinc-400 ml-1 svg' />
                 <span className='text-white text-shadow'>
                   {rp.format(Number(total))}

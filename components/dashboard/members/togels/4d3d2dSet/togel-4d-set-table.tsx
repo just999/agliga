@@ -1,5 +1,7 @@
 'use client';
 
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+
 import { Button } from '@/components/ui';
 import {
   Table,
@@ -10,12 +12,11 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-
 import useTogelSetColumns from '@/hooks/use-togel-set-columns';
 import { useZodForm } from '@/hooks/use-zod-form';
 import { cn, validBet4dSet } from '@/lib/utils';
 import { Sin4dSetFormDataSchema, sin4dSetSchema } from '@/schemas/togel-schema';
-
+import { useTogelStore } from '@/store/use-togel-store';
 import {
   flexRender,
   getCoreRowModel,
@@ -26,13 +27,11 @@ import {
   ChevronUpSquareIcon,
   PlusCircle,
 } from 'lucide-react';
-import { ChangeEvent, useCallback, useEffect, useState } from 'react';
-
 import { SubmitHandler, useFieldArray, useWatch } from 'react-hook-form';
-import Togel4dSetDetailsTable from './togel-4d-set-details-table';
-import useTogel4dSetColumns from './togel-4d-set-columns';
-import { useTogelStore } from '@/store/use-togel-store';
+
 import Togel4dRules from '../4d3d2d/togel-4d-rules';
+import useTogel4dSetColumns from './togel-4d-set-columns';
+import Togel4dSetDetailsTable from './togel-4d-set-details-table';
 
 type TogelTable4dSetProps = {
   params: {
@@ -511,7 +510,8 @@ const Togel4dSetTable = ({ params }: TogelTable4dSetProps) => {
                           'p-0 m-0 h-8 text-xs font-bold text-center',
                           header.column.id === 'number' && 'w-28',
                           header.column.id === 'bet' && 'w-80'
-                        )}>
+                        )}
+                      >
                         {header.isPlaceholder
                           ? null
                           : flexRender(
@@ -530,7 +530,8 @@ const Togel4dSetTable = ({ params }: TogelTable4dSetProps) => {
                 table.getRowModel().rows.map((row) => (
                   <TableRow
                     key={row.id}
-                    data-state={row.getIsSelected() && 'selected'}>
+                    data-state={row.getIsSelected() && 'selected'}
+                  >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell key={cell.id} className='p-0 m-0 '>
                         {flexRender(
@@ -545,7 +546,8 @@ const Togel4dSetTable = ({ params }: TogelTable4dSetProps) => {
                 <TableRow>
                   <TableCell
                     // colSpan={columns.length}
-                    className='h-24 text-center'>
+                    className='h-24 text-center'
+                  >
                     No Results
                   </TableCell>
                 </TableRow>
@@ -585,7 +587,8 @@ const Togel4dSetTable = ({ params }: TogelTable4dSetProps) => {
               variant='primary'
               disabled={emp}
               className='text-shadow-lg text-xs text-white font-semibold shadow-lg hover:bg-blue-300 hover:text-gray-600 hover:font-semibold px-2 py-1'
-              onClick={handleAddColumn}>
+              onClick={handleAddColumn}
+            >
               <PlusCircle
                 size={20}
                 className='svg text-sky-50 pr-1 hover:text-sky-500/70'
@@ -597,7 +600,8 @@ const Togel4dSetTable = ({ params }: TogelTable4dSetProps) => {
               disabled={!isValid}
               size='sm'
               className='px-3 py-.5'
-              onClick={handleValidateBet}>
+              onClick={handleValidateBet}
+            >
               {show ? 'tutup details' : 'lihat details'}
             </Button>
           </div>
@@ -617,7 +621,8 @@ const Togel4dSetTable = ({ params }: TogelTable4dSetProps) => {
           size='sm'
           type='button'
           onClick={() => setShowDescription(!showDescription)}
-          className='w-full flex justify-between hover:bg-emerald-100/70 '>
+          className='w-full flex justify-between hover:bg-emerald-100/70 '
+        >
           <div>Keterangan:</div>
           <div>
             {showDescription ? (

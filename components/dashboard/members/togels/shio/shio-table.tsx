@@ -1,31 +1,31 @@
 'use client';
 
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
+
 import {
-  TableHeader,
-  TableRow,
-  TableHead,
+  Button,
+  Table,
   TableBody,
   TableCell,
   TableFooter,
-  Table,
-  Button,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from '@/components/ui';
+import { useZodForm } from '@/hooks/use-zod-form';
+import ClientOnly from '@/lib/client-only';
+import { cn, safeParseFloat } from '@/lib/utils';
+import { shioTableSchema } from '@/schemas/togel-schema';
 import {
   flexRender,
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
+import { ChevronDownSquareIcon, ChevronUpSquareIcon } from 'lucide-react';
 
-import { useZodForm } from '@/hooks/use-zod-form';
-import { cn, safeParseFloat } from '@/lib/utils';
-
-import { useState, useRef, useCallback, ChangeEvent, useEffect } from 'react';
 import { useShioColumns } from './shio-columns';
-import { shioTableSchema } from '@/schemas/togel-schema';
-import ClientOnly from '@/lib/client-only';
-import ShioRules from './shio-rules';
-import { ChevronUpSquareIcon, ChevronDownSquareIcon } from 'lucide-react';
 import ShioDataTable from './shio-data-table';
+import ShioRules from './shio-rules';
 
 type ShioTableProps = {};
 
@@ -215,7 +215,8 @@ const ShioTable = () => {
                     return (
                       <TableHead
                         key={header.id}
-                        className='p-0 m-0 h-8 text-xs font-bold text-center'>
+                        className='p-0 m-0 h-8 text-xs font-bold text-center'
+                      >
                         {header.isPlaceholder
                           ? null
                           : flexRender(
@@ -233,7 +234,8 @@ const ShioTable = () => {
                 table.getRowModel().rows.map((row) => (
                   <TableRow
                     key={row.id}
-                    data-state={row.getIsSelected() && 'selected'}>
+                    data-state={row.getIsSelected() && 'selected'}
+                  >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell key={cell.id} className='p-0 m-0'>
                         {flexRender(
@@ -251,7 +253,8 @@ const ShioTable = () => {
                 <TableRow>
                   <TableCell
                     colSpan={shioColumns.length}
-                    className='h-24 text-center'>
+                    className='h-24 text-center'
+                  >
                     No Results
                   </TableCell>
                 </TableRow>
@@ -279,7 +282,8 @@ const ShioTable = () => {
               size='sm'
               type='submit'
               disabled={!isValid}
-              className='py-0 w-28'>
+              className='py-0 w-28'
+            >
               Submit
             </Button>
           </div>
@@ -292,7 +296,8 @@ const ShioTable = () => {
             size='sm'
             type='button'
             onClick={() => setShowShioTable(!showShioTable)}
-            className='w-full flex justify-between hover:bg-emerald-100/70 '>
+            className='w-full flex justify-between hover:bg-emerald-100/70 '
+          >
             <div>Shio table:</div>
             <div>
               {showShioTable ? (
@@ -313,7 +318,8 @@ const ShioTable = () => {
             size='sm'
             type='button'
             onClick={() => setShowDescription(!showDescription)}
-            className='w-full flex justify-between hover:bg-emerald-100/70 '>
+            className='w-full flex justify-between hover:bg-emerald-100/70 '
+          >
             <div>Keterangan:</div>
             <div>
               {showDescription ? (

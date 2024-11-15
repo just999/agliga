@@ -1,43 +1,41 @@
 import type { Metadata } from 'next';
 // import { Inter } from 'next/font/google';
 import { Nunito } from 'next/font/google';
+
 import './globals.css';
+
+import { getAnonymousUserBySessionId } from '@/actions/live-chat-actions';
 // import Navbar from '@/components/navbar/navbar';
 
 import { auth } from '@/auth';
-
-import { cn } from '@/lib/utils';
-
+import NewWidget from '@/components/chat/new-widget';
 import Footer from '@/components/footer';
-
-import { SessionProvider } from 'next-auth/react';
-
-import GoogleCaptchaWrapper from './captcha-wrapper';
 import {
   // UserProfileModal,
   // SoccerModal,
   // LiveScoreModal,
   DeleteModal,
+  DepoWdProcessModal,
+  EuroModal,
+  FixtureModal,
   // DepositWdModal,
   // PostModal,
   // SliderModal,
   // NoUserModal,
   // AuthModal,
   TopicModal,
-  EuroModal,
-  FixtureModal,
-  DepoWdProcessModal,
   // UserActiveModal,
   // UserActiveModal,
 } from '@/components/modals';
-
 import TopNav from '@/components/navbar/top-nav';
-import NewWidget from '@/components/chat/new-widget';
 import Providers from '@/components/providers/providers';
 import { TopLevelRenderer } from '@/components/top-level-rendered';
 import ErrorBoundary from '@/lib/error-boundary';
+import { cn } from '@/lib/utils';
+import { SessionProvider } from 'next-auth/react';
 import { cookies } from 'next/headers';
-import { getAnonymousUserBySessionId } from '@/actions/live-chat-actions';
+
+import GoogleCaptchaWrapper from './captcha-wrapper';
 
 const inter = Nunito({ subsets: ['latin'], preload: true });
 
@@ -81,7 +79,8 @@ export default async function RootLayout({
           inter.className,
           className
         )}
-        suppressHydrationWarning>
+        suppressHydrationWarning
+      >
         <SessionProvider session={session}>
           <ErrorBoundary>
             <Providers userId={newUserId} profileComplete={profileComplete}>

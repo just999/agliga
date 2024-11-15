@@ -1,5 +1,7 @@
 'use client';
 
+import { ChangeEvent, useEffect, useMemo, useRef } from 'react';
+
 import { InputCustom } from '@/components/ui';
 import {
   arrayRange,
@@ -11,7 +13,6 @@ import {
 } from '@/lib/utils';
 import { ColokNagaTableSchema } from '@/schemas/togel-schema';
 import { ChevronDownCircle, Percent } from 'lucide-react';
-import { ChangeEvent, useEffect, useMemo, useRef } from 'react';
 import {
   Control,
   UseFormGetValues,
@@ -76,7 +77,8 @@ export const useColokNagaColumns = (
               className={cn(
                 'p-0 m-0 text-zinc-300 font-semibold',
                 poppins.className
-              )}>
+              )}
+            >
               {row.index + 1}.
             </span>
           </div>
@@ -102,20 +104,19 @@ export const useColokNagaColumns = (
                 key === 'd1'
                   ? 'bg-violet-100 border border-violet-300'
                   : key === 'd2'
-                  ? 'bg-teal-100 border border-teal-300'
-                  : 'bg-sky-100 border border-sky-300',
+                    ? 'bg-teal-100 border border-teal-300'
+                    : 'bg-sky-100 border border-sky-300',
                 oldStandardTT.className
-              )}>
+              )}
+            >
               <option value=''></option>
               {arrayRange(0, 9, 1).map((_, i: number) => (
                 <option
                   key={i}
                   value={i.toString()}
                   disabled={isOptionDisabled(i, row.index, key)}
-                  className={cn(
-                    'text-sm text-center',
-                    oldStandardTT.className
-                  )}>
+                  className={cn('text-sm text-center', oldStandardTT.className)}
+                >
                   {i.toString()}
                 </option>
               ))}
@@ -209,7 +210,8 @@ export const useColokNagaColumns = (
               className={cn(
                 'h-7 text-zinc-700 mx-auto flex items-center justify-between border border-amber-500 gap-x-0.5 text-xs shadow-inner font-semibold w-28 bg-amber-200/40 text-center rounded-md',
                 poppins.className
-              )}>
+              )}
+            >
               <span className='flex items-center text-zinc-400'>
                 <FaRupiahSign size={12} className='text-zinc-300  mx-1' />
                 {/* {row.original.wager === ''
@@ -235,7 +237,7 @@ export const useColokNagaColumns = (
       {
         accessorKey: 'net',
         header: ({ column }: any) => (
-          <div className='text-zinc-700 font-semibold w-28  h-full flex items-end justify-center'>
+          <div className='text-zinc-700 font-semibold w-28 h-full flex items-end justify-center'>
             net
           </div>
         ),
@@ -251,7 +253,8 @@ export const useColokNagaColumns = (
                 className={cn(
                   'w-28 h-7 flex items-center gap-1  text-center font-semibold text-xs border border-slate-400 text-zinc-500 rounded',
                   poppins.className
-                )}>
+                )}
+              >
                 <FaRupiahSign size={12} className='text-zinc-300  ml-1' />
                 {/* {row.original.wager === ''
                   ? ''
@@ -278,7 +281,8 @@ export const useColokNagaColumns = (
                 className={cn(
                   'w-28 h-7 flex items-center bg-gray-500 gap-1 shadow-inner text-center font-semibold text-xs border border-slate-400 rounded',
                   poppins.className
-                )}>
+                )}
+              >
                 <FaRupiahSign size={12} className='text-zinc-400 ml-1 svg' />
                 <span className='text-white text-shadow'>
                   {rp.format(Number(total))}

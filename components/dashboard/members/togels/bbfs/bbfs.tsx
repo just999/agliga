@@ -1,5 +1,14 @@
 'use client';
 
+import {
+  ChangeEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+
 import { Button, InputCustom } from '@/components/ui';
 import { Label } from '@/components/ui/label';
 import { useCalculator, usePermAndFormat } from '@/hooks/use-togel-bbfs';
@@ -16,26 +25,17 @@ import {
   BbSin4dSchema,
   Number4dSetSchema,
 } from '@/schemas/togel-schema';
-
-import {
-  ChangeEvent,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import { ChevronDownSquareIcon, ChevronUpSquareIcon } from 'lucide-react';
 import { useFieldArray } from 'react-hook-form';
 import { FaRupiahSign } from 'react-icons/fa6';
-
-import { BbfsTable } from './bbfs-table';
 import {
   PiNumberCircleFourBold,
   PiNumberCircleThreeBold,
   PiNumberCircleTwoBold,
 } from 'react-icons/pi';
-import { ChevronUpSquareIcon, ChevronDownSquareIcon } from 'lucide-react';
+
 import Togel4dRules from '../4d3d2d/togel-4d-rules';
+import { BbfsTable } from './bbfs-table';
 
 type BbfsProps = {
   params: {
@@ -238,30 +238,32 @@ const Bbfs = ({ params }: BbfsProps) => {
     <>
       {/* <div className='font-semibold text-xs'>render: {render}</div> */}
       <div className='flex w-full py-2'>
-        <div className='flex flex-col '>
+        <div className='flex flex-col'>
           {fields.map((field, i) => {
             return (
               <div
                 key={field.id}
                 className={cn(
-                  'w-full flex flex-col bg-emerald-100 shadow-inner rounded-md p-2',
+                  'flex w-full flex-col rounded-md bg-emerald-100 p-2 shadow-inner',
                   !show && 'h-20'
-                )}>
+                )}
+              >
                 <span
                   className={cn(
-                    'text-center flex items-center justify-around text-sm font-normal py-1',
+                    'flex items-center justify-around py-1 text-center text-sm font-normal',
                     poppins.className
-                  )}>
+                  )}
+                >
                   <div className='w-fit'>
-                    <Label className='text-xs font-normal text-center'>
+                    <Label className='text-center text-xs font-normal'>
                       nomor
                     </Label>
                   </div>
-                  <div className='w-108 h-full text-center flex gap-2 pl-12 items-center justify-center'>
+                  <div className='flex h-full w-102 items-center justify-center gap-2 pr-8 text-center'>
                     <input
                       type='checkbox'
                       {...register('copy')}
-                      className='h-8 flex justify-center items-end '
+                      className='flex h-8 items-end justify-center'
                     />
                     <InputCustom
                       {...register('copyWager', {
@@ -270,13 +272,16 @@ const Bbfs = ({ params }: BbfsProps) => {
                       })}
                       type='tel'
                       // onInput={() => handleWagerInput}
-                      className='w-36 h-7 text-xs flex items-center pl-5 border border-zinc-300 text-zinc-400 placeholder:text-slate-300  placeholder:text-xs'
-                      additionalClass='w-36 gap-0 flex justify-center relative'
+                      className={cn(
+                        'flex h-7 w-34 items-center border border-zinc-300 pl-5 text-xs text-zinc-500 font-semibold placeholder:text-xs placeholder:text-slate-300',
+                        poppins.className
+                      )}
+                      additionalClass='w-34 gap-0 flex justify-center relative'
                       placeholder='bet all'
                       suffix={
                         <FaRupiahSign
                           size={12}
-                          className='text-zinc-400 absolute left-1'
+                          className='absolute left-1 text-zinc-400'
                         />
                       }
                     />
@@ -284,7 +289,7 @@ const Bbfs = ({ params }: BbfsProps) => {
                   </div>
                 </span>
                 <div className='flex w-full gap-1'>
-                  <div className='flex w-full border border-amber-500 rounded-lg'>
+                  <div className='flex w-full rounded-lg '>
                     <InputCustom
                       onInput={handle4dInput}
                       {...register(`bb.${i}.bbNumber` as const, {
@@ -292,15 +297,15 @@ const Bbfs = ({ params }: BbfsProps) => {
                       })}
                       defaultValue={field.bbNumber}
                       className={cn(
-                        'p-1 w-full h-7 text-center text-base tracking-[8px] rounded-lg placeholder:text-zinc-200 placeholder:font-semibold font-semibold placeholder:text-xs shadow-inner placeholder:tracking-normal placeholder:text-left',
+                        'h-7 w-34 rounded-lg p-1 border border-amber-500 text-center text-base font-semibold tracking-[8px] shadow-inner placeholder:text-left placeholder:text-xs placeholder:font-semibold placeholder:tracking-normal placeholder:text-zinc-200',
                         oldStandardTT.className
                       )}
                       placeholder='max 5 angka'
                     />
                   </div>
-                  <div className='flex '>
+                  <div className='flex'>
                     {/* <label className='flex flex-col'>bet:</label> */}
-                    <div className='flex items-center gap-.5'>
+                    <div className='gap-.5 flex items-center'>
                       {['bet4d', 'bet3d', 'bet2d'].map((key) => (
                         <span key={key} className='relative'>
                           <InputCustom
@@ -318,17 +323,17 @@ const Bbfs = ({ params }: BbfsProps) => {
                             suffix={
                               <FaRupiahSign
                                 size={12}
-                                className='text-zinc-400 absolute left-1 '
+                                className='absolute left-1 text-zinc-400'
                               />
                             }
                             type='tel'
                             className={cn(
-                              'w-36 h-7 p-.5  pl-5 mx-auto font-semibold text-xs text-zinc-500 rounded-md placeholder:text-zinc-300',
+                              'p-.5 mx-auto h-7 w-34 rounded-md pl-5 text-xs font-semibold text-zinc-500 placeholder:text-zinc-300',
                               key === 'bet4d'
-                                ? 'bg-purple-100 border border-purple-400 '
+                                ? 'border border-purple-400 bg-purple-100'
                                 : key === 'bet3d'
-                                ? 'bg-teal-100  border border-teal-400 '
-                                : 'bg-amber-100  border border-amber-400 ',
+                                  ? 'border border-teal-400 bg-teal-100'
+                                  : 'border border-amber-400 bg-amber-100',
                               poppins.className
                             )}
                             placeholder={key}
@@ -336,17 +341,17 @@ const Bbfs = ({ params }: BbfsProps) => {
                           {key === 'bet4d' ? (
                             <PiNumberCircleFourBold
                               size={18}
-                              className='text-indigo-500 absolute right-1 top-1 svg'
+                              className='svg absolute right-1 top-1 text-indigo-500'
                             />
                           ) : key === 'bet3d' ? (
                             <PiNumberCircleThreeBold
                               size={18}
-                              className='text-emerald-500 absolute right-1 top-1 svg '
+                              className='svg absolute right-1 top-1 text-emerald-500'
                             />
                           ) : (
                             <PiNumberCircleTwoBold
                               size={18}
-                              className='text-orange-500 absolute right-1 top-1 svg '
+                              className='svg absolute right-1 top-1 text-orange-500'
                             />
                           )}
                         </span>
@@ -354,7 +359,7 @@ const Bbfs = ({ params }: BbfsProps) => {
                     </div>
                   </div>
                 </div>
-                <div className='w-full relative'>
+                <div className='relative w-full'>
                   {/* <Button
                       type='submit'
                       size='sm'
@@ -378,19 +383,20 @@ const Bbfs = ({ params }: BbfsProps) => {
       </div>
       {/* <pre>{JSON.stringify(watch(), null, 2)}</pre> */}
 
-      <div className={cn('w-140 flex flex-col')}>
+      <div className={cn('flex w-140 flex-col')}>
         <Button
           variant='ghost'
           size='sm'
           type='button'
           onClick={() => setShowDescription(!showDescription)}
-          className='w-full flex justify-between hover:bg-emerald-100/70 '>
+          className='flex w-full justify-between hover:bg-emerald-100/70'
+        >
           <div>Keterangan:</div>
           <div>
             {showDescription ? (
-              <ChevronUpSquareIcon className='text-emerald-600 svg ' />
+              <ChevronUpSquareIcon className='svg text-emerald-600' />
             ) : (
-              <ChevronDownSquareIcon className='text-emerald-600 svg ' />
+              <ChevronDownSquareIcon className='svg text-emerald-600' />
             )}
           </div>
         </Button>

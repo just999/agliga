@@ -1,12 +1,13 @@
 'use client';
 
+import { ChangeEvent, useEffect, useMemo, useRef } from 'react';
+
 import {
   InputCustom,
   Label,
   RadioGroup,
   RadioGroupItem,
 } from '@/components/ui';
-
 import {
   arrayRange,
   cn,
@@ -20,10 +21,7 @@ import {
   FiftyFiftyTableSchema,
 } from '@/schemas/togel-schema';
 import { id } from 'date-fns/locale';
-
 import { ChevronDown, ChevronDownCircle, Percent } from 'lucide-react';
-
-import { ChangeEvent, useEffect, useMemo, useRef } from 'react';
 import {
   Control,
   Controller,
@@ -84,7 +82,8 @@ export const useMacauCColumns = (
         key={key}
         className={cn(
           'flex w-40 gap-1 border border-gray-300 h-7 items-center justify-between space-x-2 px-0 py-0 rounded-md relative'
-        )}>
+        )}
+      >
         <select
           {...register(`macauC.${row.index}.${type}`)}
           defaultValue={values[0]}
@@ -93,12 +92,13 @@ export const useMacauCColumns = (
             getValues(`macauC.${row.index}.${type}`) === 'small'
               ? 'bg-cyan-500 text-white border border-blue-400'
               : getValues(`macauC.${row.index}.${type}`) === 'big'
-              ? 'bg-cyan-100 text-cyan-700 border border-cyan-400'
-              : getValues(`macauC.${row.index}.${type}`) === 'odd'
-              ? 'bg-fuchsia-500 text-white border border-fuchsia-500'
-              : 'bg-rose-100 text-rose-700 border border-red-400',
+                ? 'bg-cyan-100 text-cyan-700 border border-cyan-400'
+                : getValues(`macauC.${row.index}.${type}`) === 'odd'
+                  ? 'bg-fuchsia-500 text-white border border-fuchsia-500'
+                  : 'bg-rose-100 text-rose-700 border border-red-400',
             poppins.className
-          )}>
+          )}
+        >
           {values.map((val, i) => (
             <option value={val} key={val} className={cn('px-2')}>
               {labels[i]}
@@ -132,7 +132,8 @@ export const useMacauCColumns = (
               className={cn(
                 'p-0 m-0 text-zinc-300 font-semibold',
                 poppins.className
-              )}>
+              )}
+            >
               {row.index + 1}.
             </span>
           </div>
@@ -166,10 +167,11 @@ export const useMacauCColumns = (
                 row.original.position === 'belakang'
                   ? 'bg-amber-500'
                   : row.original.position === 'tengah'
-                  ? 'bg-lime-500'
-                  : 'bg-green-500',
+                    ? 'bg-lime-500'
+                    : 'bg-green-500',
                 poppins.className
-              )}>
+              )}
+            >
               <span>{row.original.position}</span>
             </div>
           );
@@ -260,7 +262,8 @@ export const useMacauCColumns = (
               className={cn(
                 'h-7 text-zinc-700 mx-auto flex items-center justify-between border border-amber-500 gap-x-0.5 text-xs shadow-inner font-semibold w-24 bg-amber-200/40 text-center rounded-md',
                 poppins.className
-              )}>
+              )}
+            >
               <span className='flex items-center text-zinc-400'>
                 <FaRupiahSign size={12} className='text-zinc-400 mx-1' />
                 {discount === '' ? '' : rp.format(Number(discount))}
@@ -299,7 +302,8 @@ export const useMacauCColumns = (
                 className={cn(
                   'w-24 h-7 flex items-center gap-1  text-center font-semibold text-xs border border-slate-400 text-zinc-500 rounded',
                   poppins.className
-                )}>
+                )}
+              >
                 <FaRupiahSign size={12} className='text-zinc-400 ml-1' />
                 {net === '' ? '' : rp.format(Number(net))}
               </div>
@@ -323,7 +327,8 @@ export const useMacauCColumns = (
                 className={cn(
                   'w-24 h-7 flex items-center bg-gray-500 gap-1 shadow-inner text-center font-semibold text-xs border border-slate-400 rounded',
                   poppins.className
-                )}>
+                )}
+              >
                 <FaRupiahSign size={12} className='text-zinc-400 ml-1 svg' />
                 <span className='text-white text-shadow'>
                   {rp.format(Number(total))}

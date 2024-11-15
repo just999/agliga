@@ -1,5 +1,7 @@
 'use client';
 
+import { ChangeEvent, useCallback, useMemo } from 'react';
+
 import header from '@/components/auth/header';
 import { Form4dSetProps } from '@/components/dashboard/members/togels/togel-4d-set';
 import {
@@ -12,11 +14,7 @@ import footer from '@/components/footer';
 import { InputCustom } from '@/components/ui';
 import { cn, oldStandardTT, poppins, rp, safeParseFloat } from '@/lib/utils';
 import { Sin4dFormDataSchema, Sin4dSchema } from '@/schemas/togel-schema';
-
 import { Percent, Trash2Icon } from 'lucide-react';
-import { register } from 'module';
-
-import { ChangeEvent, useCallback, useMemo } from 'react';
 import {
   Control,
   FieldArrayWithId,
@@ -27,7 +25,6 @@ import {
   UseFormWatch,
   useWatch,
 } from 'react-hook-form';
-
 import { FaRupiahSign } from 'react-icons/fa6';
 
 // enum Togel4d {
@@ -91,7 +88,8 @@ export const useTogel4dColumns = (
               className={cn(
                 'p-0 m-0 text-zinc-300 font-semibold',
                 poppins.className
-              )}>
+              )}
+            >
               {row.index + 1}.
             </span>
           </div>
@@ -143,7 +141,8 @@ export const useTogel4dColumns = (
             className={cn(
               'text-green-700 h-7 flex items-center justify-center border-2 border-emerald-600 font-semibold text-xs  bg-emerald-400/40 text-center rounded-md text-shadow shadow-inner',
               poppins.className
-            )}>
+            )}
+          >
             <div className='text-emerald-800 text-xs px-1'>
               {row.original.game}
             </div>
@@ -238,13 +237,15 @@ export const useTogel4dColumns = (
                 className={cn(
                   'flex gap-1 items-center bg-zinc-300/40 h-7 text-center shadow-inner rounded-md',
                   poppins.className
-                )}>
+                )}
+              >
                 <FaRupiahSign size={10} className='text-zinc-400 ml-1 ' />
                 <span
                   className={cn(
                     'text-left px-0 w-28 text-gray-500 tracking-tight text-xs flex items-center justify-between',
                     poppins.className
-                  )}>
+                  )}
+                >
                   {row.original.dis === '' ? '' : rp.format(row.original.dis)}
 
                   {row.original.game === '4d' ? (
@@ -276,7 +277,8 @@ export const useTogel4dColumns = (
           <div
             className={cn(
               'text-xs w-28 flex justify-end font-semibold mx-auto text-center'
-            )}>
+            )}
+          >
             total
           </div>
         ),
@@ -296,13 +298,15 @@ export const useTogel4dColumns = (
                 className={cn(
                   'flex gap-1 items-center bg-zinc-300/40 h-7 text-center shadow-inner rounded-md',
                   poppins.className
-                )}>
+                )}
+              >
                 <FaRupiahSign size={10} className='text-zinc-400 ml-1' />
                 <span
                   className={cn(
                     'text-left px-0 text-gray-500 tracking-wider text-xs',
                     poppins.className
-                  )}>
+                  )}
+                >
                   {row.original.net === '' ? '' : rp.format(row.original.net)}
                   {/* {rp.format(row.original.net)} */}
                 </span>
@@ -323,7 +327,8 @@ export const useTogel4dColumns = (
                 className={cn(
                   'w-28 h-7 flex items-center bg-gray-500 gap-1 shadow-inner text-center font-semibold text-xs border border-slate-400 rounded ',
                   poppins.className
-                )}>
+                )}
+              >
                 <FaRupiahSign size={10} className='text-zinc-400 ml-1 svg' />
                 <span className='text-white text-shadow'>
                   {rp.format(total.toFixed())}

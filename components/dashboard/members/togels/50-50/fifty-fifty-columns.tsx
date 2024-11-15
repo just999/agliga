@@ -1,12 +1,13 @@
 'use client';
 
+import { ChangeEvent, useEffect, useMemo, useRef } from 'react';
+
 import {
   InputCustom,
   Label,
   RadioGroup,
   RadioGroupItem,
 } from '@/components/ui';
-
 import {
   arrayRange,
   cn,
@@ -16,10 +17,7 @@ import {
   safeParseFloat,
 } from '@/lib/utils';
 import { FiftyFiftyTableSchema } from '@/schemas/togel-schema';
-
 import { Percent } from 'lucide-react';
-
-import { ChangeEvent, useEffect, useMemo, useRef } from 'react';
 import {
   Control,
   Controller,
@@ -74,15 +72,15 @@ export const useFiftyFiftyColumns = (
       type === 'bigSmall'
         ? ['big', 'small']
         : type === 'oddEven'
-        ? ['even', 'odd']
-        : ['middle', 'side'];
+          ? ['even', 'odd']
+          : ['middle', 'side'];
 
     const labels =
       type === 'bigSmall'
         ? ['Besar', 'Kecil']
         : type === 'oddEven'
-        ? ['Genap', 'Ganjil']
-        : ['tengah', 'tepi'];
+          ? ['Genap', 'Ganjil']
+          : ['tengah', 'tepi'];
 
     return (
       <div className='flex flex-col items-start w-full'>
@@ -95,16 +93,18 @@ export const useFiftyFiftyColumns = (
                 getValues(`ff.${row.index}.bigSmall`) === value
                   ? 'bg-cyan-500 w-24 h-7 text-yellow-100 border-blue-400 hover:bg-cyan-500/70'
                   : getValues(`ff.${row.index}.oddEven`) === value
-                  ? 'bg-fuchsia-500 w-24 h-7 text-yellow-100 hover:bg-fuchsia-500/70'
-                  : getValues(`ff.${row.index}.sideMiddle`) === value
-                  ? 'bg-rose-500 w-24 h-7 text-yellow-100 hover:bg-fuchsia-500/70'
-                  : 'bg-transparent text-gray-500 border border-zinc-300 rounded-md'
-              )}>
+                    ? 'bg-fuchsia-500 w-24 h-7 text-yellow-100 hover:bg-fuchsia-500/70'
+                    : getValues(`ff.${row.index}.sideMiddle`) === value
+                      ? 'bg-rose-500 w-24 h-7 text-yellow-100 hover:bg-fuchsia-500/70'
+                      : 'bg-transparent text-gray-500 border border-zinc-300 rounded-md'
+              )}
+            >
               <Label
                 className={cn(
                   'text-sm gap-1 w-20 h-7 flex items-center justify-center font-semibold px-1 cursor-pointer',
                   poppins.className
-                )}>
+                )}
+              >
                 <input
                   {...register(`ff.${row.index}.${type}`)}
                   type='radio'
@@ -135,7 +135,8 @@ export const useFiftyFiftyColumns = (
               className={cn(
                 'p-0 m-0 text-zinc-300 font-semibold',
                 poppins.className
-              )}>
+              )}
+            >
               {row.index + 1}.
             </span>
           </div>
@@ -574,7 +575,8 @@ export const useFiftyFiftyColumns = (
               className={cn(
                 'h-7 text-zinc-700 mx-auto flex items-center justify-between border border-amber-500 gap-x-0.5 text-xs shadow-inner font-semibold w-28 bg-amber-200/40 text-center rounded-md',
                 poppins.className
-              )}>
+              )}
+            >
               <span className='flex items-center text-zinc-400'>
                 <FaRupiahSign size={12} className='text-zinc-300 mx-1' />
                 {discount === '' ? '' : rp.format(Number(discount))}
@@ -613,7 +615,8 @@ export const useFiftyFiftyColumns = (
                 className={cn(
                   'w-28 h-7 flex items-center gap-1  text-center font-semibold text-xs border border-slate-400 text-zinc-500 rounded',
                   poppins.className
-                )}>
+                )}
+              >
                 <FaRupiahSign size={12} className='text-zinc-300 ml-1' />
                 {net === '' ? '' : rp.format(Number(net))}
               </div>
@@ -637,7 +640,8 @@ export const useFiftyFiftyColumns = (
                 className={cn(
                   'w-28 h-7 flex items-center bg-gray-500 gap-1 shadow-inner text-center font-semibold text-xs border border-slate-400 rounded',
                   poppins.className
-                )}>
+                )}
+              >
                 <FaRupiahSign size={12} className='text-zinc-400 ml-1 svg' />
                 <span className='text-white text-shadow'>
                   {rp.format(Number(total))}

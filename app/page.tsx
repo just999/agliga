@@ -52,10 +52,8 @@
 import getCurrentUser from '@/actions/get-user';
 import ClientEmblaCarousel from '@/components/carousel/Client-embla-carousel';
 import ImageSliders from '@/components/carousel/image-sliders';
-
 import Posts from '@/components/posts/posts';
 import ClientOnly from '@/lib/client-only';
-
 import {
   fetchPostByCat,
   getPosts,

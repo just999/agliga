@@ -1,5 +1,7 @@
 'use client';
 
+import { useEffect, useRef, useState } from 'react';
+
 import { createTogel } from '@/actions/togel-actions';
 import {
   Button,
@@ -11,24 +13,22 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui';
-
 import useTransformGames from '@/hooks/use-togel-transform-games';
 import { useZodForm } from '@/hooks/use-zod-form';
 import { cn, handleFormServerErrors } from '@/lib/utils';
 import { Sin4dSchema, sin4dSchema } from '@/schemas/togel-schema';
+import { useTogelStore } from '@/store/use-togel-store';
 import {
   flexRender,
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-
-import { useEffect, useRef, useState } from 'react';
+import { ChevronLeftCircle, PlusCircle } from 'lucide-react';
 import { useFieldArray, useWatch } from 'react-hook-form';
 import toast from 'react-hot-toast';
+
 import { Form4dSetProps } from '../togel-4d-set';
 import { useTogel4dSetDetailsColumns } from './togel-4d-set-details-columns';
-import { ChevronLeftCircle, PlusCircle } from 'lucide-react';
-import { useTogelStore } from '@/store/use-togel-store';
 
 type TogelTable4dSetConfirmProps = {
   params: {
@@ -182,7 +182,8 @@ const Togel4dSetDetailsTable = ({
       </div> */}
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className={cn(!show ? 'hidden' : '')}>
+        className={cn(!show ? 'hidden' : '')}
+      >
         <div className='py-2'>
           <Table className={cn('bg-emerald-50 overflow-hidden')}>
             <TableHeader className={'h-7 shadow-lg'}>
@@ -192,7 +193,8 @@ const Togel4dSetDetailsTable = ({
                     return (
                       <TableHead
                         key={header.id}
-                        className='p-0 m-0 h-8 text-xs font-bold text-center'>
+                        className='p-0 m-0 h-8 text-xs font-bold text-center'
+                      >
                         {header.isPlaceholder
                           ? null
                           : flexRender(
@@ -210,7 +212,8 @@ const Togel4dSetDetailsTable = ({
                 table.getRowModel().rows.map((row) => (
                   <TableRow
                     key={row.id}
-                    data-state={row.getIsSelected() && 'selected'}>
+                    data-state={row.getIsSelected() && 'selected'}
+                  >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell key={cell.id} className='p-0 m-0'>
                         {flexRender(
@@ -260,7 +263,8 @@ const Togel4dSetDetailsTable = ({
               size='sm'
               variant='default'
               className='group text-shadow-lg text-xs text-white font-semibold shadow-lg hover:bg-orange-300 hover:text-gray-600 hover:font-semibold px-2 py-1'
-              onClick={handleBackChange}>
+              onClick={handleBackChange}
+            >
               <ChevronLeftCircle
                 size={18}
                 className='svg text-white pr-1 group-hover:text-gray-600'
@@ -272,7 +276,8 @@ const Togel4dSetDetailsTable = ({
               disabled={!isValid}
               size='sm'
               variant='primary'
-              className='px-3 py-.5'>
+              className='px-3 py-.5'
+            >
               Submit
             </Button>
           </div>

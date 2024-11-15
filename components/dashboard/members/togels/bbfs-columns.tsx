@@ -1,9 +1,10 @@
 'use client';
 
+import { useEffect, useMemo } from 'react';
+
 import { cn, oldStandardTT, poppins } from '@/lib/utils';
 import { BbSin4dSchema, BbTabSchema } from '@/schemas/togel-schema';
 import { Percent, Trash2Icon } from 'lucide-react';
-import { useEffect, useMemo } from 'react';
 import {
   Control,
   UseFormGetValues,
@@ -58,7 +59,8 @@ export const useBBTogelColumns = (
               className={cn(
                 'p-0 m-0 text-zinc-400 font-semibold',
                 poppins.className
-              )}>
+              )}
+            >
               {row.index + 1}.
             </span>
           </div>
@@ -79,7 +81,8 @@ export const useBBTogelColumns = (
                   'h-7 text-base border rounded-lg px-5 w-32 text-right font-extrabold text-shadow tracking-[10px] shadow-inner [&>*:nth-child(odd)]:bg-orange-100',
                   oldStandardTT.className
                 )}
-                style={{ width: '100%', textAlign: 'right' }}>
+                style={{ width: '100%', textAlign: 'right' }}
+              >
                 {row.original}
               </div>
             </div>
@@ -96,12 +99,13 @@ export const useBBTogelColumns = (
             className={cn(
               'text-zinc-700 font-semibold text-xs w-full bg-emerald-400/40 text-center rounded-md',
               poppins.className
-            )}>
+            )}
+          >
             {Object.entries(row.original).length === 4
               ? '4d'
               : Object.entries(row.original).length === 3
-              ? '3d'
-              : '2d'}{' '}
+                ? '3d'
+                : '2d'}{' '}
           </div>
         ),
       },
@@ -117,7 +121,8 @@ export const useBBTogelColumns = (
               b.bet4d || b.bet3d || b.bet2d ? (
                 <div
                   key={i}
-                  className='flex items-center bg-zinc-300/40 text-center shadow-inner rounded-md '>
+                  className='flex items-center bg-zinc-300/40 text-center shadow-inner rounded-md '
+                >
                   <FaRupiahSign
                     size={10}
                     className='text-sky-400 ml-2  align-middle'
@@ -126,7 +131,8 @@ export const useBBTogelColumns = (
                     className={cn(
                       'text-left px-2 text-gray-500 tracking-wider text-xs',
                       poppins.className
-                    )}>
+                    )}
+                  >
                     {Object.entries(row.original).length === 4 ? (
                       <div>{b.bet4d}</div>
                     ) : Object.entries(row.original).length === 3 ? (
@@ -160,7 +166,8 @@ export const useBBTogelColumns = (
               className={cn(
                 'text-zinc-700 text-xs shadow-inner font-semibold w-full bg-emerald-400/40 text-center rounded-md',
                 poppins.className
-              )}>
+              )}
+            >
               {Object.entries(row.original).length === 4 ? (
                 <div className='border rounded-md shadow-inner flex '>
                   {discount4d}(66
@@ -184,7 +191,8 @@ export const useBBTogelColumns = (
             className={cn(
               'text-xs  font-semibold mx-auto text-center pt-2',
               Number(re2) + Number(re3) + Number(re4) === 0 ? 'hidden' : ''
-            )}>
+            )}
+          >
             Total{' '}
           </div>
         ),
@@ -201,7 +209,8 @@ export const useBBTogelColumns = (
               b.bet4d || b.bet3d || b.bet2d ? (
                 <div
                   key={i}
-                  className='w-28 h-7 flex items-center gap-2  text-center font-semibold text-xs border border-slate-400 text-zinc-500 rounded'>
+                  className='w-28 h-7 flex items-center gap-2  text-center font-semibold text-xs border border-slate-400 text-zinc-500 rounded'
+                >
                   <FaRupiahSign
                     size={10}
                     className='text-sky-400 ml-1  align-middle'
@@ -210,7 +219,8 @@ export const useBBTogelColumns = (
                     className={cn(
                       'text-left px-2 text-zinc-500 font-semibold tracking-wider text-xs',
                       poppins.className
-                    )}>
+                    )}
+                  >
                     {Object.entries(row.original).length === 4 ? (
                       <div>{(Number(b.bet4d) * (34 / 100)).toFixed()}</div>
                     ) : Object.entries(row.original).length === 3 ? (
@@ -231,7 +241,8 @@ export const useBBTogelColumns = (
             className={cn(
               'w-28 h-7 flex items-center bg-gray-500 gap-1 shadow-inner text-center font-semibold text-xs border border-slate-400 rounded',
               Number(re2) + Number(re3) + Number(re4) === 0 ? 'hidden' : ''
-            )}>
+            )}
+          >
             <FaRupiahSign
               size={10}
               className={cn(
@@ -242,7 +253,8 @@ export const useBBTogelColumns = (
             {bbData?.map((bb, i) => (
               <div
                 key={i}
-                className='px-2 text-center text-xs text-white text-shadow'>
+                className='px-2 text-center text-xs text-white text-shadow'
+              >
                 {bb.bet2d &&
                   (
                     Number(re2) * Number(bb.bet2d) * (71 / 100) +

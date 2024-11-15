@@ -1,6 +1,15 @@
 'use client';
 
 import {
+  ChangeEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+
+import {
   Button,
   Table,
   TableBody,
@@ -10,32 +19,22 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui';
+import { useZodForm } from '@/hooks/use-zod-form';
+import ClientOnly from '@/lib/client-only';
+import { cn, generateAndPadArrayFn, safeParseFloat } from '@/lib/utils';
+import { bseoTableSchema } from '@/schemas/togel-schema';
+import { useTogelStore } from '@/store/use-togel-store';
+import { ArrayOptProps } from '@/types/types';
 import {
   flexRender,
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
+import { ChevronDownSquareIcon, ChevronUpSquareIcon } from 'lucide-react';
 
-import { useZodForm } from '@/hooks/use-zod-form';
-import { cn, generateAndPadArrayFn, safeParseFloat } from '@/lib/utils';
-
-import { bseoTableSchema } from '@/schemas/togel-schema';
-import {
-  ChangeEvent,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
-
-import ClientOnly from '@/lib/client-only';
-import { ArrayOptProps } from '@/types/types';
+import Togel4dRules from '../4d3d2d/togel-4d-rules';
 import { useQuick2dColumns } from './quick2d-columns';
 import Quick2dDetailsTable from './quick2d-details-table';
-import { useTogelStore } from '@/store/use-togel-store';
-import { ChevronUpSquareIcon, ChevronDownSquareIcon } from 'lucide-react';
-import Togel4dRules from '../4d3d2d/togel-4d-rules';
 
 type BseoSpecialTableProps = {};
 
@@ -281,8 +280,9 @@ const Quick2d = () => {
                 return (
                   <TableHead
                     key={header.id}
-                    className={cn('p-0 m-0 h-8 text-xs font-bold text-center')}
-                    style={{ width: `${header.getSize()}px` }}>
+                    className={cn('m-0 h-8 p-0 text-center text-xs font-bold')}
+                    style={{ width: `${header.getSize()}px` }}
+                  >
                     {header.isPlaceholder
                       ? null
                       : flexRender(
@@ -296,18 +296,20 @@ const Quick2d = () => {
             </TableRow>
           ))}
         </TableHeader>
-        <TableBody>
+        <TableBody className='w-full '>
           {table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row) => (
               <TableRow
                 key={row.id}
                 data-state={row.getIsSelected() && 'selected'}
-                className='bg-orange-50 shadow-inner'>
+                className='w-full bg-orange-50 shadow-inner'
+              >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell
                     key={cell.id}
-                    className={cn('p-0 m-0')}
-                    style={{ width: `${cell.column.getSize()}px` }}>
+                    className={cn('m-0 p-0')}
+                    style={{ width: `${cell.column.getSize()}px` }}
+                  >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     {/* <pre>{JSON.stringify(cell.column.getSize(), null, 2)}</pre> */}
                   </TableCell>
@@ -318,13 +320,14 @@ const Quick2d = () => {
             <TableRow>
               <TableCell
                 colSpan={quick2dColumns.length}
-                className='h-24 text-center'>
+                className='h-24 text-center'
+              >
                 No Results
               </TableCell>
             </TableRow>
           )}
         </TableBody>
-        <TableFooter className='bg-transparent '>
+        <TableFooter className='bg-transparent'>
           {table.getFooterGroups().map((footerGroup) => (
             <TableRow key={footerGroup.id}>
               {footerGroup.headers.map((header) => (
@@ -343,27 +346,29 @@ const Quick2d = () => {
       </Table>
       <div
         className={cn(
-          'w-full flex flex-col'
+          'flex w-full flex-col'
           // show ? 'w-full flex flex-row-reverse justify-between' : ''
-        )}>
+        )}
+      >
         <Quick2dDetailsTable q2dData={bseoVal} />
       </div>
 
       {/* <pre>{JSON.stringify(watch(), null, 2)}</pre> */}
 
-      <div className={cn('w-136 flex flex-col')}>
+      <div className={cn('flex w-136 flex-col')}>
         <Button
           variant='ghost'
           size='sm'
           type='button'
           onClick={() => setShowDescription(!showDescription)}
-          className='w-full flex justify-between hover:bg-emerald-100/70 '>
+          className='flex w-full justify-between hover:bg-emerald-100/70'
+        >
           <div>Keterangan:</div>
           <div>
             {showDescription ? (
-              <ChevronUpSquareIcon className='text-emerald-600 svg ' />
+              <ChevronUpSquareIcon className='svg text-emerald-600' />
             ) : (
-              <ChevronDownSquareIcon className='text-emerald-600 svg ' />
+              <ChevronDownSquareIcon className='svg text-emerald-600' />
             )}
           </div>
         </Button>

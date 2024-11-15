@@ -1,12 +1,11 @@
 'use client';
 
-import { cn, poppins, rp } from '@/lib/utils';
-import { ColokBebasTableSchema } from '@/schemas/togel-schema';
+import { useMemo } from 'react';
 
 import { InputCustom } from '@/components/ui';
-import { oldStandardTT } from '@/lib/utils';
+import { cn, oldStandardTT, poppins, rp } from '@/lib/utils';
+import { ColokBebasTableSchema } from '@/schemas/togel-schema';
 import { Percent } from 'lucide-react';
-import { useMemo } from 'react';
 import {
   Control,
   UseFormGetValues,
@@ -42,7 +41,8 @@ export const useColokBebasColumns = (
               className={cn(
                 'p-0 m-0 text-zinc-300 font-semibold',
                 poppins.className
-              )}>
+              )}
+            >
               {row.index + 1}.
             </span>
           </div>
@@ -59,7 +59,8 @@ export const useColokBebasColumns = (
             className={cn(
               'w-12 h-7 text-base flex items-center justify-center border border-emerald-500 rounded-md font-extrabold text-shadow shadow-inner text-emerald-700 bg-emerald-100 ',
               oldStandardTT.className
-            )}>
+            )}
+          >
             {/* <InputCustom
                   disabled
                   {...register(`cl.${row.index}.d1`)}
@@ -74,13 +75,13 @@ export const useColokBebasColumns = (
         accessorKey: 'wager',
         header: 'bet',
         cell: ({ row }: any) => (
-          <div className='relative  flex justify-center text-zinc-700 border border-zinc-400 rounded-md h-7 px-0 font-semibold w-28 '>
+          <div className='relative  flex justify-center text-zinc-700 border border-zinc-400 rounded-md h-7 px-0 font-semibold w-32 '>
             <InputCustom
               {...register(`cb.${row.index}.wager`)}
               type='tel'
               placeholder='bet'
               className={cn(
-                'w-28 h-7 text-xs font-semibold pl-5 text-zinc-600 placeholder:text-slate-300',
+                'w-32 h-7 text-xs border border-zinc-400 font-semibold pl-5 text-zinc-600 placeholder:text-slate-300',
                 poppins.className
               )}
               suffix={
@@ -109,9 +110,10 @@ export const useColokBebasColumns = (
             // <div className='relative flex justify-center'>
             <div
               className={cn(
-                'h-7 text-zinc-700 mx-auto flex items-center justify-between border border-amber-500 gap-x-0.5 text-xs shadow-inner font-semibold w-28 bg-amber-200/40 text-center rounded-md',
+                'h-7 text-zinc-700 mx-auto flex items-center justify-between border border-amber-500 gap-x-0.5 text-xs shadow-inner font-semibold w-32 bg-amber-200/40 text-center rounded-md',
                 poppins.className
-              )}>
+              )}
+            >
               <span className='flex items-center text-zinc-400 '>
                 <FaRupiahSign size={12} className='text-zinc-300  mx-1' />
                 {/* {row.original.wager === ''
@@ -144,12 +146,13 @@ export const useColokBebasColumns = (
           const wager = row.original.wager;
           const netValue = (Number(wager) * 0.95).toFixed();
           return (
-            <div className='relative flex justify-center items-center bg-zinc-300/40 text-zinc-700 border border-zinc-200 rounded-md h-7 px-0 font-semibold w-28 mx-auto'>
+            <div className='relative flex justify-center items-center bg-zinc-300/40 text-zinc-700 border border-zinc-200 rounded-md h-7 px-0 font-semibold w-32 mx-auto'>
               <div
                 className={cn(
-                  'w-28 h-7 flex items-center gap-1  text-center font-semibold text-xs border border-slate-400 text-zinc-500 rounded',
+                  'w-32 h-7 flex items-center gap-1  text-center font-semibold text-xs border border-slate-400 text-zinc-500 rounded',
                   poppins.className
-                )}>
+                )}
+              >
                 <FaRupiahSign size={12} className='text-zinc-300  ml-1' />
                 {row.original.wager === '' ? '' : rp.format(Number(netValue))}
               </div>
@@ -172,9 +175,10 @@ export const useColokBebasColumns = (
             <div className='flex justify-center py-2'>
               <div
                 className={cn(
-                  'w-28 h-7 flex items-center bg-gray-500 gap-1 shadow-inner text-center font-semibold text-xs border border-slate-400 rounded',
+                  'w-32 h-7 flex items-center bg-gray-500 gap-1 shadow-inner text-center font-semibold text-xs border border-slate-400 rounded',
                   poppins.className
-                )}>
+                )}
+              >
                 <FaRupiahSign size={12} className='text-zinc-400 ml-1 svg' />
                 <span className='text-white text-shadow'>
                   {rp.format(Number(total))}

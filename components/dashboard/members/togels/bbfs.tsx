@@ -1,5 +1,7 @@
 'use client';
 
+import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
+
 import { Button, InputCustom } from '@/components/ui';
 import { Label } from '@/components/ui/label';
 import { useCalculator, usePermAndFormat } from '@/hooks/use-togel-bbfs';
@@ -18,15 +20,13 @@ import {
   Number4dSetSchema,
   Sin4dSchema,
 } from '@/schemas/togel-schema';
-
-import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import { useFieldArray } from 'react-hook-form';
 import { FaRupiahSign } from 'react-icons/fa6';
 
 import { form4d } from './4d3d2d/togel-table';
+import bbfs from './bbfs/bbfs';
 import TogelTableBb from './togel-table-bb';
 import { TogelTableComponent } from './togel-table-component';
-import bbfs from './bbfs/bbfs';
 
 type BbfsProps = {
   params: {
@@ -382,7 +382,8 @@ const Bbfs = ({ params }: BbfsProps) => {
                     className={cn(
                       'text-center flex items-center justify-around text-sm font-semibold py-1',
                       roboto.className
-                    )}>
+                    )}
+                  >
                     <div className='w-fit'>
                       <Label className='text-sm font-semibold bg-slate-100 text-center'>
                         Nomor
@@ -465,7 +466,8 @@ const Bbfs = ({ params }: BbfsProps) => {
                   <div className='w-full relative py-1'>
                     <Button
                       size='sm'
-                      className='w-14 absolute right-2 px-2 py-1 my-1  '>
+                      className='w-14 absolute right-2 px-2 py-1 my-1  '
+                    >
                       Submit
                     </Button>
                     <TogelTableComponent

@@ -622,9 +622,9 @@ export function BbfsTable<TData, TValue>({
   return (
     <ClientOnly>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className='flex justify-between items-center py-2'>
+        <div className='flex items-center justify-between py-2'>
           {/* <div className='font-semibold text-xs my-5'>render: {render}</div> */}
-          <Button type='submit' size='sm' className='px-2 '>
+          <Button type='submit' size='sm' className='px-2'>
             Submit
           </Button>
         </div>
@@ -637,7 +637,7 @@ export function BbfsTable<TData, TValue>({
                     <TableHead
                       key={header.id}
                       className={cn(
-                        'p-0 m-0 h-8 text-xs font-bold text-center',
+                        'm-0 h-8 p-0 text-center text-xs font-bold',
                         header.getContext().header.column.id === 'index' &&
                           'w-8',
                         header.getContext().header.column.id === 'number' &&
@@ -649,7 +649,8 @@ export function BbfsTable<TData, TValue>({
                         header.getContext().header.column.id === 'dis' &&
                           'w-12',
                         header.getContext().header.column.id === 'net' && 'w-28'
-                      )}>
+                      )}
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -662,22 +663,24 @@ export function BbfsTable<TData, TValue>({
               </TableRow>
             ))}
           </TableHeader>
-          <TableBody className='border-b pb-2 '>
+          <TableBody className='border-b pb-2'>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
-                  data-state={row.getIsSelected() && 'selected'}>
+                  data-state={row.getIsSelected() && 'selected'}
+                >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell
                       key={cell.id}
                       className={cn(
-                        'p-0 m-0',
+                        'm-0 p-0',
                         cell.column.id === 'number' && 'w-20',
                         cell.column.id === 'dis' && 'w-12',
                         cell.column.id === 'bet' && 'w-28',
                         cell.column.id === 'net' && 'w-28'
-                      )}>
+                      )}
+                    >
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
@@ -690,13 +693,14 @@ export function BbfsTable<TData, TValue>({
               <TableRow>
                 <TableCell
                   colSpan={bbfsColumns?.length}
-                  className='text-center italic bg-cyan-100 shadow-inner'>
+                  className='bg-cyan-100 text-center italic shadow-inner'
+                >
                   Detail Bet...
                 </TableCell>
               </TableRow>
             )}
           </TableBody>
-          <TableFooter className='bg-transparent '>
+          <TableFooter className='bg-transparent'>
             {table.getFooterGroups().map((footerGroup) => (
               <TableRow key={footerGroup.id}>
                 {footerGroup.headers.map((header) => (
@@ -715,78 +719,84 @@ export function BbfsTable<TData, TValue>({
         </Table>
 
         <div className='h-2' />
-        <div className='flex justify-center items-center gap-2 bg-orange-100'>
-          <div className='text-xs '>
+        <div className='flex items-center justify-center gap-2 bg-orange-100'>
+          <div className='text-xs'>
             tampil{' '}
             <span
               className={cn(
-                'h-3 bg-emerald-50 rounded-sm px-1 font-semibold',
+                'h-3 rounded-sm bg-emerald-50 px-1 font-semibold',
                 poppins.className
-              )}>
+              )}
+            >
               {table.getRowModel().rows.length.toLocaleString()}{' '}
             </span>{' '}
             dari
             <span
               className={cn(
-                'h-3 bg-emerald-50 rounded-sm px-1 font-semibold',
+                'h-3 rounded-sm bg-emerald-50 px-1 font-semibold',
                 poppins.className
-              )}>
+              )}
+            >
               {table.getRowCount().toLocaleString()}
             </span>{' '}
             baris
           </div>
-          <div className='flex  '>
+          <div className='flex'>
             <Button
               variant='ghost'
               type='button'
               className={cn(
-                ' border rounded-md h-5 w-7 p-0 m-auto flex items-center justify-center bg-orange-500 hover:bg-orange-500/70',
+                'm-auto flex h-5 w-7 items-center justify-center rounded-md border bg-orange-500 p-0 hover:bg-orange-500/70',
                 !table.getCanPreviousPage()
-                  ? 'bg-orange-400/70 cursor-not-allowed'
+                  ? 'cursor-not-allowed bg-orange-400/70'
                   : ''
               )}
               onClick={() => table.firstPage()}
-              disabled={!table.getCanPreviousPage()}>
-              <ChevronsLeft size={14} className='  text-white svg ' />
+              disabled={!table.getCanPreviousPage()}
+            >
+              <ChevronsLeft size={14} className='svg text-white' />
             </Button>
             <Button
               variant='ghost'
               type='button'
               className={cn(
-                'border rounded-md h-5 w-7 p-0 m-auto flex items-center justify-center bg-orange-500 hover:bg-orange-500/70',
+                'm-auto flex h-5 w-7 items-center justify-center rounded-md border bg-orange-500 p-0 hover:bg-orange-500/70',
                 !table.getCanPreviousPage()
-                  ? 'bg-orange-400/70 cursor-not-allowed'
+                  ? 'cursor-not-allowed bg-orange-400/70'
                   : ''
               )}
               onClick={() => table.previousPage()}
-              disabled={!table.getCanPreviousPage()}>
-              <ChevronLeft size={14} className='  text-white svg ' />
+              disabled={!table.getCanPreviousPage()}
+            >
+              <ChevronLeft size={14} className='svg text-white' />
             </Button>
             <Button
               variant='ghost'
               type='button'
               className={cn(
-                'border rounded-md h-5 w-7 p-0 m-auto flex items-center justify-center bg-orange-500 hover:bg-orange-500/70',
+                'm-auto flex h-5 w-7 items-center justify-center rounded-md border bg-orange-500 p-0 hover:bg-orange-500/70',
                 !table.getCanNextPage()
-                  ? 'bg-orange-400/70 cursor-not-allowed'
+                  ? 'cursor-not-allowed bg-orange-400/70'
                   : ''
               )}
               onClick={() => table.nextPage()}
-              disabled={!table.getCanNextPage()}>
-              <ChevronRight size={14} className='  text-white svg ' />
+              disabled={!table.getCanNextPage()}
+            >
+              <ChevronRight size={14} className='svg text-white' />
             </Button>
             <Button
               variant='ghost'
               type='button'
               className={cn(
-                'border rounded-md h-5 w-7 p-0 m-auto flex items-center justify-center bg-orange-500 hover:bg-orange-500/70',
+                'm-auto flex h-5 w-7 items-center justify-center rounded-md border bg-orange-500 p-0 hover:bg-orange-500/70',
                 !table.getCanNextPage()
-                  ? 'bg-orange-400/70 cursor-not-allowed'
+                  ? 'cursor-not-allowed bg-orange-400/70'
                   : ''
               )}
               onClick={() => table.lastPage()}
-              disabled={!table.getCanNextPage()}>
-              <ChevronsRight size={14} className='  text-white svg ' />
+              disabled={!table.getCanNextPage()}
+            >
+              <ChevronsRight size={14} className='svg text-white' />
             </Button>
           </div>
           <span className='flex items-center gap-1 text-xs'>
@@ -815,7 +825,8 @@ export function BbfsTable<TData, TValue>({
             onChange={(e) => {
               table.setPageSize(Number(e.target.value));
             }}
-            className='text-xs bg-amber-100'>
+            className='bg-amber-100 text-xs'
+          >
             {[10, 20, 30, 40, 50, maxRowCount].map((pageSize) => (
               <option key={pageSize} value={pageSize}>
                 Show {pageSize}
@@ -855,7 +866,7 @@ function Filter({
           ])
         }
         placeholder={`Min`}
-        className='w-24 border shadow rounded'
+        className='w-24 rounded border shadow'
       />
       <input
         type='number'
@@ -867,12 +878,12 @@ function Filter({
           ])
         }
         placeholder={`Max`}
-        className='w-24 border shadow rounded'
+        className='w-24 rounded border shadow'
       />
     </div>
   ) : (
     <input
-      className='w-36 border shadow rounded'
+      className='w-36 rounded border shadow'
       onChange={(e) => column.setFilterValue(e.target.value)}
       onClick={(e) => e.stopPropagation()}
       placeholder={`Search...`}

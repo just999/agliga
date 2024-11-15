@@ -1,29 +1,29 @@
 'use client';
 
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
+
 import {
-  TableHeader,
-  TableRow,
-  TableHead,
+  Button,
+  Table,
   TableBody,
   TableCell,
   TableFooter,
-  Table,
-  Button,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from '@/components/ui';
+import { useZodForm } from '@/hooks/use-zod-form';
+import { cn, safeParseFloat } from '@/lib/utils';
+import { dasarBsOeTableSchema } from '@/schemas/togel-schema';
 import {
   flexRender,
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
+import { ChevronDownSquareIcon, ChevronUpSquareIcon } from 'lucide-react';
 
-import { useZodForm } from '@/hooks/use-zod-form';
-import { cn, safeParseFloat } from '@/lib/utils';
-
-import { useState, useRef, useCallback, ChangeEvent, useEffect } from 'react';
 import { useDasarColumns } from './dasar-columns';
-import { dasarBsOeTableSchema } from '@/schemas/togel-schema';
 import DasarRules from './dasar-rules';
-import { ChevronUpSquareIcon, ChevronDownSquareIcon } from 'lucide-react';
 
 type DasarTableProps = {};
 
@@ -241,7 +241,8 @@ const DasarTable = () => {
                     return (
                       <TableHead
                         key={header.id}
-                        className='p-0 m-0 h-8 text-xs font-bold text-center'>
+                        className='p-0 m-0 h-8 text-xs font-bold text-center'
+                      >
                         {header.isPlaceholder
                           ? null
                           : flexRender(
@@ -259,7 +260,8 @@ const DasarTable = () => {
                 table.getRowModel().rows.map((row) => (
                   <TableRow
                     key={row.id}
-                    data-state={row.getIsSelected() && 'selected'}>
+                    data-state={row.getIsSelected() && 'selected'}
+                  >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell key={cell.id} className='p-0 m-0'>
                         {flexRender(
@@ -277,7 +279,8 @@ const DasarTable = () => {
                 <TableRow>
                   <TableCell
                     colSpan={dasarColumns.length}
-                    className='h-24 text-center'>
+                    className='h-24 text-center'
+                  >
                     No Results
                   </TableCell>
                 </TableRow>
@@ -305,20 +308,22 @@ const DasarTable = () => {
               size='sm'
               type='submit'
               disabled={!isValid}
-              className='py-0 w-28'>
+              className='py-0 w-28'
+            >
               Submit
             </Button>
           </div>
         </div>
         {/* <pre>{JSON.stringify(watch(), null, 2)}</pre> */}
 
-        <div className={cn('w-140 flex flex-col')}>
+        <div className={cn('w-137 flex flex-col')}>
           <Button
             variant='ghost'
             size='sm'
             type='button'
             onClick={() => setShowDescription(!showDescription)}
-            className='w-full flex justify-between hover:bg-emerald-100/70 '>
+            className='w-full flex justify-between hover:bg-emerald-100/70 '
+          >
             <div>Keterangan:</div>
             <div>
               {showDescription ? (

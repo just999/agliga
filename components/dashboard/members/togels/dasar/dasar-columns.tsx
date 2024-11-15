@@ -259,11 +259,13 @@
 // };
 
 'use client';
+
+import { ChangeEvent, useEffect, useMemo, useRef } from 'react';
+
 import { InputCustom, Label } from '@/components/ui';
 import { cn, poppins, rp, safeParseFloat } from '@/lib/utils';
 import { FiftyFiftyMsKkkTableSchema } from '@/schemas/togel-schema';
 import { ChevronDownCircle, Percent } from 'lucide-react';
-import { ChangeEvent, useEffect, useMemo, useRef } from 'react';
 import {
   Control,
   UseFormGetValues,
@@ -319,13 +321,15 @@ export const useDasarColumns = (
       <div
         className={cn(
           'flex w-40 gap-1 border h-7 items-center justify-between space-x-2 px-0 py-0 rounded-md cursor-pointer relative'
-        )}>
+        )}
+      >
         <select
           {...register(`dasar.${row.index}.${type}`)}
           className={cn(
             'w-full text-xs bg-transparent font-semibold px-1 appearance-none text-zinc-500',
             poppins.className
-          )}>
+          )}
+        >
           {values.map((val, i) => (
             <option value={val} key={val} className='px-2 '>
               {labels[i]}
@@ -356,14 +360,16 @@ export const useDasarColumns = (
                 getValues(`dasar.${row.index}.bigSmall`) === value
                   ? 'bg-cyan-500 w-20 h-7 text-yellow-100 border border-blue-400 hover:bg-cyan-500/70 hover:text-white/70'
                   : getValues(`dasar.${row.index}.oddEven`) === value
-                  ? 'bg-fuchsia-500 w-20 h-7 text-yellow-100 hover:bg-fuchsia-500/70 hover:text-white/70 border border-purple-400'
-                  : 'bg-muted text-violet-700 border border-purple-400'
-              )}>
+                    ? 'bg-fuchsia-500 w-20 h-7 text-yellow-100 hover:bg-fuchsia-500/70 hover:text-white/70 border border-purple-400'
+                    : 'bg-muted text-violet-700 border border-purple-400'
+              )}
+            >
               <Label
                 className={cn(
                   'text-sm gap-1 w-20 h-7 flex items-center justify-center font-normal px-1 cursor-pointer',
                   poppins.className
-                )}>
+                )}
+              >
                 <input
                   {...register(`dasar.${row.index}.${type}`)}
                   type='radio'
@@ -394,7 +400,8 @@ export const useDasarColumns = (
               className={cn(
                 'p-0 m-0 text-zinc-300 font-semibold',
                 poppins.className
-              )}>
+              )}
+            >
               {row.index + 1}.
             </span>
           </div>
@@ -440,7 +447,7 @@ export const useDasarColumns = (
         ),
         cell: ({ row }: any) => {
           return (
-            <div className='relative  flex justify-center text-zinc-700 border border-zinc-400 rounded-md h-7 px-0 font-semibold w-full '>
+            <div className='relative  flex justify-center text-zinc-700 rounded-md h-7 px-0 font-semibold w-full '>
               <InputCustom
                 {...register(`dasar.${row.index}.wager`)}
                 type='tel'
@@ -479,7 +486,8 @@ export const useDasarColumns = (
               className={cn(
                 'h-7 text-zinc-700 mx-auto flex items-center justify-between border border-amber-500 gap-x-0.5 text-xs shadow-inner font-semibold w-30 bg-amber-200/40 text-center rounded-md',
                 poppins.className
-              )}>
+              )}
+            >
               <span className='flex items-center text-zinc-400'>
                 <FaRupiahSign size={12} className='text-zinc-300 mx-1' />
                 {discount === '' ? '' : rp.format(Number(discount))}
@@ -518,7 +526,8 @@ export const useDasarColumns = (
                 className={cn(
                   'w-30 h-7 flex items-center gap-1  text-center font-semibold text-xs border border-slate-400 text-zinc-500 rounded',
                   poppins.className
-                )}>
+                )}
+              >
                 <FaRupiahSign size={12} className='text-zinc-300 ml-1' />
                 {net === '' ? '' : rp.format(Number(net))}
               </div>
@@ -542,7 +551,8 @@ export const useDasarColumns = (
                 className={cn(
                   'w-30 h-7 flex items-center bg-gray-500 gap-1 shadow-inner text-center font-semibold text-xs border border-slate-400 rounded',
                   poppins.className
-                )}>
+                )}
+              >
                 <FaRupiahSign size={12} className='text-zinc-400 ml-1 svg' />
                 <span className='text-white text-shadow'>
                   {rp.format(Number(total))}

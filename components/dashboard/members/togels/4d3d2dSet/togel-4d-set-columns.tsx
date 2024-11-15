@@ -1,10 +1,11 @@
 'use client';
 
+import { ChangeEvent, useCallback, useEffect, useMemo } from 'react';
+
 import { InputCustom } from '@/components/ui';
 import { cn, oldStandardTT, poppins, safeParseFloat } from '@/lib/utils';
 import { Sin4dSetSchema } from '@/schemas/togel-schema';
 import { Trash2Icon } from 'lucide-react';
-import { ChangeEvent, useCallback, useEffect, useMemo } from 'react';
 import {
   Control,
   UseFormGetValues,
@@ -126,7 +127,8 @@ const useTogel4dSetColumns = (
               className={cn(
                 'p-0 m-0 text-zinc-300 font-semibold',
                 poppins.className
-              )}>
+              )}
+            >
               {row.index + 1}.
             </span>
           </div>
@@ -216,8 +218,8 @@ const useTogel4dSetColumns = (
                       key === 'bet4d'
                         ? 'bg-purple-100 border border-purple-400 '
                         : key === 'bet3d'
-                        ? 'bg-teal-100  border border-teal-400 '
-                        : 'bg-amber-100  border border-amber-400 ',
+                          ? 'bg-teal-100  border border-teal-400 '
+                          : 'bg-amber-100  border border-amber-400 ',
                       poppins.className
                     )}
                     disabled={key === 'allBet' && filledFields < 2}

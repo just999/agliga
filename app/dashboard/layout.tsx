@@ -1,6 +1,5 @@
 import { getAuthUserId, getUserRole } from '@/actions/auth-actions';
 import Container from '@/components/container';
-
 import DashboardSidebar from '@/components/dashboard/dashboard-sidebar';
 import { Nav } from '@/components/dashboard/members/nav';
 
@@ -13,13 +12,13 @@ const DashboardLayout = async ({ children }: DashboardLayoutProps) => {
   const userRole = await getUserRole();
 
   return (
-    <div className='flex mx-auto relative'>
-      <div className='hidden md:block h-[100vh] min-w-40 w-64'>
+    <div className='relative mx-auto flex'>
+      <div className='hidden h-[100vh] w-64 min-w-40 md:block'>
         <DashboardSidebar userId={userId} userRole={userRole} />
       </div>
-      <div className='p-0 w-full h-full md:max-w-[1600px] '>
+      <div className='h-full w-full p-0 md:max-w-[1600px]'>
         {/* {userRole === 'user' && ( */}
-        <Container className='w-full mx-auto flex flex-col items-center'>
+        <Container className='mx-auto flex w-full flex-col items-center'>
           <Nav />
           {children}
         </Container>

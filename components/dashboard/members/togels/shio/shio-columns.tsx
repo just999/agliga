@@ -1,11 +1,12 @@
 'use client';
+
+import { ChangeEvent, useEffect, useMemo, useRef } from 'react';
+
 import { InputCustom, Label } from '@/components/ui';
 import { shioWithIcon } from '@/lib/helper';
 import { cn, poppins, rp, safeParseFloat } from '@/lib/utils';
 import { ShioTableSchema } from '@/schemas/togel-schema';
-
 import { Percent } from 'lucide-react';
-import { ChangeEvent, useEffect, useMemo, useRef } from 'react';
 import {
   Control,
   UseFormGetValues,
@@ -68,7 +69,8 @@ export const useShioColumns = (
               className={cn(
                 'p-0 m-0 text-zinc-300 font-semibold',
                 poppins.className
-              )}>
+              )}
+            >
               {row.index + 1}.
             </span>
           </div>
@@ -115,7 +117,8 @@ export const useShioColumns = (
               className={cn(
                 'w-33 h-7 gap-2 flex px-2 font-semibold text-xs shadow-lg  border border-orange-700 bg-orange-500 rounded-lg pl-2 text-orange-100 items-center p-0',
                 poppins.className
-              )}>
+              )}
+            >
               <span className='pl-2 flex items-center text-yellow-100 text-shadow gap-2'>
                 {filteredShio} {row.original.shio}
               </span>
@@ -172,7 +175,8 @@ export const useShioColumns = (
               className={cn(
                 'h-7 text-zinc-700 mx-auto flex items-center justify-between border border-amber-500 gap-x-0.5 text-xs shadow-inner font-semibold w-28 bg-amber-200/40 text-center rounded-md',
                 poppins.className
-              )}>
+              )}
+            >
               <span className='flex items-center text-zinc-400'>
                 <FaRupiahSign size={12} className='text-zinc-400 mx-1 ' />
                 {discount === '' ? '' : rp.format(Number(discount))}
@@ -211,7 +215,8 @@ export const useShioColumns = (
                 className={cn(
                   'w-28 h-7 flex items-center gap-1  text-center font-semibold text-xs border border-slate-400 text-zinc-500 rounded',
                   poppins.className
-                )}>
+                )}
+              >
                 <FaRupiahSign size={12} className='text-zinc-400 ml-1' />
                 {net === '' ? '' : rp.format(Number(net))}
               </div>
@@ -235,7 +240,8 @@ export const useShioColumns = (
                 className={cn(
                   'w-28 h-7 flex items-center bg-gray-500 gap-1 shadow-inner text-center font-semibold text-xs border border-slate-400 rounded',
                   poppins.className
-                )}>
+                )}
+              >
                 <FaRupiahSign size={12} className='text-zinc-400 ml-1 svg' />
                 <span className='text-white text-shadow'>
                   {rp.format(Number(total))}

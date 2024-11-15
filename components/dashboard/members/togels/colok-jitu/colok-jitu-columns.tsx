@@ -1,5 +1,7 @@
 'use client';
 
+import { ChangeEvent, useEffect, useMemo, useRef } from 'react';
+
 import { InputCustom } from '@/components/ui';
 import { positionVal } from '@/lib/helper';
 import {
@@ -12,7 +14,6 @@ import {
 } from '@/lib/utils';
 import { ColokJituTableSchema } from '@/schemas/togel-schema';
 import { ChevronDown, ChevronDownCircle, Percent } from 'lucide-react';
-import { ChangeEvent, useEffect, useMemo, useRef } from 'react';
 import {
   Control,
   UseFormGetValues,
@@ -76,7 +77,8 @@ export const useColokJituColumns = (
               className={cn(
                 'p-0 m-0 text-zinc-300 font-semibold',
                 poppins.className
-              )}>
+              )}
+            >
               {row.index + 1}.
             </span>
           </div>
@@ -100,7 +102,8 @@ export const useColokJituColumns = (
               className={cn(
                 'w-12 h-7 pt-0.5 pr-1 font-semibold rounded-md text-base text-shadow flex items-center justify-center appearance-none  text-gray-500 cursor-pointer group-hover:bg-amber-100/70 bg-violet-100 border border-violet-300',
                 oldStandardTT.className
-              )}>
+              )}
+            >
               <option value=''></option>
               {arrayRange(0, 9, 1).map((_, i: number) => (
                 <option
@@ -109,7 +112,8 @@ export const useColokJituColumns = (
                   className={cn(
                     'w-12 h-7 flex items-center justify-center text-sm font-semibold text-center',
                     poppins.className
-                  )}>
+                  )}
+                >
                   {i.toString()}
                 </option>
               ))}
@@ -143,7 +147,8 @@ export const useColokJituColumns = (
               className={cn(
                 'w-20 h-7 font-normal rounded-md text-sm text-shadow flex items-center justify-center align-middle appearance-none bg-teal-100 border border-teal-300',
                 poppins.className
-              )}>
+              )}
+            >
               <option value=''></option>
               {positionVal.map((pos, i: number) => (
                 <option
@@ -152,7 +157,8 @@ export const useColokJituColumns = (
                   className={cn(
                     'text-sm font-normal text-center',
                     poppins.className
-                  )}>
+                  )}
+                >
                   {pos}
                 </option>
               ))}
@@ -181,7 +187,7 @@ export const useColokJituColumns = (
                 pattern: /^[0-9]+$/,
               })}
               type='tel'
-              className='w-28 h-7 pl-5 border border-zinc-300 text-xs text-zinc-600 placeholder:text-slate-300 placeholder:pl-2'
+              className='w-30 h-7 pl-5 border border-zinc-300 text-xs text-zinc-600 placeholder:text-slate-300 placeholder:pl-2'
               placeholder='bet all'
               suffix={
                 <FaRupiahSign
@@ -199,7 +205,7 @@ export const useColokJituColumns = (
           const isDisabled = !d1Value || !posValue;
 
           return (
-            <div className='relative  flex justify-center text-zinc-700 border border-zinc-400 rounded-md h-7 px-0 font-semibold w-full '>
+            <div className='relative  flex justify-center text-zinc-700  rounded-md h-7 px-0 font-semibold w-full '>
               <InputCustom
                 {...register(`cj.${row.index}.wager`, {
                   onChange: (e: ChangeEvent<HTMLInputElement>) =>
@@ -212,7 +218,7 @@ export const useColokJituColumns = (
                 type='tel'
                 placeholder='bet'
                 className={cn(
-                  'w-28 h-7 text-xs font-semibold pl-5 text-zinc-600 placeholder:text-slate-300',
+                  'w-30 h-7 text-xs font-semibold pl-5 border border-zinc-400 text-zinc-600 placeholder:text-slate-300',
                   poppins.className
                 )}
                 suffix={
@@ -230,7 +236,7 @@ export const useColokJituColumns = (
       {
         accessorKey: 'dis',
         header: ({ column }: any) => (
-          <div className='text-zinc-700 font-semibold w-28  h-full flex items-end justify-center'>
+          <div className='text-zinc-700 font-semibold w-30 h-full flex items-end justify-center'>
             <div className='flex items-center text-xs font-semibold'>
               dis (6 <Percent size={10} /> )
             </div>
@@ -243,9 +249,10 @@ export const useColokJituColumns = (
           return (
             <div
               className={cn(
-                'h-7 text-zinc-700 mx-auto flex items-center justify-between border border-amber-500 gap-x-0.5 text-xs shadow-inner font-semibold w-28 bg-amber-200/40 text-center rounded-md',
+                'h-7 text-zinc-700 mx-auto flex items-center justify-between border border-amber-500 gap-x-0.5 text-xs shadow-inner font-semibold w-30 bg-amber-200/40 text-center rounded-md',
                 poppins.className
-              )}>
+              )}
+            >
               <span className='flex items-center text-zinc-400'>
                 <FaRupiahSign size={12} className='text-zinc-300  mx-1' />
                 {/* {row.original.wager === ''
@@ -271,7 +278,7 @@ export const useColokJituColumns = (
       {
         accessorKey: 'net',
         header: ({ column }: any) => (
-          <div className='text-zinc-700 font-semibold w-28  h-full flex items-end justify-center'>
+          <div className='text-zinc-700 font-semibold w-30  h-full flex items-end justify-center'>
             net
           </div>
         ),
@@ -282,12 +289,13 @@ export const useColokJituColumns = (
               ? ''
               : (wager * 0.94).toFixed().toString();
           return (
-            <div className='relative flex justify-center items-center bg-zinc-300/40 text-zinc-700 border border-zinc-200 rounded-md h-7 px-0 font-semibold w-28 mx-auto'>
+            <div className='relative flex justify-center items-center bg-zinc-300/40 text-zinc-700 border border-zinc-200 rounded-md h-7 px-0 font-semibold w-30 mx-auto'>
               <div
                 className={cn(
-                  'w-28 h-7 flex items-center gap-1  text-center font-semibold text-xs border border-slate-400 text-zinc-500 rounded',
+                  'w-30 h-7 flex items-center gap-1  text-center font-semibold text-xs border border-slate-400 text-zinc-500 rounded',
                   poppins.className
-                )}>
+                )}
+              >
                 <FaRupiahSign size={12} className='text-zinc-300  ml-1' />
                 {/* {row.original.wager === ''
                   ? ''
@@ -313,9 +321,10 @@ export const useColokJituColumns = (
             <div className='flex justify-center py-1'>
               <div
                 className={cn(
-                  'w-28 h-7 flex items-center bg-gray-500 gap-1 shadow-inner text-center font-semibold text-xs border border-slate-400 rounded',
+                  'w-30 h-7 flex items-center bg-gray-500 gap-1 shadow-inner text-center font-semibold text-xs border border-slate-400 rounded',
                   poppins.className
-                )}>
+                )}
+              >
                 <FaRupiahSign size={12} className='text-zinc-400 ml-1 svg' />
                 <span className='text-white text-shadow'>
                   {rp.format(Number(total))}

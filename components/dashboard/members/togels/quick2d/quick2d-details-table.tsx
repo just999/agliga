@@ -202,25 +202,27 @@ const Quick2dDetailsTable = ({ q2dData }: Quick2dDetailsTableProps) => {
         )}>
         render: {render}
       </div> */}
-      <form onSubmit={handleSubmit(onSubmit)} className='py-2 '>
-        <div className='w-full flex flex-row-reverse items-center justify-between'>
+      <form onSubmit={handleSubmit(onSubmit)} className='py-2'>
+        <div className='flex w-full flex-row-reverse items-center justify-between'>
           <div
             className={cn(
-              'w-full  py-2 pr-4 text-right'
+              'w-full py-2 pr-4 text-right'
               // show ? 'text-left' : 'text-right'
-            )}>
+            )}
+          >
             <Button
               onClick={handleSetIsToggle}
               size='sm'
               disabled={!wager || table.getRowModel().rows?.length === 0}
               type='button'
-              className='py-1 px-2 w-20'>
+              className='w-20 px-2 py-1'
+            >
               {isToggle ? (
-                <div className='w-full flex items-center justify-between gap-1 '>
-                  Hide <ChevronUpSquareIcon size={16} className='svg ' />
+                <div className='flex w-full items-center justify-between gap-1'>
+                  Hide <ChevronUpSquareIcon size={16} className='svg' />
                 </div>
               ) : (
-                <div className='w-full flex items-center justify-between gap-1 '>
+                <div className='flex w-full items-center justify-between gap-1'>
                   details <ChevronDownSquareIcon size={16} />{' '}
                 </div>
               )}
@@ -228,17 +230,19 @@ const Quick2dDetailsTable = ({ q2dData }: Quick2dDetailsTableProps) => {
           </div>
           <div
             className={cn(
-              'transition-opacity duration-2000 ease-in-out',
-              isToggle ? 'opacity-100 max-h-10' : 'opacity-0 max-h-0'
-            )}>
+              'duration-2000 transition-opacity ease-in-out',
+              isToggle ? 'max-h-10 opacity-100' : 'max-h-0 opacity-0'
+            )}
+          >
             <div className={isToggle ? 'block' : 'hidden'}>
-              <div className='w-full text-left py-2 pr-4 '>
+              <div className='w-full py-2 pr-4 text-left'>
                 <Button
                   size='sm'
                   type='submit'
                   // disabled={!isValid || !wager}
-                  className='py-1 px-2 '>
-                  <div className='flex items-center gap-2 '>Submit</div>
+                  className='px-2 py-1'
+                >
+                  <div className='flex items-center gap-2'>Submit</div>
                 </Button>
               </div>
             </div>
@@ -246,9 +250,10 @@ const Quick2dDetailsTable = ({ q2dData }: Quick2dDetailsTableProps) => {
         </div>
         <div
           className={cn(
-            'transition-all duration-1000 ease-in-out transform overflow-hidden',
+            'transform overflow-hidden transition-all duration-1000 ease-in-out',
             isToggle ? 'max-h-[1705px] opacity-100' : 'max-h-0 opacity-0'
-          )}>
+          )}
+        >
           <Table>
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (
@@ -258,9 +263,10 @@ const Quick2dDetailsTable = ({ q2dData }: Quick2dDetailsTableProps) => {
                       <TableHead
                         key={header.id}
                         className={cn(
-                          'p-0 m-0 h-8 text-xs font-bold text-center'
+                          'm-0 h-8 p-0 text-center text-xs font-bold'
                         )}
-                        style={{ width: `${header.getSize()}px` }}>
+                        style={{ width: `${header.getSize()}px` }}
+                      >
                         {header.isPlaceholder
                           ? null
                           : flexRender(
@@ -279,12 +285,14 @@ const Quick2dDetailsTable = ({ q2dData }: Quick2dDetailsTableProps) => {
                 table.getRowModel().rows.map((row) => (
                   <TableRow
                     key={row.id}
-                    data-state={row.getIsSelected() && 'selected'}>
+                    data-state={row.getIsSelected() && 'selected'}
+                  >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell
                         key={cell.id}
-                        className={cn('p-0 m-0')}
-                        style={{ width: `${cell.column.getSize()}px` }}>
+                        className={cn('m-0 p-0')}
+                        style={{ width: `${cell.column.getSize()}px` }}
+                      >
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()
@@ -298,13 +306,14 @@ const Quick2dDetailsTable = ({ q2dData }: Quick2dDetailsTableProps) => {
                 <TableRow>
                   <TableCell
                     colSpan={columns.length}
-                    className='h-24 text-center'>
+                    className='h-24 text-center'
+                  >
                     No Results
                   </TableCell>
                 </TableRow>
               )}
             </TableBody>
-            <TableFooter className='bg-transparent '>
+            <TableFooter className='bg-transparent'>
               {table.getFooterGroups().map((footerGroup) => (
                 <TableRow key={footerGroup.id}>
                   {footerGroup.headers.map((header) => (
@@ -322,78 +331,84 @@ const Quick2dDetailsTable = ({ q2dData }: Quick2dDetailsTableProps) => {
             </TableFooter>
           </Table>
           <div className='h-2' />
-          <div className='flex justify-center items-center gap-2 bg-orange-100'>
-            <div className='text-xs '>
+          <div className='flex items-center justify-center gap-2 bg-orange-100'>
+            <div className='text-xs'>
               tampil{' '}
               <span
                 className={cn(
-                  'h-3 bg-emerald-50 rounded-sm px-1 font-semibold',
+                  'h-3 rounded-sm bg-emerald-50 px-1 font-semibold',
                   poppins.className
-                )}>
+                )}
+              >
                 {table.getRowModel().rows.length.toLocaleString()}{' '}
               </span>{' '}
               dari
               <span
                 className={cn(
-                  'h-3 bg-emerald-50 rounded-sm px-1 font-semibold',
+                  'h-3 rounded-sm bg-emerald-50 px-1 font-semibold',
                   poppins.className
-                )}>
+                )}
+              >
                 {table.getRowCount().toLocaleString()}
               </span>{' '}
               baris
             </div>
-            <div className='flex  '>
+            <div className='flex'>
               <Button
                 variant='ghost'
                 type='button'
                 className={cn(
-                  ' border rounded-md h-5 w-7 p-0 m-auto flex items-center justify-center bg-orange-500 hover:bg-orange-500/70',
+                  'm-auto flex h-5 w-7 items-center justify-center rounded-md border bg-orange-500 p-0 hover:bg-orange-500/70',
                   !table.getCanPreviousPage()
-                    ? 'bg-orange-400/70 cursor-not-allowed'
+                    ? 'cursor-not-allowed bg-orange-400/70'
                     : ''
                 )}
                 onClick={() => table.firstPage()}
-                disabled={!table.getCanPreviousPage()}>
-                <ChevronsLeft size={14} className='  text-white svg ' />
+                disabled={!table.getCanPreviousPage()}
+              >
+                <ChevronsLeft size={14} className='svg text-white' />
               </Button>
               <Button
                 variant='ghost'
                 type='button'
                 className={cn(
-                  'border rounded-md h-5 w-7 p-0 m-auto flex items-center justify-center bg-orange-500 hover:bg-orange-500/70',
+                  'm-auto flex h-5 w-7 items-center justify-center rounded-md border bg-orange-500 p-0 hover:bg-orange-500/70',
                   !table.getCanPreviousPage()
-                    ? 'bg-orange-400/70 cursor-not-allowed'
+                    ? 'cursor-not-allowed bg-orange-400/70'
                     : ''
                 )}
                 onClick={() => table.previousPage()}
-                disabled={!table.getCanPreviousPage()}>
-                <ChevronLeft size={14} className='  text-white svg ' />
+                disabled={!table.getCanPreviousPage()}
+              >
+                <ChevronLeft size={14} className='svg text-white' />
               </Button>
               <Button
                 variant='ghost'
                 type='button'
                 className={cn(
-                  'border rounded-md h-5 w-7 p-0 m-auto flex items-center justify-center bg-orange-500 hover:bg-orange-500/70',
+                  'm-auto flex h-5 w-7 items-center justify-center rounded-md border bg-orange-500 p-0 hover:bg-orange-500/70',
                   !table.getCanNextPage()
-                    ? 'bg-orange-400/70 cursor-not-allowed'
+                    ? 'cursor-not-allowed bg-orange-400/70'
                     : ''
                 )}
                 onClick={() => table.nextPage()}
-                disabled={!table.getCanNextPage()}>
-                <ChevronRight size={14} className='  text-white svg ' />
+                disabled={!table.getCanNextPage()}
+              >
+                <ChevronRight size={14} className='svg text-white' />
               </Button>
               <Button
                 variant='ghost'
                 type='button'
                 className={cn(
-                  'border rounded-md h-5 w-7 p-0 m-auto flex items-center justify-center bg-orange-500 hover:bg-orange-500/70',
+                  'm-auto flex h-5 w-7 items-center justify-center rounded-md border bg-orange-500 p-0 hover:bg-orange-500/70',
                   !table.getCanNextPage()
-                    ? 'bg-orange-400/70 cursor-not-allowed'
+                    ? 'cursor-not-allowed bg-orange-400/70'
                     : ''
                 )}
                 onClick={() => table.lastPage()}
-                disabled={!table.getCanNextPage()}>
-                <ChevronsRight size={14} className='  text-white svg ' />
+                disabled={!table.getCanNextPage()}
+              >
+                <ChevronsRight size={14} className='svg text-white' />
               </Button>
             </div>
             <span className='flex items-center gap-1 text-xs'>
@@ -422,7 +437,8 @@ const Quick2dDetailsTable = ({ q2dData }: Quick2dDetailsTableProps) => {
               onChange={(e) => {
                 table.setPageSize(Number(e.target.value));
               }}
-              className='text-xs bg-amber-100'>
+              className='bg-amber-100 text-xs'
+            >
               {[10, 20, 30, 40, 50].map((pageSize) => (
                 <option key={pageSize} value={pageSize}>
                   Show {pageSize}
@@ -466,7 +482,7 @@ function Filter({
           ])
         }
         placeholder={`Min`}
-        className='w-24 border shadow rounded'
+        className='w-24 rounded border shadow'
       />
       <input
         type='number'
@@ -478,12 +494,12 @@ function Filter({
           ])
         }
         placeholder={`Max`}
-        className='w-24 border shadow rounded'
+        className='w-24 rounded border shadow'
       />
     </div>
   ) : (
     <input
-      className='w-36 border shadow rounded'
+      className='w-36 rounded border shadow'
       onChange={(e) => column.setFilterValue(e.target.value)}
       onClick={(e) => e.stopPropagation()}
       placeholder={`Search...`}

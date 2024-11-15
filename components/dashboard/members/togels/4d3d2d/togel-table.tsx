@@ -1,5 +1,9 @@
 'use client';
 
+import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
+
+import { createTogel } from '@/actions/togel-actions';
+import { Button } from '@/components/ui';
 import {
   Table,
   TableBody,
@@ -9,27 +13,21 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-
+import { useZodForm } from '@/hooks/use-zod-form';
+import { cn, handleFormServerErrors, safeParseFloat } from '@/lib/utils';
 import { sin4dSchema, Sin4dSchema } from '@/schemas/togel-schema';
 import {
   flexRender,
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
-import { useFieldArray, useWatch } from 'react-hook-form';
-
-import { createTogel } from '@/actions/togel-actions';
-import { Button } from '@/components/ui';
-import { cn, handleFormServerErrors, safeParseFloat } from '@/lib/utils';
-
-import { useZodForm } from '@/hooks/use-zod-form';
-
 import {
   ChevronDownSquareIcon,
   ChevronUpSquareIcon,
   PlusCircle,
 } from 'lucide-react';
+import { useFieldArray, useWatch } from 'react-hook-form';
+
 import { useTogel4dColumns } from './togel-4d-columns';
 import Togel4dRules from './togel-4d-rules';
 
@@ -411,7 +409,8 @@ const TogelTable = ({ slug }: TogelTableProps) => {
                     return (
                       <TableHead
                         key={header.id}
-                        className='p-0 m-0 h-8 text-xs font-bold text-center'>
+                        className='p-0 m-0 h-8 text-xs font-bold text-center'
+                      >
                         {header.isPlaceholder
                           ? null
                           : flexRender(
@@ -429,7 +428,8 @@ const TogelTable = ({ slug }: TogelTableProps) => {
                 table.getRowModel().rows.map((row) => (
                   <TableRow
                     key={row.id}
-                    data-state={row.getIsSelected() && 'selected'}>
+                    data-state={row.getIsSelected() && 'selected'}
+                  >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell key={cell.id} className='p-0 m-0'>
                         {flexRender(
@@ -447,7 +447,8 @@ const TogelTable = ({ slug }: TogelTableProps) => {
                 <TableRow>
                   <TableCell
                     colSpan={togel4dColumns.length}
-                    className='h-24 text-center'>
+                    className='h-24 text-center'
+                  >
                     No Results
                   </TableCell>
                 </TableRow>
@@ -487,7 +488,8 @@ const TogelTable = ({ slug }: TogelTableProps) => {
               size='sm'
               variant='primary'
               className='text-shadow-lg text-xs text-white font-semibold shadow-lg hover:bg-blue-300 hover:text-gray-600 hover:font-semibold px-2 py-1'
-              onClick={handleAddColumn}>
+              onClick={handleAddColumn}
+            >
               <PlusCircle
                 size={20}
                 className='svg text-sky-50 pr-1 hover:text-sky-500/70'
@@ -499,7 +501,8 @@ const TogelTable = ({ slug }: TogelTableProps) => {
                 size='sm'
                 type='submit'
                 disabled={!isValid}
-                className='py-0 w-28'>
+                className='py-0 w-28'
+              >
                 Submit
               </Button>
             </div>
@@ -511,7 +514,8 @@ const TogelTable = ({ slug }: TogelTableProps) => {
             size='sm'
             type='button'
             onClick={() => setShowDescription(!showDescription)}
-            className='w-full flex justify-between hover:bg-emerald-100/70 '>
+            className='w-full flex justify-between hover:bg-emerald-100/70 '
+          >
             <div>Keterangan:</div>
             <div>
               {showDescription ? (

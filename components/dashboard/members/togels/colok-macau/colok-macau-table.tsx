@@ -1,5 +1,7 @@
 'use client';
 
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
+
 import {
   Button,
   Table,
@@ -18,11 +20,11 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
-import { useColokMacauColumns } from './colok-macau-columns';
+import { ChevronDownSquareIcon, ChevronUpSquareIcon } from 'lucide-react';
 import { useWatch } from 'react-hook-form';
+
+import { useColokMacauColumns } from './colok-macau-columns';
 import ColokMacauRules from './colok-macau-rules';
-import { ChevronUpSquareIcon, ChevronDownSquareIcon } from 'lucide-react';
 
 type ColokMacauTableProps = {};
 
@@ -190,7 +192,8 @@ const ColokMacauTable = () => {
                   return (
                     <TableHead
                       key={header.id}
-                      className='p-0 m-0 h-8 text-xs font-bold text-center'>
+                      className='p-0 m-0 h-8 text-xs font-bold text-center'
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -208,7 +211,8 @@ const ColokMacauTable = () => {
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
-                  data-state={row.getIsSelected() && 'selected'}>
+                  data-state={row.getIsSelected() && 'selected'}
+                >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id} className='p-0 m-0'>
                       {flexRender(
@@ -226,7 +230,8 @@ const ColokMacauTable = () => {
               <TableRow>
                 <TableCell
                   colSpan={cmColumns.length}
-                  className='h-24 text-center'>
+                  className='h-24 text-center'
+                >
                   No Results
                 </TableCell>
               </TableRow>
@@ -254,19 +259,21 @@ const ColokMacauTable = () => {
             size='sm'
             type='submit'
             disabled={!isValid}
-            className='py-0 w-28'>
+            className='py-0 w-28'
+          >
             Submit
           </Button>
         </div>
       </form>
 
-      <div className={cn('w-116 flex flex-col')}>
+      <div className={cn('w-115 flex flex-col')}>
         <Button
           variant='ghost'
           size='sm'
           type='button'
           onClick={() => setShowDescription(!showDescription)}
-          className='w-full flex justify-between hover:bg-emerald-100/70 '>
+          className='w-full flex justify-between hover:bg-emerald-100/70 '
+        >
           <div>Keterangan:</div>
           <div>
             {showDescription ? (

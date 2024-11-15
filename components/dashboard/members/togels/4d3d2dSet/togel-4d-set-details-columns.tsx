@@ -1,11 +1,12 @@
 'use client';
 
+import { ChangeEvent, useCallback, useEffect, useMemo } from 'react';
+
 import { Form4dSetProps } from '@/components/dashboard/members/togels/togel-4d-set';
 import { Button, InputCustom } from '@/components/ui';
 import { cn, oldStandardTT, poppins, rp, safeParseFloat } from '@/lib/utils';
 import { Trash2Icon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { ChangeEvent, useCallback, useEffect, useMemo } from 'react';
 import {
   Control,
   FieldArrayWithId,
@@ -16,7 +17,6 @@ import {
   UseFormWatch,
   useWatch,
 } from 'react-hook-form';
-
 import { FaRupiahSign } from 'react-icons/fa6';
 
 export const useTogel4dSetDetailsColumns = (
@@ -76,7 +76,8 @@ export const useTogel4dSetDetailsColumns = (
               className={cn(
                 'p-0 m-0 text-zinc-300 font-semibold',
                 poppins.className
-              )}>
+              )}
+            >
               {row.index + 1}.
             </span>
           </div>
@@ -125,7 +126,8 @@ export const useTogel4dSetDetailsColumns = (
             className={cn(
               'text-green-700 h-7 flex items-center justify-center border-2 border-emerald-600 font-semibold text-xs w-full bg-emerald-400/40 text-center rounded-lg text-shadow',
               poppins.className
-            )}>
+            )}
+          >
             <div className='text-emerald-800 text-xs px-1'>
               {row.original.game}
             </div>
@@ -159,7 +161,8 @@ export const useTogel4dSetDetailsColumns = (
             <div
               className={cn(
                 'w-full flex justify-center text-zinc-700 font-semibold'
-              )}>
+              )}
+            >
               bet
             </div>
 
@@ -174,7 +177,8 @@ export const useTogel4dSetDetailsColumns = (
                 className={cn(
                   'text-left px-0 text-zinc-500 font-semibold tracking-wider text-xs',
                   poppins.className
-                )}>
+                )}
+              >
                 {rp.format(row.original.wager)}
               </span>
             </div>
@@ -197,7 +201,8 @@ export const useTogel4dSetDetailsColumns = (
               className={cn(
                 'h-7 text-zinc-700 flex items-center border border-amber-500 gap-x-0.5 text-xs shadow-inner font-semibold w-29 bg-amber-200/40 text-center rounded-md',
                 poppins.className
-              )}>
+              )}
+            >
               <div className='w-29 flex items-center text-zinc-400 gap-1  justify-between h-7 rounded-lg shadow-inner '>
                 <div className='flex items-center '>
                   <FaRupiahSign size={10} className='text-zinc-400 mx-1' />
@@ -205,8 +210,8 @@ export const useTogel4dSetDetailsColumns = (
                     {row.original.dis === '66%'
                       ? rp.format(Number(dis4d))
                       : row.original.dis === '59%'
-                      ? rp.format(Number(dis3d))
-                      : rp.format(Number(dis2d))}
+                        ? rp.format(Number(dis3d))
+                        : rp.format(Number(dis2d))}
                   </div>
                 </div>
                 <div className='text-nowrap flex text-[10px] text-teal-600  pr-1'>
@@ -222,7 +227,8 @@ export const useTogel4dSetDetailsColumns = (
           <div
             className={cn(
               'text-xs w-29 font-semibold mx-auto text-center pt-2'
-            )}>
+            )}
+          >
             Total{' '}
           </div>
         ),
@@ -243,13 +249,15 @@ export const useTogel4dSetDetailsColumns = (
                 className={cn(
                   'flex gap-1 items-center bg-zinc-300/40 h-7 text-center shadow-inner rounded-md',
                   poppins.className
-                )}>
+                )}
+              >
                 <FaRupiahSign size={12} className='text-zinc-400 ml-1' />
                 <span
                   className={cn(
                     'text-left px-0 text-gray-500 tracking-wider text-xs',
                     poppins.className
-                  )}>
+                  )}
+                >
                   {row.original.net === '' ? '' : rp.format(Number(net))}
                 </span>
                 {/* <pre>{JSON.stringify(row.original.net, null, 2)}</pre> */}
@@ -273,7 +281,8 @@ export const useTogel4dSetDetailsColumns = (
                 className={cn(
                   'w-29 h-7 flex items-center bg-gray-500 gap-1 shadow-inner text-center font-semibold text-xs border border-slate-400 rounded',
                   poppins.className
-                )}>
+                )}
+              >
                 <FaRupiahSign size={12} className='text-zinc-400 ml-1 svg' />
                 <span className='text-white text-shadow'>
                   {rp.format(formattedTotal)}

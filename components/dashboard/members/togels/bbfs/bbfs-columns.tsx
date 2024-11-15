@@ -75,7 +75,7 @@ export const useBbfsColumns = (
       {
         accessorKey: 'index',
         header: ({}) => (
-          <div className='w-7 text-zinc-700 h-full font-semibold flex items-center justify-center'>
+          <div className='flex h-full w-7 items-center justify-center font-semibold text-zinc-700'>
             no.
           </div>
         ),
@@ -83,9 +83,10 @@ export const useBbfsColumns = (
           <div className='flex flex-row justify-center p-0'>
             <span
               className={cn(
-                'p-0 m-0 text-zinc-300 font-semibold',
+                'm-0 p-0 font-semibold text-zinc-300',
                 poppins.className
-              )}>
+              )}
+            >
               {row.index + 1}.
             </span>
           </div>
@@ -96,41 +97,43 @@ export const useBbfsColumns = (
         header: ({ column }: any) => (
           <div
             className={cn(
-              'h-7 text-base flex justify-end items-center pr-3 w-32 font-normal text-shadow   [&>*:nth-child(odd)]:bg-orange-50',
+              'text-shadow flex h-7 w-32 items-center justify-end pr-3 text-base font-normal [&>*:nth-child(odd)]:bg-orange-50',
               poppins.className
-            )}>
-            <span className='text-zinc-500 text-xs w-7 h-5 flex items-end justify-center bg-stone-100 rounded-sm shadow-md border border-stone-100'>
+            )}
+          >
+            <span className='flex h-5 w-7 items-end justify-center rounded-sm border border-stone-100 bg-stone-100 text-xs text-zinc-500 shadow-md'>
               d1
             </span>
-            <span className='text-zinc-500 text-xs w-7 h-5 flex items-end justify-center bg-stone-100 rounded-sm shadow-md border border-stone-100'>
+            <span className='flex h-5 w-7 items-end justify-center rounded-sm border border-stone-100 bg-stone-100 text-xs text-zinc-500 shadow-md'>
               d2
             </span>
-            <span className='text-zinc-500 text-xs w-7 h-5 flex items-end justify-center bg-stone-100 rounded-sm shadow-md border border-stone-100'>
+            <span className='flex h-5 w-7 items-end justify-center rounded-sm border border-stone-100 bg-stone-100 text-xs text-zinc-500 shadow-md'>
               d3
             </span>
-            <span className='text-zinc-500 text-xs w-7 h-5 flex items-end justify-center bg-stone-100 rounded-sm shadow-md border border-stone-100'>
+            <span className='flex h-5 w-7 items-end justify-center rounded-sm border border-stone-100 bg-stone-100 text-xs text-zinc-500 shadow-md'>
               d4
             </span>
           </div>
         ),
         cell: ({ row }: any) => (
-          <div className='text-zinc-700 px-0 font-semibold flex justify-center w-full'>
+          <div className='flex w-full justify-center px-0 font-semibold text-zinc-700'>
             <div className='w-32'>
               <div
                 className={cn(
-                  'h-7 text-base flex justify-end items-center pr-3 w-32 font-extrabold text-shadow   [&>*:nth-child(odd)]:bg-orange-50/50',
+                  'text-shadow flex h-7 w-32 items-center justify-end pr-3 text-base font-extrabold [&>*:nth-child(odd)]:bg-orange-50/50',
                   oldStandardTT.className
-                )}>
-                <span className=' w-7 h-7 border border-input bg-background rounded-md flex justify-center  items-center '>
+                )}
+              >
+                <span className='flex h-7 w-7 items-center justify-center rounded-md border border-input bg-background'>
                   {row.original.d1}
                 </span>
-                <span className=' w-7 h-7 border border-input bg-background rounded-md flex justify-center  items-center '>
+                <span className='flex h-7 w-7 items-center justify-center rounded-md border border-input bg-background'>
                   {row.original.d2}
                 </span>
-                <span className=' w-7 h-7 border border-input bg-background rounded-md flex justify-center  items-center '>
+                <span className='flex h-7 w-7 items-center justify-center rounded-md border border-input bg-background'>
                   {row.original.d3}
                 </span>
-                <span className=' w-7 h-7 border border-input bg-background rounded-md flex justify-center  items-center '>
+                <span className='flex h-7 w-7 items-center justify-center rounded-md border border-input bg-background'>
                   {row.original.d4}
                 </span>
                 {/* <pre>{JSON.stringify(row.original, null, 2)}</pre> */}
@@ -141,16 +144,15 @@ export const useBbfsColumns = (
       },
       {
         accessorKey: 'game',
-        header: ({}) => (
-          <div className='text-zinc-700 font-semibold '>game</div>
-        ),
+        header: ({}) => <div className='font-semibold text-zinc-700'>game</div>,
         cell: ({ row }: any) => (
           <div
             className={cn(
-              'text-green-700 h-7 flex items-center justify-center border-2 border-emerald-600 font-semibold text-xs w-full bg-emerald-400/40 text-center rounded-lg text-shadow',
+              'text-shadow flex h-7 w-full items-center justify-center rounded-lg border-2 border-emerald-600 bg-emerald-400/40 text-center text-xs font-semibold text-green-700',
               poppins.className
-            )}>
-            <div className='text-emerald-800 text-xs px-1'>
+            )}
+          >
+            <div className='px-1 text-xs text-emerald-800'>
               {row.original.game}
             </div>
           </div>
@@ -159,14 +161,15 @@ export const useBbfsColumns = (
       {
         accessorKey: 'wager',
         header: () => (
-          <div className={cn('text-zinc-700 font-semibold')}>bet</div>
+          <div className={cn('font-semibold text-zinc-700')}>bet</div>
         ),
         cell: ({ row }: any) => (
           <div
             className={cn(
-              'text-zinc-700 border border-zinc-400 rounded-md h-7 px-0 font-semibold w-full',
+              'h-7 w-full rounded-md border border-zinc-400 px-0 font-semibold text-zinc-700',
               poppins.className
-            )}>
+            )}
+          >
             {/* <pre>{JSON.stringify(newBBwagerValue[0].bet2d, null, 2)}</pre> */}
             {/* {bbData?.map((b: any, i: number) =>
               b.bet4d || b.bet3d || b.bet2d ? (
@@ -198,15 +201,17 @@ export const useBbfsColumns = (
 
             <div
               className={cn(
-                'flex gap-1 items-center bg-stone-300/40 h-7 text-center shadow-inner rounded-md',
+                'flex h-7 items-center gap-1 rounded-md bg-stone-300/40 text-center shadow-inner',
                 poppins.className
-              )}>
-              <FaRupiahSign size={10} className='text-zinc-400 ml-1' />
+              )}
+            >
+              <FaRupiahSign size={10} className='ml-1 text-zinc-400' />
               <span
                 className={cn(
-                  'text-left px-0 text-gray-500 tracking-wider text-xs',
+                  'px-0 text-left text-xs tracking-wider text-gray-500',
                   poppins.className
-                )}>
+                )}
+              >
                 {rp.format(row.original.wager)}
               </span>
             </div>
@@ -216,20 +221,21 @@ export const useBbfsColumns = (
       {
         accessorKey: 'dis',
         header: () => (
-          <div className='text-zinc-700 font-semibold w-28'>dis(%)</div>
+          <div className='w-28 font-semibold text-zinc-700'>dis(%)</div>
         ),
         cell: ({ row }: any) => {
           return (
             <div
               className={cn(
-                'h-7 text-zinc-700 flex items-center justify-between border border-amber-500 gap-x-0.5 text-xs shadow-inner font-semibold w-28 bg-amber-200/40 text-center rounded-md',
+                'flex h-7 w-28 items-center justify-between gap-x-0.5 rounded-md border border-amber-500 bg-amber-200/40 text-center text-xs font-semibold text-zinc-700 shadow-inner',
                 poppins.className
-              )}>
-              <span className='flex items-center text-zinc-400 '>
-                <FaRupiahSign size={10} className='text-zinc-400 mx-1 ' />
+              )}
+            >
+              <span className='flex items-center text-zinc-400'>
+                <FaRupiahSign size={10} className='mx-1 text-zinc-400' />
                 {rp.format(row.original.dis)}
               </span>
-              <div className='flex items-center text-[10px] text-teal-600 pr-1  '>
+              <div className='flex items-center pr-1 text-[10px] text-teal-600'>
                 {row.original.game === '4d' ? (
                   <>
                     (66
@@ -254,9 +260,10 @@ export const useBbfsColumns = (
         footer: () => (
           <div
             className={cn(
-              'text-xs w-28 font-semibold mx-auto text-center pt-2',
+              'mx-auto w-28 pt-2 text-center text-xs font-semibold',
               Number(re2) + Number(re3) + Number(re4) === 0 ? 'hidden' : ''
-            )}>
+            )}
+          >
             total{' '}
           </div>
         ),
@@ -265,24 +272,26 @@ export const useBbfsColumns = (
       {
         accessorKey: 'net',
         header: () => (
-          <div className='text-zinc-700 font-semibold w-28  h-full flex items-center justify-center'>
+          <div className='flex h-full w-28 items-center justify-center font-semibold text-zinc-700'>
             net
           </div>
         ),
         cell: ({ row }: any) => {
           return (
-            <div className='text-zinc-700 border border-zinc-400 rounded-md h-7 px-0 font-semibold w-28'>
+            <div className='h-7 w-28 rounded-md border border-zinc-400 px-0 font-semibold text-zinc-700'>
               <div
                 className={cn(
-                  'flex gap-1 items-center bg-zinc-300/40 h-7 text-center shadow-inner rounded-md',
+                  'flex h-7 items-center gap-1 rounded-md bg-zinc-300/40 text-center shadow-inner',
                   poppins.className
-                )}>
-                <FaRupiahSign size={10} className='text-zinc-400 ml-1 ' />
+                )}
+              >
+                <FaRupiahSign size={10} className='ml-1 text-zinc-400' />
                 <span
                   className={cn(
-                    'text-left px-0 text-gray-500 tracking-wider text-xs',
+                    'px-0 text-left text-xs tracking-wider text-gray-500',
                     poppins.className
-                  )}>
+                  )}
+                >
                   {rp.format(row.original.net)}
                 </span>
               </div>
@@ -300,13 +309,14 @@ export const useBbfsColumns = (
             <div className='flex justify-center py-2'>
               <div
                 className={cn(
-                  'w-28 h-7 flex items-center bg-gray-500 gap-1 shadow-inner text-center font-semibold text-xs border border-slate-400 rounded-md',
+                  'flex h-7 w-28 items-center gap-1 rounded-md border border-slate-400 bg-gray-500 text-center text-xs font-semibold shadow-inner',
                   Number(re2) + Number(re3) + Number(re4) === 0 ? 'hidden' : ''
-                )}>
+                )}
+              >
                 <FaRupiahSign
                   size={10}
                   className={cn(
-                    'text-zinc-300 ml-1 svg',
+                    'svg ml-1 text-zinc-300',
                     Number(re2) + Number(re3) + Number(re4) === 0
                       ? 'hidden'
                       : ''
@@ -324,7 +334,7 @@ export const useBbfsColumns = (
                     ).toFixed()}
                 </div>
               ))} */}
-                <span className='text-white text-shadow'>
+                <span className='text-shadow text-white'>
                   {rp.format(total.toFixed())}
                   {/* <pre>{JSON.stringify(row.original, null, 2)}</pre> */}
                 </span>
@@ -342,7 +352,7 @@ export const useBbfsColumns = (
               <Trash2Icon
                 size={20}
                 onClick={() => remove(row.index)}
-                className='svg text-rose-600 hover:-translate-y-1 mx-auto  hover:scale-150 hover:svg duration-300  cursor-pointer pl-1'
+                className='svg hover:svg mx-auto cursor-pointer pl-1 text-rose-600 duration-300 hover:-translate-y-1 hover:scale-150'
               />
             )}
           </div>

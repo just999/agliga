@@ -85,25 +85,27 @@ export const FiftyFiftyComboColumns = (
     return (
       <div
         className={cn(
-          'flex w-24 gap-1 border border-gray-300 h-7 items-center justify-between space-x-2 px-0 py-0 rounded-md hover:bg-amber-200 hover:text-gray-500 relative'
-        )}>
+          'relative flex h-7 w-24 items-center justify-between gap-1 space-x-2 rounded-md border border-gray-300 px-0 py-0 hover:bg-amber-200 hover:text-gray-500'
+        )}
+      >
         <select
           {...register(`ffC.${row.index}.${type}`)}
           className={cn(
-            'w-24 h-7 text-xs rounded-md shadow-lg cursor-pointer font-semibold px-2  appearance-none text-zinc-400',
+            'h-7 w-24 cursor-pointer appearance-none rounded-md px-2 text-xs font-semibold text-zinc-400 shadow-lg',
             getValues(`ffC.${row.index}.${type}`) === 'stereo'
-              ? 'bg-sky-100 text-sky-700 border border-sky-600'
+              ? 'border border-sky-600 bg-sky-100 text-sky-700'
               : getValues(`ffC.${row.index}.${type}`) === 'mono'
-              ? 'bg-emerald-100 text-emerald-700 border border-emerald-600'
-              : getValues(`ffC.${row.index}.${type}`) === 'kempis'
-              ? 'bg-indigo-100 text-indigo-700 border border-indigo-600'
-              : getValues(`ffC.${row.index}.${type}`) === 'kembar'
-              ? 'bg-rose-100 text-rose-700 border border-rose-600'
-              : getValues(`ffC.${row.index}.${type}`) === 'kembang'
-              ? 'bg-purple-100 text-purple-700 border border-purple-600'
-              : 'bg-transparent',
+                ? 'border border-emerald-600 bg-emerald-100 text-emerald-700'
+                : getValues(`ffC.${row.index}.${type}`) === 'kempis'
+                  ? 'border border-indigo-600 bg-indigo-100 text-indigo-700'
+                  : getValues(`ffC.${row.index}.${type}`) === 'kembar'
+                    ? 'border border-rose-600 bg-rose-100 text-rose-700'
+                    : getValues(`ffC.${row.index}.${type}`) === 'kembang'
+                      ? 'border border-purple-600 bg-purple-100 text-purple-700'
+                      : 'bg-transparent',
             poppins.className
-          )}>
+          )}
+        >
           {type === 'monoStereo'
             ? values.map((val, i) => (
                 <option value={val} key={val}>
@@ -119,9 +121,9 @@ export const FiftyFiftyComboColumns = (
         <ChevronDownCircle
           size={14}
           className={cn(
-            'absolute right-1 text-zinc-600 svg hover:text-gray-500 ',
+            'svg absolute right-1 text-zinc-600 hover:text-gray-500',
             getValues(`ffC.${row.index}.${type}`) !== values[0] &&
-              'text-zinc-600 svg'
+              'svg text-zinc-600'
           )}
         />
       </div>
@@ -133,22 +135,24 @@ export const FiftyFiftyComboColumns = (
     const labels =
       type === 'bigSmall' ? ['Besar', 'Kecil'] : ['Ganjil', 'Genap'];
     return (
-      <div className='flex flex-col items-start w-full'>
+      <div className='flex w-full flex-col items-start'>
         <span className='flex gap-0'>
           {values.map((value, index) => (
             <div
               key={value}
               className={cn(
-                'flex w-20 items-center space-x-2 px-2 py-0 rounded-md hover:bg-slate-200 cursor-pointer',
+                'flex w-20 cursor-pointer items-center space-x-2 rounded-md px-2 py-0 hover:bg-slate-200',
                 getValues(`ffC.${row.index}.${type}`) === value
-                  ? 'bg-cyan-500 w-20 h-7 text-white'
+                  ? 'h-7 w-20 bg-cyan-500 text-white'
                   : 'text-muted-foreground'
-              )}>
+              )}
+            >
               <Label
                 className={cn(
-                  'text-sm gap-1 w-20 h-7 flex items-center justify-center font-semibold px-1 cursor-pointer',
+                  'flex h-7 w-20 cursor-pointer items-center justify-center gap-1 px-1 text-sm font-semibold',
                   poppins.className
-                )}>
+                )}
+              >
                 <input
                   {...register(`ffC.${row.index}.${type}`)}
                   type='radio'
@@ -169,7 +173,7 @@ export const FiftyFiftyComboColumns = (
       {
         accessorKey: 'index',
         header: ({}) => (
-          <div className='w-7 text-zinc-700 h-full font-semibold flex items-center justify-center'>
+          <div className='flex h-full w-7 items-center justify-center font-semibold text-zinc-700'>
             no.
           </div>
         ),
@@ -177,9 +181,10 @@ export const FiftyFiftyComboColumns = (
           <div className='flex flex-row justify-center p-0'>
             <span
               className={cn(
-                'p-0 m-0 text-zinc-300 font-semibold',
+                'm-0 p-0 font-semibold text-zinc-300',
                 poppins.className
-              )}>
+              )}
+            >
               {row.index + 1}.
             </span>
           </div>
@@ -189,7 +194,7 @@ export const FiftyFiftyComboColumns = (
       {
         id: 'position',
         header: () => (
-          <div className='w-16 p-0 m-0 flex justify-center text-zinc-700 font-semibold'>
+          <div className='m-0 flex w-16 justify-center p-0 font-semibold text-zinc-700'>
             position
           </div>
         ),
@@ -209,14 +214,15 @@ export const FiftyFiftyComboColumns = (
           return (
             <div
               className={cn(
-                'w-20  text-xs shadow-inner font-semibold text-shadow text-yellow-100 h-7 gap-.5 flex justify-center  items-center rounded-lg p-0',
+                'text-shadow gap-.5 flex h-7 w-20 items-center justify-center rounded-lg p-0 text-xs font-semibold text-yellow-100 shadow-inner',
                 row.original.position === 'belakang'
-                  ? 'bg-amber-500 border border-amber-500'
+                  ? 'border border-amber-500 bg-amber-500'
                   : row.original.position === 'tengah'
-                  ? 'bg-lime-500 border border-lime-500'
-                  : 'bg-green-500 border border-emerald-500',
+                    ? 'border border-lime-500 bg-lime-500'
+                    : 'border border-emerald-500 bg-green-500',
                 poppins.className
-              )}>
+              )}
+            >
               <span>{row.original.position}</span>
             </div>
           );
@@ -225,7 +231,7 @@ export const FiftyFiftyComboColumns = (
       {
         id: 'oddEvenBigSmall',
         header: () => (
-          <div className='w-24 p-0 m-0 text-zinc-700 font-semibold'>
+          <div className='m-0 w-24 p-0 font-semibold text-zinc-700'>
             genap/ganjil-besar/kecil
           </div>
         ),
@@ -258,7 +264,7 @@ export const FiftyFiftyComboColumns = (
               radioGroupItems = null;
           }
           return (
-            <div className='w-24 h-7 gap-.5 flex justify-center items-center p-0'>
+            <div className='gap-.5 flex h-7 w-24 items-center justify-center p-0'>
               {radioGroupItems}
             </div>
           );
@@ -267,23 +273,23 @@ export const FiftyFiftyComboColumns = (
       {
         accessorKey: 'wager',
         header: ({ column }: any) => (
-          <div className='flex flex-col gap-1 items-center '>bet</div>
+          <div className='flex flex-col items-center gap-1'>bet</div>
         ),
         cell: ({ row }: any) => {
           return (
-            <div className='relative  flex justify-center text-zinc-700 border border-zinc-400 rounded-md h-7 px-0 font-semibold w-full '>
+            <div className='relative flex h-7 w-full justify-center rounded-md px-0 font-semibold text-zinc-700'>
               <InputCustom
                 {...register(`ffC.${row.index}.wager`)}
                 type='tel'
                 placeholder='bet'
                 className={cn(
-                  'w-28 h-7 text-xs font-semibold pl-5 text-zinc-600 border border-zinc-400 placeholder:text-slate-300',
+                  'h-7 w-28 border border-zinc-400 pl-5 text-xs font-semibold text-zinc-600 placeholder:text-slate-300',
                   poppins.className
                 )}
                 suffix={
                   <FaRupiahSign
                     size={12}
-                    className='text-zinc-300 absolute left-1'
+                    className='absolute left-1 text-zinc-300'
                   />
                 }
               />
@@ -295,7 +301,7 @@ export const FiftyFiftyComboColumns = (
       {
         accessorKey: 'dis',
         header: ({ column }: any) => (
-          <div className='text-zinc-700 font-semibold w-28  h-full flex items-center justify-center'>
+          <div className='flex h-full w-28 items-center justify-center font-semibold text-zinc-700'>
             <div className='flex items-center text-xs font-semibold'>
               kei (2 <Percent size={10} /> )
             </div>
@@ -308,15 +314,16 @@ export const FiftyFiftyComboColumns = (
           return (
             <div
               className={cn(
-                'h-7 text-zinc-700 mx-auto flex items-center justify-between border border-amber-500 gap-x-0.5 text-xs shadow-inner font-semibold w-28 bg-amber-200/40 text-center rounded-md',
+                'mx-auto flex h-7 w-28 items-center justify-between gap-x-0.5 rounded-md border border-amber-500 bg-amber-200/40 text-center text-xs font-semibold text-zinc-700 shadow-inner',
                 poppins.className
-              )}>
+              )}
+            >
               <span className='flex items-center text-zinc-400'>
-                <FaRupiahSign size={12} className='text-zinc-300 mx-1' />
+                <FaRupiahSign size={12} className='mx-1 text-zinc-300' />
                 {discount === '' ? '' : rp.format(Number(discount))}
               </span>
               {discount && (
-                <div className='flex items-center text-[10px] text-rose-500 pr-1  '>
+                <div className='flex items-center pr-1 text-[10px] text-rose-500'>
                   (-2 <Percent size={10} className='svg' />)
                   {/* <pre>{JSON.stringify(row.original.dis, null, 2)}</pre> */}
                 </div>
@@ -325,7 +332,7 @@ export const FiftyFiftyComboColumns = (
           );
         },
         footer: () => (
-          <div className='text-xs w-full font-semibold mx-auto text-center'>
+          <div className='mx-auto w-full text-center text-xs font-semibold'>
             Total
           </div>
         ),
@@ -333,7 +340,7 @@ export const FiftyFiftyComboColumns = (
       {
         accessorKey: 'net',
         header: ({ column }: any) => (
-          <div className='text-zinc-700 font-semibold w-28  h-full flex items-center justify-center'>
+          <div className='flex h-full w-28 items-center justify-center font-semibold text-zinc-700'>
             net
           </div>
         ),
@@ -344,13 +351,14 @@ export const FiftyFiftyComboColumns = (
               ? ''
               : (wager * 1.02).toFixed().toString();
           return (
-            <div className='relative flex justify-center items-center bg-zinc-300/40 text-zinc-700 border border-zinc-200 rounded-md h-7 px-0 font-semibold w-28 mx-auto'>
+            <div className='relative mx-auto flex h-7 w-28 items-center justify-center rounded-md border border-zinc-200 bg-zinc-300/40 px-0 font-semibold text-zinc-700'>
               <div
                 className={cn(
-                  'w-28 h-7 flex items-center gap-1  text-center font-semibold text-xs border border-slate-400 text-zinc-500 rounded',
+                  'flex h-7 w-28 items-center gap-1 rounded border border-slate-400 text-center text-xs font-semibold text-zinc-500',
                   poppins.className
-                )}>
-                <FaRupiahSign size={12} className='text-zinc-300 ml-1' />
+                )}
+              >
+                <FaRupiahSign size={12} className='ml-1 text-zinc-300' />
                 {net === '' ? '' : rp.format(Number(net))}
               </div>
             </div>
@@ -371,11 +379,12 @@ export const FiftyFiftyComboColumns = (
             <div className='flex justify-center py-1'>
               <div
                 className={cn(
-                  'w-28 h-7 flex items-center bg-gray-500 gap-1 shadow-inner text-center font-semibold text-xs border border-slate-400 rounded',
+                  'flex h-7 w-28 items-center gap-1 rounded border border-slate-400 bg-gray-500 text-center text-xs font-semibold shadow-inner',
                   poppins.className
-                )}>
-                <FaRupiahSign size={12} className='text-zinc-400 ml-1 svg' />
-                <span className='text-white text-shadow'>
+                )}
+              >
+                <FaRupiahSign size={12} className='svg ml-1 text-zinc-400' />
+                <span className='text-shadow text-white'>
                   {rp.format(Number(total))}
                 </span>
               </div>

@@ -18,7 +18,8 @@ const Togel4dPage = async ({ params }: Togel4dPageProps) => {
         className={cn(
           'mx-auto text-center font-semibold text-lg',
           oldStandardTT.className
-        )}>
+        )}
+      >
         {capitalizeFirstCharacter(params.slug)} - Pools - 4d 3d 2d
       </div>
       <div className='bg-green-50/50 px-2 py-1 rounded-lg shadow-lg'>

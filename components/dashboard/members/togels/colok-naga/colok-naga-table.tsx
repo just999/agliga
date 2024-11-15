@@ -1,5 +1,7 @@
 'use client';
 
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
+
 import {
   Button,
   Table,
@@ -11,7 +13,7 @@ import {
   TableRow,
 } from '@/components/ui';
 import { useZodForm } from '@/hooks/use-zod-form';
-import { safeParseFloat } from '@/lib/utils';
+import { cn as cnn, safeParseFloat } from '@/lib/utils';
 import {
   ColokNagaTableSchema,
   colokNagaTableSchema,
@@ -21,12 +23,11 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
-import { useColokNagaColumns } from './colok-naga-columns';
+import { ChevronDownSquareIcon, ChevronUpSquareIcon } from 'lucide-react';
 import { useWatch } from 'react-hook-form';
+
+import { useColokNagaColumns } from './colok-naga-columns';
 import ColokNagaRules from './colok-naga-rules';
-import { cn as cnn } from '@/lib/utils';
-import { ChevronUpSquareIcon, ChevronDownSquareIcon } from 'lucide-react';
 
 type ColokNagaTableProps = {};
 
@@ -203,7 +204,8 @@ const ColokNagaTable = () => {
                     return (
                       <TableHead
                         key={header.id}
-                        className='p-0 m-0 h-8 text-xs font-bold text-center'>
+                        className='p-0 m-0 h-8 text-xs font-bold text-center'
+                      >
                         {header.isPlaceholder
                           ? null
                           : flexRender(
@@ -221,7 +223,8 @@ const ColokNagaTable = () => {
                 table.getRowModel().rows.map((row) => (
                   <TableRow
                     key={row.id}
-                    data-state={row.getIsSelected() && 'selected'}>
+                    data-state={row.getIsSelected() && 'selected'}
+                  >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell key={cell.id} className='p-0 m-0'>
                         {flexRender(
@@ -239,7 +242,8 @@ const ColokNagaTable = () => {
                 <TableRow>
                   <TableCell
                     colSpan={cnColumns.length}
-                    className='h-24 text-center'>
+                    className='h-24 text-center'
+                  >
                     No Results
                   </TableCell>
                 </TableRow>
@@ -267,19 +271,21 @@ const ColokNagaTable = () => {
               size='sm'
               type='submit'
               disabled={!isValid}
-              className='py-0 w-28'>
+              className='py-0 w-28'
+            >
               Submit
             </Button>
           </div>
         </div>
 
-        <div className={cnn('w-128 flex flex-col')}>
+        <div className={cnn('w-127 flex flex-col')}>
           <Button
             variant='ghost'
             size='sm'
             type='button'
             onClick={() => setShowDescription(!showDescription)}
-            className='w-full flex justify-between hover:bg-emerald-100/70 '>
+            className='w-full flex justify-between hover:bg-emerald-100/70 '
+          >
             <div>Keterangan:</div>
             <div>
               {showDescription ? (

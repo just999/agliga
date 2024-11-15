@@ -1,29 +1,29 @@
 'use client';
 
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
+
 import {
-  TableHeader,
-  TableRow,
-  TableHead,
+  Button,
+  Table,
   TableBody,
   TableCell,
   TableFooter,
-  Table,
-  Button,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from '@/components/ui';
+import { useZodForm } from '@/hooks/use-zod-form';
+import { cn, safeParseFloat } from '@/lib/utils';
+import { macauBsOeTableSchema } from '@/schemas/togel-schema';
 import {
   flexRender,
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
+import { ChevronDownSquareIcon, ChevronUpSquareIcon } from 'lucide-react';
 
-import { useZodForm } from '@/hooks/use-zod-form';
-import { cn, safeParseFloat } from '@/lib/utils';
-
-import { useState, useRef, useCallback, ChangeEvent, useEffect } from 'react';
 import { useMacauCColumns } from './macau-combo-columns';
-import { macauBsOeTableSchema } from '@/schemas/togel-schema';
 import MacauComboRules from './macau-combo-rules';
-import { ChevronUpSquareIcon, ChevronDownSquareIcon } from 'lucide-react';
 
 type MacauComboTableProps = {};
 
@@ -284,7 +284,8 @@ const MacauComboTable = () => {
                     return (
                       <TableHead
                         key={header.id}
-                        className='p-0 m-0 h-8 text-xs font-bold text-center'>
+                        className='p-0 m-0 h-8 text-xs font-bold text-center'
+                      >
                         {header.isPlaceholder
                           ? null
                           : flexRender(
@@ -302,7 +303,8 @@ const MacauComboTable = () => {
                 table.getRowModel().rows.map((row) => (
                   <TableRow
                     key={row.id}
-                    data-state={row.getIsSelected() && 'selected'}>
+                    data-state={row.getIsSelected() && 'selected'}
+                  >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell key={cell.id} className='p-0 m-0'>
                         {flexRender(
@@ -320,7 +322,8 @@ const MacauComboTable = () => {
                 <TableRow>
                   <TableCell
                     colSpan={macauCColumns.length}
-                    className='h-24 text-center'>
+                    className='h-24 text-center'
+                  >
                     No Results
                   </TableCell>
                 </TableRow>
@@ -348,7 +351,8 @@ const MacauComboTable = () => {
               size='sm'
               type='submit'
               disabled={!isValid}
-              className='py-0 w-24'>
+              className='py-0 w-24'
+            >
               Submit
             </Button>
           </div>
@@ -361,7 +365,8 @@ const MacauComboTable = () => {
             size='sm'
             type='button'
             onClick={() => setShowDescription(!showDescription)}
-            className='w-full flex justify-between hover:bg-emerald-100/70 '>
+            className='w-full flex justify-between hover:bg-emerald-100/70 '
+          >
             <div>Keterangan:</div>
             <div>
               {showDescription ? (

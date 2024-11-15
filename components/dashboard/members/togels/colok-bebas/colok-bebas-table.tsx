@@ -196,6 +196,8 @@
 
 'use client';
 
+import { useCallback, useEffect, useRef, useState } from 'react';
+
 import {
   Button,
   Table,
@@ -207,6 +209,7 @@ import {
   TableRow,
 } from '@/components/ui';
 import { useZodForm } from '@/hooks/use-zod-form';
+import { cn } from '@/lib/utils';
 import {
   colokBebasTableSchema,
   ColokBebasTableSchema,
@@ -216,11 +219,10 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { useColokBebasColumns } from './colok-bebas-columns';
-import { cn } from '@/lib/utils';
-import { ChevronUpSquareIcon, ChevronDownSquareIcon } from 'lucide-react';
+import { ChevronDownSquareIcon, ChevronUpSquareIcon } from 'lucide-react';
+
 import Togel4dRules from '../4d3d2d/togel-4d-rules';
+import { useColokBebasColumns } from './colok-bebas-columns';
 import ColokBebasRules from './colok-bebas-rules';
 
 type ColokBebasTableProps<TData, TValue> = {
@@ -333,7 +335,8 @@ ColokBebasTableProps<TData, TValue>) => {
                 return (
                   <TableHead
                     key={header.id}
-                    className='p-0 m-0 h-8 text-xs font-bold text-center'>
+                    className='p-0 m-0 h-8 text-xs font-bold text-center'
+                  >
                     {header.isPlaceholder
                       ? null
                       : flexRender(
@@ -351,7 +354,8 @@ ColokBebasTableProps<TData, TValue>) => {
             table.getRowModel().rows.map((row) => (
               <TableRow
                 key={row.id}
-                data-state={row.getIsSelected() && 'selected'}>
+                data-state={row.getIsSelected() && 'selected'}
+              >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id} className='p-0 m-0'>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -366,7 +370,8 @@ ColokBebasTableProps<TData, TValue>) => {
             <TableRow>
               <TableCell
                 colSpan={cbColumns.length}
-                className='h-24 text-center'>
+                className='h-24 text-center'
+              >
                 No Results
               </TableCell>
             </TableRow>
@@ -394,18 +399,20 @@ ColokBebasTableProps<TData, TValue>) => {
           size='sm'
           type='submit'
           disabled={!isValid}
-          className='py-0 w-28'>
+          className='py-0 w-32'
+        >
           Submit
         </Button>
       </div>
       {/* <pre>{JSON.stringify(watch(), null, 2)}</pre> */}
-      <div className={cn('w-108 flex flex-col')}>
+      <div className={cn('w-115 flex flex-col')}>
         <Button
           variant='ghost'
           size='sm'
           type='button'
           onClick={() => setShowDescription(!showDescription)}
-          className='w-full flex justify-between hover:bg-emerald-100/70 '>
+          className='w-full flex justify-between hover:bg-emerald-100/70 '
+        >
           <div>Keterangan:</div>
           <div>
             {showDescription ? (
