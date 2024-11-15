@@ -18,12 +18,12 @@ const DashboardLayout = async ({ children }: DashboardLayoutProps) => {
         <DashboardSidebar userId={userId} userRole={userRole} />
       </div>
       <div className='p-0 w-full h-full md:max-w-[1600px] '>
-        {userRole === 'user' && (
-          <Container className='w-full mx-auto max-w-[960px] flex flex-col items-center'>
-            <Nav />
-            {children}
-          </Container>
-        )}
+        {/* {userRole === 'user' && ( */}
+        <Container className='w-full mx-auto flex flex-col items-center'>
+          <Nav />
+          {children}
+        </Container>
+        {/* )} */}
       </div>
     </div>
   );

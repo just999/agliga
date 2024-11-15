@@ -94,6 +94,7 @@ import {
 import { Role } from '@prisma/client';
 import {
   BadgeDollarSign,
+  BadgeDollarSignIcon,
   Banknote,
   BaselineIcon,
   CableIcon,
@@ -107,6 +108,7 @@ import {
   HandCoins,
   HashIcon,
   Image,
+  LandmarkIcon,
   LayoutDashboard,
   ListChecks,
   MessageCircle,
@@ -114,9 +116,12 @@ import {
   MessageSquareMore,
   Newspaper,
   Plug,
+  ReceiptTextIcon,
   RecycleIcon,
+  ScrollTextIcon,
   Settings,
   SlashIcon,
+  StickyNoteIcon,
   TargetIcon,
   User,
   UserCog2,
@@ -3283,12 +3288,17 @@ export const dashboardUserMenu = [
   {
     title: 'Posts',
     icon: Newspaper,
-    link: '/dashboard/posts',
+    link: '/dashboard/members/posts',
   },
   {
-    title: 'Categories',
-    icon: Folder,
-    link: '/dashboard/categories',
+    title: 'Statements',
+    icon: ScrollTextIcon,
+    link: '/dashboard/members/statements',
+  },
+  {
+    title: 'Transaction',
+    icon: ReceiptTextIcon,
+    link: '/dashboard/members/transaction',
   },
   {
     title: 'Deposits',
@@ -3299,6 +3309,21 @@ export const dashboardUserMenu = [
     title: 'Wds',
     icon: HandCoins,
     link: (userId: string) => `/dashboard/wds/${userId}`,
+  },
+  {
+    title: 'Banks',
+    icon: LandmarkIcon,
+    link: '/dashboard/members/banks',
+  },
+  {
+    title: 'Memo',
+    icon: StickyNoteIcon,
+    link: '/dashboard/members/memo',
+  },
+  {
+    title: 'Referral',
+    icon: BadgeDollarSignIcon,
+    link: '/dashboard/members/referral',
   },
   {
     title: 'Messages',
@@ -3567,7 +3592,7 @@ export const thead4dSet = [
 
 export const positionVal = ['as', 'kop', 'kepala', 'ekor'];
 
-type ShioWithIconProps = {
+export type ShioWithIconProps = {
   label: string;
   name: string;
   year: string[];

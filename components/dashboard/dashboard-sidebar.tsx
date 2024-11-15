@@ -53,6 +53,7 @@ const DashboardSidebar = ({ userId, userRole }: DashboardSidebarProps) => {
   const dashboardMenu =
     userRole === 'admin' ? dashboardAdminMenu : dashboardUserMenu;
 
+  const sidebarHeaderTitle = userRole === 'admin' ? 'Admin' : 'Member';
   const userDepo = dashboardMenu.filter((item) =>
     linksTitle.includes(item.title)
   );
@@ -174,8 +175,8 @@ const DashboardSidebar = ({ userId, userRole }: DashboardSidebarProps) => {
             <CommandInput placeholder='Type a command or search...' />
             <CommandList className='max-h-[100vh]'>
               <CommandEmpty>No results found.</CommandEmpty>
-              <CommandGroup heading='Member' className='p-0 pl-1'>
-                {dashboardUserMenu.map(({ title, icon: Icon, link }) => {
+              <CommandGroup heading={sidebarHeaderTitle} className='p-0 pl-1'>
+                {dashboardMenu.map(({ title, icon: Icon, link }) => {
                   const depoLink = title === 'Deposits' ? userDepoLink : link;
                   if (!depoLink) return null;
 
@@ -231,7 +232,64 @@ const DashboardSidebar = ({ userId, userRole }: DashboardSidebarProps) => {
                   );
                 })}
               </CommandGroup>
-              <CommandSeparator />
+              {/* <CommandGroup heading='Member' className='p-0 pl-1'>
+                {dashboardUserMenu.map(({ title, icon: Icon, link }) => {
+                  const depoLink = title === 'Deposits' ? userDepoLink : link;
+                  if (!depoLink) return null;
+
+                  const wdLink = title === 'Wds' ? userWdLink : link;
+                  if (!wdLink) return null;
+
+                  const messageLink =
+                    title === 'Messages' ? userMessageLink : link;
+                  if (!messageLink) return null;
+
+                  const resolvedDepoWdLink =
+                    title === 'Deposits'
+                      ? resolveDepoLink(depoLink, userId)
+                      : resolveWdLink(wdLink, userId);
+
+                  return (
+                    <CommandItem
+                      key={title}
+                      className={cn(
+                        'w-full pl-2 h-8 group hover:!bg-orange-100/70 cursor-pointer ',
+                        isActiveRoute(pathname || '', resolvedDepoWdLink)
+                          ? ' text-white-50  bg-orange-500 shadow-lg text-shadow border-r-4 border-solid aria-selected:bg-orange-500 aria-selected:text-white  border-amber-600 transition font-semibold'
+                          : 'text-gray-600 bg-stone-100'
+                      )}>
+                      <Icon
+                        className={cn(
+                          'svg mr-2 h-4 w-4 group-hover:text-black',
+                          isActiveRoute(pathname || '', resolvedDepoWdLink)
+                            ? 'text-white '
+                            : 'fill-gray-300'
+                        )}
+                      />
+                      <Link
+                        href={resolvedDepoWdLink}
+                        className={cn(
+                          'svg mr-2 h-4 w-4 group-hover:text-black group-hover:font-normal',
+                          isActiveRoute(pathname || '', resolvedDepoWdLink)
+                            ? 'text-yellow-50 font-light'
+                            : 'fill-gray-300'
+                        )}>
+                        <span>{title}</span>
+                        {userRole === 'user' &&
+                          resolvedDepoWdLink.startsWith(
+                            '/dashboard/messages'
+                          ) &&
+                          unreadCount > 0 && (
+                            <span className='ml-1 text-emerald-400 font-bold'>
+                              ({unreadCount})
+                            </span>
+                          )}
+                      </Link>
+                    </CommandItem>
+                  );
+                })}
+              </CommandGroup> */}
+              {/* <CommandSeparator />
               <CommandGroup heading='Settings' className='p-0 py-1.5'>
                 {dashboardSettingMenu.map(
                   ({ title, icon: Icon, link, shortcut }) => (
@@ -271,8 +329,8 @@ const DashboardSidebar = ({ userId, userRole }: DashboardSidebarProps) => {
                     </CommandItem>
                   )
                 )}
-              </CommandGroup>
-              <CommandSeparator />
+              </CommandGroup> */}
+              {/* <CommandSeparator />
               <CommandGroup heading='Admin' className='p-0 pl-1'>
                 {dashboardAdminMenu.map(({ title, icon: Icon, link }) => {
                   const itemLink =
@@ -319,7 +377,7 @@ const DashboardSidebar = ({ userId, userRole }: DashboardSidebarProps) => {
                     </CommandItem>
                   );
                 })}
-              </CommandGroup>
+              </CommandGroup> */}
             </CommandList>
           </Command>
         )}

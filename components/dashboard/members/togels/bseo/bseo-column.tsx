@@ -41,7 +41,7 @@ export const useBsTogelColumns = <TData, TValue>(
   // }, [newWagerValue, setValue]);
 
   const handleInputChange = (key: string, e: string, i: number) => {
-    console.log(key, e, i);
+    // console.log(key, e, i);
     // if (gameData && gameData.map((ga) => ({}))) {
     // }
   };

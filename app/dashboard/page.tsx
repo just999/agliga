@@ -5,8 +5,6 @@ import AnalyticsChart from '@/components/dashboard/analytics-chart';
 import DashboardCard from '@/components/dashboard/dashboard-card';
 import PostsTable from '@/components/posts/posts-table';
 
-import ClientOnly from '@/lib/client-only';
-
 import { dashboardCardItems } from '@/lib/helper';
 import { Nav } from '@/components/dashboard/members/nav';
 import Container from '@/components/container';

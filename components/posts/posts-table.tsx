@@ -115,7 +115,7 @@ const PostsTable = ({ limit, title, user, posts }: PostsTableProps) => {
 
   return (
     <ClientOnly>
-      <div className='mt-10 px-2 pb-20'>
+      <div className='w-full mt-10 px-2 pb-20'>
         <h3 className='text-2xl mb-4 font-semibold'>
           {title ? title : 'Posts'}
         </h3>

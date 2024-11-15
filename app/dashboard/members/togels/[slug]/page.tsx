@@ -17,7 +17,6 @@ const TogelPage = async ({ params }: TogelPageProps) => {
   } else if (togel.status === 'error') {
     togelData = null;
   }
-
   return (
     <div className='bg-orange-300 px-2 pb-2 shadow-xl'>
       <div

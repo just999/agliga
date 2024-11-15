@@ -23,7 +23,7 @@ type AnalyticsChartProps = {};
 const AnalyticsChart = () => {
   return (
     <ClientOnly>
-      <Card>
+      <Card className='w-full '>
         <CardHeader>
           <CardTitle>Analytics for Year</CardTitle>
           <CardDescription>Views Per Month</CardDescription>

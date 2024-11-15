@@ -79,7 +79,7 @@ export const createTogelTableColumns = (
           // disabled
           type='text'
           {...register(`${row.index}.game`, {
-            onchange: (e: any) => console.log(e.target.value),
+            // onchange: (e: any) => console.log(e.target.value),
           })}
           // value={row.original.game || ''}
           className='w-full h-8 p-1 border rounded'

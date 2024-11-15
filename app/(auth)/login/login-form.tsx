@@ -111,7 +111,7 @@ const LoginForm = () => {
                 )}>
                 {isSubmitting || isLoading ? (
                   <div className='flex gap-2 items-center justify-center'>
-                    <Spinner size={16} color='gray-200' /> processing...
+                    <Spinner size={16} color='gray-200' /> login in...
                   </div>
                 ) : (
                   <div className='flex items-center gap-2 justify-center text-shadow'>

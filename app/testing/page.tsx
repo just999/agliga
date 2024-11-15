@@ -178,6 +178,7 @@ import Container from '@/components/container';
 import ShioDataTable from '@/components/dashboard/members/togels/shio/shio-data-table';
 
 import TanstackTable from '@/components/testing/tanstack-table';
+import TestTable from '@/components/testing/test-table';
 
 import CurrencyInput from '@/components/ui/currency-input';
 import { cn, poppins } from '@/lib/utils';
@@ -193,8 +194,8 @@ const TestingPage = () => {
   };
 
   return (
-    <div className='container mx-auto p-4'>
-      <h1 className='text-2xl font-bold mb-4'>Vertical Header Table</h1>
+    <div className='mx-auto p-4'>
+      {/* <h1 className='text-2xl font-bold mb-4'>Vertical Header Table</h1> */}
       {/* <CurrencyInput
         value={inputValue}
         onChange={handleInputChange}
@@ -205,6 +206,7 @@ const TestingPage = () => {
         placeholder='Enter number'
       /> */}
       {/* <ShioDataTable /> */}
+      <TestTable />
     </div>
   );
 };
