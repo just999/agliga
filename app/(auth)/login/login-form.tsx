@@ -1,27 +1,23 @@
 'use client';
 
 import { login } from '@/actions/auth-actions';
-
-import { zodResolver } from '@hookform/resolvers/zod';
-
-import { useRouter } from 'next/navigation';
-
-import { useForm } from 'react-hook-form';
-
-import { toast } from 'react-hot-toast';
-import SocialLogin from './social-login';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { LoginSchema, loginSchema } from '@/schemas';
-import { InputCustom } from '@/components/ui/inputCustom';
-import Spinner from '@/components/ui/spinner';
-
-import { LogInIcon, MailIcon } from 'lucide-react';
-import { PasswordInput } from '@/components/ui/password-input';
-import { cn } from '@/lib/utils';
+import { HeadingLogo } from '@/components/shadcn/ui';
+import { Button } from '@/components/shadcn/ui/button';
+import { Card, CardContent, CardHeader } from '@/components/shadcn/ui/card';
+import { InputCustom } from '@/components/shadcn/ui/inputCustom';
+import { PasswordInput } from '@/components/shadcn/ui/password-input';
+import Spinner from '@/components/shadcn/ui/spinner';
 import ClientOnly from '@/lib/client-only';
+import { cn } from '@/lib/utils';
+import { LoginSchema, loginSchema } from '@/schemas';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { LogInIcon, MailIcon } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { useForm } from 'react-hook-form';
+import { toast } from 'react-hot-toast';
+
 import LoginRegisterButton from '../_components/login-register-button';
-import { HeadingLogo } from '@/components/ui';
+import SocialLogin from './social-login';
 
 const LoginForm = () => {
   const router = useRouter();
@@ -108,7 +104,8 @@ const LoginForm = () => {
                 variant='ghost'
                 className={cn(
                   'bg-indigo-500 px-4 text-gray-50 hover:bg-indigo-500/70 hover:text-gray-200 w-full shadow-lg'
-                )}>
+                )}
+              >
                 {isSubmitting || isLoading ? (
                   <div className='flex gap-2 items-center justify-center'>
                     <Spinner size={16} color='gray-200' /> login in...

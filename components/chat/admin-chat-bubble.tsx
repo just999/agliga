@@ -1,26 +1,20 @@
 'use client';
 
-import { cn } from '@/lib/utils';
-
-import { User } from '@prisma/client';
-
-import { MessageCircleMore } from 'lucide-react';
-import { usePresenceStore } from '@/store/use-presence-store';
-
-import { useMessageStore } from '@/store/use-message-store';
 import { useCallback, useEffect, useState } from 'react';
 
-import { Button } from '@/components/ui';
-
-import { useSession } from 'next-auth/react';
-import { useChatStore } from '@/store/use-chat-store';
-
+import { getMessageThread } from '@/actions/message-actions';
+import { Button } from '@/components/shadcn/ui';
 import { useCurrentUserRole } from '@/hooks/use-user';
+import { cn } from '@/lib/utils';
+import { useChatStore } from '@/store/use-chat-store';
+import { useMessageStore } from '@/store/use-message-store';
+import { usePresenceStore } from '@/store/use-presence-store';
+import { MessageDto } from '@/types';
+import { User } from '@prisma/client';
+import { MessageCircleMore } from 'lucide-react';
+import { useSession } from 'next-auth/react';
 
 import ChatContainer from './chat-container';
-
-import { MessageDto } from '@/types';
-import { getMessageThread } from '@/actions/message-actions';
 
 type AdminChatBubbleProps = {
   adminUser?: User;
@@ -164,7 +158,8 @@ const AdminChatBubble = ({
         // !recipientUserData?.id && 'cursor-not-allowed',
         // showBubbleChat ? 'slide-up' : 'slide-down',
         className
-      )}>
+      )}
+    >
       {/* {Array.isArray(recipientAdminUser) &&
         recipientAdminUser?.length !== 0 && ( */}
       <div>

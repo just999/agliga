@@ -5,15 +5,15 @@ import {
   getAdminUserId,
   getUserByUserId,
 } from '@/actions/user-actions';
-import { cn } from '@/lib/utils';
-
-import { userRole } from '@/lib/auth';
-import MemberSidebar from '../member-sidebar';
-import ChatSidebar from '../chat-sidebar';
-import { Card } from '@/components/ui';
-import { createPortal } from 'react-dom';
 import NewChatWidget from '@/components/chat/new-chat-widget';
+import { Card } from '@/components/shadcn/ui';
+import { userRole } from '@/lib/auth';
 import { adminChatProfile } from '@/lib/helper';
+import { cn } from '@/lib/utils';
+import { createPortal } from 'react-dom';
+
+import ChatSidebar from '../chat-sidebar';
+import MemberSidebar from '../member-sidebar';
 
 interface PortalRoot {
   root: HTMLElement | null;
@@ -65,7 +65,8 @@ const UserLayout = async ({
         className={cn(
           'col-span-22 w-[352px] bg-slate-300'
           // basePath && 'bg-emerald-100'
-        )}>
+        )}
+      >
         <Card>{children}</Card>
       </div>
     </div>

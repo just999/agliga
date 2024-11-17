@@ -1,6 +1,6 @@
 'use client';
 
-import { Card, CardHeader, CardContent, CardFooter } from '../ui/card';
+import { Card, CardContent, CardFooter, CardHeader } from '../shadcn/ui/card';
 import BackButton from './back-button';
 import Header from './header';
 import Social from './social';

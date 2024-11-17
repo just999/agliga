@@ -1,11 +1,10 @@
 'use client';
 
-import { usePathname, useRouter } from 'next/navigation';
-
 import Link from 'next/link';
-
+import { usePathname, useRouter } from 'next/navigation';
 import { IconType } from 'react-icons';
-import { Button } from '../ui/button';
+
+import { Button } from '../shadcn/ui/button';
 
 type SidebarItemProps = {
   label: string;
@@ -33,7 +32,8 @@ const SidebarItem = ({ label, icon: Icon, href }: SidebarItemProps) => {
       onClick={onClick}
       variant={active ? 'default' : 'outline'}
       className='justify-start h-[52px] '
-      asChild>
+      asChild
+    >
       <Link href={href} className='flex flex-row gap-2 '>
         <Icon size={24} />
         <span className='text-xs '>{label}</span>

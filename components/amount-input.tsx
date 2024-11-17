@@ -1,9 +1,10 @@
 'use client';
 
 import useFormTypes from '@/hooks/use-form-types';
-import { InputCustom } from './ui';
-import { UseFormReturn, FieldPath } from 'react-hook-form';
 import { FormSchema, NewFormSchema } from '@/schemas';
+import { FieldPath, UseFormReturn } from 'react-hook-form';
+
+import { InputCustom } from './shadcn/ui';
 
 type AmountInputProps = {
   methods: UseFormReturn<NewFormSchema, any, undefined>;

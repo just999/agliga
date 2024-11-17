@@ -456,8 +456,24 @@
 
 'use client';
 
+import { useEffect, useState } from 'react';
+
 import {
-  Table as TanTable,
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/shadcn/ui';
+import ClientOnly from '@/lib/client-only';
+import { initial4dValues } from '@/lib/helper';
+import { cn, poppins } from '@/lib/utils';
+import { BbSchema, BbTab4dSchema, BbTabSchema } from '@/schemas/togel-schema';
+import { rankItem } from '@tanstack/match-sorter-utils';
+import {
   Column,
   FilterFn,
   flexRender,
@@ -466,33 +482,18 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   PaginationState,
+  Table as TanTable,
   useReactTable,
 } from '@tanstack/react-table';
-
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow,
-  Button,
-} from '@/components/ui';
-import ClientOnly from '@/lib/client-only';
-import { cn, poppins } from '@/lib/utils';
-import { BbSchema, BbTab4dSchema, BbTabSchema } from '@/schemas/togel-schema';
-import { rankItem } from '@tanstack/match-sorter-utils';
-import { useEffect, useState } from 'react';
-import { Control, useFieldArray, useForm, useWatch } from 'react-hook-form';
-import { useBbfsColumns } from './bbfs-columns';
-import { initial4dValues } from '@/lib/helper';
-import {
-  ChevronsLeft,
   ChevronLeft,
   ChevronRight,
+  ChevronsLeft,
   ChevronsRight,
 } from 'lucide-react';
+import { Control, useFieldArray, useForm, useWatch } from 'react-hook-form';
+
+import { useBbfsColumns } from './bbfs-columns';
 
 const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
   const itemRank = rankItem(row.getValue(columnId), value);

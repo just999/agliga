@@ -1,7 +1,8 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import { Button } from './ui';
+
+import { Button } from './shadcn/ui';
 
 type TooltipCustomProps = {
   children: React.ReactNode;
@@ -23,7 +24,8 @@ const TooltipCustom = ({
   return (
     <div
       className={cn('relative group')}
-      style={{ '--tooltip-duration': `${duration}ms` } as React.CSSProperties}>
+      style={{ '--tooltip-duration': `${duration}ms` } as React.CSSProperties}
+    >
       {children}
       <div
         role='tooltip'
@@ -39,7 +41,8 @@ const TooltipCustom = ({
           position === 'left' &&
             'right-full top-1/2 transform -translate-y-1/2 mr-.5',
           className
-        )}>
+        )}
+      >
         {content}
       </div>
       {/* <Button aria-describedby='tooltip-id'>

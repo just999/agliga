@@ -1,27 +1,22 @@
 'use client';
 
-import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import Modal from './modal';
 
-import Input from '../ui/input';
+import { useEuros, usePenalty } from '@/hooks/use-euro';
+import { useGetEuros } from '@/hooks/use-get-schedule';
+import useModal from '@/hooks/use-modal';
+import { initialEuroFormWithIconValues, team } from '@/lib/helper';
+import { cn, findMatchingObjects, noto } from '@/lib/utils';
+import { EuroWithIconProps } from '@/types/types';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
-import { useRouter } from 'next/navigation';
-
-import SelectInput from '../ui/select-input';
-
-import useModal from '@/hooks/use-modal';
-
-import { useGetEuros } from '@/hooks/use-get-schedule';
-
-import { EuroWithIconProps } from '@/types/types';
-
-import { initialEuroFormWithIconValues, team } from '@/lib/helper';
-import { useEuros, usePenalty } from '@/hooks/use-euro';
-import { cn, findMatchingObjects, noto } from '@/lib/utils';
-import { HeadingLogo } from '../ui';
+import { HeadingLogo } from '../shadcn/ui';
+import Input from '../shadcn/ui/input';
+import SelectInput from '../shadcn/ui/select-input';
+import Modal from './modal';
 
 const EuroModal = () => {
   const [schedule, setSchedule] = useState<EuroWithIconProps>(

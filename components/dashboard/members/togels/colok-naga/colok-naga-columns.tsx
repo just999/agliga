@@ -2,7 +2,7 @@
 
 import { ChangeEvent, useEffect, useMemo, useRef } from 'react';
 
-import { InputCustom } from '@/components/ui';
+import { InputCustom } from '@/components/shadcn/ui';
 import {
   arrayRange,
   cn,

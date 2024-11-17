@@ -1,7 +1,8 @@
 'use client';
 
 import { Link } from 'lucide-react';
-import { Button } from '../ui/button';
+
+import { Button } from '../shadcn/ui/button';
 
 type BackButtonProps = { href: string; label: string };
 

@@ -1,10 +1,11 @@
 import React from 'react';
-import { getAdminUserId, getUserByUserId } from '@/actions/user-actions';
-import { cn } from '@/lib/utils';
-import MemberSidebar from '../member-sidebar';
 
+import { getAdminUserId, getUserByUserId } from '@/actions/user-actions';
+import { Card } from '@/components/shadcn/ui';
 import { userRole } from '@/lib/auth';
-import { Card } from '@/components/ui';
+import { cn } from '@/lib/utils';
+
+import MemberSidebar from '../member-sidebar';
 
 const UserLayout = async ({
   params,
@@ -46,7 +47,8 @@ const UserLayout = async ({
           className={cn(
             'col-span-9 relative',
             basePath && 'mt-10 bottom-0 right-0 bg-emerald-100'
-          )}>
+          )}
+        >
           <Card>{children}</Card>
         </div>
       </div>

@@ -1,19 +1,18 @@
 'use client';
 
-import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import Modal from './modal';
 
+import useModal from '@/hooks/use-modal';
+import ClientOnly from '@/lib/client-only';
+import { useImageStore } from '@/store/use-image-store';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
-import { useRouter } from 'next/navigation';
-import useModal from '@/hooks/use-modal';
 import Images from '../candidate-form/images';
-
-import { useImageStore } from '@/store/use-image-store';
-import ClientOnly from '@/lib/client-only';
-import { HeadingLogo } from '../ui';
+import { HeadingLogo } from '../shadcn/ui';
+import Modal from './modal';
 
 type SliderModalProps = {};
 

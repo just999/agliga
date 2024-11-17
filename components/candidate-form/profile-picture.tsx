@@ -1,27 +1,25 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 
-import { Button } from '../ui/button';
-
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
-
+import { updateUserAvatar } from '@/actions/user-actions';
 import useModal from '@/hooks/use-modal';
-import { useSession } from 'next-auth/react';
-
-import axios from 'axios';
-import toast from 'react-hot-toast';
-import { useRouter } from 'next/navigation';
+import { cn, handleFormServerErrors } from '@/lib/utils';
+import { updateAvatarSchema, UpdateAvatarSchema } from '@/schemas';
 import useProfileStore from '@/store/use-profile-store';
 import { ProfileProps } from '@/types/types';
-import { User } from '@prisma/client';
-import { cn, handleFormServerErrors } from '@/lib/utils';
-import { ImagePlus } from 'lucide-react';
-import { updateAvatarSchema, UpdateAvatarSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { updateUserAvatar } from '@/actions/user-actions';
-import { InputCustom, Spinner } from '../ui';
+import { User } from '@prisma/client';
+import axios from 'axios';
+import { ImagePlus } from 'lucide-react';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
+
+import { InputCustom, Spinner } from '../shadcn/ui';
+import { Avatar, AvatarFallback, AvatarImage } from '../shadcn/ui/avatar';
+import { Button } from '../shadcn/ui/button';
 import UserAvatar from '../user-avatar';
 
 type ProfilePictureProps = {
@@ -170,11 +168,13 @@ const ProfilePicture = ({ text, setText, user }: ProfilePictureProps) => {
     <div
       className='flex flex-col justify-center items-center  gap-2 w-1/6'
       onDragOver={handleDragOver}
-      onDrop={handleFileDrop}>
+      onDrop={handleFileDrop}
+    >
       {/* <Label>Profile picture</Label> */}
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className='flex flex-col gap-2 items-center'>
+        className='flex flex-col gap-2 items-center'
+      >
         <Controller
           control={control}
           name='image'
@@ -200,7 +200,8 @@ const ProfilePicture = ({ text, setText, user }: ProfilePictureProps) => {
             className={cn(
               'flex flex-row text-nowrap px-4 w-full rounded-sm text-white font-semibold text-shadow',
               role === 'user' ? 'bg-emerald-300 ' : 'bg-yellow-500'
-            )}>
+            )}
+          >
             Status: {role}
           </div>
         </div>
@@ -218,7 +219,8 @@ const ProfilePicture = ({ text, setText, user }: ProfilePictureProps) => {
               ? onUpload
               : undefined
           }
-          className='group text-xs flex flex-row gap-2 bg-blue-500 hover:!bg-blue-500/70 px-2 mb-2'>
+          className='group text-xs flex flex-row gap-2 bg-blue-500 hover:!bg-blue-500/70 px-2 mb-2'
+        >
           {isSubmitting ? (
             <div className='flex gap-2 items-center justify-center'>
               <Spinner size={16} color='gray-200' /> Submitting...

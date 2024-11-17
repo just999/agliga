@@ -1,6 +1,27 @@
 'use client';
 
+import { useCallback, useEffect, useState } from 'react';
+
+import {
+  createAnonymousUser,
+  getAnonymousUser,
+} from '@/actions/live-chat-actions';
+import {
+  capitalizeFirstCharacter,
+  cn,
+  createChatId,
+  handleFormServerErrors,
+} from '@/lib/utils';
+import { nonMember, NonMember } from '@/schemas/live-chat-schema';
 import { useChatStore } from '@/store/use-chat-store';
+import { SafeAdminChat, SafeUser } from '@/types/types';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { User } from '@prisma/client';
+import { ChevronDownSquareIcon, MailIcon } from 'lucide-react';
+import { useSession } from 'next-auth/react';
+import { FieldValues, useForm } from 'react-hook-form';
+import { FaCat } from 'react-icons/fa';
+
 import {
   Button,
   Card,
@@ -13,31 +34,9 @@ import {
   HeadingLogo,
   InputCustom,
   Spinner,
-} from '../ui';
-import { useCallback, useEffect, useState } from 'react';
-import {
-  capitalizeFirstCharacter,
-  cn,
-  createChatId,
-  handleFormServerErrors,
-} from '@/lib/utils';
-import { ChevronDownSquareIcon, MailIcon } from 'lucide-react';
+} from '../shadcn/ui';
 import UserAvatar from '../user-avatar';
-import { SafeAdminChat, SafeUser } from '@/types/types';
-
-import { useSession } from 'next-auth/react';
 import NewLiveChatContainer from './new-live-chat-container';
-
-import { User } from '@prisma/client';
-
-import { FaCat } from 'react-icons/fa';
-import {
-  createAnonymousUser,
-  getAnonymousUser,
-} from '@/actions/live-chat-actions';
-import { FieldValues, useForm } from 'react-hook-form';
-import { nonMember, NonMember } from '@/schemas/live-chat-schema';
-import { zodResolver } from '@hookform/resolvers/zod';
 
 type LiveChatProps = {
   users: User[];
@@ -191,14 +190,16 @@ const LiveChat = ({ users, adminProfile }: LiveChatProps) => {
         className={cn(
           `fixed bottom-0 right-1 text-shadow-lg transition-transform duration-300 ease-in-out transform`,
           toggleStartChat && isToggle ? 'translate-y-0' : 'translate-y-full'
-        )}>
+        )}
+      >
         {/* <NewLiveChatContainer users={users} adminProfile={adminChatProfile} /> */}
       </div>
       <div
         className={cn(
           `fixed h-[570px] w-[400px] bottom-0 right-1 text-shadow-lg  transition-transform duration-300 ease-in-out transform`,
           isToggle ? 'translate-y-0' : 'translate-y-full'
-        )}>
+        )}
+      >
         {isToggle ? (
           <div className='flex flex-col h-[570px] w-full items-end'>
             <Button
@@ -210,7 +211,8 @@ const LiveChat = ({ users, adminProfile }: LiveChatProps) => {
                 'group w-fit flex items-center text-wrap text-white font-extrabold text-shadow text-sm h-6  hover:bg-blue-500/90 p-0 m-0',
                 isToggle && 'bottom-0',
                 toggleStartChat && 'hidden'
-              )}>
+              )}
+            >
               <ChevronDownSquareIcon
                 size={24}
                 className='svg text-white group-hover:text-gray-700'
@@ -242,7 +244,8 @@ const LiveChat = ({ users, adminProfile }: LiveChatProps) => {
                       className={cn(
                         'flex flex-col justify-between'
                         // status === 'unauthenticated' ? 'h-52' : 'h-60'
-                      )}>
+                      )}
+                    >
                       <CardHeader className='p-0 px-2 py-1'>
                         {userRole !== 'admin' && (
                           <CardTitle>
@@ -272,7 +275,8 @@ const LiveChat = ({ users, adminProfile }: LiveChatProps) => {
                               className={cn(
                                 'overflow-auto bg-stone-700 p-0 px-1 py-1 mx-auto text-justify w-full text-xs',
                                 status === 'unauthenticated' ? 'h-48' : 'h-60'
-                              )}>
+                              )}
+                            >
                               Selamat datang di Target4D🎯 Situs Togel & Slot
                               Online Terpercaya Indonesia. ✓ Minimal Deposit
                               10.000,- ✓ Minimal Withdraw 50.000,- ✓10 Pasaran
@@ -325,7 +329,8 @@ const LiveChat = ({ users, adminProfile }: LiveChatProps) => {
                             <Button
                               type='submit'
                               disabled={isSubmitting || !isValid}
-                              className='mx-auto w-full shadow-lg py-4'>
+                              className='mx-auto w-full shadow-lg py-4'
+                            >
                               Submit Name & start to chat
                             </Button>
                           </form>
@@ -336,7 +341,8 @@ const LiveChat = ({ users, adminProfile }: LiveChatProps) => {
                             <Button
                               type='button'
                               className='mx-auto w-full shadow-lg'
-                              onClick={handleToggleCloseChat}>
+                              onClick={handleToggleCloseChat}
+                            >
                               close chat
                             </Button>
                           ) : (
@@ -344,7 +350,8 @@ const LiveChat = ({ users, adminProfile }: LiveChatProps) => {
                               type='button'
                               disabled={loading}
                               className='mx-auto w-full shadow-lg'
-                              onClick={handleToggleStartChat}>
+                              onClick={handleToggleStartChat}
+                            >
                               {loading ? <Spinner size={32} /> : 'start chat'}
                             </Button>
                           )}

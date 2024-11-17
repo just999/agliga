@@ -1,23 +1,22 @@
 'use client';
 
-import { Copy, Edit, MoreHorizontal, Trash } from 'lucide-react';
+import { group } from 'console';
 
-// import { ScheduleColumn } from './columns';
-import toast from 'react-hot-toast';
-import { Schedule } from '@prisma/client';
-import useModal from '@/hooks/use-modal';
-import { useSession } from 'next-auth/react';
-import { FixtureProps } from '@/types/types';
-
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/shadcn/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { group } from 'console';
+} from '@/components/shadcn/ui/dropdown-menu';
+import useModal from '@/hooks/use-modal';
+import { FixtureProps } from '@/types/types';
+import { Schedule } from '@prisma/client';
+import { Copy, Edit, MoreHorizontal, Trash } from 'lucide-react';
+import { useSession } from 'next-auth/react';
+// import { ScheduleColumn } from './columns';
+import toast from 'react-hot-toast';
 
 type RoundCellActionProps = {
   data: any;

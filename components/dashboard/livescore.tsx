@@ -1,10 +1,10 @@
 // app/livescore/page.tsx
 'use client';
 
-import React from 'react';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+
 import Loader from '../loader';
-import { HeadingLogo } from '../ui';
+import { HeadingLogo } from '../shadcn/ui';
 
 interface LivescoreData {
   html: string;

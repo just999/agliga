@@ -1,23 +1,20 @@
 'use client';
 
-import Modal from './modal';
-import useModal from '@/hooks/use-modal';
-
-import { FieldValues, useForm } from 'react-hook-form';
-
-import { useSportCategories, useTopics } from '@/hooks/use-topics';
-import { Button } from '../ui/button';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 
-import { CategoryProps, InitialPostProps, ValueIconProps } from '@/types/types';
-import { initialFormState } from './post-modal';
-
-import { useParams } from 'next/navigation';
 import { useGetPost } from '@/hooks/use-get-post';
+import useModal from '@/hooks/use-modal';
+import { useSportCategories, useTopics } from '@/hooks/use-topics';
+import { CategoryProps, InitialPostProps, ValueIconProps } from '@/types/types';
+import { useParams } from 'next/navigation';
+import { FieldValues, useForm } from 'react-hook-form';
 
-import SelectInput from '../ui/select-input';
-import Input from '../ui/input';
-import { HeadingLogo } from '../ui';
+import { HeadingLogo } from '../shadcn/ui';
+import { Button } from '../shadcn/ui/button';
+import Input from '../shadcn/ui/input';
+import SelectInput from '../shadcn/ui/select-input';
+import Modal from './modal';
+import { initialFormState } from './post-modal';
 
 type AddPostModalProps = {};
 
@@ -245,7 +242,8 @@ const AddPostModal = () => {
     <form
       action={modalType === 'post' ? `/api/posts` : `/api/posts/${id}`}
       method={modalType === 'post' ? `POST` : 'PUT'}
-      encType='multipart/form-data'>
+      encType='multipart/form-data'
+    >
       <div className='flex flex-col justify-center gap-1'>
         <HeadingLogo
           title={modalType === 'post' ? 'New Post' : 'Edit Post'}
@@ -358,7 +356,8 @@ const AddPostModal = () => {
           <Button
             variant='primary'
             className='bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline'
-            type='submit'>
+            type='submit'
+          >
             Add Post
           </Button>
         </div>

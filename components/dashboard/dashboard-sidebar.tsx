@@ -1,5 +1,17 @@
 'use client';
 
+import ClientOnly from '@/lib/client-only';
+import {
+  dashboardAdminMenu,
+  dashboardSettingMenu,
+  dashboardUserMenu,
+} from '@/lib/helper';
+import { cn } from '@/lib/utils';
+import { useMessageStore } from '@/store/use-message-store';
+import Link from 'next/link';
+import { notFound, usePathname, useSearchParams } from 'next/navigation';
+
+import ClientSideNav from '../navbar/client-side-nav';
 import {
   Command,
   CommandEmpty,
@@ -9,18 +21,7 @@ import {
   CommandList,
   CommandSeparator,
   CommandShortcut,
-} from '../ui/command';
-import Link from 'next/link';
-import {
-  dashboardAdminMenu,
-  dashboardSettingMenu,
-  dashboardUserMenu,
-} from '@/lib/helper';
-import { notFound, usePathname, useSearchParams } from 'next/navigation';
-import { cn } from '@/lib/utils';
-import ClientOnly from '@/lib/client-only';
-import { useMessageStore } from '@/store/use-message-store';
-import ClientSideNav from '../navbar/client-side-nav';
+} from '../shadcn/ui/command';
 
 type DashboardSidebarProps = {
   userId?: string;
@@ -200,7 +201,8 @@ const DashboardSidebar = ({ userId, userRole }: DashboardSidebarProps) => {
                         isActiveRoute(pathname || '', resolvedDepoWdLink)
                           ? ' text-white-50  bg-orange-500 shadow-lg text-shadow border-r-4 border-solid aria-selected:bg-orange-500 aria-selected:text-white  border-amber-600 transition font-semibold'
                           : 'text-gray-600 bg-stone-100'
-                      )}>
+                      )}
+                    >
                       <Icon
                         className={cn(
                           'svg mr-2 h-4 w-4 group-hover:text-black',
@@ -216,7 +218,8 @@ const DashboardSidebar = ({ userId, userRole }: DashboardSidebarProps) => {
                           isActiveRoute(pathname || '', resolvedDepoWdLink)
                             ? 'text-yellow-50 font-light'
                             : 'fill-gray-300'
-                        )}>
+                        )}
+                      >
                         <span>{title}</span>
                         {userRole === 'user' &&
                           resolvedDepoWdLink.startsWith(

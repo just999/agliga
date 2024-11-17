@@ -1,5 +1,5 @@
 import ColokNagaTable from '@/components/dashboard/members/togels/colok-naga/colok-naga-table';
-import TogelContainer from '@/components/ui/togel-container';
+import TogelContainer from '@/components/shadcn/ui/togel-container';
 import { capitalizeFirstCharacter, cn, oldStandardTT } from '@/lib/utils';
 
 type ColokNagaPageProps = {
@@ -15,7 +15,8 @@ const ColokNagaPage = async ({ params }: ColokNagaPageProps) => {
         className={cn(
           'mx-auto text-center font-semibold text-lg',
           oldStandardTT.className
-        )}>
+        )}
+      >
         {capitalizeFirstCharacter(params.slug)} - Pools - Colok-Naga
       </div>
       <div className='bg-green-50/50 px-2 py-1 rounded-lg shadow-lg'>

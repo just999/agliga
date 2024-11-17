@@ -1,6 +1,7 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+
 import { createDepo } from '@/actions/member-actions';
 import {
   Button,
@@ -9,20 +10,15 @@ import {
   InputCustom,
   SelectInput,
   Spinner,
-} from '@/components/ui';
-
+} from '@/components/shadcn/ui';
 import useBanks from '@/hooks/use-banks';
 import useGames from '@/hooks/use-games';
 import { banks } from '@/lib/helper';
 import { cn, handleFormServerErrors } from '@/lib/utils';
 import { DepoSchema, depoSchema } from '@/schemas';
 import { UserProps } from '@/types/types';
-
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
-
-import { useEffect, useState } from 'react';
-
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
@@ -122,7 +118,8 @@ const MemberDepoForm = ({ user }: DepoFormProps) => {
 
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className='w-full flex flex-col gap-3 px-4'>
+          className='w-full flex flex-col gap-3 px-4'
+        >
           {userData?.email && userData?.name && userData?.accountNumber && (
             <>
               <InputCustom

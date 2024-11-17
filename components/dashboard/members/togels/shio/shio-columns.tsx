@@ -2,7 +2,7 @@
 
 import { ChangeEvent, useEffect, useMemo, useRef } from 'react';
 
-import { InputCustom, Label } from '@/components/ui';
+import { InputCustom, Label } from '@/components/shadcn/ui';
 import { shioWithIcon } from '@/lib/helper';
 import { cn, poppins, rp, safeParseFloat } from '@/lib/utils';
 import { ShioTableSchema } from '@/schemas/togel-schema';

@@ -1,18 +1,19 @@
 'use server';
 
 import React from 'react';
-import Image from 'next/image';
-import { BsDot, BsTrash, BsPen } from 'react-icons/bs';
-import { Button } from '../ui/button';
-import PostAuthor from './post-author';
-import { PostProps } from '@/types/types';
 
-import CommentsList from './comments/comments-list';
-
-import CommentCreateForm from './comments/comment-create-form';
-import EditDeletePostButton from './edit-delete-post-button';
 import { cn } from '@/lib/utils';
+import { PostProps } from '@/types/types';
+import Image from 'next/image';
 import image from 'next/image';
+import { BsDot, BsPen, BsTrash } from 'react-icons/bs';
+
+import { Button } from '../shadcn/ui/button';
+import CommentCreateForm from './comments/comment-create-form';
+import CommentsList from './comments/comments-list';
+import EditDeletePostButton from './edit-delete-post-button';
+import PostAuthor from './post-author';
+
 // import ClientOnly from '@/lib/client-only';
 
 type PostShowProps = {
@@ -88,10 +89,10 @@ const PostShow = ({ item }: PostShowProps) => {
                   item.img.length === 4
                     ? 'w-1/5'
                     : item.img.length === 3
-                    ? 'w-1/3'
-                    : item.img.length === 2
-                    ? 'w-1/2'
-                    : ''
+                      ? 'w-1/3'
+                      : item.img.length === 2
+                        ? 'w-1/2'
+                        : ''
                 )}
               />
             </div>

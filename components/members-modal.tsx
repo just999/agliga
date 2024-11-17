@@ -6,6 +6,26 @@
 // import { ScrollArea } from '../ui/scroll-area';
 // import { MemberRole } from '@prisma/client';
 // import UserAvatar from '../user-avatar';
+import { useState } from 'react';
+
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+} from '@radix-ui/react-dialog';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from '@radix-ui/react-dropdown-menu';
+import axios from 'axios';
 import {
   Check,
   Gavel,
@@ -17,29 +37,10 @@ import {
   ShieldCheck,
   ShieldQuestion,
 } from 'lucide-react';
-import { useState } from 'react';
-
-import qs from 'query-string';
-import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuSub,
-  DropdownMenuSubTrigger,
-  DropdownMenuPortal,
-  DropdownMenuSubContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-} from '@radix-ui/react-dropdown-menu';
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogDescription,
-} from '@radix-ui/react-dialog';
-import { DialogHeader } from './ui/dialog';
+import qs from 'query-string';
+
+import { DialogHeader } from './shadcn/ui/dialog';
 
 const roleIconMap = {
   GUEST: null,

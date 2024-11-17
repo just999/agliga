@@ -292,17 +292,17 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Button } from '@/components/ui/button';
+
+import BeatSpinner from '@/components/shadcn/ui/beat-spinner';
+import { Button } from '@/components/shadcn/ui/button';
 import { cn, poppins } from '@/lib/utils';
+import { useTabsStore } from '@/store/use-tabs-store';
 import { DepoProps, tabsProps, WdProps } from '@/types/types';
+import { User } from '@prisma/client';
+import { usePathname } from 'next/navigation';
 import { IoNotifications } from 'react-icons/io5';
 
-import { User } from '@prisma/client';
-
 import DepoWdClient from './depo-wd-client';
-import { useTabsStore } from '@/store/use-tabs-store';
-import { usePathname } from 'next/navigation';
-import BeatSpinner from '@/components/ui/beat-spinner';
 
 type DepoWdTabsActiveProps = {
   depo: (DepoProps & WdProps)[];
@@ -377,7 +377,8 @@ const DepoWdTabsActive = ({
         tab.active
           ? 'bg-orange-300/50 w-full border-b-4 border-orange-400 shadow-xl'
           : 'bg-amber-100 w-full'
-      )}>
+      )}
+    >
       <Button
         onClick={() => handleTabActive(tab.id)}
         variant='ghost'
@@ -388,7 +389,8 @@ const DepoWdTabsActive = ({
           tab.active
             ? 'bg-orange-300 text-black ring-orange-400 text-shadow shadow-orange-700'
             : undefined
-        )}>
+        )}
+      >
         <div className='relative px-2 border text-xl border-none border-yellow-400 flex flex-row rounded-md items-center '>
           <span>{tab.label}</span>
           <span className='flex items-center rounded-full p-2.5 drop-shadow-xl'>
@@ -399,7 +401,8 @@ const DepoWdTabsActive = ({
               className={cn(
                 'absolute top-0 right-0  text-amber-200 text-base  rounded-full bg-red-600 shadow-xl',
                 poppins.className
-              )}>
+              )}
+            >
               <span className='text-xs px-2 text-shadow'>{newDepoCount}</span>
             </span>
           ) : tab.value === 'wd' ? (
@@ -407,7 +410,8 @@ const DepoWdTabsActive = ({
               className={cn(
                 'absolute top-0 right-0  text-amber-200 text-base  rounded-full bg-red-600 shadow-xl',
                 poppins.className
-              )}>
+              )}
+            >
               <span className='text-xs px-2 text-shadow'>{newWdCount}</span>
             </span>
           ) : (
@@ -435,10 +439,8 @@ const DepoWdTabsActive = ({
         {tabs.map((t) => (
           <div
             key={t.id}
-            className={cn(
-              'tab-pane fade',
-              t.active ? 'show active' : 'hidden'
-            )}>
+            className={cn('tab-pane fade', t.active ? 'show active' : 'hidden')}
+          >
             <DepoWdClient
               role={role}
               tab={t.value}

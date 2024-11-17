@@ -1,11 +1,9 @@
 'use client';
 
-import { InputCustom } from '@/components/ui/inputCustom';
-import { PasswordInput } from '@/components/ui/password-input';
+import { InputCustom } from '@/components/shadcn/ui/inputCustom';
+import { PasswordInput } from '@/components/shadcn/ui/password-input';
 import ClientOnly from '@/lib/client-only';
-
 import { MailIcon } from 'lucide-react';
-
 import { useFormContext } from 'react-hook-form';
 
 const UserDetailsForm = () => {

@@ -1,10 +1,10 @@
 'use client';
 
 import useModal from '@/hooks/use-modal';
-import Modal from './modal';
-
 import { useRouter } from 'next/navigation';
-import { HeadingLogo } from '../ui';
+
+import { HeadingLogo } from '../shadcn/ui';
+import Modal from './modal';
 
 type NoUserModalProps = {};
 

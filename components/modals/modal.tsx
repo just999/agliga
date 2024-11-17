@@ -1,10 +1,12 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import { IoMdClose } from 'react-icons/io';
-import { Button } from '../ui/button';
-import Btn from '../ui/btn';
+
 import { cn } from '@/lib/utils';
+import { IoMdClose } from 'react-icons/io';
+
+import Btn from '../shadcn/ui/btn';
+import { Button } from '../shadcn/ui/button';
 
 type ModalProps = {
   modalClassName?: string;
@@ -84,7 +86,8 @@ const Modal = ({
       className={cn(
         'justify-center items-center flex overflow-x-hidden overflow-scroll top-0 left-0 h-full fixed inset-0 z-50 outline-none focus:outline-none bg-neutral-800/70 pt-24 backdrop-blur',
         modalClassName
-      )}>
+      )}
+    >
       <div className='relative w-full md:w-4/6 lg:w-3/6 xl:w-2/5 my-6 mx-auto h-full lg:h-auto md:h-auto '>
         {/* CONTENT */}
         <div
@@ -93,19 +96,22 @@ const Modal = ({
             additionalClass,
             showModal ? 'translate-y-0' : 'translate-y-full',
             showModal ? 'opacity-100' : 'opacity-0'
-          )}>
+          )}
+        >
           <div
             className={cn(
               'translate   h-full lg:h-auto md:h-auto border-0 rounded-lg shadow-lg relative flex flex-col  bg-white outline-none focus:outline-none ',
               className
-            )}>
+            )}
+          >
             <div className='relative p-4 flex-auto'>
               <Button
                 size='icon'
                 variant='ghost'
                 onClick={handleClose}
                 type='button'
-                className='p-1 border-0 h-6 w-6  bg-white text-stone-400 hover:opacity-80 hover:border hover:bg-rose-600/20 hover:border-solid hover:border-red-300 shadow-lg rounded-full transition absolute left-9 '>
+                className='p-1 border-0 h-6 w-6  bg-white text-stone-400 hover:opacity-80 hover:border hover:bg-rose-600/20 hover:border-solid hover:border-red-300 shadow-lg rounded-full transition absolute left-9 '
+              >
                 <IoMdClose size={18} className='w-6 h-6 ' />
               </Button>
               <form onSubmit={onSubmit}>{body}</form>

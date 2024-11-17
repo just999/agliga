@@ -1,5 +1,5 @@
 import ColokBebasTable from '@/components/dashboard/members/togels/colok-bebas/colok-bebas-table';
-import TogelContainer from '@/components/ui/togel-container';
+import TogelContainer from '@/components/shadcn/ui/togel-container';
 import { capitalizeFirstCharacter, cn, oldStandardTT } from '@/lib/utils';
 
 type ColokBebasPageProps = {
@@ -15,7 +15,8 @@ const ColokBebasPage = async ({ params }: ColokBebasPageProps) => {
         className={cn(
           'mx-auto text-center font-semibold text-lg',
           oldStandardTT.className
-        )}>
+        )}
+      >
         {capitalizeFirstCharacter(params.slug)} - Pools - Colok-Bebas
       </div>
       <div className='bg-green-50/50 px-2 py-1 rounded-lg shadow-lg'>

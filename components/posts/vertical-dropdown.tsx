@@ -1,18 +1,18 @@
 'use client';
 
+import { useFavorite } from '@/hooks/use-favorite';
+import { PostProps, SafeUser } from '@/types/types';
 import {
   DropdownMenu,
-  DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuTrigger,
 } from '@radix-ui/react-dropdown-menu';
 import { MoreVertical } from 'lucide-react';
-import { Button } from '../ui/button';
-
-import { PostProps, SafeUser } from '@/types/types';
 import { BiCommentDots, BiPencil } from 'react-icons/bi';
-import { useFavorite } from '@/hooks/use-favorite';
+
+import { Button } from '../shadcn/ui/button';
 
 type VerticalDropdownProps = {
   item: PostProps;

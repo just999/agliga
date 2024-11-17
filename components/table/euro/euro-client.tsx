@@ -1,23 +1,21 @@
 'use client';
 
-import { DataTable } from '@/components/ui/data-table';
+import React, { useEffect, useState } from 'react';
 
-import { euroColumns } from './euro-columns';
-import { euroRoundColumns } from './euro-round-columns';
+import { DataTable } from '@/components/shadcn/ui/data-table';
+import { Skeleton } from '@/components/shadcn/ui/skeleton';
+import useLeague, { TeamStats } from '@/hooks/use-league';
+import { fetchEuroByRound } from '@/lib/queries/euro';
+import { cn, fixtureFiltered } from '@/lib/utils';
 import {
   EuroGroupProps,
   EuroProps,
   EuroWithIconProps,
   FixtureProps,
 } from '@/types/types';
-import { useEffect, useState } from 'react';
-import React from 'react';
 
-import useLeague, { TeamStats } from '@/hooks/use-league';
-import { Skeleton } from '@/components/ui/skeleton';
-import { cn, fixtureFiltered } from '@/lib/utils';
-
-import { fetchEuroByRound } from '@/lib/queries/euro';
+import { euroColumns } from './euro-columns';
+import { euroRoundColumns } from './euro-round-columns';
 
 interface EuroClientProps {
   eu?: FixtureProps[] | any;

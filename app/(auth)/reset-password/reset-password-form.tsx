@@ -1,28 +1,24 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
+
 import {
   generateResetPasswordEmail,
   resetPassword,
 } from '@/actions/auth-actions';
 import CardWrapper from '@/components/card-wrapper';
-
-import { Button } from '@/components/ui/button';
-
-import Spinner from '@/components/ui/spinner';
-import { ActionResult } from '@/types';
-
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { GiDialPadlock } from 'react-icons/gi';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { ResetPasswordSchema, resetPasswordSchema } from '@/schemas';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { PasswordInput } from '@/components/ui/password-input';
-import toast from 'react-hot-toast';
-
 import ResultMessage from '@/components/result-message';
+import { Button } from '@/components/shadcn/ui/button';
+import { PasswordInput } from '@/components/shadcn/ui/password-input';
+import Spinner from '@/components/shadcn/ui/spinner';
 import ClientOnly from '@/lib/client-only';
+import { ResetPasswordSchema, resetPasswordSchema } from '@/schemas';
+import { ActionResult } from '@/types';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
+import { GiDialPadlock } from 'react-icons/gi';
 
 type ResetPasswordFormProps = {};
 
@@ -70,7 +66,8 @@ const ResetPasswordForm = () => {
   const bodyContent = (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className='flex flex-col space-y-4 '>
+      className='flex flex-col space-y-4 '
+    >
       <PasswordInput
         isDirty={isDirty}
         className='text-sm font-semibold'

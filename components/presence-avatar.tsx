@@ -1,14 +1,13 @@
 'use client';
 
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/shadcn/ui';
 import { cn } from '@/lib/utils';
-
-import { usePresenceStore } from '@/store/use-presence-store';
 import { userData } from '@/store/use-active-user-store';
-
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui';
-import { AnonymousUser, User } from '@prisma/client';
-import UserAvatar from './user-avatar';
+import { usePresenceStore } from '@/store/use-presence-store';
 import { SafeAdminChat } from '@/types/types';
+import { AnonymousUser, User } from '@prisma/client';
+
+import UserAvatar from './user-avatar';
 
 type PresenceAvatarProps = {
   user?: User | SafeAdminChat;

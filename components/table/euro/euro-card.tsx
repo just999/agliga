@@ -1,7 +1,6 @@
 'use client';
 
-import { Skeleton } from '@/components/ui/skeleton';
-
+import { Skeleton } from '@/components/shadcn/ui/skeleton';
 import { convertDateMonthYear } from '@/lib/convert-date-time';
 import { cn } from '@/lib/utils';
 import { EuroWithIconProps } from '@/types/types';

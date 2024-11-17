@@ -2,21 +2,18 @@
 
 import './postItemOne.css';
 
-import Link from 'next/link';
-import Image from 'next/image';
-
-import { EB_Garamond } from 'next/font/google';
-import { Source_Serif_4 } from 'next/font/google';
 import { cn } from '@/lib/utils';
-import { BsDot } from 'react-icons/bs';
-import Loader from '../loader';
 import { PostProps, SafeUser } from '@/types/types';
+import { EB_Garamond, Source_Serif_4 } from 'next/font/google';
+import Image from 'next/image';
+import Link from 'next/link';
+import { BsDot } from 'react-icons/bs';
 
+import HeartButton from '../heart-button';
+import Loader from '../loader';
+import { Button } from '../shadcn/ui/button';
 import PostAuthor from './post-author';
 import VerticalDropdown from './vertical-dropdown';
-import HeartButton from '../heart-button';
-
-import { Button } from '../ui/button';
 
 interface PostItemOneProps {
   pageOne: boolean;
@@ -54,7 +51,8 @@ const PostItemOne = ({
         'post-entry-1 p-2 bg-yellow-50/60 shadow-xl rounded-md h-[380px] xs:flex xs:flex-col  xs:gap-2 xs:h-full',
         className,
         large ? 'lg' : undefined
-      )}>
+      )}
+    >
       <Link href={`/posts/${item.id}`}>
         {typeof item.img === 'string' && (large || pageOne) ? (
           <Image
@@ -93,7 +91,8 @@ const PostItemOne = ({
           className={cn(
             'post-meta flex flex-row items-center justify-start gap-0',
             className
-          )}>
+          )}
+        >
           <span className='date'>{item.category}</span>
           <span className='mx-1'>
             <BsDot />
@@ -125,7 +124,8 @@ const PostItemOne = ({
       <h2>
         <Link
           href={`/posts/${item.id}`}
-          className='text-ellipsis overflow-hidden'>
+          className='text-ellipsis overflow-hidden'
+        >
           {item.img && pageOne === false ? (
             <span className='shadow-lg px-1'>
               <div className={cn('mb-2 font-semibold', eb.className)}>
@@ -135,7 +135,8 @@ const PostItemOne = ({
                 className={cn(
                   'text-sm w-full py-2 mb-2 text-pretty text-gray-700 font-light',
                   source.className
-                )}>
+                )}
+              >
                 {item.brief?.substring(0, 60)}...
               </div>{' '}
             </span>
@@ -148,7 +149,8 @@ const PostItemOne = ({
                 className={cn(
                   'text-sm w-full py-2 text-pretty text-gray-700 font-light',
                   source.className
-                )}>
+                )}
+              >
                 {item.brief?.substring(0, 120)}...
               </div>{' '}
             </span>
@@ -165,7 +167,8 @@ const PostItemOne = ({
                 className={cn(
                   'text-sm w-full  py-2 text-pretty text-gray-700 font-light',
                   source.className
-                )}>
+                )}
+              >
                 {item.brief?.substring(0, 350)}
               </div>
             </span>

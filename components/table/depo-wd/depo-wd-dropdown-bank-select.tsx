@@ -1,6 +1,8 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
+import { useEffect, useState } from 'react';
+
+import { Button } from '@/components/shadcn/ui/button';
 import {
   Command,
   CommandEmpty,
@@ -8,19 +10,14 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from '@/components/ui/command';
-
+} from '@/components/shadcn/ui/command';
 import { cn } from '@/lib/utils';
-
 import { DepoProps, ValueIconProps } from '@/types/types';
-
 import {
   Popover,
-  PopoverTrigger,
   PopoverContent,
+  PopoverTrigger,
 } from '@radix-ui/react-popover';
-
-import { useEffect, useState } from 'react';
 import { BsArrowDown } from 'react-icons/bs';
 import { FcUndo } from 'react-icons/fc';
 
@@ -50,7 +47,7 @@ const DepoWdDropdownBankSelect = ({
   const handleUnselect = () => {
     setSelectedValue(null);
     setOpen(false);
-    onChange(null || '');
+    // onChange(null || '');
   };
   // let selectedData;
   // if (column === 'bank') {

@@ -1,9 +1,11 @@
 'use client';
 
+import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
+
 import { createMessage } from '@/actions/message-actions';
-import { Button } from '@/components/ui/button';
-import { InputCustom } from '@/components/ui/inputCustom';
-import Spinner from '@/components/ui/spinner';
+import { Button } from '@/components/shadcn/ui/button';
+import { InputCustom } from '@/components/shadcn/ui/inputCustom';
+import Spinner from '@/components/shadcn/ui/spinner';
 import { cn, handleFormServerErrors } from '@/lib/utils';
 import { MessageSchema, messageSchema } from '@/schemas';
 import { useMessageStore } from '@/store/use-message-store';
@@ -12,7 +14,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { AnonymousUser, User } from '@prisma/client';
 import { SendIcon } from 'lucide-react';
 import { useParams, useRouter } from 'next/navigation';
-import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 
 type ChatFormProps = {
@@ -71,7 +72,8 @@ const ChatForm = forwardRef<ChatFormHandle, ChatFormProps>(
     return (
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className='w-full flex flex-col bg-zinc-300'>
+        className='w-full flex flex-col bg-zinc-300'
+      >
         <div className='flex flex-row items-center gap-2'>
           <InputCustom
             className='h-8 shadow-inner border-0 focus-visible:ring-0 focus:outline-none focus:right-0 '
@@ -96,7 +98,8 @@ const ChatForm = forwardRef<ChatFormHandle, ChatFormProps>(
               isValid && 'hover:bg-blue-700/70 hover:text-blue-800',
               isSubmitting && 'bg-yellow-600 text-sky-500'
             )}
-            disabled={!isValid || isSubmitting}>
+            disabled={!isValid || isSubmitting}
+          >
             {isSubmitting ? (
               <Spinner className='gap-0 text-black' size={14} color='sky-700' />
             ) : (

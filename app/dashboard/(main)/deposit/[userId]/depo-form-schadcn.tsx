@@ -1,18 +1,16 @@
 'use client';
 
-import { Button, InputCustom } from '@/components/ui';
-import DatePicker from '@/components/ui/datepicker';
+import { Button, InputCustom } from '@/components/shadcn/ui';
+import DatePicker from '@/components/shadcn/ui/datepicker';
 import { UserTest } from '@/types/types';
 import { zodResolver } from '@hookform/resolvers/zod';
-
 import {
   Select,
-  SelectTrigger,
-  SelectValue,
   SelectContent,
   SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from '@radix-ui/react-select';
-
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -76,9 +74,8 @@ const DepoFormSchadcn = ({ user }: UserFormProps) => {
         />
         <Select
           defaultValue={user ? user.role : undefined}
-          onValueChange={(value: FormValues['role']) =>
-            setValue('role', value)
-          }>
+          onValueChange={(value: FormValues['role']) => setValue('role', value)}
+        >
           <SelectTrigger className='w-[180px]'>
             <SelectValue placeholder='Role' />
           </SelectTrigger>

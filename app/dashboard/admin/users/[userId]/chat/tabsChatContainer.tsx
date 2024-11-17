@@ -1,8 +1,10 @@
 'use client';
 
+import { useCallback, useEffect, useMemo, useRef } from 'react';
+
 import ChatTabsContent from '@/components/chat/chat-tabs-content';
 import ChatTabsList from '@/components/chat/chat-tabs-list';
-import { Tabs, TabsList } from '@/components/ui';
+import { Tabs, TabsList } from '@/components/shadcn/ui';
 import ClientOnly from '@/lib/client-only';
 import { cn, createChatId } from '@/lib/utils';
 import { useChatStore } from '@/store/use-chat-store';
@@ -10,7 +12,6 @@ import { usePresenceStore } from '@/store/use-presence-store';
 import { SafeAdminChat } from '@/types/types';
 import { User } from '@prisma/client';
 import { useSession } from 'next-auth/react';
-import { useCallback, useEffect, useMemo, useRef } from 'react';
 
 type TabsChatContainerProps = {
   users: User[];
@@ -143,24 +144,28 @@ const TabsChatContainer = ({
       <div
         className={cn(
           'm-0 p-0 flex flex-col items-end justify-end rounded-t-lg'
-        )}>
+        )}
+      >
         <Tabs
           value={tab}
           onValueChange={onTabChange}
           className={cn(
             'max-h-[570px] z-10 grid grid-cols-[400px] bg-amber-100',
             toggleSidePanel ? 'rounded-t-lg' : 'rounded-t-lg'
-          )}>
+          )}
+        >
           <div
             className={cn(
               'relative rounded-t-lg',
               toggleSidePanel ? '' : 'rounded-t-lg'
-            )}>
+            )}
+          >
             <TabsList
               className={cn(
                 'absolute top-0 left-0 h-full w-[50px] flex flex-col gap-2 justify-start backdrop-blur-sm bg-stone-500/10 transition-transform duration-300 ease-in-out',
                 toggleSidePanel ? 'translate-x-0' : '-translate-x-full'
-              )}>
+              )}
+            >
               {onlineUsers.map((user) => (
                 <ChatTabsList
                   key={user?.id}

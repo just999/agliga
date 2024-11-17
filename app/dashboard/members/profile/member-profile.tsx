@@ -1,4 +1,3 @@
-import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
@@ -6,13 +5,13 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui';
-import { cn } from '@/lib/utils';
-import { Landmark, Pencil } from 'lucide-react';
-
+} from '@/components/shadcn/ui';
+import { Button } from '@/components/shadcn/ui/button';
 import { banks } from '@/lib/helper';
-import Link from 'next/link';
+import { cn } from '@/lib/utils';
 import { User } from '@prisma/client';
+import { Landmark, Pencil } from 'lucide-react';
+import Link from 'next/link';
 
 type MemberProfileProps = {
   className?: string;
@@ -24,7 +23,8 @@ const MemberProfile = ({ className, user, ...props }: MemberProfileProps) => {
   return (
     <Card
       className={cn('w-[440px] pt-2 border-0 bg-sky-50', className)}
-      {...props}>
+      {...props}
+    >
       <CardHeader className='flex flex-col items-center '>
         <CardTitle>Profile Settings</CardTitle>
         <CardDescription>Your Profile details</CardDescription>
@@ -40,7 +40,8 @@ const MemberProfile = ({ className, user, ...props }: MemberProfileProps) => {
                   bank.map(({ value, icon: Icon }) => (
                     <span
                       key={value}
-                      className='flex flex-row items-start gap-2 '>
+                      className='flex flex-row items-start gap-2 '
+                    >
                       <Icon className='svg text-white' />
                       <span className='text-white font-bold'>{value}</span>
                     </span>
@@ -82,7 +83,8 @@ const MemberProfile = ({ className, user, ...props }: MemberProfileProps) => {
           asChild
           className='w-full group bg-sky-500 hover:!bg-sky-500/70 flex flex-row items-center shadow-lg
           text-white'
-          variant='ghost'>
+          variant='ghost'
+        >
           <Link href={`/dashboard/members/profile/${user?.id}`}>
             <Pencil className='mr-2 h-4 w-4 svg text-white  group-hover:text-black' />{' '}
             <div className='text-white text-shadow  group-hover:text-black'>

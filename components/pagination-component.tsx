@@ -1,10 +1,11 @@
 'use client';
 
 import { useEffect } from 'react';
-import { Pagination } from './ui/pagination';
 
 import { cn } from '@/lib/utils';
 import { usePaginationStore } from '@/store/use-pagination-store';
+
+import { Pagination } from './shadcn/ui/pagination';
 
 type PaginationComponentProps = {
   totalCount: number;
@@ -55,7 +56,8 @@ const PaginationComponent = ({ totalCount }: PaginationComponentProps) => {
                 pageSize === size &&
                   'bg-secondary  text-white hover:bg-secondary hover:text-white'
                 // 'cursor-pointer border-2 hover:bg-gray-100 items-center justify-center rounded-lg shadow-sm min-w-[36px] w-9 h-9 text-sm'
-              )}>
+              )}
+            >
               {size}
             </div>
           ))}

@@ -207,7 +207,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui';
+} from '@/components/shadcn/ui';
 import { useZodForm } from '@/hooks/use-zod-form';
 import { cn } from '@/lib/utils';
 import {

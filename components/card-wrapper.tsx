@@ -40,10 +40,12 @@
 
 // export default CardWrapper;
 import React from 'react';
-import { IconType } from 'react-icons';
-import { Card, CardContent, CardFooter, CardHeader } from './ui/card';
-import { Button } from './ui/button';
+
 import { cn } from '@/lib/utils';
+import { IconType } from 'react-icons';
+
+import { Button } from './shadcn/ui/button';
+import { Card, CardContent, CardFooter, CardHeader } from './shadcn/ui/card';
 
 type CardWrapperProps = {
   body?: React.ReactNode;
@@ -77,7 +79,8 @@ const CardWrapper = ({
                 className={cn(
                   'text-2xl font-semibold text-nowrap text-stone-200 text-shadow',
                   classNames
-                )}>
+                )}
+              >
                 {headerText}
               </h1>
             </div>
@@ -94,7 +97,8 @@ const CardWrapper = ({
               variant='ghost'
               className='w-full shadow-lg bg-sky-500 hover:bg-sky-400 hover:text-white text-shadow text-gray-50'
               size='sm'
-              type='button'>
+              type='button'
+            >
               {actionLabel}
             </Button>
           )}

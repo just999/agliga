@@ -1,24 +1,20 @@
 'use client';
 
 import { createSchedule } from '@/actions/schedule-actions';
-
 import {
-  Card,
-  CardHeader,
-  CardContent,
   Button,
-  Spinner,
+  Card,
+  CardContent,
+  CardHeader,
   HeadingLogo,
-  SelectInput,
   InputCustom,
-} from '@/components/ui';
-
+  SelectInput,
+  Spinner,
+} from '@/components/shadcn/ui';
 import { useTeams, useWeeks } from '@/hooks/use-teams';
 import { cn, handleFormServerErrors } from '@/lib/utils';
-
 import { scheduleSchema, ScheduleSchema } from '@/schemas/schedules-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
-
 import { CalendarCog } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
@@ -170,7 +166,8 @@ const ScheduleForm = () => {
                 type='submit'
                 className={cn(
                   'bg-indigo-500 px-4 text-gray-50 hover:bg-indigo-500/70 hover:text-gray-200 w-full shadow-lg'
-                )}>
+                )}
+              >
                 {isSubmitting || isLoading ? (
                   <div className='flex gap-2 items-center justify-center'>
                     <Spinner size={16} color='gray-200' /> processing...

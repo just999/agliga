@@ -2,8 +2,8 @@
 
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
 
-import { Button, InputCustom } from '@/components/ui';
-import { Label } from '@/components/ui/label';
+import { Button, InputCustom } from '@/components/shadcn/ui';
+import { Label } from '@/components/shadcn/ui/label';
 import { useCalculator, usePermAndFormat } from '@/hooks/use-togel-bbfs';
 import { useZodForm } from '@/hooks/use-zod-form';
 import {

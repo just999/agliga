@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/shadcn/ui/button';
 import {
   Command,
   CommandEmpty,
@@ -10,22 +10,19 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from '@/components/ui/command';
+} from '@/components/shadcn/ui/command';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@/components/ui/popover';
-
-import { IconType } from 'react-icons';
-
-import { BsPlusCircleDotted } from 'react-icons/bs';
-
-import { cn } from '@/lib/utils';
-import { FcUndo } from 'react-icons/fc';
+} from '@/components/shadcn/ui/popover';
 import useModal from '@/hooks/use-modal';
-import { DepoProps } from '@/types/types';
 import { useUserRole } from '@/hooks/use-user-role';
+import { cn } from '@/lib/utils';
+import { DepoProps } from '@/types/types';
+import { IconType } from 'react-icons';
+import { BsPlusCircleDotted } from 'react-icons/bs';
+import { FcUndo } from 'react-icons/fc';
 
 type Status = {
   value: string;
@@ -78,10 +75,10 @@ export function DepoWdStatusActions({
                         selectedStatus.value === 'error'
                         ? 'text-rose-600 font-bold'
                         : selectedStatus.value === 'in progress'
-                        ? 'text-sky-600 font-bold'
-                        : selectedStatus.value === 'success'
-                        ? 'text-emerald-700 font-bold'
-                        : 'text-orange-700 font-bold '
+                          ? 'text-sky-600 font-bold'
+                          : selectedStatus.value === 'success'
+                            ? 'text-emerald-700 font-bold'
+                            : 'text-orange-700 font-bold '
                     )}
                   >
                     {selectedStatus.value}

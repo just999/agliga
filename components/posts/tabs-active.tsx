@@ -1,11 +1,12 @@
 'use client';
 
-import { cn } from '@/lib/utils';
-import { Button } from '../ui/button';
-
-import { PostProps, tabsData } from '@/types/types';
-import SidePostItem from './side-post-item';
 import { useState } from 'react';
+
+import { cn } from '@/lib/utils';
+import { PostProps, tabsData } from '@/types/types';
+
+import { Button } from '../shadcn/ui/button';
+import SidePostItem from './side-post-item';
 
 type TabsActiveProps = {
   items: PostProps[];
@@ -32,7 +33,8 @@ const TabsActive = ({ items }: TabsActiveProps) => {
         tab.active
           ? ' bg-orange-100/50 w-full border-b-2 border-orange-400 '
           : ' bg-gray-50 w-full'
-      )}>
+      )}
+    >
       <Button
         onClick={() => handleTabActive(tab.id)}
         variant='ghost'
@@ -41,7 +43,8 @@ const TabsActive = ({ items }: TabsActiveProps) => {
         className={cn(
           `text-center w-full text-gray-400  nav-link`,
           tab.active ? 'active text-black ring-orange-400' : undefined
-        )}>
+        )}
+      >
         {tab.name}
       </Button>
     </li>
@@ -55,7 +58,8 @@ const TabsActive = ({ items }: TabsActiveProps) => {
         <div
           className={`tab-pane fade ${
             tabs[0].active ? 'show active' : 'hidden'
-          }`}>
+          }`}
+        >
           {items.slice(0, 6).map((item, i) => (
             <SidePostItem key={item.id} item={item} i={i} />
           ))}
@@ -63,7 +67,8 @@ const TabsActive = ({ items }: TabsActiveProps) => {
         <div
           className={`tab-pane fade ${
             tabs[1].active ? 'show active' : 'hidden'
-          }`}>
+          }`}
+        >
           {items.slice(6, 12).map((item, i) => (
             <SidePostItem key={item.id} item={item} i={i} />
           ))}

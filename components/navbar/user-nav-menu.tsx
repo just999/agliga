@@ -1,10 +1,10 @@
 'use client';
 
-import useModal from '@/hooks/use-modal';
+import { logOut } from '@/actions/auth-actions';
 import { useClickOutside } from '@/hooks/use-click-outside';
+import useModal from '@/hooks/use-modal';
 
-import { Button } from '../ui/button';
-
+import { Button } from '../shadcn/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,8 +18,7 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from '../ui/dropdown-menu';
-import { logOut } from '@/actions/auth-actions';
+} from '../shadcn/ui/dropdown-menu';
 import UserAvatar from '../user-avatar';
 
 type UserNavMenuProps = {
@@ -48,7 +47,8 @@ const UserNavMenu = ({ user }: UserNavMenuProps) => {
           variant='ghost'
           type='button'
           size='sm'
-          aria-label='User Nav Menu'>
+          aria-label='User Nav Menu'
+        >
           {/* <AiOutlineMenu /> */}
           {/* <Avatar
             src={user?.image}
@@ -64,7 +64,8 @@ const UserNavMenu = ({ user }: UserNavMenuProps) => {
         <DropdownMenuGroup>
           <DropdownMenuItem
             onClick={() => onOpen('profile')}
-            className='cursor-pointer'>
+            className='cursor-pointer'
+          >
             Profile
             <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
           </DropdownMenuItem>

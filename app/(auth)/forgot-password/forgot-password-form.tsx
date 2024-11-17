@@ -1,18 +1,17 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
+
 import { generateResetPasswordEmail } from '@/actions/auth-actions';
 import CardWrapper from '@/components/card-wrapper';
-
-import { Button } from '@/components/ui/button';
-import { InputCustom } from '@/components/ui/inputCustom';
-import Spinner from '@/components/ui/spinner';
+import ResultMessage from '@/components/result-message';
+import { Button } from '@/components/shadcn/ui/button';
+import { InputCustom } from '@/components/shadcn/ui/inputCustom';
+import Spinner from '@/components/shadcn/ui/spinner';
 import { ActionResult } from '@/types';
 import { MailIcon } from 'lucide-react';
-import { useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import { GiDialPadlock } from 'react-icons/gi';
-import ResultMessage from '@/components/result-message';
 
 type ForgotPasswordFormProps = {};
 
@@ -33,7 +32,8 @@ const ForgotPasswordForm = () => {
   const bodyContent = (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className='flex flex-col space-y-4 '>
+      className='flex flex-col space-y-4 '
+    >
       <InputCustom
         type='email'
         className='w-full text-sm font-semibold '

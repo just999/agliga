@@ -2,7 +2,7 @@ import Togel4dSetTable from '@/components/dashboard/members/togels/4d3d2dSet/tog
 import Togel4dSet from '@/components/dashboard/members/togels/togel-4d-set';
 import TogelTable4dSet from '@/components/dashboard/members/togels/togel-table-4d-set';
 import TogelTable4dSetConfirm from '@/components/dashboard/members/togels/togel-table-4d-set-confirm';
-import TogelContainer from '@/components/ui/togel-container';
+import TogelContainer from '@/components/shadcn/ui/togel-container';
 import { capitalizeFirstCharacter, cn, oldStandardTT } from '@/lib/utils';
 
 type Togel4dSetPageProps = {
@@ -18,7 +18,8 @@ const Togel4dSetPage = async ({ params }: Togel4dSetPageProps) => {
         className={cn(
           'mx-auto text-center font-semibold text-lg',
           oldStandardTT.className
-        )}>
+        )}
+      >
         {capitalizeFirstCharacter(params.slug)} - Pools - 4d/3d/2d - set
       </div>
       <div className='bg-green-50/50 px-2 py-1 rounded-lg shadow-lg'>

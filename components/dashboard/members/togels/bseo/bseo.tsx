@@ -1,12 +1,14 @@
 'use client';
 
-import { Button, InputCustom } from '@/components/ui';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+
+import { Button, InputCustom } from '@/components/shadcn/ui';
 import { useZodForm } from '@/hooks/use-zod-form';
 import { cn, generateAndPadArray } from '@/lib/utils';
 import { Bseo4dSchema, bseoSchema } from '@/schemas/togel-schema';
 import { ChevronLeft } from 'lucide-react';
-import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useFieldArray } from 'react-hook-form';
+
 import BseoTableTest from './bseo-table-test';
 
 type BseoProps = {
@@ -253,17 +255,17 @@ const Bseo = ({ params }: BseoProps) => {
     position === '2d'
       ? '2d umum'
       : position === '2dd'
-      ? '2d depan'
-      : '2d tengah';
+        ? '2d depan'
+        : '2d tengah';
 
   const bseoValue =
     bseo === 'big'
       ? 'besar'
       : bseo === 'small'
-      ? 'kecil'
-      : bseo === 'odd'
-      ? 'ganjil'
-      : 'genap';
+        ? 'kecil'
+        : bseo === 'odd'
+          ? 'ganjil'
+          : 'genap';
 
   const onSubmit = (data: any) => {};
   return (
@@ -279,7 +281,8 @@ const Bseo = ({ params }: BseoProps) => {
                       {...register(`bs.${i}.bseo`, {
                         onChange: (e) => handleChange(e, i),
                         disabled: !positions && !wager,
-                      })}>
+                      })}
+                    >
                       <option value=''>Besar/kecil/genap/ganjil</option>
                       <option value='big'>Besar</option>
                       <option value='small'>Kecil</option>
@@ -290,7 +293,8 @@ const Bseo = ({ params }: BseoProps) => {
                     <select
                       {...register(`bs.${i}.position`, {
                         onChange: (e) => handleChange(e, i),
-                      })}>
+                      })}
+                    >
                       <option value=''>2d/2dt/2dd</option>
                       <option value='2dd'>2d depan</option>
                       <option value='2dt'>2d tengah</option>
@@ -311,7 +315,8 @@ const Bseo = ({ params }: BseoProps) => {
                       disabled={!isValid}
                       className='px-4 py-1 shadow-lg absolute left-4'
                       type='button'
-                      onClick={handleSetBseo}>
+                      onClick={handleSetBseo}
+                    >
                       {show ? (
                         <div className='flex items-center gap-2 '>
                           <ChevronLeft className='svg ' /> Back

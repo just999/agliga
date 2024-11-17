@@ -7,7 +7,7 @@ import {
   Label,
   RadioGroup,
   RadioGroupItem,
-} from '@/components/ui';
+} from '@/components/shadcn/ui';
 import {
   arrayRange,
   cn,

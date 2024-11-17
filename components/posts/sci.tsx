@@ -1,9 +1,10 @@
 'use client';
 
 import { scis } from '@/data/data';
-import IconBox from './icon-box';
 import { cn } from '@/lib/utils';
-import { Button } from '../ui/button';
+
+import { Button } from '../shadcn/ui/button';
+import IconBox from './icon-box';
 
 type SciProps = {
   size?: number | string | undefined;
@@ -24,7 +25,8 @@ const Sci = ({ size, iconClass, className }: SciProps) => {
           size='sm'
           type='button'
           key={soc.id}
-          className={cn('text-left', iconClass, className)}>
+          className={cn('text-left', iconClass, className)}
+        >
           <IconBox
             color={soc.color}
             icon={soc.icon}

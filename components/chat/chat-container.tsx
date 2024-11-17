@@ -1,5 +1,11 @@
 'use client';
 
+import { useCallback, useEffect, useRef, useState } from 'react';
+
+import { getAnonymousUser } from '@/actions/live-chat-actions';
+import { getMessageThread } from '@/actions/message-actions';
+import { Button, Spinner } from '@/components/shadcn/ui';
+import { useCurrentUserRole } from '@/hooks/use-user';
 import {
   capitalizeFirstCharacter,
   cn,
@@ -9,23 +15,17 @@ import {
   normalizedDateTime,
 } from '@/lib/utils';
 import { useChatStore } from '@/store/use-chat-store';
-
-import { MessageCircleMore } from 'lucide-react';
-import { BsChevronDown } from 'react-icons/bs';
-import PresenceAvatar from '../presence-avatar';
-import { Button, Spinner } from '@/components/ui';
-import { useCallback, useEffect, useRef, useState } from 'react';
 import { MessageDto } from '@/types';
 import { User } from '@prisma/client';
-import MessageList from './message-list';
-import ChatForm from './chat-form';
-import { getMessageThread } from '@/actions/message-actions';
-
-import { useCurrentUserRole } from '@/hooks/use-user';
-import ChatSidebar from './chat-sidebar';
-import CardInnerWrapper from '../card-inner-wrapper';
+import { MessageCircleMore } from 'lucide-react';
 import { useSession } from 'next-auth/react';
-import { getAnonymousUser } from '@/actions/live-chat-actions';
+import { BsChevronDown } from 'react-icons/bs';
+
+import CardInnerWrapper from '../card-inner-wrapper';
+import PresenceAvatar from '../presence-avatar';
+import ChatForm from './chat-form';
+import ChatSidebar from './chat-sidebar';
+import MessageList from './message-list';
 
 type ChatContainerProps = {
   username: string | null | undefined;
@@ -227,7 +227,8 @@ ChatContainerProps) => {
         size='sm'
         type='button'
         className='p-0 m-0 h-0 hover:bg-emerald-100 hover:text-sky-700 pr-1'
-        onClick={handleToggleOff}>
+        onClick={handleToggleOff}
+      >
         {/* <Link href={`/members/${user.id}`}> */}
         <BsChevronDown className='fill-gray-800' />
         {/* </Link> */}
@@ -259,7 +260,8 @@ ChatContainerProps) => {
         toggleSidePanel
           ? ' shadow-lg'
           : ' border-l-transparent border-t-transparent shadow-none'
-      )}>
+      )}
+    >
       <CardInnerWrapper
         toggleSidePanel={toggleSidePanel}
         setToggleSidePanel={setToggleSidePanel}

@@ -8,7 +8,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui';
+} from '@/components/shadcn/ui';
 import { cn } from '@/lib/utils';
 import { BbTabSchema, Bseo4dSchema } from '@/schemas/togel-schema';
 import {
@@ -23,6 +23,7 @@ import {
   UseFormSetFocus,
   UseFormWatch,
 } from 'react-hook-form';
+
 import { useBsColumns } from './bseo-column-test';
 
 type BseoTableTestProps = {
@@ -85,7 +86,8 @@ const BseoTableTest = ({
                     // header.getContext().header.column.id === 'dis' && 'w-12',
                     // header.getContext().header.column.id === 'net' && 'w-28'
                   )}
-                  style={{ width: `${header.getSize()}px` }}>
+                  style={{ width: `${header.getSize()}px` }}
+                >
                   {header.isPlaceholder
                     ? null
                     : flexRender(
@@ -104,7 +106,8 @@ const BseoTableTest = ({
           table.getRowModel().rows.map((row) => (
             <TableRow
               key={row.id}
-              data-state={row.getIsSelected() && 'selected'}>
+              data-state={row.getIsSelected() && 'selected'}
+            >
               {row.getVisibleCells().map((cell) => (
                 <TableCell
                   key={cell.id}
@@ -118,7 +121,8 @@ const BseoTableTest = ({
                     // cell.column.id === 'bet' && 'w-28',
                     // cell.column.id === 'net' && 'w-28'
                   )}
-                  style={{ width: `${cell.column.getSize()}px` }}>
+                  style={{ width: `${cell.column.getSize()}px` }}
+                >
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   {/* <pre>{JSON.stringify(cell.column.getSize(), null, 2)}</pre> */}
                 </TableCell>

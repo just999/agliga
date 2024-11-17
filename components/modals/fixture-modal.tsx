@@ -1,28 +1,23 @@
 'use client';
 
-import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import Modal from './modal';
 
-import Input from '../ui/input';
+import { usePenalty } from '@/hooks/use-euro';
+import { useGetFixtures } from '@/hooks/use-get-schedule';
+import useModal from '@/hooks/use-modal';
+import { useTeams, useWeeks } from '@/hooks/use-teams';
+import { initialFixtureFormValues } from '@/lib/helper';
+import { findMatchingObjects } from '@/lib/utils';
+import { FixtureProps } from '@/types/types';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
-import { useRouter } from 'next/navigation';
-
-import SelectInput from '../ui/select-input';
-
-import useModal from '@/hooks/use-modal';
-
-import { useWeeks, useTeams } from '@/hooks/use-teams';
-
-import { FixtureProps } from '@/types/types';
-
-import { initialFixtureFormValues } from '@/lib/helper';
-import { usePenalty } from '@/hooks/use-euro';
-import { findMatchingObjects } from '@/lib/utils';
-import { useGetFixtures } from '@/hooks/use-get-schedule';
-import { HeadingLogo } from '../ui';
+import { HeadingLogo } from '../shadcn/ui';
+import Input from '../shadcn/ui/input';
+import SelectInput from '../shadcn/ui/select-input';
+import Modal from './modal';
 
 const FixtureModal = () => {
   const [fixture, setFixture] = useState<FixtureProps>(

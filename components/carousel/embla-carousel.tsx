@@ -3,15 +3,15 @@
 'use client';
 
 import React, { useCallback, useEffect } from 'react';
-import useEmblaCarousel from 'embla-carousel-react';
-import Autoplay from 'embla-carousel-autoplay'; // Assuming you are using the Autoplay plugin
-import { EmblaPluginType } from 'embla-carousel';
-import { EmblaOptionsType } from 'embla-carousel';
 
-import { Button } from '../ui/button';
-import { useDotButton } from './embla-carousel-dot-button';
-import { usePrevNextButtons } from './embla-carousel-arrow-button';
+import { EmblaOptionsType, EmblaPluginType } from 'embla-carousel';
+import Autoplay from 'embla-carousel-autoplay'; // Assuming you are using the Autoplay plugin
+import useEmblaCarousel from 'embla-carousel-react';
 import { ChevronsLeft, ChevronsRightIcon } from 'lucide-react';
+
+import { Button } from '../shadcn/ui/button';
+import { usePrevNextButtons } from './embla-carousel-arrow-button';
+import { useDotButton } from './embla-carousel-dot-button';
 
 type PropType = {
   plugins?: EmblaPluginType[];
@@ -60,12 +60,14 @@ export const EmblaCarousel: React.FC<PropType> = ({
     <div className='embla w-full] mx-auto'>
       <div
         className='embla__viewport mx-auto  w-full text-center h-96 '
-        ref={emblaRef}>
+        ref={emblaRef}
+      >
         <div className='embla__container h-full'>
           {React.Children.map(children, (child, index) => (
             <div
               className='embla__slide flex items-center justify-center'
-              key={index}>
+              key={index}
+            >
               {index + 1}- {child}
             </div>
           ))}
@@ -74,13 +76,15 @@ export const EmblaCarousel: React.FC<PropType> = ({
           <Button
             variant='ghost'
             className='embla__prev absolute z-999 right-0 top-44 bg-white/20 hover:bg-white/30 shadow-xl'
-            onClick={scrollPrev}>
+            onClick={scrollPrev}
+          >
             <ChevronsRightIcon size={38} className='text-white/60 svg ' />
           </Button>
           <Button
             variant='ghost'
             className='embla__next  absolute z-999 left-0 top-44 bg-white/20 hover:bg-white/30 shadow-xl'
-            onClick={scrollNext}>
+            onClick={scrollNext}
+          >
             <ChevronsLeft size={38} className='text-white/60 svg ' />
           </Button>
         </div>

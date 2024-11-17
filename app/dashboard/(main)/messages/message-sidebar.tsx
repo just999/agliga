@@ -1,15 +1,14 @@
 'use client';
 
+import { useState } from 'react';
+
 import { Inbox } from '@/components/assets/icons/inbox';
 import { Outbox } from '@/components/assets/icons/outbox';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/shadcn/ui/badge';
+import { Button } from '@/components/shadcn/ui/button';
 import { cn } from '@/lib/utils';
-
 import { useMessageStore } from '@/store/use-message-store';
-
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useState } from 'react';
 
 const MessageSidebar = () => {
   const { unreadCount } = useMessageStore((state) => ({
@@ -44,7 +43,8 @@ const MessageSidebar = () => {
               ? 'text-black hover:text-gray-600/50 '
               : 'text-white bg-indigo-500  hover:bg-indigo-500/70  border-r-4 border-solid border-purple-800 rounded-none shadow-lg'
           )}
-          onClick={() => handleSelect(key)}>
+          onClick={() => handleSelect(key)}
+        >
           <Icon
             className={cn('fill-orange-800 group-hover:fill-black   svg')}
           />

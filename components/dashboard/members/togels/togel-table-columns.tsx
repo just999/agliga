@@ -1,6 +1,6 @@
 'use client';
 
-import { InputCustom } from '@/components/ui';
+import { InputCustom } from '@/components/shadcn/ui';
 import { cn, oldStandardTT } from '@/lib/utils';
 import { Sin4dSchema } from '@/schemas/togel-schema';
 import { ColumnDef } from '@tanstack/react-table';

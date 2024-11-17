@@ -12,7 +12,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui';
+} from '@/components/shadcn/ui';
 import useTransformGames from '@/hooks/use-togel-transform-games';
 import { useZodForm } from '@/hooks/use-zod-form';
 import { cn, handleFormServerErrors } from '@/lib/utils';

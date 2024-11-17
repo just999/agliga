@@ -1,11 +1,6 @@
 'use client';
 
-import {
-  FilterFn,
-  flexRender,
-  getCoreRowModel,
-  useReactTable,
-} from '@tanstack/react-table';
+import { useCallback, useState } from 'react';
 
 import {
   Table,
@@ -15,7 +10,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
+} from '@/components/shadcn/ui/table';
 import { useZodForm } from '@/hooks/use-zod-form';
 import ClientOnly from '@/lib/client-only';
 import { cn } from '@/lib/utils';
@@ -26,8 +21,14 @@ import {
   Sin4dSchema,
 } from '@/schemas/togel-schema';
 import { rankItem } from '@tanstack/match-sorter-utils';
-import { useCallback, useState } from 'react';
+import {
+  FilterFn,
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+} from '@tanstack/react-table';
 import { FieldValues, SubmitHandler } from 'react-hook-form';
+
 import { useBsTogelColumns } from './bseo-column';
 
 const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
@@ -164,7 +165,8 @@ export function BseoTable<TData, TValue>({
                         'w-28',
                       header.getContext().header.column.id === 'dis' && 'w-12',
                       header.getContext().header.column.id === 'net' && 'w-28'
-                    )}>
+                    )}
+                  >
                     {header.isPlaceholder
                       ? null
                       : flexRender(
@@ -189,7 +191,8 @@ export function BseoTable<TData, TValue>({
             table.getRowModel().rows.map((row) => (
               <TableRow
                 key={row.id}
-                data-state={row.getIsSelected() && 'selected'}>
+                data-state={row.getIsSelected() && 'selected'}
+              >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell
                     key={cell.id}
@@ -199,7 +202,8 @@ export function BseoTable<TData, TValue>({
                       cell.column.id === 'dis' && 'w-12',
                       cell.column.id === 'bet' && 'w-28',
                       cell.column.id === 'net' && 'w-28'
-                    )}>
+                    )}
+                  >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     {/* <pre>{JSON.stringify(cell.column, null, 2)}</pre> */}
                   </TableCell>
@@ -210,7 +214,8 @@ export function BseoTable<TData, TValue>({
             <TableRow>
               <TableCell
                 colSpan={bsColumns?.length}
-                className='text-center italic bg-cyan-100 shadow-inner'>
+                className='text-center italic bg-cyan-100 shadow-inner'
+              >
                 Detail Bet...
               </TableCell>
             </TableRow>

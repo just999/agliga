@@ -1,6 +1,23 @@
 'use client';
 
-import { Button } from '../ui/button';
+import React, { useEffect, useState } from 'react';
+
+import useBanks from '@/hooks/use-banks';
+import useGames from '@/hooks/use-games';
+import useModal from '@/hooks/use-modal';
+import { findMatchingObjects } from '@/lib/utils';
+import axios from 'axios';
+import { useSession } from 'next-auth/react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
+import { BiUser } from 'react-icons/bi';
+import { BsHouse, BsPencil, BsPersonFillGear, BsTrash } from 'react-icons/bs';
+
+import ProfilePicture from '../candidate-form/profile-picture';
+import { Badge } from '../shadcn/ui/badge';
+import { Button } from '../shadcn/ui/button';
 import {
   Card,
   CardContent,
@@ -8,30 +25,10 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '../ui/card';
-import React from 'react';
+} from '../shadcn/ui/card';
+import Input from '../shadcn/ui/input';
+import SelectInput from '../shadcn/ui/select-input';
 import Modal from './modal';
-import useModal from '@/hooks/use-modal';
-import { useEffect, useState } from 'react';
-import { useSession } from 'next-auth/react';
-
-import { BsTrash, BsPersonFillGear, BsHouse, BsPencil } from 'react-icons/bs';
-
-import { useForm, FieldValues, SubmitHandler } from 'react-hook-form';
-import Input from '../ui/input';
-import SelectInput from '../ui/select-input';
-import useBanks from '@/hooks/use-banks';
-import useGames from '@/hooks/use-games';
-import axios from 'axios';
-import toast from 'react-hot-toast';
-
-import { BiUser } from 'react-icons/bi';
-import Link from 'next/link';
-
-import { useRouter } from 'next/navigation';
-import { Badge } from '../ui/badge';
-import { findMatchingObjects } from '@/lib/utils';
-import ProfilePicture from '../candidate-form/profile-picture';
 
 export type UserProfileModalProps = {
   name: string;
@@ -255,7 +252,8 @@ const UserProfileModal = () => {
                 variant='ghost'
                 size='sm'
                 type='button'
-                className='flex gap-2 '>
+                className='flex gap-2 '
+              >
                 <p>Email: {profile.email}</p> <BsPencil />
               </Button>
             </div>
@@ -271,7 +269,8 @@ const UserProfileModal = () => {
                     <Badge
                       key={g}
                       variant='outline'
-                      className='border-b-2 border-gray-400 shadow-lg cursor-pointer'>
+                      className='border-b-2 border-gray-400 shadow-lg cursor-pointer'
+                    >
                       {g}{' '}
                     </Badge>
                   ))}
@@ -288,7 +287,8 @@ const UserProfileModal = () => {
               size='sm'
               variant='ghost'
               asChild
-              className='group text-xs flex-flex-row items-center justify-center gap-2 shadow-sm bg-stone-50 hover:text-red-500 hover:drop-shadow-xl px-4'>
+              className='group text-xs flex-flex-row items-center justify-center gap-2 shadow-sm bg-stone-50 hover:text-red-500 hover:drop-shadow-xl px-4'
+            >
               <Link href='/'>
                 Delete Profile{' '}
                 <BsTrash className='group-hover:text-red-500  text-neutral-400 h-4 w-4 m-0 p-0 cursor-pointer hover:font-bold hover:shadow-lg ' />
@@ -299,7 +299,8 @@ const UserProfileModal = () => {
               variant='ghost'
               type='button'
               className='group text-xs flex-flex-row items-center justify-center gap-2 shadow-sm bg-stone-50 hover:text-sky-500  hover:drop-shadow-xl px-4'
-              onClick={() => onOpen('validateUser')}>
+              onClick={() => onOpen('validateUser')}
+            >
               Edit profile
               <BsPersonFillGear className='group-hover:text-sky-500 text-neutral-400  hover:font-bold h-4 w-4 m-0 cursor-pointer   hover:shadow-lg' />
             </Button>
@@ -511,7 +512,8 @@ const UserProfileModal = () => {
               size='sm'
               variant='ghost'
               asChild
-              className='text-xs flex-flex-row items-center justify-center gap-2 drop-shadow-lg bg-stone-50'>
+              className='text-xs flex-flex-row items-center justify-center gap-2 drop-shadow-lg bg-stone-50'
+            >
               <Link href='/'>
                 Back to Homepage{' '}
                 <BsHouse className='text-neutral-400 h-4 w-4 m-0 p-0 cursor-pointer hover:text-red-500 hover:font-bold hover:shadow-lg ' />
@@ -522,7 +524,8 @@ const UserProfileModal = () => {
               variant='ghost'
               type='button'
               className='text-xs flex-flex-row items-center justify-center gap-2 drop-shadow-lg bg-stone-50'
-              onClick={() => onOpen('profile')}>
+              onClick={() => onOpen('profile')}
+            >
               Back to your profile
               <BiUser className='text-neutral-400  hover:font-bold h-4 w-4 m-0 cursor-pointer hover:text-sky-500  hover:shadow-lg' />
             </Button>

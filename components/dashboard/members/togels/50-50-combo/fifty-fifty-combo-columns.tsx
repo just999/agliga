@@ -1,11 +1,13 @@
 'use client';
 
+import { ChangeEvent, useEffect, useMemo, useRef } from 'react';
+
 import {
   InputCustom,
   Label,
   RadioGroup,
   RadioGroupItem,
-} from '@/components/ui';
+} from '@/components/shadcn/ui';
 import { positionVal } from '@/lib/helper';
 import {
   arrayRange,
@@ -20,10 +22,7 @@ import {
   FiftyFiftyTableSchema,
 } from '@/schemas/togel-schema';
 import { id } from 'date-fns/locale';
-
 import { ChevronDownCircle, Percent } from 'lucide-react';
-
-import { ChangeEvent, useEffect, useMemo, useRef } from 'react';
 import {
   Control,
   UseFormGetValues,

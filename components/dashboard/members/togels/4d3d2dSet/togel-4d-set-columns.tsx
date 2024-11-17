@@ -2,7 +2,7 @@
 
 import { ChangeEvent, useCallback, useEffect, useMemo } from 'react';
 
-import { InputCustom } from '@/components/ui';
+import { InputCustom } from '@/components/shadcn/ui';
 import { cn, oldStandardTT, poppins, safeParseFloat } from '@/lib/utils';
 import { Sin4dSetSchema } from '@/schemas/togel-schema';
 import { Trash2Icon } from 'lucide-react';

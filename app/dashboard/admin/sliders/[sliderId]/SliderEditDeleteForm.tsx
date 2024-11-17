@@ -1,5 +1,7 @@
 'use client';
 
+import { useEffect, useRef, useState } from 'react';
+
 import {
   deleteSliderImage,
   editSliderImage,
@@ -16,17 +18,15 @@ import {
   Heading,
   InputCustom,
   Spinner,
-} from '@/components/ui';
+} from '@/components/shadcn/ui';
 import useFormTypes from '@/hooks/use-form-types';
 import { cn, handleFormServerErrors } from '@/lib/utils';
 import { sliderSchema, SliderSchema } from '@/schemas/slider-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQuery } from '@tanstack/react-query';
-
 import { ImagePlus, X } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { IoMdClose } from 'react-icons/io';
@@ -195,15 +195,15 @@ const SliderEditDeleteForm = () => {
             formType === 'add-slider'
               ? 'Slider'
               : formType === 'delete-slider'
-              ? 'Delete Slider?'
-              : 'Edit Slider'
+                ? 'Delete Slider?'
+                : 'Edit Slider'
           }
           description={cn(
             formType === 'delete-slider'
               ? 'Are you sure to delete this image? this action can not be undone'
               : preview.startsWith('http')
-              ? 'Please choose image that u want to replace'
-              : 'New Image:'
+                ? 'Please choose image that u want to replace'
+                : 'New Image:'
           )}
           className='text-zinc-500 text-center'
         />
@@ -213,13 +213,15 @@ const SliderEditDeleteForm = () => {
         variant='ghost'
         onClick={handleClose}
         type='button'
-        className='p-1 border-0 h-6 w-6  bg-white text-stone-400 hover:opacity-80 hover:border hover:bg-rose-600/20 hover:border-solid hover:border-red-300 shadow-lg rounded-full transition absolute left-4 top-4'>
+        className='p-1 border-0 h-6 w-6  bg-white text-stone-400 hover:opacity-80 hover:border hover:bg-rose-600/20 hover:border-solid hover:border-red-300 shadow-lg rounded-full transition absolute left-4 top-4'
+      >
         <X size={18} className={cn('w-6 h-6 svg')} />
       </Button>
       <CardContent>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className='flex flex-col gap-2 items-center'>
+          className='flex flex-col gap-2 items-center'
+        >
           <div className={cn(formType === 'delete-slider' ? 'hidden' : '')}>
             <Controller
               control={control}
@@ -252,7 +254,8 @@ const SliderEditDeleteForm = () => {
             size='sm'
             type='submit'
             disabled={isSubmitting}
-            className='group text-xs flex flex-row gap-2 bg-blue-500 hover:!bg-blue-500/70 px-2 mb-2'>
+            className='group text-xs flex flex-row gap-2 bg-blue-500 hover:!bg-blue-500/70 px-2 mb-2'
+          >
             {isSubmitting ? (
               <div className='flex gap-2 items-center justify-center'>
                 <Spinner size={16} color='gray-200' /> Submitting...
@@ -267,8 +270,8 @@ const SliderEditDeleteForm = () => {
                   {formType === 'add-slider'
                     ? 'Add Slider'
                     : formType === 'delete-slider'
-                    ? 'Delete Slider'
-                    : 'Update Slider'}
+                      ? 'Delete Slider'
+                      : 'Update Slider'}
                 </span>
               </span>
             )}

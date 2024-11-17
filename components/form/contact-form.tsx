@@ -1,11 +1,12 @@
 'use client';
 
+import type { FormEvent } from 'react';
+
 import { contactUs } from '@/actions/auth-actions';
 import { getCaptchaToken } from '@/actions/recapcha-actions';
-
-import type { FormEvent } from 'react';
 import toast from 'react-hot-toast';
-import { Button, InputCustom, Textarea } from '../ui';
+
+import { Button, InputCustom, Textarea } from '../shadcn/ui';
 
 export function ContactForm() {
   async function handleSubmit(e: FormEvent) {
@@ -36,7 +37,8 @@ export function ContactForm() {
   return (
     <form
       className='flex items-center justify-center flex-col gap-3 w-full'
-      onSubmit={handleSubmit}>
+      onSubmit={handleSubmit}
+    >
       <h2 className='text-2xl font-semibold'>Contact Us</h2>
       <InputCustom
         type='name'
@@ -58,7 +60,8 @@ export function ContactForm() {
       />
       <Button
         type='submit'
-        className='text-lg w-full bg-blue-800 text-white rounded-md p-2.5 focus:ring-2 focus:ring-blue-300 g-recaptcha'>
+        className='text-lg w-full bg-blue-800 text-white rounded-md p-2.5 focus:ring-2 focus:ring-blue-300 g-recaptcha'
+      >
         Submit
       </Button>
     </form>

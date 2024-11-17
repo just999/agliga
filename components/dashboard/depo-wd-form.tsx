@@ -1,11 +1,12 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+
 import { createDepo, createWd } from '@/actions/member-actions';
 import useBanks from '@/hooks/use-banks';
+import useFormTypes from '@/hooks/use-form-types';
 import useGames from '@/hooks/use-games';
-
-import { handleFormServerErrors, cn } from '@/lib/utils';
+import { cn, handleFormServerErrors } from '@/lib/utils';
 import {
   DepoSchema,
   depoSchema,
@@ -14,11 +15,13 @@ import {
   WdSchema,
   wdSchema,
 } from '@/schemas';
-
 import { zodResolver } from '@hookform/resolvers/zod';
-
+import { User } from '@prisma/client';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+
+import AmountInput from '../amount-input';
 import {
   Button,
   Card,
@@ -26,13 +29,7 @@ import {
   InputCustom,
   SelectInput,
   Spinner,
-} from '../ui';
-import { useRouter } from 'next/navigation';
-import { User } from '@prisma/client';
-
-import useFormTypes from '@/hooks/use-form-types';
-
-import AmountInput from '../amount-input';
+} from '../shadcn/ui';
 
 type DepoWdFormProps = {
   user: User;
@@ -143,7 +140,8 @@ const DepoWdForm = ({ user }: DepoWdFormProps) => {
 
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className='w-full flex flex-col gap-3 px-4'>
+          className='w-full flex flex-col gap-3 px-4'
+        >
           {userData?.email && userData?.name && userData?.accountNumber && (
             <>
               <InputCustom

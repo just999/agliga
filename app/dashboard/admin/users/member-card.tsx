@@ -1,21 +1,20 @@
 'use client';
 
+import { useCallback, useEffect, useState } from 'react';
+
+import { toggleLikeUser } from '@/actions/like-actions';
+import { getUnreadMessagesBySenderId } from '@/actions/message-actions';
 import LikeButton from '@/components/like-button';
 import PresenceDot from '@/components/presence-dot';
-import { capitalizeFirstCharacter, transformImageUrl } from '@/lib/utils';
-
-import { User } from '@prisma/client';
-
-import Link from 'next/link';
-import { toggleLikeUser } from '@/actions/like-actions';
-import { useCallback, useEffect, useState } from 'react';
-import { Card, CardFooter } from '@/components/ui/card';
-import Image from 'next/image';
+import { Badge, Button } from '@/components/shadcn/ui';
+import { Card, CardFooter } from '@/components/shadcn/ui/card';
 import { banks } from '@/lib/helper';
-import { getUnreadMessagesBySenderId } from '@/actions/message-actions';
-import { Badge, Button } from '@/components/ui';
+import { capitalizeFirstCharacter, transformImageUrl } from '@/lib/utils';
 import { useChatStore } from '@/store/use-chat-store';
+import { User } from '@prisma/client';
 import { useSession } from 'next-auth/react';
+import Image from 'next/image';
+import Link from 'next/link';
 
 type MemberCardProps = {
   user: User;
@@ -112,7 +111,8 @@ const MemberCard = ({ user, likeIds }: MemberCardProps) => {
         variant='ghost'
         // href={`/dashboard/chat/${user.id}`}
         onClick={handleToggleChat}
-        className='flex flex-row items-center gap-2 cursor-pointer p-2 bg-emerald-400 rounded-t-lg'>
+        className='flex flex-row items-center gap-2 cursor-pointer p-2 bg-emerald-400 rounded-t-lg'
+      >
         <Image
           alt='user'
           width={50}

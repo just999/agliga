@@ -1,19 +1,16 @@
-import { cn } from '@/lib/utils';
-import { LogInIcon, UserRoundPlus } from 'lucide-react';
-
-import { Button } from '../ui/button';
-import Categories from './categories';
-
-import Logo from './logo';
-
-import Container from '../container';
+import { getUserInfoForNav } from '@/actions/user-actions';
 import { auth } from '@/auth';
 import { adminLinks, userLinks } from '@/lib/helper';
-
+import { cn } from '@/lib/utils';
+import { LogInIcon, UserRoundPlus } from 'lucide-react';
 import Link from 'next/link';
+
+import Container from '../container';
+import { Button } from '../shadcn/ui/button';
+import Categories from './categories';
+import Logo from './logo';
 import NavLink from './nav-link';
 import UserNavMenu from './user-nav-menu';
-import { getUserInfoForNav } from '@/actions/user-actions';
 
 type TopNavProps = {
   className?: string;
@@ -68,10 +65,12 @@ const TopNav = async ({ className, searchParams }: TopNavProps) => {
                   variant='ghost'
                   type='button'
                   asChild
-                  className='hidden h-fit  md:block  text-sm font-semibold py-1 px-2  hover:bg-neutral-100 hover:shadow-md  transition cursor-pointer bg-sky-500 group hover:!bg-sky-500/70'>
+                  className='hidden h-fit  md:block  text-sm font-semibold py-1 px-2  hover:bg-neutral-100 hover:shadow-md  transition cursor-pointer bg-sky-500 group hover:!bg-sky-500/70'
+                >
                   <Link
                     href='/login'
-                    className=' flex flex-row gap-1 items-center justify-end '>
+                    className=' flex flex-row gap-1 items-center justify-end '
+                  >
                     <span className='flex  gap-1 items-center justify-center font-semibold text-xs text-white group-hover:text-gray-600 group-hover:font-semibold'>
                       <LogInIcon
                         size={14}
@@ -85,10 +84,12 @@ const TopNav = async ({ className, searchParams }: TopNavProps) => {
                   variant='ghost'
                   type='button'
                   asChild
-                  className='hidden h-fit  md:block  text-sm font-semibold py-1 px-2  hover:bg-neutral-100 hover:shadow-md  transition cursor-pointer bg-sky-500 group hover:!bg-sky-500/70'>
+                  className='hidden h-fit  md:block  text-sm font-semibold py-1 px-2  hover:bg-neutral-100 hover:shadow-md  transition cursor-pointer bg-sky-500 group hover:!bg-sky-500/70'
+                >
                   <Link
                     href='/register'
-                    className=' flex flex-row gap-1 items-center justify-end '>
+                    className=' flex flex-row gap-1 items-center justify-end '
+                  >
                     <span className='flex  gap-1 items-center justify-center font-semibold text-xs text-white group-hover:text-gray-600 group-hover:font-semibold'>
                       <UserRoundPlus
                         size={14}

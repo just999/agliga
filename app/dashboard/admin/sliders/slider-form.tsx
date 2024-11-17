@@ -183,34 +183,30 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import useSlidersStore from '@/store/use-sliders-store';
 
+import { addSlider } from '@/actions/slider-actions';
 import {
-  Card,
-  CardHeader,
-  CardContent,
-  Spinner,
-  Button,
   Avatar,
   AvatarFallback,
   AvatarImage,
-  InputCustom,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
   Heading,
-} from '@/components/ui';
+  InputCustom,
+  Spinner,
+} from '@/components/shadcn/ui';
+import useFormTypes from '@/hooks/use-form-types';
 import { handleFormServerErrors } from '@/lib/utils';
 import { SliderSchema, sliderSchema } from '@/schemas/slider-schema';
+import { useImageStore } from '@/store/use-image-store';
+import useSlidersStore from '@/store/use-sliders-store';
 import { zodResolver } from '@hookform/resolvers/zod';
-
 import { ImagePlus } from 'lucide-react';
 import { useSession } from 'next-auth/react';
-
-import { Controller, useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
-
-import { useImageStore } from '@/store/use-image-store';
-import useFormTypes from '@/hooks/use-form-types';
-
-import { addSlider } from '@/actions/slider-actions';
+import { Controller, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { IoMdClose } from 'react-icons/io';
 
@@ -323,8 +319,8 @@ const SliderForm = () => {
             formType === 'add-slider'
               ? 'Slider'
               : formType === 'delete-slider'
-              ? 'Delete Slider'
-              : 'Edit Slider'
+                ? 'Delete Slider'
+                : 'Edit Slider'
           }
           className='text-zinc-500 text-center'
         />
@@ -334,13 +330,15 @@ const SliderForm = () => {
         variant='ghost'
         onClick={handleClose}
         type='button'
-        className='p-1 border-0 h-6 w-6  bg-white text-stone-400 hover:opacity-80 hover:border hover:bg-rose-600/20 hover:border-solid hover:border-red-300 shadow-lg rounded-full transition absolute left-4 top-4 '>
+        className='p-1 border-0 h-6 w-6  bg-white text-stone-400 hover:opacity-80 hover:border hover:bg-rose-600/20 hover:border-solid hover:border-red-300 shadow-lg rounded-full transition absolute left-4 top-4 '
+      >
         <IoMdClose size={18} className='w-6 h-6 ' />
       </Button>
       <CardContent>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className='flex flex-col gap-2 items-center'>
+          className='flex flex-col gap-2 items-center'
+        >
           <div>
             <Controller
               control={control}
@@ -372,7 +370,8 @@ const SliderForm = () => {
             size='sm'
             type='submit'
             disabled={isSubmitting || !preview}
-            className='group text-xs flex flex-row gap-2 bg-blue-500 hover:!bg-blue-500/70 px-2 mb-2'>
+            className='group text-xs flex flex-row gap-2 bg-blue-500 hover:!bg-blue-500/70 px-2 mb-2'
+          >
             {isSubmitting || isLoading ? (
               <div className='flex gap-2 items-center justify-center'>
                 <Spinner size={16} color='gray-200' /> Submitting...

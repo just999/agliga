@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react';
 
-import { InputCustom } from '@/components/ui';
+import { InputCustom } from '@/components/shadcn/ui';
 import { cn, oldStandardTT, poppins, rp } from '@/lib/utils';
 import { ColokBebasTableSchema } from '@/schemas/togel-schema';
 import { Percent } from 'lucide-react';

@@ -1,17 +1,17 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
-import Spinner from '@/components/ui/spinner';
+import { completeSocialLoginProfile } from '@/actions/auth-actions';
+import CardWrapper from '@/components/card-wrapper';
+import { Button } from '@/components/shadcn/ui/button';
+import Spinner from '@/components/shadcn/ui/spinner';
 import { cn } from '@/lib/utils';
 import { profileSchema, ProfileSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { signIn } from 'next-auth/react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { RiProfileLine } from 'react-icons/ri';
-import ProfileForm from '../register/profile-form';
-import { completeSocialLoginProfile } from '@/actions/auth-actions';
 
-import { signIn } from 'next-auth/react';
-import CardWrapper from '@/components/card-wrapper';
+import ProfileForm from '../register/profile-form';
 
 type CompleteProfileFormProps = {};
 
@@ -56,7 +56,8 @@ const CompleteProfileForm = () => {
               disabled={!isValid}
               className={cn(
                 'bg-indigo-500 px-4 text-gray-50 hover:bg-indigo-500/70 hover:text-gray-200 w-full shadow-md'
-              )}>
+              )}
+            >
               {isSubmitting ? (
                 <span>
                   <Spinner size={24} /> processing...

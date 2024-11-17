@@ -1,8 +1,10 @@
 'use client';
 
-import { cn } from '@/lib/utils';
-import Logo from '../navbar/logo';
 import { CSSProperties, ReactNode } from 'react';
+
+import { cn } from '@/lib/utils';
+
+import Logo from '../../navbar/logo';
 
 type HeadingProps = {
   title: string;
@@ -27,7 +29,8 @@ const HeadingLogo = ({
         className={cn(
           'text-2xl font-bold flex flex-row items-center justify-center gap-8',
           className
-        )}>
+        )}
+      >
         <Logo
           styles={styles ? styles : { width: '18%', height: 'auto' }}
           className={cn('w-10 h-auto svg')}

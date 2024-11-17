@@ -1,38 +1,35 @@
 'use client';
 
+import footer from '@/components/footer';
+import { Button } from '@/components/shadcn/ui/button';
+import { banks, games, statuses } from '@/lib/helper';
+import { cn, noto, numberWithCommas, poppins } from '@/lib/utils';
+import { Depo, DepoProps, DepoWdProps } from '@/types/types';
+// A TanStack fork of Kent C. Dodds' match-sorter library that provides ranking information
+import {
+  compareItems,
+  RankingInfo,
+  rankItem,
+} from '@tanstack/match-sorter-utils';
 import {
   Column,
   ColumnDef,
   ColumnFiltersState,
   FilterFn,
-  SortingFn,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
-  useReactTable,
-  SortingState,
-  sortingFns,
   getSortedRowModel,
+  SortingFn,
+  sortingFns,
+  SortingState,
+  useReactTable,
 } from '@tanstack/react-table';
-
-import { cn, noto, numberWithCommas, poppins } from '@/lib/utils';
-
-import { Button } from '@/components/ui/button';
 import { ArrowUpDown } from 'lucide-react';
-import { Depo, DepoProps, DepoWdProps } from '@/types/types';
-import { banks, games, statuses } from '@/lib/helper';
 
 import CellDepoWdActions from './cell-depo-wd-actions';
 import { DepoWdStatusActions } from './depo-wd-status-actions';
-
-// A TanStack fork of Kent C. Dodds' match-sorter library that provides ranking information
-import {
-  RankingInfo,
-  rankItem,
-  compareItems,
-} from '@tanstack/match-sorter-utils';
-import footer from '@/components/footer';
 
 // Define a custom fuzzy sort function that will sort by rank if the row has ranking information
 const fuzzySort: SortingFn<any> = (rowA, rowB, columnId) => {

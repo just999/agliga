@@ -1,21 +1,17 @@
 'use client';
 
 import { Euro24 } from '@/components/assets/games/euro24';
-import { Button } from '@/components/ui/button';
-import { CardContent, CardFooter } from '@/components/ui/card';
-import { Skeleton } from '@/components/ui/skeleton';
+import { Button } from '@/components/shadcn/ui/button';
+import { CardContent, CardFooter } from '@/components/shadcn/ui/card';
+import { Skeleton } from '@/components/shadcn/ui/skeleton';
+import Penalty from '@/components/soccer/penalty';
+import { useEuros } from '@/hooks/use-euro';
 import useModal from '@/hooks/use-modal';
-
 import { convertDateTime } from '@/lib/convert-date-time';
 import { cn, getMatchStatus, noto } from '@/lib/utils';
 import { EuroWithIconProps } from '@/types/types';
 import { useSession } from 'next-auth/react';
-
-import { BsTrashFill, BsPencilFill } from 'react-icons/bs';
-
-import Penalty from '@/components/soccer/penalty';
-
-import { useEuros } from '@/hooks/use-euro';
+import { BsPencilFill, BsTrashFill } from 'react-icons/bs';
 
 type EuroCardContentProps = {
   it?: EuroWithIconProps;

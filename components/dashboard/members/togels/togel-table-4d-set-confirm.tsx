@@ -1,5 +1,7 @@
 'use client';
 
+import { useEffect, useRef, useState } from 'react';
+
 import { createTogel } from '@/actions/togel-actions';
 import {
   Button,
@@ -10,7 +12,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui';
+} from '@/components/shadcn/ui';
 import { useTogel } from '@/hooks/use-togel';
 import useTransformGames from '@/hooks/use-togel-transform-games';
 import { useZodForm } from '@/hooks/use-zod-form';
@@ -22,9 +24,9 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import { PlusCircle } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
 import { useFieldArray } from 'react-hook-form';
 import toast from 'react-hot-toast';
+
 import { Form4dSetProps } from './togel-4d-set';
 
 type TogelTable4dSetConfirmProps = {
@@ -465,7 +467,8 @@ const TogelTable4dSetConfirm = ({
                   return (
                     <TableHead
                       key={header.id}
-                      className='p-0 m-0 h-8 text-xs font-bold text-center'>
+                      className='p-0 m-0 h-8 text-xs font-bold text-center'
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -483,7 +486,8 @@ const TogelTable4dSetConfirm = ({
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
-                  data-state={row.getIsSelected() && 'selected'}>
+                  data-state={row.getIsSelected() && 'selected'}
+                >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id} className='p-0 m-0'>
                       {flexRender(
@@ -501,7 +505,8 @@ const TogelTable4dSetConfirm = ({
               <TableRow>
                 <TableCell
                   // colSpan={columns.length}
-                  className='h-24 text-center'>
+                  className='h-24 text-center'
+                >
                   No Results
                 </TableCell>
               </TableRow>
@@ -540,7 +545,8 @@ const TogelTable4dSetConfirm = ({
             size='sm'
             variant='default'
             className='text-shadow-lg text-xs text-white font-semibold shadow-lg hover:bg-orange-300 hover:text-gray-600 hover:font-semibold px-2 py-1'
-            onClick={handleAddColumn}>
+            onClick={handleAddColumn}
+          >
             <PlusCircle
               size={14}
               className='svg text-sky-700 pr-1 hover:text-green-600'
@@ -551,7 +557,8 @@ const TogelTable4dSetConfirm = ({
             disabled={!isValid}
             size='sm'
             variant='primary'
-            className='px-3 py-.5'>
+            className='px-3 py-.5'
+          >
             Submit
           </Button>
         </div>

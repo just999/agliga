@@ -1,19 +1,19 @@
 'use client';
 
+import React, { useEffect, useState } from 'react';
+
 import Container from '@/components/container';
-import React from 'react';
-
 import EditDeletePostButton from '@/components/posts/edit-delete-post-button';
-import { HeadingLogo } from '@/components/ui';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
-import { Skeleton } from '@/components/ui/skeleton';
-
+import { HeadingLogo } from '@/components/shadcn/ui';
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from '@/components/shadcn/ui/avatar';
+import { Button } from '@/components/shadcn/ui/button';
+import { Skeleton } from '@/components/shadcn/ui/skeleton';
 import useModal, { ImageSlider } from '@/hooks/use-modal';
-
 import { fetchSliders } from '@/lib/queries/sliders';
-import { useEffect, useState } from 'react';
-
 import { FcAddImage } from 'react-icons/fc';
 
 type PageProps = {
@@ -56,7 +56,8 @@ const SlidersPage = () => {
           .map((_, i) => (
             <span
               key={i + 1}
-              className='relative h-full  shadow-xl rounded-xl border-slate-600 border-1'>
+              className='relative h-full  shadow-xl rounded-xl border-slate-600 border-1'
+            >
               <Avatar className='rounded-none w-auto h-20 my-auto  bg-slate-100 '>
                 <Skeleton className='w-[100px] h-[20px] rounded-lg aspect-auto  ' />
                 <Skeleton className='text-stone-400 w-[100px] h-[200px] text-xs bg-slate-100'></Skeleton>
@@ -77,7 +78,8 @@ const SlidersPage = () => {
           images.map((img: PageProps, i) => (
             <span
               key={img.id}
-              className='relative h-[80px]  rounded-xl border-slate-600 border-1 group cursor-pointer'>
+              className='relative h-[80px]  rounded-xl border-slate-600 border-1 group cursor-pointer'
+            >
               <Avatar className='rounded-none w-auto h-20 my-auto  bg-slate-100 '>
                 <AvatarImage
                   src={img.images}
@@ -112,7 +114,8 @@ const SlidersPage = () => {
             size='sm'
             variant='ghost'
             onClick={() => onOpen('add-slider')}
-            className='w-32 h-20 m-0  shadow-xl bg-zinc-200'>
+            className='w-32 h-20 m-0  shadow-xl bg-zinc-200'
+          >
             <Avatar className='rounded-none w-32 h-20 my-auto shadow-xl px-2 bg-slate-100 '>
               <AvatarImage
                 src={''}

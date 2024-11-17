@@ -2,7 +2,7 @@
 
 import { ChangeEvent, useEffect, useMemo, useRef } from 'react';
 
-import { InputCustom } from '@/components/ui';
+import { InputCustom } from '@/components/shadcn/ui';
 import { positionVal } from '@/lib/helper';
 import {
   arrayRange,
@@ -13,7 +13,7 @@ import {
   safeParseFloat,
 } from '@/lib/utils';
 import { ColokJituTableSchema } from '@/schemas/togel-schema';
-import { ChevronDown, ChevronDownCircle, Percent } from 'lucide-react';
+import { ChevronDownCircle, Percent } from 'lucide-react';
 import {
   Control,
   UseFormGetValues,

@@ -1,6 +1,6 @@
 import DasarTable from '@/components/dashboard/members/togels/dasar/dasar-table';
-import TogelContainer from '@/components/ui/togel-container';
-import { cn, oldStandardTT, capitalizeFirstCharacter } from '@/lib/utils';
+import TogelContainer from '@/components/shadcn/ui/togel-container';
+import { capitalizeFirstCharacter, cn, oldStandardTT } from '@/lib/utils';
 
 type DasarPageProps = {
   params: {
@@ -15,7 +15,8 @@ const DasarPage = async ({ params }: DasarPageProps) => {
         className={cn(
           'mx-auto text-center font-semibold text-lg',
           oldStandardTT.className
-        )}>
+        )}
+      >
         {capitalizeFirstCharacter(params.slug)} - Pools - Dasar
       </div>
       <div className='bg-green-50/50 px-2 py-1 rounded-lg shadow-lg'>

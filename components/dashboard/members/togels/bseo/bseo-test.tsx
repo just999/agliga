@@ -1,36 +1,35 @@
 'use client';
 
 import {
-  TableHeader,
-  TableRow,
-  TableHead,
+  ChangeEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+
+import {
+  Button,
+  Table,
   TableBody,
   TableCell,
   TableFooter,
-  Table,
-  Button,
-} from '@/components/ui';
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/shadcn/ui';
+import { useZodForm } from '@/hooks/use-zod-form';
+import ClientOnly from '@/lib/client-only';
+import { cn, generateAndPadArray, safeParseFloat } from '@/lib/utils';
+import { bseoTableSchema, Sin4dSchema } from '@/schemas/togel-schema';
 import {
   flexRender,
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-
-import { useZodForm } from '@/hooks/use-zod-form';
-import { cn, generateAndPadArray, safeParseFloat } from '@/lib/utils';
-
-import {
-  useState,
-  useRef,
-  useCallback,
-  ChangeEvent,
-  useEffect,
-  useMemo,
-} from 'react';
-import { bseoTableSchema, Sin4dSchema } from '@/schemas/togel-schema';
-
-import ClientOnly from '@/lib/client-only';
 import { ChevronLeft, ChevronLeftCircle, Percent } from 'lucide-react';
+
 import BseoTableTest from './bseo-table-test';
 import { useBseoTestColumns } from './bseo-test-columns';
 
@@ -214,10 +213,10 @@ const BseoTest = () => {
     bseo === 'big'
       ? arrayOptions.big
       : bseo === 'small'
-      ? arrayOptions.small
-      : bseo === 'even'
-      ? arrayOptions.even
-      : arrayOptions.odd;
+        ? arrayOptions.small
+        : bseo === 'even'
+          ? arrayOptions.even
+          : arrayOptions.odd;
 
   const onSubmit = (data: any) => {
     const filteredData = data.bsEo.filter(
@@ -263,7 +262,8 @@ const BseoTest = () => {
                   return (
                     <TableHead
                       key={header.id}
-                      className='p-0 m-0 h-8 text-xs font-bold text-center'>
+                      className='p-0 m-0 h-8 text-xs font-bold text-center'
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -281,7 +281,8 @@ const BseoTest = () => {
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
-                  data-state={row.getIsSelected() && 'selected'}>
+                  data-state={row.getIsSelected() && 'selected'}
+                >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id} className='p-0 m-0'>
                       {flexRender(
@@ -299,7 +300,8 @@ const BseoTest = () => {
               <TableRow>
                 <TableCell
                   colSpan={bseoTestColumns.length}
-                  className='h-24 text-center'>
+                  className='h-24 text-center'
+                >
                   No Results
                 </TableCell>
               </TableRow>
@@ -327,12 +329,14 @@ const BseoTest = () => {
             className={cn(
               'w-full  py-2 pr-4',
               show ? 'text-left' : 'text-right'
-            )}>
+            )}
+          >
             <Button
               onClick={handleSetBseo}
               size='sm'
               type='button'
-              className='py-1 px-2 '>
+              className='py-1 px-2 '
+            >
               {show ? (
                 <div className='flex items-center gap-2 '>
                   <ChevronLeft className='svg ' /> Back
@@ -348,7 +352,8 @@ const BseoTest = () => {
                 size='sm'
                 type='submit'
                 disabled={!isValid}
-                className='py-1 px-2 '>
+                className='py-1 px-2 '
+              >
                 <div className='flex items-center gap-2 '>Submit</div>
               </Button>
             </div>

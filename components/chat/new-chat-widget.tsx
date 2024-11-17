@@ -127,16 +127,17 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { MessageCircleMore } from 'lucide-react';
+
+import NewChatContainer from '@/components/chat/new-chat-container';
+import { Button, Spinner } from '@/components/shadcn/ui';
+import { cn, createChatId } from '@/lib/utils';
+import { useChatStore } from '@/store/use-chat-store';
+import { usePresenceStore } from '@/store/use-presence-store';
+import { SafeAdminChat } from '@/types/types';
 import { User } from '@prisma/client';
+import { MessageCircleMore } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 
-import { Button, Spinner } from '@/components/ui';
-import { useChatStore } from '@/store/use-chat-store';
-import { cn, createChatId } from '@/lib/utils';
-import { usePresenceStore } from '@/store/use-presence-store';
-import NewChatContainer from '@/components/chat/new-chat-container';
-import { SafeAdminChat } from '@/types/types';
 import LiveChatContainer from './live-chat-container';
 
 type NewChatWidgetProps = {
@@ -216,7 +217,8 @@ const NewChatWidget = ({ users, adminProfile }: NewChatWidgetProps) => {
         className={cn(
           `fixed bottom-0 right-1 text-shadow-lg transition-transform duration-300 ease-in-out transform`,
           isToggle ? 'translate-y-0' : 'translate-y-full'
-        )}>
+        )}
+      >
         {/* <NewChatContainer users={users} adminProfile={adminProfile} /> */}
         <LiveChatContainer users={users} adminProfile={adminProfile} />
 
@@ -231,7 +233,8 @@ const NewChatWidget = ({ users, adminProfile }: NewChatWidgetProps) => {
             'p-0 m-0 w-13 h-13 hover:bg-transparent',
             loading && 'cursor-not-allowed'
           )}
-          onClick={handleToggleChat}>
+          onClick={handleToggleChat}
+        >
           <MessageCircleMore
             size={50}
             className='svg text-blue-600 hover:text-shadow hover:text-500/80 hover:fill-slate-500/20 hover:text-blue-700 fill-sky-100/20'

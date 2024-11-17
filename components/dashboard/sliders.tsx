@@ -141,23 +141,27 @@
 'use client';
 
 // Import necessary items
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+
 import { getAllSliders } from '@/actions/slider-actions';
+import SliderEditDeleteForm from '@/app/dashboard/admin/sliders/[sliderId]/SliderEditDeleteForm';
+import SliderForm from '@/app/dashboard/admin/sliders/slider-form';
 import Container from '@/components/container';
 import EditDeletePostButton from '@/components/posts/edit-delete-post-button';
-import { HeadingLogo } from '@/components/ui';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
-import { Skeleton } from '@/components/ui/skeleton';
-import { useEffect, useState } from 'react';
-import { FcAddImage } from 'react-icons/fc';
-
+import { HeadingLogo } from '@/components/shadcn/ui';
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from '@/components/shadcn/ui/avatar';
+import { Button } from '@/components/shadcn/ui/button';
+import { Skeleton } from '@/components/shadcn/ui/skeleton';
 // Import your zustand store
 import useFormTypes from '@/hooks/use-form-types';
-import SliderForm from '@/app/dashboard/admin/sliders/slider-form';
-import EditDeleteButton from '../ui/edit-delete-button';
-import SliderEditDeleteForm from '@/app/dashboard/admin/sliders/[sliderId]/SliderEditDeleteForm';
 import { useQuery } from '@tanstack/react-query';
+import { FcAddImage } from 'react-icons/fc';
+
+import EditDeleteButton from '../shadcn/ui/edit-delete-button';
 
 type SlidersProps = {
   id: string;
@@ -235,7 +239,8 @@ const Sliders = () => {
           .map((_, i) => (
             <span
               key={i + 1}
-              className='relative h-full  shadow-xl rounded-xl border-slate-600 border-1'>
+              className='relative h-full  shadow-xl rounded-xl border-slate-600 border-1'
+            >
               <Avatar className='rounded-none w-auto h-20 my-auto  bg-slate-100 '>
                 <Skeleton className='w-[100px] h-[20px] rounded-lg aspect-auto  ' />
                 <Skeleton className='text-stone-400 w-[100px] h-[200px] text-xs bg-slate-100'></Skeleton>
@@ -257,7 +262,8 @@ const Sliders = () => {
             images.map((img, i) => (
               <span
                 key={img.id}
-                className='relative h-[80px]  rounded-xl border-slate-600 border-1 group cursor-pointer'>
+                className='relative h-[80px]  rounded-xl border-slate-600 border-1 group cursor-pointer'
+              >
                 <Avatar className='rounded-none w-auto h-20 my-auto  bg-slate-100 '>
                   <AvatarImage
                     src={img.images}
@@ -271,7 +277,8 @@ const Sliders = () => {
                 <Button
                   size='sm'
                   variant='ghost'
-                  onClick={() => handleEditSlider(img)}>
+                  onClick={() => handleEditSlider(img)}
+                >
                   {/* Include your edit icon if necessary */}
                   <span className='absolute invisible group-hover:visible top-0 left-0.5 text-black px-1 text-[10px] bg-stone-300/60 rounded-full'>
                     {i + 1}
@@ -290,7 +297,8 @@ const Sliders = () => {
             size='sm'
             variant='ghost'
             onClick={handleAddSlider}
-            className='w-32 h-20 m-0 shadow-xl bg-zinc-200'>
+            className='w-32 h-20 m-0 shadow-xl bg-zinc-200'
+          >
             <Avatar className='rounded-none w-32 h-20 my-auto shadow-xl px-2 bg-slate-100 '>
               <AvatarImage
                 src=''

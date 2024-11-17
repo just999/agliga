@@ -1,6 +1,6 @@
 'use client';
 
-import Spinner from '@/components/ui/spinner';
+import Spinner from '@/components/shadcn/ui/spinner';
 import { cn } from '@/lib/utils';
 
 type SpinnerProps = {

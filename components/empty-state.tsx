@@ -1,8 +1,7 @@
 'use client';
 
 import BackButton from './back-button';
-
-import HeadingLogo from './ui/heading-logo';
+import HeadingLogo from './shadcn/ui/heading-logo';
 
 type EmptyStateProps = {
   title: string;

@@ -1,16 +1,16 @@
 'use client';
 
-import axios from 'axios';
 import { useCallback, useState } from 'react';
-import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import Modal from './modal';
 
-import Input from '../ui/input';
+import useModal from '@/hooks/use-modal';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
-import { useRouter } from 'next/navigation';
-import useModal from '@/hooks/use-modal';
-import { HeadingLogo } from '../ui';
+import { HeadingLogo } from '../shadcn/ui';
+import Input from '../shadcn/ui/input';
+import Modal from './modal';
 
 type TopicModalProps = {};
 

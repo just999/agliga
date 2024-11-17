@@ -1,7 +1,5 @@
-import { Button } from '@/components/ui/button';
-
+import { Button } from '@/components/shadcn/ui/button';
 import Link from 'next/link';
-
 import { FaGithub } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 
@@ -16,7 +14,8 @@ const LoginRegisterButton = ({ type }: LoginRegisterButtonProps) => {
         size='sm'
         className='w-full h-fit bg-slate-50 hover:bg-stone-200 p-0 m-0 py-1'
         variant='ghost'
-        asChild>
+        asChild
+      >
         <Link href='/forgot-password' className='text-xs  text-shadow'>
           Forgot Password
         </Link>
@@ -26,10 +25,12 @@ const LoginRegisterButton = ({ type }: LoginRegisterButtonProps) => {
         size='sm'
         className='w-full h-fit bg-slate-50 hover:bg-stone-200 p-0 m-0 py-1'
         variant='ghost'
-        asChild>
+        asChild
+      >
         <Link
           href={type === 'register' ? '/login' : '/register'}
-          className='text-xs text-shadow'>
+          className='text-xs text-shadow'
+        >
           {type === 'register' ? 'Login' : 'Register'}
         </Link>
       </Button>

@@ -1,10 +1,11 @@
 'use client';
 
+import { title } from 'process';
+
 import useModal from '@/hooks/use-modal';
 
+import { HeadingLogo } from '../shadcn/ui';
 import Modal from './modal';
-import { HeadingLogo } from '../ui';
-import { title } from 'process';
 
 type UserActiveModalProps = {};
 

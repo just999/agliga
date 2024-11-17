@@ -1,5 +1,5 @@
+import { DataTable } from '@/components/shadcn/ui/data-table';
 import { depoColumns } from '@/components/table/depo-wd/depo-columns';
-import { DataTable } from '@/components/ui/data-table';
 import { Depo, User } from '@prisma/client';
 
 type DepoClientProps = {

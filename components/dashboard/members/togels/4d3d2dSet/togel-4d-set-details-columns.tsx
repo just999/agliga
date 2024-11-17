@@ -3,7 +3,7 @@
 import { ChangeEvent, useCallback, useEffect, useMemo } from 'react';
 
 import { Form4dSetProps } from '@/components/dashboard/members/togels/togel-4d-set';
-import { Button, InputCustom } from '@/components/ui';
+import { Button, InputCustom } from '@/components/shadcn/ui';
 import { cn, oldStandardTT, poppins, rp, safeParseFloat } from '@/lib/utils';
 import { Trash2Icon } from 'lucide-react';
 import { useRouter } from 'next/navigation';

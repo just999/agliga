@@ -135,17 +135,6 @@
 
 'use client';
 
-import { createMessage } from '@/actions/message-actions';
-import { Button } from '@/components/ui/button';
-import { InputCustom } from '@/components/ui/inputCustom';
-import Spinner from '@/components/ui/spinner';
-import { cn, handleFormServerErrors } from '@/lib/utils';
-import { MessageSchema, messageSchema } from '@/schemas';
-import { SafeAdminChat } from '@/types/types';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { User } from '@prisma/client';
-import { SendIcon } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 import {
   forwardRef,
   memo,
@@ -154,6 +143,18 @@ import {
   useImperativeHandle,
   useRef,
 } from 'react';
+
+import { createMessage } from '@/actions/message-actions';
+import { Button } from '@/components/shadcn/ui/button';
+import { InputCustom } from '@/components/shadcn/ui/inputCustom';
+import Spinner from '@/components/shadcn/ui/spinner';
+import { cn, handleFormServerErrors } from '@/lib/utils';
+import { MessageSchema, messageSchema } from '@/schemas';
+import { SafeAdminChat } from '@/types/types';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { User } from '@prisma/client';
+import { SendIcon } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 
 type ChatFormProps = {
@@ -217,7 +218,8 @@ const ChatForm = memo(
         <form
           onSubmit={handleSubmit(onSubmit)}
           aria-label='Chat message form'
-          className='w-full flex flex-col'>
+          className='w-full flex flex-col'
+        >
           <div className='flex items-center gap-2'>
             <InputCustom
               className='w-full h-8 shadow-inner border-0 focus-visible:ring-0 focus:outline-none focus:right-0 '
@@ -243,7 +245,8 @@ const ChatForm = memo(
                 isValid && 'hover:bg-blue-700/70 hover:text-blue-800',
                 isSubmitting && 'bg-yellow-600 text-sky-500'
               )}
-              disabled={!isValid || isSubmitting}>
+              disabled={!isValid || isSubmitting}
+            >
               {isSubmitting ? (
                 <Spinner
                   className='gap-0 text-black'

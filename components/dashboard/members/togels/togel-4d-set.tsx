@@ -1,6 +1,8 @@
 'use client';
 
-import { Button, InputCustom } from '@/components/ui';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+
+import { Button, InputCustom } from '@/components/shadcn/ui';
 import { useZodForm } from '@/hooks/use-zod-form';
 import ClientOnly from '@/lib/client-only';
 import { thead4dSet } from '@/lib/helper';
@@ -11,9 +13,9 @@ import {
   sin4dSetSchema,
 } from '@/schemas/togel-schema';
 import { MinusCircle, PlusCircle } from 'lucide-react';
-import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { SubmitHandler, useFieldArray } from 'react-hook-form';
 import { FaRupiahSign } from 'react-icons/fa6';
+
 import { TotalAmountSet } from './togel-games4d';
 
 type Togel4dSetProps = {
@@ -304,7 +306,8 @@ const Togel4dSet = ({ params }: Togel4dSetProps) => {
                 <th
                   key={head.label}
                   colSpan={head.colspan}
-                  className='text-sm font-bold'>
+                  className='text-sm font-bold'
+                >
                   {head.label === 'bet' ? (
                     <span className='text-center flex items-center justify-center'>
                       <input
@@ -590,7 +593,8 @@ const Togel4dSet = ({ params }: Togel4dSetProps) => {
             size='sm'
             variant='default'
             className='text-shadow-lg text-xs text-white font-semibold shadow-lg hover:bg-orange-300 hover:text-gray-600 hover:font-semibold px-2 py-1'
-            onClick={handleAddColumn}>
+            onClick={handleAddColumn}
+          >
             <PlusCircle
               size={14}
               className='svg text-sky-700 pr-1 hover:text-green-600'
@@ -609,7 +613,8 @@ const Togel4dSet = ({ params }: Togel4dSetProps) => {
             size='sm'
             onClick={handlePreviewBet}
             variant='primary'
-            className='px-3 py-.5'>
+            className='px-3 py-.5'
+          >
             Check-Bet
           </Button>
         </div>

@@ -1,17 +1,19 @@
 'use client';
 
-import { useState, useRef, useCallback, ChangeEvent, useEffect } from 'react';
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
+
 import {
-  TableHeader,
-  TableRow,
-  TableHead,
+  Button,
+  Table,
   TableBody,
   TableCell,
   TableFooter,
-  Table,
-  Button,
-} from '@/components/ui';
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/shadcn/ui';
 import { useZodForm } from '@/hooks/use-zod-form';
+import ClientOnly from '@/lib/client-only';
 import { cn, safeParseFloat } from '@/lib/utils';
 import { fiftyFiftyTableSchema } from '@/schemas/togel-schema';
 import {
@@ -19,10 +21,10 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
+import { ChevronDownSquareIcon, ChevronUpSquareIcon } from 'lucide-react';
+
 import { useFiftyFiftyColumns } from './fifty-fifty-columns';
-import ClientOnly from '@/lib/client-only';
 import FiftyFiftyRules from './fifty-fifty-rules';
-import { ChevronUpSquareIcon, ChevronDownSquareIcon } from 'lucide-react';
 
 type FiftyFiftyTableProps = {};
 
@@ -214,7 +216,8 @@ const FiftyFiftyTable = () => {
                     return (
                       <TableHead
                         key={header.id}
-                        className='p-0 m-0 h-8 text-xs font-bold text-center'>
+                        className='p-0 m-0 h-8 text-xs font-bold text-center'
+                      >
                         {header.isPlaceholder
                           ? null
                           : flexRender(
@@ -232,7 +235,8 @@ const FiftyFiftyTable = () => {
                 table.getRowModel().rows.map((row) => (
                   <TableRow
                     key={row.id}
-                    data-state={row.getIsSelected() && 'selected'}>
+                    data-state={row.getIsSelected() && 'selected'}
+                  >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell key={cell.id} className='p-0 m-0'>
                         {flexRender(
@@ -250,7 +254,8 @@ const FiftyFiftyTable = () => {
                 <TableRow>
                   <TableCell
                     colSpan={ffColumns.length}
-                    className='h-24 text-center'>
+                    className='h-24 text-center'
+                  >
                     No Results
                   </TableCell>
                 </TableRow>
@@ -278,7 +283,8 @@ const FiftyFiftyTable = () => {
               size='sm'
               type='submit'
               disabled={!isValid}
-              className='py-0 w-28'>
+              className='py-0 w-28'
+            >
               Submit
             </Button>
           </div>
@@ -290,7 +296,8 @@ const FiftyFiftyTable = () => {
             size='sm'
             type='button'
             onClick={() => setShowDescription(!showDescription)}
-            className='w-full flex justify-between hover:bg-emerald-100/70 '>
+            className='w-full flex justify-between hover:bg-emerald-100/70 '
+          >
             <div>Keterangan:</div>
             <div>
               {showDescription ? (

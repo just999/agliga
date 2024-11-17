@@ -1,7 +1,9 @@
 // Image.tsx
 import React from 'react';
-import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
+
 import { TImage } from '@/types/types';
+
+import { Avatar, AvatarFallback, AvatarImage } from './shadcn/ui/avatar';
 
 interface ImageProps {
   image: TImage;

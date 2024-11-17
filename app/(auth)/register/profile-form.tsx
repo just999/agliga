@@ -1,15 +1,14 @@
 'use client';
 
-import SelectInput from '@/components/ui/select-input';
-import { InputCustom } from '@/components/ui/inputCustom';
+import { useEffect, useState } from 'react';
+
+import { InputCustom } from '@/components/shadcn/ui/inputCustom';
+import SelectInput from '@/components/shadcn/ui/select-input';
 import useBanks from '@/hooks/use-banks';
 import useGames from '@/hooks/use-games';
 import { findMatchingObjects } from '@/lib/utils';
 import { UserProps } from '@/types/types';
-
 import { CreditCardIcon, PhoneIcon, UserPlusIcon } from 'lucide-react';
-import { useEffect, useState } from 'react';
-
 import { useFormContext } from 'react-hook-form';
 
 type Props = {

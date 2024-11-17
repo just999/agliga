@@ -1,11 +1,11 @@
 'use client';
 
-import { useSession } from 'next-auth/react';
-import { PostProps } from '@/types/types';
-import VerticalDropdown from '../ui/vertical-dropdown';
-import { Slider } from '@prisma/client';
-
 import { cn } from '@/lib/utils';
+import { PostProps } from '@/types/types';
+import { Slider } from '@prisma/client';
+import { useSession } from 'next-auth/react';
+
+import VerticalDropdown from '../shadcn/ui/vertical-dropdown';
 
 type EditDeletePostButtonProps = {
   item?: PostProps;
@@ -28,7 +28,8 @@ const EditDeletePostButton = ({
       className={cn(
         'flex flex-row w-full justify-between items-center mb-5',
         className
-      )}>
+      )}
+    >
       <h1 className='text-2xl font-bold '>{item?.title}</h1>
       {status === 'authenticated' && userRole === 'admin' && (
         <VerticalDropdown

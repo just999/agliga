@@ -1,11 +1,9 @@
 'use client';
 
-import { ColumnDef } from '@tanstack/react-table';
-
-import { cn, noto } from '@/lib/utils';
-
+import { Button } from '@/components/shadcn/ui/button';
 import { TeamStats } from '@/hooks/use-league';
-import { Button } from '@/components/ui/button';
+import { cn, noto } from '@/lib/utils';
+import { ColumnDef } from '@tanstack/react-table';
 import { ArrowUpDown } from 'lucide-react';
 
 export const euroColumns: ColumnDef<TeamStats>[] = [

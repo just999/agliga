@@ -1,10 +1,11 @@
 'use client';
 
-import { InputCustom } from '@/components/ui';
+import { ChangeEvent, useCallback, useEffect, useMemo } from 'react';
+
+import { InputCustom } from '@/components/shadcn/ui';
 import { cn, oldStandardTT, poppins, safeParseFloat } from '@/lib/utils';
 import { Sin4dSetSchema } from '@/schemas/togel-schema';
 import { Trash2Icon } from 'lucide-react';
-import { ChangeEvent, useCallback, useEffect, useMemo } from 'react';
 import {
   Control,
   FieldValues,
@@ -63,7 +64,7 @@ const useTogelSetColumns = (
         setValue(`sin4dSet.${i}.bet4d`, allBet);
       }
     });
-  }, [copyWager, copy]);
+  }, [sin4dSet, copy, copyWager, setValue]);
 
   // const allBet = useAutoSetValues(sin4dSet, watchAllInputs, watch, setValue);
   useEffect(() => {
@@ -96,7 +97,8 @@ const useTogelSetColumns = (
               className={cn(
                 'p-0 m-0 text-zinc-700 font-semibold',
                 poppins.className
-              )}>
+              )}
+            >
               {row.index + 1}.
             </span>
           </div>
@@ -198,7 +200,7 @@ const useTogelSetColumns = (
           ),
       },
     ],
-    []
+    [handleInputChange, register, remove]
   );
 
   return { togelColumns };

@@ -1,5 +1,6 @@
 import { LucideIcon } from 'lucide-react';
-import { Card, CardContent } from '../ui/card';
+
+import { Card, CardContent } from '../shadcn/ui/card';
 
 type DashboardCardProps = {
   title: string;

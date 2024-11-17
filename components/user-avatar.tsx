@@ -1,6 +1,6 @@
 'use client';
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/shadcn/ui';
 import { cn, transformImageUrl } from '@/lib/utils';
 import { User } from 'next-auth';
 

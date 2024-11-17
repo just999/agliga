@@ -1,22 +1,22 @@
 'use client';
 
 import React from 'react';
-import { Copy, Edit, MoreHorizontal, Trash } from 'lucide-react';
+
+import { Button } from '@/components/shadcn/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from '@/components/shadcn/ui/dropdown-menu';
+import useModal from '@/hooks/use-modal';
+import { DepoWdProps } from '@/types/types';
+import { Depo, Wd } from '@prisma/client';
+import { Copy, Edit, MoreHorizontal, Trash } from 'lucide-react';
+import { useSession } from 'next-auth/react';
 // import { ScheduleColumn } from './columns';
 import toast from 'react-hot-toast';
-
-import useModal from '@/hooks/use-modal';
-import { useSession } from 'next-auth/react';
-import { DepoWdProps } from '@/types/types';
-import { Button } from '@/components/ui/button';
-import { Depo, Wd } from '@prisma/client';
 
 type CellDepoWdActionsProps = {
   data: DepoWdProps;
@@ -86,7 +86,8 @@ const CellDepoWdActions = ({ data }: CellDepoWdActionsProps) => {
           </DropdownMenuTrigger>
           <DropdownMenuContent
             align='end'
-            className='backdrop-blur-sm bg-white/20'>
+            className='backdrop-blur-sm bg-white/20'
+          >
             {/* <DropdownMenuLabel className='text-xs '></DropdownMenuLabel> */}
             {/* <DropdownMenuItem
           onClick={() => onCopy(data.id)}
@@ -97,14 +98,16 @@ const CellDepoWdActions = ({ data }: CellDepoWdActionsProps) => {
         </DropdownMenuItem> */}
             <DropdownMenuItem
               onClick={() => handleEditDepoWd()}
-              className='text-xs text-slate-500 hover:text-black cursor-pointer hover:bg-emerald-100 '>
+              className='text-xs text-slate-500 hover:text-black cursor-pointer hover:bg-emerald-100 '
+            >
               <Edit className='mr-4 h-4 w-4' />
               Update
             </DropdownMenuItem>
             {newDeleteModalType && (
               <DropdownMenuItem
                 onClick={() => handleDeleteDepoWd()}
-                className='text-xs text-slate-500 hover:text-black hover:bg-emerald-100 cursor-pointer '>
+                className='text-xs text-slate-500 hover:text-black hover:bg-emerald-100 cursor-pointer '
+              >
                 <Trash className='mr-4 h-4 w-4 ' />
                 Delete
               </DropdownMenuItem>

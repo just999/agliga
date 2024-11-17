@@ -2,7 +2,7 @@
 
 import { ChangeEvent, useCallback, useEffect, useMemo, useRef } from 'react';
 
-import { InputCustom, Label } from '@/components/ui';
+import { InputCustom, Label } from '@/components/shadcn/ui';
 import { cn, poppins, safeParseFloat } from '@/lib/utils';
 import { BseoTableSchema } from '@/schemas/togel-schema';
 import { ChevronDownCircle } from 'lucide-react';

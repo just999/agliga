@@ -1,7 +1,8 @@
 'use client';
 
 import { Column } from '@tanstack/react-table';
-import { DebouncedInput } from '../ui/debounce-input';
+
+import { DebouncedInput } from '../shadcn/ui/debounce-input';
 
 type FilterProps = {};
 

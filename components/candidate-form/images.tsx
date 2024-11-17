@@ -1,6 +1,11 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
+
+import useFormTypes from '@/hooks/use-form-types';
+import useModal from '@/hooks/use-modal';
+import usePostsStore from '@/store/use-posts-store';
+import { InitialPostProps } from '@/types/types';
 import {
   Control,
   Controller,
@@ -10,18 +15,11 @@ import {
   UseFormSetValue,
   UseFormWatch,
 } from 'react-hook-form';
-
-import { Button } from '../ui/button';
-
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
-
-import { InitialPostProps } from '@/types/types';
-import useModal from '@/hooks/use-modal';
+import { FcAddImage, FcEditImage, FcEmptyTrash } from 'react-icons/fc';
 import { MdOutlineAddPhotoAlternate } from 'react-icons/md';
 
-import usePostsStore from '@/store/use-posts-store';
-import { FcAddImage, FcEmptyTrash, FcEditImage } from 'react-icons/fc';
-import useFormTypes from '@/hooks/use-form-types';
+import { Avatar, AvatarFallback, AvatarImage } from '../shadcn/ui/avatar';
+import { Button } from '../shadcn/ui/button';
 
 type ImagesProps = {
   control?: Control<FieldValues | any>;
@@ -140,7 +138,8 @@ const Images = ({
                 size='sm'
                 type='button'
                 onClick={onAddImages}
-                className='bg-sky-50 border text-slate-400 border-sky-200 border-solid rounded-full  w-1/4 h-6 cursor-pointer'>
+                className='bg-sky-50 border text-slate-400 border-sky-200 border-solid rounded-full  w-1/4 h-6 cursor-pointer'
+              >
                 {formType === 'add-slider' ? (
                   <span>
                     <FcAddImage size={18} />
@@ -161,7 +160,8 @@ const Images = ({
                 size='sm'
                 type='button'
                 onClick={onAddImages}
-                className='bg-sky-50 border text-slate-400 border-sky-200 border-solid rounded-full  w-1/4 h-6 cursor-pointer'>
+                className='bg-sky-50 border text-slate-400 border-sky-200 border-solid rounded-full  w-1/4 h-6 cursor-pointer'
+              >
                 <MdOutlineAddPhotoAlternate size={14} />{' '}
                 <span className='text-[10px] px-2 '>
                   {modalType === 'post' ? 'add' : 'edit'}

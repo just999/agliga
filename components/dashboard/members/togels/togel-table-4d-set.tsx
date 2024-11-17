@@ -1,6 +1,8 @@
 'use client';
 
-import { Button } from '@/components/ui';
+import { useCallback, useEffect, useState } from 'react';
+
+import { Button } from '@/components/shadcn/ui';
 import {
   Table,
   TableBody,
@@ -9,10 +11,10 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
-
+} from '@/components/shadcn/ui/table';
 import useTogelSetColumns from '@/hooks/use-togel-set-columns';
 import { useZodForm } from '@/hooks/use-zod-form';
+import ClientOnly from '@/lib/client-only';
 import { cn, validBet4dSet } from '@/lib/utils';
 import {
   Sin4dSetFormDataSchema,
@@ -26,10 +28,8 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import { PlusCircle } from 'lucide-react';
-import { useCallback, useEffect, useState } from 'react';
-
-import ClientOnly from '@/lib/client-only';
 import { SubmitHandler, useFieldArray, useWatch } from 'react-hook-form';
+
 import TogelTable4dSetConfirm from './togel-table-4d-set-confirm';
 
 type TogelTable4dSetProps = {
@@ -253,7 +253,8 @@ const TogelTable4dSet = ({ params }: TogelTable4dSetProps) => {
                         'p-0 m-0 h-8 text-xs font-bold text-center',
                         header.column.id === 'number' && 'w-40',
                         header.column.id === 'bet' && 'w-80'
-                      )}>
+                      )}
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -272,7 +273,8 @@ const TogelTable4dSet = ({ params }: TogelTable4dSetProps) => {
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
-                  data-state={row.getIsSelected() && 'selected'}>
+                  data-state={row.getIsSelected() && 'selected'}
+                >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id} className='p-0 m-0 '>
                       {flexRender(
@@ -287,7 +289,8 @@ const TogelTable4dSet = ({ params }: TogelTable4dSetProps) => {
               <TableRow>
                 <TableCell
                   // colSpan={columns.length}
-                  className='h-24 text-center'>
+                  className='h-24 text-center'
+                >
                   No Results
                 </TableCell>
               </TableRow>
@@ -326,7 +329,8 @@ const TogelTable4dSet = ({ params }: TogelTable4dSetProps) => {
             size='sm'
             variant='default'
             className='text-shadow-lg text-xs text-white font-semibold shadow-lg hover:bg-orange-300 hover:text-gray-600 hover:font-semibold px-2 py-1'
-            onClick={handleAddColumn}>
+            onClick={handleAddColumn}
+          >
             <PlusCircle
               size={14}
               className='svg text-sky-700 pr-1 hover:text-green-600'
@@ -345,7 +349,8 @@ const TogelTable4dSet = ({ params }: TogelTable4dSetProps) => {
             size='sm'
             variant='primary'
             className='px-3 py-.5'
-            onClick={handleValidateBet}>
+            onClick={handleValidateBet}
+          >
             Check Bet
           </Button>
         </div>

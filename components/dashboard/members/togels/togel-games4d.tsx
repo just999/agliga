@@ -1,8 +1,11 @@
 'use client';
 
-import { InputCustom } from '@/components/ui';
-import { cn } from '@/lib/utils';
 import { useEffect, useMemo, useState } from 'react';
+
+import { InputCustom } from '@/components/shadcn/ui';
+import { useTogel4d } from '@/hooks/use-togel4d';
+import { cn } from '@/lib/utils';
+import { FormValuesProps } from '@/types/types';
 import {
   Control,
   FieldValues,
@@ -13,8 +16,6 @@ import {
 } from 'react-hook-form';
 import { FaRupiahSign } from 'react-icons/fa6';
 
-import { useTogel4d } from '@/hooks/use-togel4d';
-import { FormValuesProps } from '@/types/types';
 import { FormSetValuesProps } from './togel-4d-set';
 
 type TogelGames4dProps = {

@@ -11,7 +11,7 @@ import {
   TotalNetAmount,
 } from '@/components/dashboard/members/togels/togel-games4d';
 import footer from '@/components/footer';
-import { InputCustom } from '@/components/ui';
+import { InputCustom } from '@/components/shadcn/ui';
 import { cn, oldStandardTT, poppins, rp, safeParseFloat } from '@/lib/utils';
 import { Sin4dFormDataSchema, Sin4dSchema } from '@/schemas/togel-schema';
 import { Percent, Trash2Icon } from 'lucide-react';

@@ -262,7 +262,7 @@
 
 import { ChangeEvent, useEffect, useMemo, useRef } from 'react';
 
-import { InputCustom, Label } from '@/components/ui';
+import { InputCustom, Label } from '@/components/shadcn/ui';
 import { cn, poppins, rp, safeParseFloat } from '@/lib/utils';
 import { FiftyFiftyMsKkkTableSchema } from '@/schemas/togel-schema';
 import { ChevronDownCircle, Percent } from 'lucide-react';

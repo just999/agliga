@@ -1,16 +1,17 @@
 'use client';
 
 // import { useParams, useRouter } from 'next/navigation';
-import { columns } from './columns';
-import { DataTable } from '@/components/ui/data-table';
-
-import useModal from '@/hooks/use-modal';
-import { Schedule } from '@prisma/client';
-import useRunToggleStore from '@/store/use-table-store';
-import { useSearchParams } from 'next/navigation';
-import { runData } from '@/lib/helper';
-import { FixtureProps } from '@/types/types';
+import { DataTable } from '@/components/shadcn/ui/data-table';
 import { useGetFixtures } from '@/hooks/use-get-schedule';
+import useModal from '@/hooks/use-modal';
+import { runData } from '@/lib/helper';
+import useRunToggleStore from '@/store/use-table-store';
+import { FixtureProps } from '@/types/types';
+import { Schedule } from '@prisma/client';
+import { useSearchParams } from 'next/navigation';
+
+import { columns } from './columns';
+
 // import ApiList from '@/components/ui/api-list';
 
 interface ScheduleClientProps {

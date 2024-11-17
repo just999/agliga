@@ -1,5 +1,13 @@
 'use client';
 
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+
 import {
   Button,
   Table,
@@ -9,7 +17,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui';
+} from '@/components/shadcn/ui';
 import { cn, generateAndPadArrayFn, poppins } from '@/lib/utils';
 import {
   BseoOnlySchema,
@@ -17,15 +25,16 @@ import {
   QuickTabSchema,
 } from '@/schemas/togel-schema';
 import { useTogelStore } from '@/store/use-togel-store';
+import { ArrayOptProps } from '@/types/types';
 import {
   Column,
-  Table as TanTable,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
   PaginationState,
+  Table as TanTable,
   useReactTable,
 } from '@tanstack/react-table';
 import {
@@ -36,11 +45,9 @@ import {
   ChevronsRight,
   ChevronUpSquareIcon,
 } from 'lucide-react';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useFieldArray, useForm, useWatch } from 'react-hook-form';
+
 import { useQuick2dDetailsColumns } from './quick2d-details-columns';
-import { ArrayOptProps } from '@/types/types';
-import React from 'react';
 
 type Quick2dDetailsTableProps = {
   // data?: Togel4dValues[];

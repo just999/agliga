@@ -1,5 +1,8 @@
 'use client';
 
+import { type } from 'os';
+import { ChangeEvent, useMemo } from 'react';
+
 import { Form4dSetProps } from '@/components/dashboard/members/togels/togel-4d-set';
 import {
   TogelDiscount,
@@ -7,14 +10,11 @@ import {
   TogelNetWager,
   TotalNetAmount,
 } from '@/components/dashboard/members/togels/togel-games4d';
-import { InputCustom } from '@/components/ui';
+import { InputCustom } from '@/components/shadcn/ui';
 import { cn, oldStandardTT, poppins, safeParseFloat } from '@/lib/utils';
-
 import { Trash2Icon } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { type } from 'os';
-import { ChangeEvent, useMemo } from 'react';
 import {
   Control,
   FieldValues,
@@ -23,7 +23,6 @@ import {
   UseFormSetFocus,
   UseFormWatch,
 } from 'react-hook-form';
-
 import { FaRupiahSign } from 'react-icons/fa6';
 
 export const useTogel = (
@@ -64,7 +63,8 @@ export const useTogel = (
               className={cn(
                 'p-0 m-0 text-zinc-300 font-semibold',
                 poppins.className
-              )}>
+              )}
+            >
               {row.index + 1}.
             </span>
           </div>

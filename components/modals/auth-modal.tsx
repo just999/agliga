@@ -1,29 +1,27 @@
 'use client';
 
-import axios from 'axios';
 import { useEffect, useState } from 'react';
+
+import { register as registerUser } from '@/actions/auth-actions';
+import useBanks from '@/hooks/use-banks';
+import useGames from '@/hooks/use-games';
+import useModal from '@/hooks/use-modal';
+import axios from 'axios';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
+import { AiFillGithub } from 'react-icons/ai';
+import { BsEye, BsEyeSlash } from 'react-icons/bs';
+import { FcGoogle } from 'react-icons/fc';
+import { ImFacebook2 } from 'react-icons/im';
+
+import { HeadingLogo } from '../shadcn/ui';
+import { Button } from '../shadcn/ui/button';
+import Input from '../shadcn/ui/input';
+import SelectInput from '../shadcn/ui/select-input';
 import Modal from './modal';
 
-import Input from '../ui/input';
-import toast from 'react-hot-toast';
-
-import { FcGoogle } from 'react-icons/fc';
-import { AiFillGithub } from 'react-icons/ai';
-import { ImFacebook2 } from 'react-icons/im';
-import { signIn } from 'next-auth/react';
-
-import useModal from '@/hooks/use-modal';
-import { useRouter } from 'next/navigation';
-
-import useBanks from '@/hooks/use-banks';
-
-import SelectInput from '../ui/select-input';
-import useGames from '@/hooks/use-games';
-import { Button } from '../ui/button';
-import { BsEye, BsEyeSlash } from 'react-icons/bs';
-import { register as registerUser } from '@/actions/auth-actions';
-import { HeadingLogo } from '../ui';
 // import BankSelect from '../select-input';
 
 // const bankOptions = banks.map((bank) => ({
@@ -203,8 +201,8 @@ const AuthModal = () => {
             modalType === 'login'
               ? 'password'
               : isPasswordVisible
-              ? 'text'
-              : 'password'
+                ? 'text'
+                : 'password'
           }
           label={password ? '' : 'password'}
           disabled={isLoading}
@@ -220,7 +218,8 @@ const AuthModal = () => {
               isPasswordVisible ? 'show' : ''
             }`}
             onClick={handleToggleVisibility}
-            aria-label={isPasswordVisible ? 'Hide password' : 'Show password'}>
+            aria-label={isPasswordVisible ? 'Hide password' : 'Show password'}
+          >
             {isPasswordVisible ? (
               <BsEyeSlash className='h-5 w-5' />
             ) : (
@@ -344,7 +343,8 @@ const AuthModal = () => {
           className='text-xs '
           // label='Continue with Google'
           // icon={FcGoogle}
-          onClick={() => signIn('google')}>
+          onClick={() => signIn('google')}
+        >
           <FcGoogle className='mr-2 ' size={20} />
           Login with Google
         </Button>
@@ -353,7 +353,8 @@ const AuthModal = () => {
           className='text-xs '
           // label='Continue with Github'
           // icon={AiFillGithub}
-          onClick={() => signIn('github')}>
+          onClick={() => signIn('github')}
+        >
           <AiFillGithub className='mr-2 ' size={20} />
           Login with Github
         </Button>
@@ -362,7 +363,8 @@ const AuthModal = () => {
           className='text-xs '
           // label='Continue with Github'
           // icon={AiFillGithub}
-          onClick={() => signIn('facebook')}>
+          onClick={() => signIn('facebook')}
+        >
           <ImFacebook2 className='mr-2 text-[#3b5999] ' size={20} />
           Login with Facebook
         </Button>
@@ -401,7 +403,8 @@ const AuthModal = () => {
                     onOpen('register');
                   }
             }
-            className='text-neutral-800 cursor-pointer hover:underline '>
+            className='text-neutral-800 cursor-pointer hover:underline '
+          >
             {modalType === 'register' ? 'Login' : 'Daftar'}
           </div>
         </div>

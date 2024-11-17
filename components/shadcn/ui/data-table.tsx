@@ -1,63 +1,21 @@
 'use client';
 
-import {
-  Column,
-  ColumnDef,
-  ColumnFiltersState,
-  FilterFn,
-  SortingFn,
-  flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  useReactTable,
-  SortingState,
-  sortingFns,
-  getSortedRowModel,
-} from '@tanstack/react-table';
-
-import {
-  RankingInfo,
-  rankItem,
-  compareItems,
-} from '@tanstack/match-sorter-utils';
+import React, { useCallback, useEffect, useReducer, useState } from 'react';
 
 import {
   Table,
   TableBody,
   TableCell,
+  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
-  TableFooter,
-} from '@/components/ui/table';
-
-import { InputCustom } from './inputCustom';
-import { Button } from './button';
-import React, { useCallback, useEffect, useReducer, useState } from 'react';
-
-import useRunToggleStore from '@/store/use-table-store';
-import RunTable from './run-table';
-import { cn, orbit } from '@/lib/utils';
-
+} from '@/components/shadcn/ui/table';
 import useModal from '@/hooks/use-modal';
-
-import {
-  BsArrowDownSquare,
-  BsChevronDoubleLeft,
-  BsChevronDoubleRight,
-  BsChevronLeft,
-  BsChevronRight,
-} from 'react-icons/bs';
-import EuroCard from '../table/euro/euro-card';
-
-import { Euro24 } from '../assets/games/euro24';
-
-import { useSession } from 'next-auth/react';
-
-import { FcParallelTasks } from 'react-icons/fc';
-import FixtureTable from '../table/euro/fixture/fixture-table';
-import Heading from './heading';
+import { banks, games, processDepoWd, statuses } from '@/lib/helper';
+import { cn, orbit } from '@/lib/utils';
+import useRunToggleStore from '@/store/use-table-store';
+import { useTabsStore } from '@/store/use-tabs-store';
 import {
   DepoProps,
   DepoWdProps,
@@ -65,20 +23,51 @@ import {
   tabsAdmin,
   WdProps,
 } from '@/types/types';
-import { EPL } from '../assets/sports';
-
-import Periods from '../soccer/periods';
-
+import { Fixture } from '@prisma/client';
+import { DropdownMenu } from '@radix-ui/react-dropdown-menu';
+import {
+  compareItems,
+  RankingInfo,
+  rankItem,
+} from '@tanstack/match-sorter-utils';
+import {
+  Column,
+  ColumnDef,
+  ColumnFiltersState,
+  FilterFn,
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  SortingFn,
+  sortingFns,
+  SortingState,
+  useReactTable,
+} from '@tanstack/react-table';
+import { useSession } from 'next-auth/react';
+import {
+  BsArrowDownSquare,
+  BsChevronDoubleLeft,
+  BsChevronDoubleRight,
+  BsChevronLeft,
+  BsChevronRight,
+} from 'react-icons/bs';
+import { FcParallelTasks } from 'react-icons/fc';
 import { TbNewSection } from 'react-icons/tb';
 
-import { Fixture } from '@prisma/client';
-import { useTabsStore } from '@/store/use-tabs-store';
-import { DropdownMenu } from '@radix-ui/react-dropdown-menu';
-
-import { banks, games, processDepoWd, statuses } from '@/lib/helper';
-import DepoWdDropdownBankSelect from '../table/depo-wd/depo-wd-dropdown-bank-select';
+import { Euro24 } from '../../assets/games/euro24';
+import { EPL } from '../../assets/sports';
+import Periods from '../../soccer/periods';
+import DepoWdDropdownBankSelect from '../../table/depo-wd/depo-wd-dropdown-bank-select';
+import EuroCard from '../../table/euro/euro-card';
+import FixtureTable from '../../table/euro/fixture/fixture-table';
+import Filter from '../../table/filter';
+import { Button } from './button';
 import { DebouncedInput } from './debounce-input';
-import Filter from '../table/filter';
+import Heading from './heading';
+import { InputCustom } from './inputCustom';
+import RunTable from './run-table';
 
 const hasActiveProperty = (data: any): data is { active: boolean } =>
   'active' in data;
@@ -302,7 +291,8 @@ DataTableProps<TData, TValue>) {
         className={cn(
           'flex flex-row items-center py-2 bg-orange-50/60 border border-solid border-orange-100 rounded-lg',
           className
-        )}>
+        )}
+      >
         {/* {eu && <pre>{JSON.stringify(eu[0]?.category, null, 2)}</pre>} */}
         {searchKey && (
           <InputCustom
@@ -338,7 +328,8 @@ DataTableProps<TData, TValue>) {
                       )[0];
 
                       handleNewFixture(week);
-                    }}>
+                    }}
+                  >
                     <TbNewSection size={30} />
                     {/* <pre>
                     {JSON.stringify(table.options.data[0]?.week, null, 2)}
@@ -354,7 +345,8 @@ DataTableProps<TData, TValue>) {
       <div
         className={cn(
           'flex flex-row w-full gap-4 md:gap-4 md:w-full lg:gap-4 justify-center'
-        )}>
+        )}
+      >
         <div>
           <RunTable
             toggle={() => toggle}
@@ -369,13 +361,15 @@ DataTableProps<TData, TValue>) {
                     className={cn(
                       'rounded-full h-8 p-0 m-0 border-none',
                       euroTableClassName
-                    )}>
+                    )}
+                  >
                     {round && (!eu[0]?.depoAmount || !eu[0]?.wdAmount) && (
                       <TableHead
                         className={cn(
                           'flex flex-row font-semibold justify-center ml-2 bg-emerald-300 rounded-l-lg  h-8 hover:bg-green-300 hover:font-semibold hover:text-gray-800 shadow-xl text-md text-gray-400 cursor-pointer',
                           group && 'w-full'
-                        )}>
+                        )}
+                      >
                         <Euro24 />
                         <Button
                           variant='ghost'
@@ -388,7 +382,8 @@ DataTableProps<TData, TValue>) {
                               : 'hover:font-semibold hover:text-gray-800 hover:bg-green-300'
                           )}
                           onClick={() => handleOpenGroup(group)}
-                          disabled={role === 'admin' ? false : true}>
+                          disabled={role === 'admin' ? false : true}
+                        >
                           {group ? `Group ${group}` : `Round ${round}`}
                         </Button>
                       </TableHead>
@@ -399,7 +394,8 @@ DataTableProps<TData, TValue>) {
                           className={cn(
                             'bg-amber-200  mx-4 font-semibold h-8 hover:bg-cyan-100 hover:backdrop-blur-sm  hover:text-gray-800 hover:font-bold shadow-xl cursor-pointer text-md text-gray-400',
                             group ? 'rounded-none' : 'rounded-r-full'
-                          )}>
+                          )}
+                        >
                           <Button
                             variant='ghost'
                             size='sm'
@@ -410,7 +406,8 @@ DataTableProps<TData, TValue>) {
                               }
 
                               setIsToggle((prev) => !prev);
-                            }}>
+                            }}
+                          >
                             {/* <pre>{JSON.stringify(euroGroup, null, 2)}</pre> */}
                             <BsArrowDownSquare size={18} className='mx-auto ' />
                           </Button>
@@ -420,7 +417,8 @@ DataTableProps<TData, TValue>) {
                           className={cn(
                             'bg-amber-100 rounded-r-lg px-4 font-semibold h-8 hover:bg-orange-100/70 hover:text-gray-800 hover:font-bold shadow-xl cursor-pointer text-md text-gray-400',
                             group && 'rounded-r-full'
-                          )}>
+                          )}
+                        >
                           <Button
                             variant='ghost'
                             size='sm'
@@ -437,7 +435,8 @@ DataTableProps<TData, TValue>) {
                               );
 
                               setIsToggleFixture((prev) => !prev);
-                            }}>
+                            }}
+                          >
                             {/* <pre>{JSON.stringify(euroGroup, null, 2)}</pre> */}
                             <FcParallelTasks size={18} className='mx-auto ' />
                           </Button>
@@ -479,7 +478,8 @@ DataTableProps<TData, TValue>) {
                               thClassName,
                               round && 'w-12'
                             )}
-                            colSpan={header.colSpan}>
+                            colSpan={header.colSpan}
+                          >
                             {header.isPlaceholder ? null : (
                               <>
                                 <div
@@ -490,7 +490,8 @@ DataTableProps<TData, TValue>) {
                                     onClick:
                                       header.column.getToggleSortingHandler(),
                                   }}
-                                  className='flex flex-row bg-rose-50/30  items-center text-nowrap justify-start h-6 px-2 align-middle cursor-pointer text-shadow-sm'>
+                                  className='flex flex-row bg-rose-50/30  items-center text-nowrap justify-start h-6 px-2 align-middle cursor-pointer text-shadow-sm'
+                                >
                                   {flexRender(
                                     header.column.columnDef.header,
                                     header.getContext()
@@ -587,7 +588,8 @@ DataTableProps<TData, TValue>) {
                       <TableRow
                         key={row.id}
                         data-state={row.getIsSelected() && 'selected'}
-                        className='h-8 bg-amber-50 even:bg-orange-50 odd:bg-amber-200/30'>
+                        className='h-8 bg-amber-50 even:bg-orange-50 odd:bg-amber-200/30'
+                      >
                         {row.getVisibleCells().map((cell: any) => {
                           let activeCell;
                           if (
@@ -609,7 +611,8 @@ DataTableProps<TData, TValue>) {
                                 tableCellClassName,
                                 activeCell
                               )}
-                              style={{ height: '18px' }}>
+                              style={{ height: '18px' }}
+                            >
                               {flexRender(
                                 cell.column.columnDef.cell,
                                 cell.getContext()
@@ -626,7 +629,8 @@ DataTableProps<TData, TValue>) {
                     <TableRow>
                       <TableCell
                         colSpan={columns.length}
-                        className='h-12 text-center'>
+                        className='h-12 text-center'
+                      >
                         No results.
                       </TableCell>
                     </TableRow>
@@ -679,7 +683,8 @@ DataTableProps<TData, TValue>) {
                 'space-x-2 py-4 pr-4 w-full text-nowrap',
                 className,
                 depoWdClassName
-              )}>
+              )}
+            >
               {/* <Button
                 variant='ghost'
                 size='sm'
@@ -715,7 +720,8 @@ DataTableProps<TData, TValue>) {
                   size='sm'
                   className='border rounded p-1 h-6'
                   onClick={() => table.setPageIndex(0)}
-                  disabled={!table.getCanPreviousPage()}>
+                  disabled={!table.getCanPreviousPage()}
+                >
                   <BsChevronDoubleLeft className='mr-4  grayscale hover:grayscale-0 transition ease-in-out delay-50  hover:-translate-y-1 hover:scale-150 mx-1 hover:bg-amber-50 hover:drop-shadow-lg duration-300 h-4' />
                   1st
                 </Button>
@@ -727,7 +733,8 @@ DataTableProps<TData, TValue>) {
                     !table.getCanPreviousPage() && 'text-zinc-600'
                   )}
                   onClick={() => table.previousPage()}
-                  disabled={!table.getCanPreviousPage()}>
+                  disabled={!table.getCanPreviousPage()}
+                >
                   <BsChevronLeft className='mr-4  grayscale hover:grayscale-0 transition ease-in-out delay-50  hover:-translate-y-1 hover:scale-150 mx-1 hover:bg-amber-50 hover:drop-shadow-lg duration-300 h-4' />
                   Prev
                 </Button>
@@ -739,7 +746,8 @@ DataTableProps<TData, TValue>) {
                   className={cn(
                     ' bg-stone-50 flex flex-row justify-center px-2 items-center text-stone-900 hover:bg-amber-50 hover:text-black hover:font-semibold hover:drop-shadow-xl shadow-lg text-xs h-6',
                     !table.getCanNextPage() && 'text-zinc-600'
-                  )}>
+                  )}
+                >
                   Next
                   <BsChevronRight className='ml-4  grayscale hover:grayscale-0 transition ease-in-out delay-50  hover:-translate-y-1 hover:scale-150 mx-1 hover:bg-amber-200 hover:drop-shadow-lg duration-300 h-4' />
                 </Button>
@@ -748,7 +756,8 @@ DataTableProps<TData, TValue>) {
                   size='sm'
                   className='border-none text-xs shadow-md rounded p-1 h-6'
                   onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-                  disabled={!table.getCanNextPage()}>
+                  disabled={!table.getCanNextPage()}
+                >
                   Last
                   <BsChevronDoubleRight className='ml-4  grayscale hover:grayscale-0 transition ease-in-out delay-50  hover:-translate-y-1 hover:scale-150 mx-1 hover:bg-amber-200 hover:drop-shadow-lg duration-300 h-4' />
                 </Button>
@@ -778,7 +787,8 @@ DataTableProps<TData, TValue>) {
                   onChange={(e) => {
                     table.setPageSize(Number(e.target.value));
                   }}
-                  className='text-xs h-6'>
+                  className='text-xs h-6'
+                >
                   {[10, 20, 30, 40, 50].map((pageSize) => (
                     <option key={pageSize} value={pageSize}>
                       Show {pageSize}
@@ -800,7 +810,8 @@ DataTableProps<TData, TValue>) {
               className={cn(
                 'px-4 text-center w-full text-base text-nowrap font-bold py-2 text-[#340239] bg-purple-50 drop-shadow-md sm:text-xs',
                 orbit.className
-              )}>
+              )}
+            >
               20{year1} - 20{year2}{' '}
             </div>
             <Periods />

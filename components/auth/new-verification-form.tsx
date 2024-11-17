@@ -1,11 +1,13 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
-import CardWrapper from './card-wrapper';
 import { useCallback, useEffect, useState } from 'react';
+
 import { newVerification } from '@/actions/new-verification';
+import { useSearchParams } from 'next/navigation';
 import { BeatLoader } from 'react-spinners';
-import { FormSuccess, FormError } from '../ui/success-error-form';
+
+import { FormError, FormSuccess } from '../shadcn/ui/success-error-form';
+import CardWrapper from './card-wrapper';
 
 type NewVerificationFormProps = {};
 
@@ -35,7 +37,8 @@ const NewVerificationForm = () => {
     <CardWrapper
       headerLabel='Confirming your verification'
       backButtonLabel='Back to login'
-      backButtonHref='/login'>
+      backButtonHref='/login'
+    >
       <div className='flex items-center w-full justify-center'>
         {!success && !error && <BeatLoader />}
         <FormSuccess message={success} />

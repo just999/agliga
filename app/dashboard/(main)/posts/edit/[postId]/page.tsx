@@ -1,18 +1,17 @@
 'use client';
 
 import BackButton from '@/components/back-button';
-import { Textarea } from '@/components/ui';
-import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/shadcn/ui';
+import { Button } from '@/components/shadcn/ui/button';
 import {
+  Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-  Form,
-} from '@/components/ui/form';
-import { InputCustom } from '@/components/ui/inputCustom';
-
+} from '@/components/shadcn/ui/form';
+import { InputCustom } from '@/components/shadcn/ui/inputCustom';
 import posts from '@/data/posts';
 import { FormSchema, formSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -127,7 +126,8 @@ const PostEditPage = ({ params }: PostEditPageProps) => {
           <Button
             className='w-full dark:bg-slate-800 dark:text-white '
             variant='ghost'
-            size='sm'>
+            size='sm'
+          >
             Update Post
           </Button>
         </form>

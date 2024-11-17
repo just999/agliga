@@ -1,12 +1,12 @@
 'use client';
 
+import { Button, InputCustom } from '@/components/shadcn/ui';
 import Header from '@/components/testing/header';
-import { Button, InputCustom } from '@/components/ui';
 import ClientOnly from '@/lib/client-only';
-
-import { Control, useFieldArray, useForm, useWatch } from 'react-hook-form';
-import Price from './price';
 import dynamic from 'next/dynamic';
+import { Control, useFieldArray, useForm, useWatch } from 'react-hook-form';
+
+import Price from './price';
 
 type Sin4dProps = {
   control: Control;
@@ -36,7 +36,8 @@ const Sin4d = () => {
     <ClientOnly>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className='flex flex-col justify-center w-full '>
+        className='flex flex-col justify-center w-full '
+      >
         {fields.map(({ id, name, type, amount }: any, i) => {
           return (
             <div key={id} className='flex justify-center'>
@@ -72,7 +73,8 @@ const Sin4d = () => {
           type='button'
           onClick={() => append({})}
           variant='ghost'
-          size='sm'>
+          size='sm'
+        >
           Append
         </Button>
       </form>

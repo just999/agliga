@@ -1,5 +1,23 @@
 'use client';
 
+import { Key, useState } from 'react';
+
+import { getMessageThread } from '@/actions/message-actions';
+import { Button, Card } from '@/components/shadcn/ui';
+import Heading from '@/components/shadcn/ui/heading';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/shadcn/ui/table';
+import { useMessages } from '@/hooks/use-messages';
+import { cn } from '@/lib/utils';
+import { MessageDto } from '@/types';
+import { rankItem } from '@tanstack/match-sorter-utils';
 import {
   ColumnFiltersState,
   FilterFn,
@@ -11,28 +29,6 @@ import {
   SortingState,
   useReactTable,
 } from '@tanstack/react-table';
-
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
-
-import { cn } from '@/lib/utils';
-
-import { Key, useState } from 'react';
-
-import { rankItem } from '@tanstack/match-sorter-utils';
-
-import { getMessageThread } from '@/actions/message-actions';
-import { Button, Card } from '@/components/ui';
-import Heading from '@/components/ui/heading';
-import { useMessages } from '@/hooks/use-messages';
-import { MessageDto } from '@/types';
 
 const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
   const itemRank = rankItem(row.getValue(columnId), value);
@@ -119,7 +115,8 @@ const MessageTable = <TData extends DataWithId, TValue>({
                       className={cn(
                         ' text-xs text-stone-500 h-8  text-center px-2 bg-stone-50 border border-solid border-zinc-200'
                       )}
-                      colSpan={header.colSpan}>
+                      colSpan={header.colSpan}
+                    >
                       {header.isPlaceholder ? null : (
                         <>
                           <div
@@ -128,7 +125,8 @@ const MessageTable = <TData extends DataWithId, TValue>({
                                 ? 'cursor-pointer select-none'
                                 : '',
                               onClick: header.column.getToggleSortingHandler(),
-                            }}>
+                            }}
+                          >
                             {flexRender(
                               header.column.columnDef.header,
                               header.getContext()
@@ -156,7 +154,8 @@ const MessageTable = <TData extends DataWithId, TValue>({
                   key={row.id}
                   onClick={(e) => handleSelectRow(e, row.original)}
                   data-state={row.getIsSelected() && 'selected'}
-                  className='h-6 bg-amber-50 even:bg-orange-50 odd:bg-amber-200/30'>
+                  className='h-6 bg-amber-50 even:bg-orange-50 odd:bg-amber-200/30'
+                >
                   {row.getVisibleCells().map((cell: any) => {
                     // let activeCell;
                     // if (
@@ -177,7 +176,8 @@ const MessageTable = <TData extends DataWithId, TValue>({
                           'p-0 text-start px-2 lg:text-sm even:bg-indigo-50 w-auto cursor-pointer',
                           className
                         )}
-                        style={{ height: '18px' }}>
+                        style={{ height: '18px' }}
+                      >
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()
@@ -193,7 +193,8 @@ const MessageTable = <TData extends DataWithId, TValue>({
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className='h-12 text-center'>
+                  className='h-12 text-center'
+                >
                   No results.
                 </TableCell>
               </TableRow>
@@ -228,14 +229,16 @@ const MessageTable = <TData extends DataWithId, TValue>({
             variant='outline'
             size='sm'
             onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}>
+            disabled={!table.getCanPreviousPage()}
+          >
             Previous
           </Button>
           <Button
             variant='outline'
             size='sm'
             onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}>
+            disabled={!table.getCanNextPage()}
+          >
             Next
           </Button>
         </div>

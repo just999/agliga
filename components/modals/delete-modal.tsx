@@ -1,14 +1,14 @@
 'use client';
 
 // import useDepoWdModal from '@/hooks/use-depo-wd';
-import Modal from './modal';
-
-import { useRouter } from 'next/navigation';
-
-import toast from 'react-hot-toast';
-import useModal from '@/hooks/use-modal';
 import { useEffect, useState } from 'react';
-import { HeadingLogo } from '../ui';
+
+import useModal from '@/hooks/use-modal';
+import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
+
+import { HeadingLogo } from '../shadcn/ui';
+import Modal from './modal';
 
 // type DeleteModalProps = {
 //   title?: string | undefined;

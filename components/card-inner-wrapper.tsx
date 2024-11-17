@@ -1,18 +1,19 @@
 'use client';
 
 import React, { ReactNode } from 'react';
-import { CardHeader, CardFooter, CardContent } from './ui/card';
-import { Separator } from './ui/separator';
-import { capitalizeFirstCharacter, cn } from '@/lib/utils';
-import { Calendar } from 'lucide-react';
 
+import { capitalizeFirstCharacter, cn } from '@/lib/utils';
+import { User } from '@prisma/client';
+import { Calendar } from 'lucide-react';
+import { useSession } from 'next-auth/react';
 import {
   IoArrowRedoCircleOutline,
   IoArrowUndoCircleOutline,
 } from 'react-icons/io5';
-import { Button } from './ui';
-import { useSession } from 'next-auth/react';
-import { User } from '@prisma/client';
+
+import { Button } from './shadcn/ui';
+import { CardContent, CardFooter, CardHeader } from './shadcn/ui/card';
+import { Separator } from './shadcn/ui/separator';
 
 type CardInnerWrapperProps = {
   header: ReactNode | string;
@@ -67,12 +68,14 @@ const CardInnerWrapper = ({
           toggleSidePanel
             ? 'border-l-2 border-solid border-amber-400'
             : 'shadow-lg border-l-2 border-transparent'
-        )}>
+        )}
+      >
         <CardHeader
           className={cn(
             'text-stone-600 w-full bg-stone-100 border-none',
             className
-          )}>
+          )}
+        >
           {typeof header === 'string' ? (
             <div className={cn('text-shadow', classNameHeader)}>{header}</div>
           ) : (
@@ -85,13 +88,15 @@ const CardInnerWrapper = ({
             className={cn(
               'w-full flex justify-between text-center shadow-inner bg-yellow-50',
               role === 'user' && 'flex justify-center'
-            )}>
+            )}
+          >
             {setToggleSidePanel && role === 'admin' && (
               <Button
                 variant='ghost'
                 size='sm'
                 onClick={() => setToggleSidePanel(!toggleSidePanel)}
-                className='cursor-pointer m-0 p-0 h-6 px-1 hover:text-emerald-600 hover:text-shadow-default hover:shadow-md'>
+                className='cursor-pointer m-0 p-0 h-6 px-1 hover:text-emerald-600 hover:text-shadow-default hover:shadow-md'
+              >
                 {toggleSidePanel ? (
                   <IoArrowUndoCircleOutline
                     className='svg text-stone-400 hover:text-white hover:bg-orange-300 rounded-full p-.5 hover:text-shadow'

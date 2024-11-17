@@ -1,9 +1,10 @@
 'use client';
 
-import { FcMenu } from 'react-icons/fc';
-import { SheetTrigger, SheetContent, Sheet } from '../ui/sheet';
-import Sidebar from './sidebar';
 import { RoutesProps } from '@/types/types';
+import { FcMenu } from 'react-icons/fc';
+
+import { Sheet, SheetContent, SheetTrigger } from '../shadcn/ui/sheet';
+import Sidebar from './sidebar';
 
 type MobileSidebarProps = {
   routes: RoutesProps[];

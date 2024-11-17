@@ -1,30 +1,30 @@
 'use client';
 
-import { Label } from '@radix-ui/react-label';
+import { useEffect, useState } from 'react';
 
-import { BiUser } from 'react-icons/bi';
-import { BsHouse } from 'react-icons/bs';
-import SelectInput from './ui/select-input';
-import { Button } from './ui/button';
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-  CardFooter,
-} from './ui/card';
-import Image from 'next/image';
-import Input from './ui/input';
 import useBanks from '@/hooks/use-banks';
 import useGames from '@/hooks/use-games';
-
-import { useForm, FieldValues } from 'react-hook-form';
 import useModal from '@/hooks/use-modal';
+import { Label } from '@radix-ui/react-label';
 import { useSession } from 'next-auth/react';
-import { useState, useEffect } from 'react';
-import { UserProfileModalProps } from './modals/user-profile-modal';
+import Image from 'next/image';
 import Link from 'next/link';
+import { FieldValues, useForm } from 'react-hook-form';
+import { BiUser } from 'react-icons/bi';
+import { BsHouse } from 'react-icons/bs';
+
+import { UserProfileModalProps } from './modals/user-profile-modal';
+import { Button } from './shadcn/ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from './shadcn/ui/card';
+import Input from './shadcn/ui/input';
+import SelectInput from './shadcn/ui/select-input';
 
 const UserEditProfile = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -260,7 +260,8 @@ const UserEditProfile = () => {
                 size='sm'
                 variant='ghost'
                 asChild
-                className='text-xs flex-flex-row items-center justify-center gap-2 drop-shadow-lg bg-stone-50'>
+                className='text-xs flex-flex-row items-center justify-center gap-2 drop-shadow-lg bg-stone-50'
+              >
                 <Link href='/'>
                   Back to Homepage{' '}
                   <BsHouse className='text-neutral-400 h-4 w-4 m-0 p-0 cursor-pointer hover:text-red-500 hover:font-bold hover:shadow-lg ' />
@@ -271,7 +272,8 @@ const UserEditProfile = () => {
                 variant='ghost'
                 type='button'
                 className='text-xs flex-flex-row items-center justify-center gap-2 drop-shadow-lg bg-stone-50'
-                onClick={() => onOpen('profile')}>
+                onClick={() => onOpen('profile')}
+              >
                 Back to your profile
                 <BiUser className='text-neutral-400  hover:font-bold h-4 w-4 m-0 cursor-pointer hover:text-sky-500  hover:shadow-lg' />
               </Button>

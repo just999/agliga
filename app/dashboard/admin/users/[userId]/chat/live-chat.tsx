@@ -1,15 +1,16 @@
 'use client';
 
 import { useCallback, useEffect } from 'react';
-import { Button } from '@/components/ui';
+
+import LiveChatContainer from '@/components/chat/live-chat-container';
+import { Button } from '@/components/shadcn/ui';
 import { cn } from '@/lib/utils';
 import { useChatStore } from '@/store/use-chat-store';
 import { usePresenceStore } from '@/store/use-presence-store';
-import { ChevronDownSquareIcon, MessageCircleMore } from 'lucide-react';
-import { useSession } from 'next-auth/react';
-import LiveChatContainer from '@/components/chat/live-chat-container';
 import { SafeAdminChat } from '@/types/types';
 import { User } from '@prisma/client';
+import { ChevronDownSquareIcon, MessageCircleMore } from 'lucide-react';
+import { useSession } from 'next-auth/react';
 
 type LiveChatProps = { users: User[]; adminProfile: SafeAdminChat };
 
@@ -78,7 +79,8 @@ const LiveChat = ({ users, adminProfile }: LiveChatProps) => {
           className={cn(
             'group h-full flex gap-2 items-center text-wrap text-white font-extrabold text-shadow text-sm bg-sky-500 hover:bg-blue-500/90 py-1',
             isToggle && ''
-          )}>
+          )}
+        >
           <ChevronDownSquareIcon
             size={24}
             className='svg text-white group-hover:text-gray-700'
@@ -90,7 +92,8 @@ const LiveChat = ({ users, adminProfile }: LiveChatProps) => {
         className={cn(
           `fixed bottom-4 right-1 text-shadow-lg transition-transform duration-300 ease-in-out transform`,
           isToggle ? 'translate-y-0' : 'translate-y-full'
-        )}>
+        )}
+      >
         {/* <NewChatContainer users={users} adminProfile={adminProfile} /> */}
         <LiveChatContainer users={users} adminProfile={adminProfile} />
 
@@ -107,7 +110,8 @@ const LiveChat = ({ users, adminProfile }: LiveChatProps) => {
             'fixed bottom-60 p-0 m-0 w-13 h-13 hover:bg-transparent z-20',
             loading && 'cursor-not-allowed'
           )}
-          onClick={handleToggleChat}>
+          onClick={handleToggleChat}
+        >
           <MessageCircleMore
             size={50}
             className='svg text-blue-600 hover:text-shadow hover:text-500/80 hover:fill-slate-500/20 hover:text-blue-700'

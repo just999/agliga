@@ -251,18 +251,17 @@
 
 'use client';
 
-import Modal from './modal';
-
-import { useRouter } from 'next/navigation';
-
-import toast from 'react-hot-toast';
-import useModal from '@/hooks/use-modal';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { fetchUserById } from '@/lib/queries/users';
 
+import useModal from '@/hooks/use-modal';
+import { fetchUserById } from '@/lib/queries/users';
 import { User } from '@prisma/client';
-import { HeadingLogo, Spinner } from '../ui';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
+
+import { HeadingLogo, Spinner } from '../shadcn/ui';
+import Modal from './modal';
 
 interface DataProps {
   id: string;

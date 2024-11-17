@@ -1,13 +1,7 @@
 'use client';
 
 import data from '@/data/analytics';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '../ui/card';
+import ClientOnly from '@/lib/client-only';
 import {
   CartesianGrid,
   Line,
@@ -16,7 +10,14 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import ClientOnly from '@/lib/client-only';
+
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '../shadcn/ui/card';
 
 type AnalyticsChartProps = {};
 

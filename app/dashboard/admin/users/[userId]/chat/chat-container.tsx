@@ -256,7 +256,11 @@
 // export default ChatContainer;
 'use client';
 
+import { useCallback, useEffect } from 'react';
+
 import CardInnerWrapper from '@/components/card-inner-wrapper';
+import PresenceAvatar from '@/components/presence-avatar';
+import { Button } from '@/components/shadcn/ui';
 import {
   capitalizeFirstCharacter,
   cn,
@@ -264,17 +268,15 @@ import {
   formattedDateMonthDate,
   normalizedDateTime,
 } from '@/lib/utils';
+import { useChatStore } from '@/store/use-chat-store';
 import { MessageDto } from '@/types';
 import { User } from '@prisma/client';
-import ChatForm from './chat-form';
-import PresenceAvatar from '@/components/presence-avatar';
 import { MessageCircleMore } from 'lucide-react';
-import { useChatStore } from '@/store/use-chat-store';
-import { BsChevronDown } from 'react-icons/bs';
-import MessageList from './message-list';
-import { Button } from '@/components/ui';
 import { useSession } from 'next-auth/react';
-import { useCallback, useEffect } from 'react';
+import { BsChevronDown } from 'react-icons/bs';
+
+import ChatForm from './chat-form';
+import MessageList from './message-list';
 
 type ChatContainerProps = {
   userId: string;
@@ -383,7 +385,8 @@ const ChatContainer = ({
         type='button'
         aria-label='member chat'
         className='p-0 m-0 h-0 rounded-full hover:bg-emerald-700 hover:text-sky-700 pr-1'
-        onClick={handleToggleOff}>
+        onClick={handleToggleOff}
+      >
         {/* <Link href={`/members/${user.id}`}> */}
         <BsChevronDown
           size={24}
@@ -410,7 +413,8 @@ const ChatContainer = ({
         toggleSidePanel
           ? ' shadow-lg'
           : ' border-l-transparent border-t-transparent shadow-none rounded-t-lg'
-      )}>
+      )}
+    >
       <div>HAI..........</div>
       <CardInnerWrapper
         toggleSidePanel={toggleSidePanel}

@@ -1,6 +1,5 @@
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/shadcn/ui/button';
 import { signIn } from 'next-auth/react';
-
 import { FaGithub } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 
@@ -19,14 +18,16 @@ const SocialLogin = () => {
         size='sm'
         className='w-full bg-slate-100 hover:bg-stone-200 shadow-md'
         variant='ghost'
-        onClick={() => onClick('google')}>
+        onClick={() => onClick('google')}
+      >
         <FcGoogle size={24} className='svg ' />
       </Button>
       <Button
         type='button'
         className='w-full bg-slate-100 hover:bg-stone-200 shadow-md'
         variant='ghost'
-        onClick={() => onClick('github')}>
+        onClick={() => onClick('github')}
+      >
         <FaGithub size={24} className='svg ' />
       </Button>
     </div>

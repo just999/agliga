@@ -1,10 +1,11 @@
 'use client';
 
 // import { setCookie } from '@/actions/cookies-actions';
-import React from 'react';
-import { useEffect, useState } from 'react';
-import { Button, InputCustom } from './ui';
+import React, { useEffect, useState } from 'react';
+
 import { setUserCookie } from '@/actions/cookies-actions';
+
+import { Button, InputCustom } from './shadcn/ui';
 
 type CookiesConsentBannerProps = {};
 
@@ -130,18 +131,21 @@ const CookiesConsentBanner = () => {
         <div>
           <Button
             className='bg-gray-500 hover:bg-green-600 text-white px-4 py-2 rounded mr-2 '
-            onClick={handleAccept}>
+            onClick={handleAccept}
+          >
             Accept
           </Button>
         </div>
         <Button
           className='bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded mr-2 '
-          onClick={handleDenied}>
+          onClick={handleDenied}
+        >
           Deny
         </Button>
         <Button
           className='bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded'
-          onClick={handleManage}>
+          onClick={handleManage}
+        >
           Manage
         </Button>
       </div>
@@ -162,7 +166,8 @@ const CookiesConsentBanner = () => {
             />
             <label
               htmlFor='necessary'
-              className='text-blue-500 hover:underline cursor-pointer '>
+              className='text-blue-500 hover:underline cursor-pointer '
+            >
               {' '}
               Necessary Cookies
             </label>
@@ -177,7 +182,8 @@ const CookiesConsentBanner = () => {
             />
             <label
               htmlFor='analytics'
-              className='text-blue-500 hover:underline cursor-pointer'>
+              className='text-blue-500 hover:underline cursor-pointer'
+            >
               Analytics cookies{' '}
             </label>
           </div>
@@ -191,19 +197,22 @@ const CookiesConsentBanner = () => {
             />
             <label
               htmlFor='marketing'
-              className='text-blue-500 hover:underline cursor-pointer'>
+              className='text-blue-500 hover:underline cursor-pointer'
+            >
               Marketing cookies{' '}
             </label>
           </div>
           <div>
             <Button
               className='bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded'
-              onClick={handleSavePreferences}>
+              onClick={handleSavePreferences}
+            >
               Save Preferences
             </Button>
             <Button
               className='bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded'
-              onClick={() => setShowModal(false)}>
+              onClick={() => setShowModal(false)}
+            >
               Cancel
             </Button>
           </div>

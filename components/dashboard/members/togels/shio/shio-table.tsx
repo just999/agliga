@@ -11,7 +11,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui';
+} from '@/components/shadcn/ui';
 import { useZodForm } from '@/hooks/use-zod-form';
 import ClientOnly from '@/lib/client-only';
 import { cn, safeParseFloat } from '@/lib/utils';

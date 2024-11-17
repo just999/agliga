@@ -3,6 +3,14 @@
 import { title } from 'process';
 import { useMemo } from 'react';
 
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/shadcn/ui';
 import { shioWithIcon, ShioWithIconProps } from '@/lib/helper';
 import { cn, oldStandardTT, poppins } from '@/lib/utils';
 import {
@@ -13,17 +21,7 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '../shadcn/ui';
-
-type TestTableProps = {};
+type ShioCodeTableProps = {};
 
 const defaultFilterFns = {
   fuzzy: () => true,
@@ -80,7 +78,7 @@ const columns: ColumnDef<ShioWithIconProps>[] = [
   },
 ];
 
-const TestTable = () => {
+const ShioCodeTable = () => {
   const table = useReactTable({
     data: shioWithIcon,
     columns: columns,
@@ -136,4 +134,4 @@ const TestTable = () => {
   );
 };
 
-export default TestTable;
+export default ShioCodeTable;

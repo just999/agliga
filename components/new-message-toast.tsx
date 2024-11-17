@@ -1,16 +1,18 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import { MessageDto } from '@/types';
-import { Button } from './ui';
-import { createChatId, transformImageUrl } from '@/lib/utils';
-import { useChatStore } from '@/store/use-chat-store';
-import { useSession } from 'next-auth/react';
-import { User } from '@prisma/client';
+
 import { getAnonymousUser } from '@/actions/live-chat-actions';
 import { adminChatProfile } from '@/lib/helper';
+import { createChatId, transformImageUrl } from '@/lib/utils';
+import { useChatStore } from '@/store/use-chat-store';
+import { MessageDto } from '@/types';
+import { User } from '@prisma/client';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import toast from 'react-hot-toast';
+
+import { Button } from './shadcn/ui';
 
 type NewMessageToastProps = {
   message: MessageDto;
@@ -129,7 +131,8 @@ const NewMessageToast = ({ message }: NewMessageToastProps) => {
       variant='ghost'
       size='sm'
       onClick={() => handleToggleChat(message)}
-      className='flex items-center '>
+      className='flex items-center '
+    >
       <div className='mr-2'>
         <Image
           src={transformImageUrl(message.senderImage) || '/image/user.png'}

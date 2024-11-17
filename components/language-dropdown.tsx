@@ -1,21 +1,21 @@
 'use client';
 
+import { cn, noto } from '@/lib/utils';
 import { GrLanguage } from 'react-icons/gr';
-import { Button } from './ui/button';
+
+import { Button } from './shadcn/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from './ui/dropdown-menu';
-
+} from './shadcn/ui/dropdown-menu';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from './ui/select';
-import { cn, noto } from '@/lib/utils';
+} from './shadcn/ui/select';
 
 type LanguageDropdownProps = {};
 

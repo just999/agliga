@@ -2,7 +2,7 @@
 
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 
-import { Button } from '@/components/ui';
+import { Button } from '@/components/shadcn/ui';
 import {
   Table,
   TableBody,
@@ -11,7 +11,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
+} from '@/components/shadcn/ui/table';
 import useTogelSetColumns from '@/hooks/use-togel-set-columns';
 import { useZodForm } from '@/hooks/use-zod-form';
 import { cn, validBet4dSet } from '@/lib/utils';

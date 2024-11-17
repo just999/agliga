@@ -1,17 +1,18 @@
 'use client';
 
-import { ColumnDef } from '@tanstack/react-table';
-import CellAction from './cell-action';
-import { Button } from '../ui/button';
-import { BsCalendar } from 'react-icons/bs';
-import Link from 'next/link';
-import Image from 'next/image';
-import { englishPL, EPL, penalty, team } from '@/lib/helper';
-import { Schedule } from '@prisma/client';
 import { convertDateTime } from '@/lib/convert-date-time';
-import { FixtureProps } from '@/types/types';
+import { englishPL, EPL, penalty, team } from '@/lib/helper';
 import { cn, orbit } from '@/lib/utils';
+import { FixtureProps } from '@/types/types';
+import { Schedule } from '@prisma/client';
+import { ColumnDef } from '@tanstack/react-table';
 import { ArrowUpDown } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { BsCalendar } from 'react-icons/bs';
+
+import { Button } from '../shadcn/ui/button';
+import CellAction from './cell-action';
 
 // export const columns: ColumnDef<Schedule>[] = [
 export const columns: ColumnDef<FixtureProps>[] = [

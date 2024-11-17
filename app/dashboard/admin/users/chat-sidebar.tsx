@@ -1,8 +1,12 @@
 'use client';
 
+import { useCallback, useEffect, useState } from 'react';
+
 import { getUnreadMessagesBySenderId } from '@/actions/message-actions';
-import Image from 'next/image';
-import { Button, Card, CardFooter } from '@/components/ui';
+import loading from '@/app/loading';
+import LikeButton from '@/components/like-button';
+import PresenceDot from '@/components/presence-dot';
+import { Button, Card, CardFooter } from '@/components/shadcn/ui';
 import {
   capitalizeFirstCharacter,
   cn,
@@ -12,12 +16,8 @@ import {
 import { useChatStore } from '@/store/use-chat-store';
 import { User } from '@prisma/client';
 import { useSession } from 'next-auth/react';
+import Image from 'next/image';
 import Link from 'next/link';
-
-import { useCallback, useEffect, useState } from 'react';
-import loading from '@/app/loading';
-import LikeButton from '@/components/like-button';
-import PresenceDot from '@/components/presence-dot';
 
 type ChatSidebarProps = {
   user: User;
@@ -101,7 +101,8 @@ const ChatSidebar = ({ user, navLinks, className }: ChatSidebarProps) => {
         <Link
           // variant='ghost'
           href={`/dashboard/admin/users/${user.id}/chat`}
-          className='flex flex-row items-center gap-0 cursor-pointer p-0 m-0 bg-stone-200 rounded-t-lg'>
+          className='flex flex-row items-center gap-0 cursor-pointer p-0 m-0 bg-stone-200 rounded-t-lg'
+        >
           <Image
             alt='user'
             width={30}
@@ -129,7 +130,8 @@ const ChatSidebar = ({ user, navLinks, className }: ChatSidebarProps) => {
           </div> */}
             <div
               className='absolute top-6 left-14 '
-              onClick={preventLinkAction}>
+              onClick={preventLinkAction}
+            >
               <PresenceDot user={user} sizeGoDot={12} sizeGoDotFill={16} />
             </div>
           </div>

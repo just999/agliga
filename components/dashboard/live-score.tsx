@@ -1,8 +1,9 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+
 import Loader from '../loader';
-import { HeadingLogo } from '../ui';
+import { HeadingLogo } from '../shadcn/ui';
 
 const LiveScore = () => {
   const iframeRef = useRef<HTMLIFrameElement>(null);

@@ -1,6 +1,11 @@
 'use client';
 
-import { Button, InputCustom } from '@/components/ui';
+import { ChangeEvent, useEffect, useState } from 'react';
+
+import { createTogel } from '@/actions/togel-actions';
+import { Button, InputCustom } from '@/components/shadcn/ui';
+import { useZodForm } from '@/hooks/use-zod-form';
+import ClientOnly from '@/lib/client-only';
 import { thead4d } from '@/lib/helper';
 import { cn, oldStandardTT, poppins, safeParseFloat } from '@/lib/utils';
 import {
@@ -8,21 +13,16 @@ import {
   sin4dSchema,
   Sin4dSchema,
 } from '@/schemas/togel-schema';
-
 import { MinusCircle, PlusCircle } from 'lucide-react';
-import { ChangeEvent, useEffect, useState } from 'react';
 import { SubmitHandler, useFieldArray } from 'react-hook-form';
 import { FaRupiahSign } from 'react-icons/fa6';
+
 import {
   TogelDiscount,
   TogelGames4d,
   TogelNetWager,
   TotalNetAmount,
 } from './togel-games4d';
-
-import { createTogel } from '@/actions/togel-actions';
-import { useZodForm } from '@/hooks/use-zod-form';
-import ClientOnly from '@/lib/client-only';
 
 type TogelSinProps = {
   slug: string;
@@ -169,7 +169,8 @@ const TogelSin = ({ slug }: TogelSinProps) => {
                 <th
                   key={head.label}
                   colSpan={head.colspan}
-                  className='text-sm font-bold'>
+                  className='text-sm font-bold'
+                >
                   {head.label === 'wager' ? (
                     <span className='text-center flex items-center justify-center'>
                       <input
@@ -380,7 +381,8 @@ const TogelSin = ({ slug }: TogelSinProps) => {
             size='sm'
             variant='default'
             className='text-shadow-lg text-xs text-white font-semibold shadow-lg hover:bg-orange-300 hover:text-gray-600 hover:font-semibold px-2 py-1'
-            onClick={handleAddColumn}>
+            onClick={handleAddColumn}
+          >
             <PlusCircle
               size={14}
               className='svg text-sky-700 pr-1 hover:text-green-600'
@@ -397,7 +399,8 @@ const TogelSin = ({ slug }: TogelSinProps) => {
             disabled={!isValid}
             size='sm'
             variant='primary'
-            className='px-3 py-.5'>
+            className='px-3 py-.5'
+          >
             Submit
           </Button>
         </div>

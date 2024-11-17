@@ -1,13 +1,13 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
+import { title } from 'process';
+import { useEffect, useState } from 'react';
+
+import { Button } from '@/components/shadcn/ui/button';
+import { Checkbox } from '@/components/shadcn/ui/checkbox';
 import useModal from '@/hooks/use-modal';
 import { User } from '@prisma/client';
-import { title } from 'process';
-
-import { useEffect, useState } from 'react';
-import { useForm, FieldValues } from 'react-hook-form';
+import { FieldValues, useForm } from 'react-hook-form';
 
 type UserSettingActionsProps = {
   data: User;
@@ -55,7 +55,8 @@ const UserSettingActions = ({ data }: UserSettingActionsProps) => {
   return (
     <div
       onClick={() => onOpen('edit-users', userId, title)}
-      className='flex flex-row items-center justify-start text-nowrap px-4 '>
+      className='flex flex-row items-center justify-start text-nowrap px-4 '
+    >
       <input
         type='text'
         disabled
@@ -80,7 +81,8 @@ const UserSettingActions = ({ data }: UserSettingActionsProps) => {
           variant='ghost'
           size='sm'
           type='submit'
-          className='left-0 top-0 h-6 w-20 '>
+          className='left-0 top-0 h-6 w-20 '
+        >
           active
         </Button>
       </div>

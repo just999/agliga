@@ -1,13 +1,13 @@
 import { ReactNode } from 'react';
 
-import { ButtonProps, Button } from './ui/button';
+import { Button, ButtonProps } from './shadcn/ui/button';
 import {
   Dialog,
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTrigger,
-} from './ui/dialog';
+} from './shadcn/ui/dialog';
 
 type AppModalProps = {
   isOpen: boolean;

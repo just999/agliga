@@ -1,5 +1,7 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+
 import { createWd } from '@/actions/member-actions';
 import {
   Button,
@@ -8,19 +10,14 @@ import {
   InputCustom,
   SelectInput,
   Spinner,
-} from '@/components/ui';
-
+} from '@/components/shadcn/ui';
 import useBanks from '@/hooks/use-banks';
 import useGames from '@/hooks/use-games';
 import { banks } from '@/lib/helper';
 import { cn } from '@/lib/utils';
 import { WdSchema, wdSchema } from '@/schemas';
-import { WdProps, UserProps } from '@/types/types';
-
+import { UserProps, WdProps } from '@/types/types';
 import { zodResolver } from '@hookform/resolvers/zod';
-
-import { useEffect, useState } from 'react';
-
 import { useForm } from 'react-hook-form';
 
 type WDFormProps = { user: UserProps };
@@ -112,7 +109,8 @@ const MemberWDForm = ({ user }: WDFormProps) => {
 
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className='w-full flex flex-col gap-3 px-4'>
+          className='w-full flex flex-col gap-3 px-4'
+        >
           {userData?.email && userData?.name && userData?.accountNumber && (
             <>
               <InputCustom

@@ -1,19 +1,15 @@
 'use client';
 
-import { ColumnDef } from '@tanstack/react-table';
-
-import { cn, noto, numberWithCommas } from '@/lib/utils';
-
-import { Button } from '@/components/ui/button';
-import { ArrowUpDown } from 'lucide-react';
-import { Depo, DepoWdProps, WdProps } from '@/types/types';
+import { Button } from '@/components/shadcn/ui/button';
+import ToggleUserActiveButton from '@/components/shadcn/ui/toggle-user-active-button';
 import { banks, games, statuses } from '@/lib/helper';
-
+import { cn, noto, numberWithCommas } from '@/lib/utils';
+import { Depo, DepoWdProps, WdProps } from '@/types/types';
 import { User } from '@prisma/client';
-
-import Select, { StylesConfig } from 'react-select';
-import ToggleUserActiveButton from '@/components/ui/toggle-user-active-button';
+import { ColumnDef } from '@tanstack/react-table';
+import { ArrowUpDown } from 'lucide-react';
 import { FaUserCheck, FaUserSlash } from 'react-icons/fa';
+import Select, { StylesConfig } from 'react-select';
 
 const customStyles: StylesConfig = {
   control: (provided: Record<string, unknown>, state: any) => ({

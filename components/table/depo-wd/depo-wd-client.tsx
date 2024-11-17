@@ -1,31 +1,29 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { DataTable } from '@/components/ui/data-table';
+import React, { useEffect, useState } from 'react';
 
+import { DataTable } from '@/components/shadcn/ui/data-table';
+import { Skeleton } from '@/components/shadcn/ui/skeleton';
+import useLeague, { TeamStats } from '@/hooks/use-league';
+import useModal from '@/hooks/use-modal';
+// import DepoWdTable from '@/components/ui/depo-wd-table';
+import { fetchDepo } from '@/lib/queries/depo-wd';
+import { fetchEuroByRound } from '@/lib/queries/euro';
+import { cn, fixtureFiltered } from '@/lib/utils';
 import {
+  DepoProps,
+  DepoWdProps,
   EuroGroupProps,
   EuroProps,
   EuroWithIconProps,
   FixtureProps,
-  DepoWdProps,
-  DepoProps,
   WdProps,
 } from '@/types/types';
-import React from 'react';
-
-import useLeague, { TeamStats } from '@/hooks/use-league';
-import { Skeleton } from '@/components/ui/skeleton';
-import { cn, fixtureFiltered } from '@/lib/utils';
-
-import { fetchEuroByRound } from '@/lib/queries/euro';
-// import DepoWdTable from '@/components/ui/depo-wd-table';
-import { fetchDepo } from '@/lib/queries/depo-wd';
-import { depoColumns } from './depo-columns';
-import useModal from '@/hooks/use-modal';
-import { wdColumns } from './wd-columns';
 import { User } from '@prisma/client';
+
+import { depoColumns } from './depo-columns';
 import { usersColumns } from './users-columns';
+import { wdColumns } from './wd-columns';
 
 interface DepoWdClientProps {
   depo?: DepoWdProps[] | any[];
@@ -140,8 +138,8 @@ const DepoWdClient = ({
           tab === 'depo'
             ? filteredDepo
             : tab === 'wd'
-            ? filteredWd
-            : filteredUsers
+              ? filteredWd
+              : filteredUsers
         }
         className={className}
         depoWdClassName={depoWdClassName}

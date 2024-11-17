@@ -1,16 +1,17 @@
 'use client';
 
 import { useCallback } from 'react';
+
+import { Button } from '@/components/shadcn/ui/button';
+import EuroCard from '@/components/table/euro/euro-card';
+import { EuroWithIconProps } from '@/types/types';
 import Autoplay from 'embla-carousel-autoplay';
 import useEmblaCarousel from 'embla-carousel-react';
-import EuroCard from '@/components/table/euro/euro-card';
 import { BsChevronDoubleLeft, BsChevronDoubleRight } from 'react-icons/bs';
-import { Button } from '@/components/ui/button';
 
 // import { useGetEuros } from '@/hooks/use-get-schedule';
 
-import { Skeleton } from '../ui/skeleton';
-import { EuroWithIconProps } from '@/types/types';
+import { Skeleton } from '../shadcn/ui/skeleton';
 
 type EuroCarouselProps = {
   groupArrays?: {
@@ -42,7 +43,8 @@ const EuroCarousel = ({ groupArrays }: EuroCarouselProps) => {
           size='sm'
           type='button'
           className='embla__prev mr-2 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-110 duration-300 hover:bg-orange-100 hover:shadow-lg hover:text-orange-700'
-          onClick={scrollPrev}>
+          onClick={scrollPrev}
+        >
           <BsChevronDoubleLeft size={18} />
         </Button>
       </div>
@@ -71,7 +73,8 @@ const EuroCarousel = ({ groupArrays }: EuroCarouselProps) => {
           size='sm'
           type='button'
           className='embla__next ml-2 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-110 duration-300 hover:bg-orange-100 hover:shadow-lg hover:text-orange-700'
-          onClick={scrollNext}>
+          onClick={scrollNext}
+        >
           <BsChevronDoubleRight size={18} />
         </Button>
       </div>

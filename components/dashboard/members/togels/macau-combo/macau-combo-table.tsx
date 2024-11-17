@@ -11,7 +11,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui';
+} from '@/components/shadcn/ui';
 import { useZodForm } from '@/hooks/use-zod-form';
 import { cn, safeParseFloat } from '@/lib/utils';
 import { macauBsOeTableSchema } from '@/schemas/togel-schema';

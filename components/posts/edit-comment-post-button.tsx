@@ -1,11 +1,12 @@
 'use client';
 
-import { BsTrash, BsPen } from 'react-icons/bs';
-import { Button } from '../ui/button';
 import useModal from '@/hooks/use-modal';
-import { useSession } from 'next-auth/react';
 import { PostProps } from '@/types/types';
+import { useSession } from 'next-auth/react';
 import { BiCommentDots, BiPencil } from 'react-icons/bi';
+import { BsPen, BsTrash } from 'react-icons/bs';
+
+import { Button } from '../shadcn/ui/button';
 
 type EditCommentPostButtonProps = {
   item: PostProps;

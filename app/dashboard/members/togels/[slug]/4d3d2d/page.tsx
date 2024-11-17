@@ -1,6 +1,6 @@
 import { getTogelSinByUserId } from '@/actions/togel-actions';
 import TogelTable from '@/components/dashboard/members/togels/4d3d2d/togel-table';
-import TogelContainer from '@/components/ui/togel-container';
+import TogelContainer from '@/components/shadcn/ui/togel-container';
 import { capitalizeFirstCharacter, cn, oldStandardTT } from '@/lib/utils';
 
 type Togel4dPageProps = {

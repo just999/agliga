@@ -1,29 +1,28 @@
 'use client';
 
-import React from 'react';
-import {
-  useState,
-  useCallback,
+import React, {
   Key,
-  useEffect,
-  useRef,
-  useMemo,
   MouseEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
 } from 'react';
-import { Trash2Icon } from 'lucide-react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useSession } from 'next-auth/react';
 
 import {
   deleteMessage,
   getMessagesByContainer,
 } from '@/actions/message-actions';
-import { Button, Spinner } from '@/components/ui';
+import PresenceAvatar from '@/components/presence-avatar';
+import { Button, Spinner } from '@/components/shadcn/ui';
+import { cn, createChatId, truncateString } from '@/lib/utils';
+import { useChatStore } from '@/store/use-chat-store';
 import { useMessageStore } from '@/store/use-message-store';
 import { MessageDto } from '@/types';
-import { cn, createChatId, truncateString } from '@/lib/utils';
-import PresenceAvatar from '@/components/presence-avatar';
-import { useChatStore } from '@/store/use-chat-store';
+import { Trash2Icon } from 'lucide-react';
+import { useSession } from 'next-auth/react';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 export const useMessages = (
   initialMessages: MessageDto[],
@@ -211,7 +210,8 @@ export const useMessages = (
                 row.original.dateRead
                   ? 'font-extralight'
                   : '!text-white text-sm font-extrabold !bg-stone-800 text-shadow'
-              )}>
+              )}
+            >
               {truncateString(row.original.text, 30)}
             </div>
             {/* <pre>{JSON.stringify(row.original, null, 2)}</pre> */}
@@ -232,7 +232,8 @@ export const useMessages = (
           <Button
             variant='ghost'
             onClick={(e) => handleDeleteMessage(e, row.original)}
-            className='bg-stone-100 w-full cursor-pointer hover:bg-red-50 rounded-sm'>
+            className='bg-stone-100 w-full cursor-pointer hover:bg-red-50 rounded-sm'
+          >
             {isDeleting.id === row.original.id && isDeleting.loading ? (
               <Spinner />
             ) : (

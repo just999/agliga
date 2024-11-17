@@ -1,6 +1,23 @@
 'use client';
 
 import { useMemo } from 'react';
+
+import ClientOnly from '@/lib/client-only';
+import { cn, formatShortDateTime } from '@/lib/utils';
+import { Post, User } from '@prisma/client';
+// import posts from '@/data/posts';
+import { rankItem } from '@tanstack/match-sorter-utils';
+import {
+  ColumnDef,
+  FilterFn,
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+} from '@tanstack/react-table';
+import { BookOpenText, Pencil } from 'lucide-react';
+import Link from 'next/link';
+
+import { Button } from '../shadcn/ui/button';
 import {
   Table,
   TableBody,
@@ -9,23 +26,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '../ui/table';
-import {
-  ColumnDef,
-  FilterFn,
-  flexRender,
-  getCoreRowModel,
-  useReactTable,
-} from '@tanstack/react-table';
-
-// import posts from '@/data/posts';
-import { rankItem } from '@tanstack/match-sorter-utils';
-import Link from 'next/link';
-import { Button } from '../ui/button';
-import { BookOpenText, Pencil } from 'lucide-react';
-import { Post, User } from '@prisma/client';
-import { cn, formatShortDateTime } from '@/lib/utils';
-import ClientOnly from '@/lib/client-only';
+} from '../shadcn/ui/table';
 
 const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
   const itemRank = rankItem(row.getValue(columnId), value);
@@ -83,12 +84,14 @@ const PostsTable = ({ limit, title, user, posts }: PostsTableProps) => {
           return (
             <Link
               href={userAdminLink}
-              className='text-right hidden md:table-cell '>
+              className='text-right hidden md:table-cell '
+            >
               <Button className='bg-sky-500 hover:bg-sky-500/70 text-white font-bold px-4 rounded text-xs flex gap-2 group items-center shadow-xl text-shadow'>
                 {role === 'admin' ? (
                   <span
                     className='text-white flex gap-2 items-center group-hover:text-black'
-                    onClick={handleEditPost}>
+                    onClick={handleEditPost}
+                  >
                     <Pencil size={16} className='svg' /> Edit
                   </span>
                 ) : (
@@ -144,7 +147,8 @@ const PostsTable = ({ limit, title, user, posts }: PostsTableProps) => {
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
-                  data-state={row.getIsSelected() && 'selected'}>
+                  data-state={row.getIsSelected() && 'selected'}
+                >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id} className='p-1 '>
                       {flexRender(
@@ -159,7 +163,8 @@ const PostsTable = ({ limit, title, user, posts }: PostsTableProps) => {
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className='h-24 text-center'>
+                  className='h-24 text-center'
+                >
                   No. Data
                 </TableCell>
               </TableRow>

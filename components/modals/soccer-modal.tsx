@@ -1,27 +1,21 @@
 'use client';
 
-import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import Modal from './modal';
-
-import Input from '../ui/input';
-import toast from 'react-hot-toast';
-
-import { useRouter } from 'next/navigation';
-
-import SelectInput from '../ui/select-input';
-
-import useModal from '@/hooks/use-modal';
-
-import { useTeams, useWeeks } from '@/hooks/use-teams';
 
 import { useGetSchedules } from '@/hooks/use-get-schedule';
-
-import { ScheduleProps } from '@/types/types';
-
+import useModal from '@/hooks/use-modal';
+import { useTeams, useWeeks } from '@/hooks/use-teams';
 import { initialScheduleFormValues } from '@/lib/helper';
-import { HeadingLogo } from '../ui';
+import { ScheduleProps } from '@/types/types';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
+
+import { HeadingLogo } from '../shadcn/ui';
+import Input from '../shadcn/ui/input';
+import SelectInput from '../shadcn/ui/select-input';
+import Modal from './modal';
 
 const SoccerModal = () => {
   const [schedule, setSchedule] = useState<ScheduleProps>(

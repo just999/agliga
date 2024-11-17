@@ -1,7 +1,8 @@
 'use client';
 
-import { InputCustom, Label } from '@/components/ui';
+import { ChangeEvent, useEffect, useMemo, useRef } from 'react';
 
+import { InputCustom, Label } from '@/components/shadcn/ui';
 import {
   arrayRange,
   cn,
@@ -10,10 +11,7 @@ import {
   safeParseFloat,
 } from '@/lib/utils';
 import { BseoTableSchema } from '@/schemas/togel-schema';
-
 import { ChevronDownCircle, Percent } from 'lucide-react';
-
-import { ChangeEvent, useEffect, useMemo, useRef } from 'react';
 import {
   Control,
   UseFormGetValues,
@@ -76,12 +74,14 @@ export const useBseoTestColumns = (
                 'flex items-center space-x-2 px-2 py-0 border border-orange-300 rounded-md shadow-md hover:bg-amber-400 hover:text-white cursor-pointer',
                 getValues(`bsEo.${row.index}.bseo`) === value &&
                   'bg-cyan-500 w-24  text-yellow-100 hover:bg-cyan-500/70'
-              )}>
+              )}
+            >
               <Label
                 className={cn(
                   'text-sm gap-1 w-20 h-7 flex items-center justify-center font-semibold px-1 cursor-pointer',
                   poppins.className
-                )}>
+                )}
+              >
                 <input
                   {...register(`bsEo.${row.index}.bseo`, {
                     onChange: (e) => handleChange(e, row.index),
@@ -95,7 +95,8 @@ export const useBseoTestColumns = (
                     'text-shadow text-gray-500 text-xs',
                     getValues(`bsEo.${row.index}.bseo`) === value &&
                       ' text-white hover:bg-cyan-500/70'
-                  )}>
+                  )}
+                >
                   {labels[index]}
                 </span>
               </Label>
@@ -114,7 +115,8 @@ export const useBseoTestColumns = (
         key={key}
         className={cn(
           'flex w-40 gap-1 border border-white h-8 items-center justify-between space-x-2 px-0 py-0 rounded-md relative'
-        )}>
+        )}
+      >
         <select
           {...register(`bsEo.${row.index}.position`, {
             onChange: (e) => handleChange(e, row.index),
@@ -124,12 +126,13 @@ export const useBseoTestColumns = (
             getValues(`bsEo.${row.index}.${type}`) === '2d'
               ? 'bg-teal-500 text-white'
               : getValues(`bsEo.${row.index}.${type}`) === '2dd'
-              ? 'bg-indigo-500 text-white'
-              : getValues(`bsEo.${row.index}.${type}`) === '2dt'
-              ? 'bg-emerald-500 text-white'
-              : 'bg-transparent',
+                ? 'bg-indigo-500 text-white'
+                : getValues(`bsEo.${row.index}.${type}`) === '2dt'
+                  ? 'bg-emerald-500 text-white'
+                  : 'bg-transparent',
             poppins.className
-          )}>
+          )}
+        >
           {positionValues.map((val, i) => (
             <option value={val} key={val} className={cn('px-2')}>
               {labels[i]}

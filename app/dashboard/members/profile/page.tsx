@@ -1,16 +1,17 @@
-import ProfilePicture from '@/components/candidate-form/profile-picture';
-import MemberProfile from './member-profile';
-import { auth } from '@/auth';
 import React from 'react';
-import ClientOnly from '@/lib/client-only';
-import { Heading } from '@/components/ui';
-import { getAuthUserId } from '@/actions/auth-actions';
 
+import { getAuthUserId } from '@/actions/auth-actions';
 import {
   getUserById,
   getUserByUserId,
   getUserInfoForNav,
 } from '@/actions/user-actions';
+import { auth } from '@/auth';
+import ProfilePicture from '@/components/candidate-form/profile-picture';
+import { Heading } from '@/components/shadcn/ui';
+import ClientOnly from '@/lib/client-only';
+
+import MemberProfile from './member-profile';
 
 type ProfilePageProps = {};
 

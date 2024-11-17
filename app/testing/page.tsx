@@ -174,15 +174,14 @@
 
 'use client';
 
+import { ChangeEvent, useState } from 'react';
+
 import Container from '@/components/container';
 import ShioDataTable from '@/components/dashboard/members/togels/shio/shio-data-table';
-
+import CurrencyInput from '@/components/shadcn/ui/currency-input';
 import TanstackTable from '@/components/testing/tanstack-table';
 import TestTable from '@/components/testing/test-table';
-
-import CurrencyInput from '@/components/ui/currency-input';
 import { cn, poppins } from '@/lib/utils';
-import { ChangeEvent, useState } from 'react';
 
 type TestingPageProps = {};
 

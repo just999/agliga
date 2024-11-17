@@ -1,5 +1,7 @@
 'use client';
 
+import { useEffect, useMemo, useState } from 'react';
+
 import { createPost } from '@/actions/post-actions';
 import {
   Button,
@@ -9,20 +11,14 @@ import {
   SelectInput,
   Spinner,
   Textarea,
-} from '@/components/ui';
-
+} from '@/components/shadcn/ui';
 import { useTopics } from '@/hooks/use-topics';
-
 import { cn, handleFormServerErrors } from '@/lib/utils';
 import { PostSchema, postSchema } from '@/schemas';
 import { PostProps } from '@/types/types';
-
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Post } from '@prisma/client';
-
 import { useRouter } from 'next/navigation';
-import { useEffect, useMemo, useState } from 'react';
-
 import { useForm } from 'react-hook-form';
 
 type FieldKey = keyof PostSchema | 'category.value' | 'category.icon';
@@ -128,7 +124,8 @@ const EditPostForm = ({ post }: PostFormProps) => {
         {isMounted ? (
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className='w-full flex flex-col gap-3 px-4'>
+            className='w-full flex flex-col gap-3 px-4'
+          >
             <InputCustom
               className='h-12'
               placeholder='Type a message'
@@ -192,7 +189,8 @@ const EditPostForm = ({ post }: PostFormProps) => {
                 'rounded-lg cursor-pointer  bg-sky-500 text-gray-50 px-2 py-4 h-12',
                 isValid && 'hover:bg-blue-300 hover:text-blue-800'
               )}
-              disabled={isSubmitting || !isValid}>
+              disabled={isSubmitting || !isValid}
+            >
               {isSubmitting ? (
                 <Spinner className='gap-0' size={14} color='sky-700' />
               ) : (

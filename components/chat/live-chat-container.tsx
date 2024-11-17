@@ -1,16 +1,17 @@
 'use client';
 
+import { useCallback, useEffect, useState } from 'react';
+
+import { getAnonymousUser } from '@/actions/live-chat-actions';
 import { cn } from '@/lib/utils';
 import { useChatStore } from '@/store/use-chat-store';
 import { SafeAdminChat } from '@/types/types';
-import { ChevronDownSquareIcon } from 'lucide-react';
-
-import { useCallback, useEffect, useState } from 'react';
-import { Button } from '../ui';
-import LiveChat from './live-chat';
 import { User } from '@prisma/client';
+import { ChevronDownSquareIcon } from 'lucide-react';
 import { useSession } from 'next-auth/react';
-import { getAnonymousUser } from '@/actions/live-chat-actions';
+
+import { Button } from '../shadcn/ui';
+import LiveChat from './live-chat';
 
 type LiveChatContainerProps = {
   users: User[];

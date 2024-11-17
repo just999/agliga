@@ -3,7 +3,7 @@
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
 
 import { createTogel } from '@/actions/togel-actions';
-import { Button } from '@/components/ui';
+import { Button } from '@/components/shadcn/ui';
 import {
   Table,
   TableBody,
@@ -12,7 +12,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
+} from '@/components/shadcn/ui/table';
 import { useZodForm } from '@/hooks/use-zod-form';
 import { cn, handleFormServerErrors, safeParseFloat } from '@/lib/utils';
 import { sin4dSchema, Sin4dSchema } from '@/schemas/togel-schema';
@@ -436,9 +436,6 @@ const TogelTable = ({ slug }: TogelTableProps) => {
                           cell.column.columnDef.cell,
                           cell.getContext()
                         )}
-                        {/* <pre>
-                        {JSON.stringify(cell.column.columnDef, null, 2)}
-                      </pre> */}
                       </TableCell>
                     ))}
                   </TableRow>

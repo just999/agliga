@@ -8,7 +8,7 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from '../ui';
+} from '../shadcn/ui';
 
 type PostsPaginationProps = {};
 

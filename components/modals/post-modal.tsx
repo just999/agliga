@@ -1,34 +1,28 @@
 'use client';
 
-import { useParams, useRouter } from 'next/navigation';
-import Modal from './modal';
-
 import { useEffect, useState } from 'react';
 
-import Input from '../ui/input';
+import { useGetPost } from '@/hooks/use-get-post';
+import useModal from '@/hooks/use-modal';
+import { useTopics } from '@/hooks/use-topics';
+import usePostsStore from '@/store/use-posts-store';
+import { InitialPostProps } from '@/types/types';
+import axios from 'axios';
+import { useParams, useRouter } from 'next/navigation';
 import {
   Controller,
   FieldValues,
   SubmitHandler,
   useForm,
 } from 'react-hook-form';
-
-import axios from 'axios';
 import toast from 'react-hot-toast';
-import { useGetPost } from '@/hooks/use-get-post';
-
-import useModal from '@/hooks/use-modal';
-
-import { useTopics } from '@/hooks/use-topics';
-import SelectInput from '../ui/select-input';
-
 import { IconType } from 'react-icons';
-import { InitialPostProps } from '@/types/types';
 
 import Images from '../candidate-form/images';
-
-import usePostsStore from '@/store/use-posts-store';
-import { HeadingLogo } from '../ui';
+import { HeadingLogo } from '../shadcn/ui';
+import Input from '../shadcn/ui/input';
+import SelectInput from '../shadcn/ui/select-input';
+import Modal from './modal';
 
 type ImageChangeHandler = (files: FileList) => void;
 

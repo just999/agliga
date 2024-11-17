@@ -10,12 +10,10 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui';
-
+} from '@/components/shadcn/ui';
 import { useTogel } from '@/hooks/use-togel';
 import { useZodForm } from '@/hooks/use-zod-form';
 import ClientOnly from '@/lib/client-only';
-
 import { Sin4dSchema, sin4dSchema } from '@/schemas/togel-schema';
 import {
   flexRender,
@@ -151,7 +149,8 @@ const TogelTableBb = ({ dataTable }: TogelTableBbProps) => {
                   return (
                     <TableHead
                       key={header.id}
-                      className='p-0 m-0 h-8 text-xs font-bold text-center'>
+                      className='p-0 m-0 h-8 text-xs font-bold text-center'
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -169,7 +168,8 @@ const TogelTableBb = ({ dataTable }: TogelTableBbProps) => {
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
-                  data-state={row.getIsSelected() && 'selected'}>
+                  data-state={row.getIsSelected() && 'selected'}
+                >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id} className='p-0 m-0'>
                       {flexRender(
@@ -187,7 +187,8 @@ const TogelTableBb = ({ dataTable }: TogelTableBbProps) => {
               <TableRow>
                 <TableCell
                   // colSpan={headers.}
-                  className='h-24 text-center'>
+                  className='h-24 text-center'
+                >
                   No Results
                 </TableCell>
               </TableRow>

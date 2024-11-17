@@ -1,5 +1,8 @@
 'use client';
 
+import React, { useCallback, useEffect, useState } from 'react';
+
+import { getUnreadMessagesBySenderId } from '@/actions/message-actions';
 import {
   Avatar,
   AvatarFallback,
@@ -9,19 +12,16 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '@/components/ui';
+} from '@/components/shadcn/ui';
+import { cn, createChatId } from '@/lib/utils';
 import { useChatStore } from '@/store/use-chat-store';
-import React from 'react';
+import { SafeAdminChat } from '@/types/types';
 import { User } from '@prisma/client';
 import { AvatarImage } from '@radix-ui/react-avatar';
-import { useCallback, useEffect, useState } from 'react';
-import UserAvatar from '../user-avatar';
-
-import { cn, createChatId } from '@/lib/utils';
 import { useSession } from 'next-auth/react';
-import { getUnreadMessagesBySenderId } from '@/actions/message-actions';
-import { SafeAdminChat } from '@/types/types';
+
 import TooltipCustom from '../tooltip-custom';
+import UserAvatar from '../user-avatar';
 
 type ChatTabsListProps = {
   activeUser: User | SafeAdminChat | null;
@@ -124,13 +124,15 @@ const ChatTabsList = ({
         activeUser === user
           ? 'data-[state=active]:bg-yellow-500 p-0 m-0'
           : 'data-[state=inactive]:bg-muted-foreground/80 grayscale'
-      )}>
+      )}
+    >
       {user.image && user.name && userRole === 'admin' && (
         <TooltipCustom
           position='top'
           duration={1000}
           content={<span>{user.name} </span>}
-          className='bg-emerald-500'>
+          className='bg-emerald-500'
+        >
           <UserAvatar
             src={user.image}
             alt={user.name}

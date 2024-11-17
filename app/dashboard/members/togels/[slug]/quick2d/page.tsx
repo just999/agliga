@@ -1,8 +1,8 @@
 'use client';
 
 import Quick2d from '@/components/dashboard/members/togels/quick2d/quick2d';
-import TogelContainer from '@/components/ui/togel-container';
-import { cn, oldStandardTT, capitalizeFirstCharacter } from '@/lib/utils';
+import TogelContainer from '@/components/shadcn/ui/togel-container';
+import { capitalizeFirstCharacter, cn, oldStandardTT } from '@/lib/utils';
 
 type Quick2dPageProps = {
   params: {
@@ -17,7 +17,8 @@ const Quick2dPage = ({ params }: Quick2dPageProps) => {
         className={cn(
           'mx-auto text-center font-semibold text-lg',
           oldStandardTT.className
-        )}>
+        )}
+      >
         {capitalizeFirstCharacter(params.slug)} - Pools -
         Besar-Kecil/Genap-Ganjil
       </div>

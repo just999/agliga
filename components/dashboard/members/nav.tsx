@@ -1,9 +1,6 @@
 'use client';
 
 import * as React from 'react';
-import Link from 'next/link';
-
-import { cn } from '@/lib/utils';
 
 import {
   NavigationMenu,
@@ -13,7 +10,9 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-} from '@/components/ui/navigation-menu';
+} from '@/components/shadcn/ui/navigation-menu';
+import { cn } from '@/lib/utils';
+import Link from 'next/link';
 
 // const components: { title: string; href: string; description: string }[] = [
 //   {
@@ -63,7 +62,8 @@ export function Nav() {
             <ul className='grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]'>
               <ListItem
                 href='/dashboard/members/togels/singapore/4d3d2d'
-                title='Singapore'>
+                title='Singapore'
+              >
                 Re-usable components built using Radix UI and Tailwind CSS.
               </ListItem>
               <ListItem href='/dashboard/members/togels/lugano' title='Lugano'>
@@ -80,7 +80,8 @@ export function Nav() {
               </ListItem>
               <ListItem
                 href='/dashboard/members/togels/hongkong'
-                title='Hongkong'>
+                title='Hongkong'
+              >
                 Styles for headings, paragraphs, lists...etc
               </ListItem>
               <ListItem href='/dashboard/members/togels/wuhan' title='Wuhan'>
@@ -129,7 +130,8 @@ const ListItem = React.forwardRef<
             'block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
             className
           )}
-          {...props}>
+          {...props}
+        >
           <div className='text-sm font-medium leading-none'>{title}</div>
           <p className='line-clamp-2 text-sm leading-snug text-muted-foreground'>
             {children}

@@ -1,36 +1,32 @@
 'use client';
 
+import { useEffect } from 'react';
+
 import { editUserProfile } from '@/actions/user-actions';
 import ProfilePicture from '@/components/candidate-form/profile-picture';
-
 import {
+  Button,
   Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
-  CardDescription,
-  CardContent,
-  SelectInput,
-  CardFooter,
-  Button,
   InputCustom,
+  SelectInput,
   Spinner,
-} from '@/components/ui';
+} from '@/components/shadcn/ui';
 import UserAvatar from '@/components/user-avatar';
 import useBanks from '@/hooks/use-banks';
 import useGames from '@/hooks/use-games';
 import ClientOnly from '@/lib/client-only';
 import { cn, handleFormServerErrors } from '@/lib/utils';
 import { editUserProfileSchema, EditUserProfileSchema } from '@/schemas';
-
 import { zodResolver } from '@hookform/resolvers/zod';
 import { User } from '@prisma/client';
 import { UserCog2Icon } from 'lucide-react';
-
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-
-import { useEffect } from 'react';
-
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { BiUser } from 'react-icons/bi';
@@ -250,7 +246,8 @@ const EditProfileForm = ({ user, userInfo }: ProfileProps) => {
               type='submit'
               className={cn(
                 'mt-2 px-4 text-gray-50 hover:bg-orange-500/70 hover:text-gray-600 w-full shadow-lg'
-              )}>
+              )}
+            >
               {isSubmitting ? (
                 <div className='flex gap-2 items-center justify-center'>
                   <Spinner size={16} color='gray-200' /> Submitting...
@@ -269,7 +266,8 @@ const EditProfileForm = ({ user, userInfo }: ProfileProps) => {
               size='sm'
               variant='ghost'
               asChild
-              className='text-xs flex-flex-row items-center justify-center gap-2 drop-shadow-lg bg-stone-50'>
+              className='text-xs flex-flex-row items-center justify-center gap-2 drop-shadow-lg bg-stone-50'
+            >
               <Link href='/'>
                 Back to Homepage{' '}
                 <BsHouse className='text-neutral-400 h-4 w-4 m-0 p-0 cursor-pointer hover:text-red-500 hover:font-bold hover:shadow-lg ' />

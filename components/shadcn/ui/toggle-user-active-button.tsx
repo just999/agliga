@@ -149,18 +149,17 @@
 
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-import { FaUserGear } from 'react-icons/fa6';
 import useModal from '@/hooks/use-modal';
-
 import { cn } from '@/lib/utils';
-import { User } from '@prisma/client';
 import useUserStore from '@/store/use-active-user-store';
-import Loader from '../loader';
-import { Button } from './button';
-
+import { User } from '@prisma/client';
 import { useRouter } from 'next/navigation';
+import { FaUserGear } from 'react-icons/fa6';
+
+import Loader from '../../loader';
+import { Button } from './button';
 
 /**
  * Component props

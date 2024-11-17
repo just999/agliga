@@ -1,8 +1,10 @@
 'use client';
 
+import { useCallback, useState } from 'react';
+
 import { BubbleChat } from '@/components/assets/icons/chat-bubble';
 import PresenceDot from '@/components/presence-dot';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/shadcn/ui/button';
 import {
   Card,
   CardContent,
@@ -10,7 +12,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
+} from '@/components/shadcn/ui/card';
 import { cn } from '@/lib/utils';
 import { useMessageStore } from '@/store/use-message-store';
 import { User } from '@prisma/client';
@@ -18,7 +20,6 @@ import { Separator } from '@radix-ui/react-separator';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useCallback, useState } from 'react';
 import { BsChevronDown } from 'react-icons/bs';
 
 type MemberSidebarProps = {
@@ -52,7 +53,8 @@ const MemberSidebar = ({ user, navLinks, className }: MemberSidebarProps) => {
         'items-center',
         isToggle ? 'slide-up' : 'slide-down',
         className
-      )}>
+      )}
+    >
       <CardHeader className='flex flex-row p-2 justify-between items-center gap-2 text-gray-400 bg-amber-200 w-full border-b-2 border-solid border-amber-400 drop-shadow-md rounded-t-lg'>
         <CardTitle>Profile </CardTitle>
         <CardDescription>
@@ -70,7 +72,8 @@ const MemberSidebar = ({ user, navLinks, className }: MemberSidebarProps) => {
           size='sm'
           type='button'
           className='p-0 m-0 h-0 hover:bg-emerald-100 hover:text-sky-700 pr-1'
-          onClick={handleToggleOff}>
+          onClick={handleToggleOff}
+        >
           <Link href={`/members/${user?.id}/chat`}>
             <BsChevronDown className='fill-gray-800' />
           </Link>
@@ -107,7 +110,8 @@ const MemberSidebar = ({ user, navLinks, className }: MemberSidebarProps) => {
                   pathname === link.href
                     ? 'text-sky-700 border-r-2 border-solid border-sky-700 rounded-none shadow-xl'
                     : 'hover:text-white hover:bg-stone-200'
-                )}>
+                )}
+              >
                 {link.name}
               </Link>
             ))}
@@ -129,7 +133,8 @@ const MemberSidebar = ({ user, navLinks, className }: MemberSidebarProps) => {
             variant='ghost'
             size='sm'
             type='button'
-            onClick={() => setIsToggle(true)}>
+            onClick={() => setIsToggle(true)}
+          >
             <Link href={`/members/${user?.id}/chat`}>
               <BubbleChat className='w-full h-full  relative' />
             </Link>

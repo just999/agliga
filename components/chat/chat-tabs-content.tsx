@@ -1,7 +1,11 @@
 'use client';
 
-import { User } from '@prisma/client';
-import { Button, TabsContent } from '@/components/ui';
+import { RefObject, useCallback, useEffect, useState } from 'react';
+
+import { getAnonymousUser } from '@/actions/live-chat-actions';
+import { getMessageThread } from '@/actions/message-actions';
+import PresenceAvatar from '@/components/presence-avatar';
+import { Button, TabsContent } from '@/components/shadcn/ui';
 import {
   capitalizeFirstCharacter,
   cn,
@@ -10,24 +14,19 @@ import {
   formattedDateMonthDate,
   normalizedDateTime,
 } from '@/lib/utils';
-import CardInnerWrapper from '../card-inner-wrapper';
-
 import { useChatStore } from '@/store/use-chat-store';
-import { useSession } from 'next-auth/react';
-import { RefObject, useCallback, useEffect, useState } from 'react';
-import { MessagesProps } from './chat-container';
-import MessageList from './message-list';
-import ChatForm from './chat-form';
+import { MessageDto } from '@/types';
+import { SafeAdminChat } from '@/types/types';
+import { User } from '@prisma/client';
 import { MessageCircleMore } from 'lucide-react';
+import { useSession } from 'next-auth/react';
+import user from 'pusher-js/types/src/core/user';
 import { BsChevronDown } from 'react-icons/bs';
 
-import PresenceAvatar from '@/components/presence-avatar';
-
-import { getMessageThread } from '@/actions/message-actions';
-import { SafeAdminChat } from '@/types/types';
-import { MessageDto } from '@/types';
-import { getAnonymousUser } from '@/actions/live-chat-actions';
-import user from 'pusher-js/types/src/core/user';
+import CardInnerWrapper from '../card-inner-wrapper';
+import { MessagesProps } from './chat-container';
+import ChatForm from './chat-form';
+import MessageList from './message-list';
 
 type ChatTabsContentProps = {
   activeUser?: User | SafeAdminChat | null;
@@ -235,7 +234,8 @@ const ChatTabsContent = ({
         type='button'
         aria-label='member chat'
         className='p-0 m-0 h-0 rounded-full hover:bg-emerald-700 hover:text-sky-700 pr-1'
-        onClick={handleToggleOff}>
+        onClick={handleToggleOff}
+      >
         {/* <Link href={`/members/${user.id}`}> */}
         <BsChevronDown
           size={24}
@@ -272,7 +272,8 @@ const ChatTabsContent = ({
       <TabsContent
         {...props}
         value={user.id}
-        className={cn('bg-indigo-50 m-0 p-0', className)}>
+        className={cn('bg-indigo-50 m-0 p-0', className)}
+      >
         <div
           className={cn(
             'p-0 bottom-0 w-[400px] h-max-[570px] right-0  z-50 transition-transform duration-300 items-end rounded-t-lg ',
@@ -280,7 +281,8 @@ const ChatTabsContent = ({
             toggleSidePanel
               ? ' shadow-lg'
               : ' border-l-transparent border-t-transparent shadow-none rounded-t-lg'
-          )}>
+          )}
+        >
           <CardInnerWrapper
             currentUser={newUser}
             toggleSidePanel={toggleSidePanel}

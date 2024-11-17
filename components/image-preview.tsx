@@ -1,11 +1,12 @@
 'use client';
 
-import Image from 'next/image';
-import { Button } from './ui/button';
-
 import { useEffect, useState } from 'react';
+
 import { useImageStore } from '@/store/use-image-store';
+import Image from 'next/image';
 import { FaTimesCircle } from 'react-icons/fa';
+
+import { Button } from './shadcn/ui/button';
 
 type ImagePreviewProps = {
   image: string;

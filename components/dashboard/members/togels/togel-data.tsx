@@ -1,11 +1,12 @@
 'use client';
 
-import { Button } from '@/components/ui';
+import { useState } from 'react';
+
+import { Button } from '@/components/shadcn/ui';
 import { thead4dData } from '@/lib/helper';
 import { cn } from '@/lib/utils';
 import { Sin4d, SinPool } from '@prisma/client';
 import { ChevronDown } from 'lucide-react';
-import { useState } from 'react';
 
 type TogelDataProps = {
   slug: string;
@@ -30,7 +31,8 @@ const TogelData = ({ slug, togel }: TogelDataProps) => {
           variant='ghost'
           className='p-0 m-0 h-4'
           type='button'
-          onClick={() => setShow((prev) => !prev)}>
+          onClick={() => setShow((prev) => !prev)}
+        >
           <ChevronDown size={14} />
         </Button>
       </div>
@@ -42,7 +44,8 @@ const TogelData = ({ slug, togel }: TogelDataProps) => {
               <th
                 key={sin.label}
                 colSpan={sin.colspan}
-                className='text-sm font-bold px-2'>
+                className='text-sm font-bold px-2'
+              >
                 {sin.label}
               </th>
             ))}

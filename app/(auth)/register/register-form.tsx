@@ -1,23 +1,24 @@
 'use client';
 
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { useState } from 'react';
+
+import { register as signUp } from '@/actions/auth-actions';
+import { HeadingLogo } from '@/components/shadcn/ui';
+import { Button } from '@/components/shadcn/ui/button';
+import { Card, CardContent, CardHeader } from '@/components/shadcn/ui/card';
+import Spinner from '@/components/shadcn/ui/spinner';
+import { cn, handleFormServerErrors } from '@/lib/utils';
 import { profileSchema, RegisterSchema, registerSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { PlayCircleIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
 import { FormProvider, useForm, useFormContext } from 'react-hook-form';
-import UserDetailsForm from './user-details-form';
-import ProfileForm from './profile-form';
-import { Button } from '@/components/ui/button';
-import Spinner from '@/components/ui/spinner';
-import { cn, handleFormServerErrors } from '@/lib/utils';
-
 import toast from 'react-hot-toast';
-import { register as signUp } from '@/actions/auth-actions';
+
 import LoginRegisterButton from '../_components/login-register-button';
 import SocialLogin from '../login/social-login';
-import { PlayCircleIcon } from 'lucide-react';
-import { HeadingLogo } from '@/components/ui';
+import ProfileForm from './profile-form';
+import UserDetailsForm from './user-details-form';
 
 const stepSchema = [registerSchema, profileSchema];
 
@@ -100,7 +101,8 @@ const RegisterForm = () => {
                     onClick={onBack}
                     className='w-full bg-emerald-200 shadow-md'
                     variant='ghost'
-                    type='button'>
+                    type='button'
+                  >
                     Back
                   </Button>
                 )}
@@ -112,7 +114,8 @@ const RegisterForm = () => {
                   // disabled={!isValid}
                   className={cn(
                     'bg-indigo-500 px-4 text-gray-50 hover:bg-indigo-500/70 hover:text-gray-200 w-full shadow-md'
-                  )}>
+                  )}
+                >
                   {isSubmitting || isLoading ? (
                     <span className='flex flex-row gap-2 items-center justify-center '>
                       <Spinner size={16} /> process...
